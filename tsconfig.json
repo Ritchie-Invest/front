@@ -2,7 +2,9 @@
   "compilerOptions": {
     "target": "ES2021",
     "module": "esnext",
-    "lib": ["ESNext"],
+    "lib": [
+      "ESNext"
+    ],
     "jsx": "react-native",
     "strict": true,
     "esModuleInterop": true,
@@ -10,13 +12,26 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "types": ["react", "react-native"],
+    "types": [
+      "react",
+      "react-native"
+    ],
     "baseUrl": ".",
     "paths": {
-      "~/*": ["src/*"],
-      "config": ["./tamagui.config.ts"]
+      "~/*": [
+        "src/*"
+      ],
+      "config": [
+        "./tamagui.config.ts"
+      ]
     }
   },
-  "include": ["src", "tamagui.config.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src",
+    "tamagui.config.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "extends": "expo/tsconfig.base"
 }

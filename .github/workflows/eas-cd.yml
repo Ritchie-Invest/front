@@ -1,0 +1,46 @@
+name: EAS CD
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - name: Install eas-cli
+        run: pnpm add -g eas-cli
+      - name: EAS Build Android
+        env:
+          EAS_TOKEN: ${{ secrets.EAS_TOKEN }}
+        run: eas build --platform android --non-interactive --profile production
+
+  build-ios:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - name: Install eas-cli
+        run: pnpm add -g eas-cli
+      - name: EAS Build iOS
+        env:
+          EAS_TOKEN: ${{ secrets.EAS_TOKEN }}
+        run: eas build --platform ios --non-interactive --profile production

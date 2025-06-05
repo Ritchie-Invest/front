@@ -21,14 +21,10 @@
       "~/*": [
         "src/*"
       ],
-      "config": [
-        "./tamagui.config.ts"
-      ]
     }
   },
   "include": [
     "src",
-    "tamagui.config.ts"
   ],
   "exclude": [
     "node_modules"

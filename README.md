@@ -6,7 +6,7 @@ The app provides a mix of interactive lessons, gamified modules, and real-life s
 
 ## ⚙️ Technologies
 - React Native with Expo
-- Tamagui (Design System)
+- Native Base (Design System)
 - Zustand + React Query (State Management)
 - i18n (Multilingual support)
 - Jest + RTL (Tests)

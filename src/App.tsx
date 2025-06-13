@@ -3,7 +3,7 @@ import { NativeBaseProvider, Box, Text } from 'native-base';
 import { NavigationContainer } from '@react-navigation/native';
 import { useColorScheme } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from './features/landing/home';
+import HomeScreen from './features/landing/screen/home';
 export default function App() {
   const colorScheme = useColorScheme();
   const Stack = createNativeStackNavigator();

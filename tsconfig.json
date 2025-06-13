@@ -14,7 +14,8 @@
     "noEmit": true,
     "types": [
       "react",
-      "react-native"
+      "react-native",
+      "jest"
     ],
     "baseUrl": ".",
     "paths": {

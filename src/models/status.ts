@@ -5,9 +5,8 @@ export enum ProgressStatus {
   COMPLETED = 'completed',
 }
 
-// Enum pour les types de jeux
 export enum GameType {
-  QCM = 'qcm',
+  MCQ = 'mcq',
   SENTENCES = 'sentences',
   MATCH = 'match',
   TRUE_OR_FALSE = 'trueOrFalse',

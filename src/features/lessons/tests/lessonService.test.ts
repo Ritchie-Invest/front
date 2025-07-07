@@ -27,7 +27,7 @@ describe('lessonsService', () => {
         expect(lesson).toHaveProperty('chapterId');
         expect(lesson).toHaveProperty('title');
         expect(lesson).toHaveProperty('description');
-        expect(['completed', 'available', 'locked']).toContain(lesson.status);
+        expect(['completed', 'current', 'locked']).toContain(lesson.status);
       });
     });
   });

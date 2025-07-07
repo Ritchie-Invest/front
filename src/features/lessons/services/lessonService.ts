@@ -1,7 +1,7 @@
 // /src/features/lessons/services/lessonsService.ts
-import { Chapter } from '~/models/chapter';
-import { Lesson } from '~/models/lesson';
-import { ProgressStatus } from '~/models/status';
+import { Chapter } from '../../../models/chapter';
+import { Lesson } from '../../../models/lesson';
+import { ProgressStatus } from '../../../models/status';
 
 // Types étendus pour l'affichage
 export type ChapterWithProgress = Chapter & {

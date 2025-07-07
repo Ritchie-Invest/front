@@ -1,5 +1,6 @@
 import React from 'react';
 import { VStack, HStack, Text, Progress } from 'native-base';
+import { useTranslation } from 'react-i18next';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { Card } from '~/components/molecules/card';
 
@@ -10,6 +11,8 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ progressValue, completedLessons, totalLessons }) => {
+  const { t } = useTranslation();
+
   return (
     <VStack space={6} mb={6}>
       {/* Titre et description */}
@@ -17,22 +20,22 @@ export const Hero: React.FC<HeroProps> = ({ progressValue, completedLessons, tot
         <HStack alignItems="center" space={2}>
           <FontAwesome5 name="bullseye" size={16} color="#ec4899" />
           <Text fontSize="xl" fontWeight="bold" color="blue.900">
-            Votre Parcours d'Investissement
+            {t('home.hero.title')}
           </Text>
         </HStack>
         <Text fontSize="sm" color="gray.600">
-          Découvrez l'investissement étape par étape, du débutant complet à l'investisseur confirmé.
+          {t('home.hero.description')}
         </Text>
       </VStack>
 
       {/* Carte de progression */}
       <Card>
         <HStack justifyContent="space-between" alignItems="center">
-          <Text bold>Votre Progression</Text>
+          <Text bold>{t('home.hero.progressTitle')}</Text>
           <HStack alignItems="center" space={1}>
             <FontAwesome5 name="trophy" color="#eab308" size={16} />
             <Text>
-              {completedLessons} / {totalLessons} niveaux complétés
+              {completedLessons} / {totalLessons} {t('home.hero.levelsCompleted')}
             </Text>
           </HStack>
         </HStack>

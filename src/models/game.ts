@@ -1,15 +1,15 @@
+import { GameType } from './status';
+
 export interface Game {
   id: number;
-  title: string;
-  type: 'qcm' | 'sentences' | 'match' | 'trueOrFalse' | 'gauge' | 'order';
+  lessonId: number;
+  type: GameType;
   rules: {
     shuffle_questions: boolean;
     time_limit_seconds: number;
   };
   questions: Question[];
 }
-
-// Pour QCM, Sentences, TrueOrFalse
 
 export interface Answer {
   value: string;

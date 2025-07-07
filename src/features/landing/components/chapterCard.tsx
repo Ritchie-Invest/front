@@ -1,25 +1,28 @@
 import React from 'react';
 import { View } from 'react-native';
 import { VStack, HStack, Text, Progress } from 'native-base';
+import { useTranslation } from 'react-i18next';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Card } from '~/components/molecules/card';
+import { ProgressStatus } from '~/models/status';
 
 interface ChapterCardProps {
   title: string;
   description: string;
   completedLessons: number;
   totalLessons: number;
-  status: 'completed' | 'current' | 'locked';
+  status: ProgressStatus;
 }
 
 export const ChapterCard = React.forwardRef<any, ChapterCardProps>((props, ref) => {
   const { title, description, completedLessons, totalLessons, status, ...rest } = props;
+  const { t } = useTranslation();
 
   const progressValue = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
 
   const getStatusProps = () => {
     switch (status) {
-      case 'completed':
+      case ProgressStatus.COMPLETED:
         return {
           cardVariant: 'chapter' as const,
           iconName: 'checkmark-circle' as const,
@@ -29,7 +32,7 @@ export const ChapterCard = React.forwardRef<any, ChapterCardProps>((props, ref) 
           progressBg: 'white:alpha.30',
           opacity: 1,
         };
-      case 'current':
+      case ProgressStatus.CURRENT:
         return {
           cardVariant: 'chapter' as const,
           iconName: 'book' as const,
@@ -39,7 +42,7 @@ export const ChapterCard = React.forwardRef<any, ChapterCardProps>((props, ref) 
           progressBg: 'white:alpha.30',
           opacity: 1,
         };
-      case 'locked':
+      case ProgressStatus.LOCKED:
         return {
           cardVariant: 'default' as const,
           iconName: 'lock-closed' as const,
@@ -70,14 +73,14 @@ export const ChapterCard = React.forwardRef<any, ChapterCardProps>((props, ref) 
         variant={statusProps.cardVariant}
         mb={4}
         opacity={statusProps.opacity}
-        borderWidth={status === 'locked' ? 1 : 0}
-        borderColor={status === 'locked' ? 'gray.300' : 'transparent'}
+        borderWidth={status === ProgressStatus.LOCKED ? 1 : 0}
+        borderColor={status === ProgressStatus.LOCKED ? 'gray.300' : 'transparent'}
         bg={
-          status === 'locked'
+          status === ProgressStatus.LOCKED
             ? 'gray.50'
-            : status === 'completed'
+            : status === ProgressStatus.COMPLETED
               ? 'emerald.500'
-              : status === 'current'
+              : status === ProgressStatus.CURRENT
                 ? 'blue.600'
                 : undefined
         }
@@ -88,7 +91,7 @@ export const ChapterCard = React.forwardRef<any, ChapterCardProps>((props, ref) 
             <Text fontSize="lg" bold color={statusProps.textColor}>
               {title}
             </Text>
-            {status === 'current' && (
+            {status === ProgressStatus.CURRENT && (
               <Text
                 fontSize="xs"
                 bg="white:alpha.30"
@@ -98,25 +101,29 @@ export const ChapterCard = React.forwardRef<any, ChapterCardProps>((props, ref) 
                 color="white"
                 fontWeight="bold"
               >
-                EN COURS
+                {t('home.chapter.current')}
               </Text>
             )}
           </HStack>
-          <Text color={statusProps.textColor} opacity={status === 'locked' ? 0.7 : 1}>
+          <Text color={statusProps.textColor} opacity={status === ProgressStatus.LOCKED ? 0.7 : 1}>
             {description}
           </Text>
-          <Text color={statusProps.textColor} fontSize="xs" opacity={status === 'locked' ? 0.7 : 1}>
-            {completedLessons}/{totalLessons} niveaux complétés
+          <Text
+            color={statusProps.textColor}
+            fontSize="xs"
+            opacity={status === ProgressStatus.LOCKED ? 0.7 : 1}
+          >
+            {completedLessons}/{totalLessons} {t('home.chapter.completedLevels')}
           </Text>
           <Progress
             value={progressValue}
             colorScheme={statusProps.progressColorScheme}
             bg={statusProps.progressBg}
-            opacity={status === 'locked' ? 0.5 : 1}
+            opacity={status === ProgressStatus.LOCKED ? 0.5 : 1}
           />
-          {status === 'locked' && (
+          {status === ProgressStatus.LOCKED && (
             <Text fontSize="xs" color="gray.500" fontStyle="italic">
-              Terminez le chapitre précédent pour débloquer
+              {t('home.chapter.unlockMessage')}
             </Text>
           )}
         </VStack>

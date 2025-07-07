@@ -1,20 +1,20 @@
 // /src/features/lessons/services/lessonsService.ts
 import { Chapter } from '~/models/chapter';
 import { Lesson } from '~/models/lesson';
+import { ProgressStatus } from '~/models/status';
 
 // Types étendus pour l'affichage
 export type ChapterWithProgress = Chapter & {
   completedLessons: number;
   totalLessons: number;
-  status: 'completed' | 'current' | 'locked';
+  status: ProgressStatus;
 };
 
 export type LessonWithStatus = Lesson & {
   chapterId: number;
-  status: 'completed' | 'available' | 'locked';
+  status: ProgressStatus;
 };
 
-// Mock data - À remplacer par de vrais appels API
 const mockChapters: ChapterWithProgress[] = [
   {
     id: 1,
@@ -23,7 +23,7 @@ const mockChapters: ChapterWithProgress[] = [
     lessons: [],
     completedLessons: 3,
     totalLessons: 3,
-    status: 'completed',
+    status: ProgressStatus.COMPLETED,
   },
   {
     id: 2,
@@ -32,7 +32,7 @@ const mockChapters: ChapterWithProgress[] = [
     lessons: [],
     completedLessons: 0,
     totalLessons: 4,
-    status: 'current',
+    status: ProgressStatus.CURRENT,
   },
   {
     id: 3,
@@ -41,7 +41,7 @@ const mockChapters: ChapterWithProgress[] = [
     lessons: [],
     completedLessons: 0,
     totalLessons: 5,
-    status: 'locked',
+    status: ProgressStatus.LOCKED,
   },
   {
     id: 4,
@@ -50,7 +50,7 @@ const mockChapters: ChapterWithProgress[] = [
     lessons: [],
     completedLessons: 0,
     totalLessons: 6,
-    status: 'locked',
+    status: ProgressStatus.LOCKED,
   },
 ];
 
@@ -62,7 +62,7 @@ const mockLessons: LessonWithStatus[] = [
     title: 'Épargne vs Investissement',
     description: 'Comprendre la différence entre épargner et investir.',
     games: [],
-    status: 'completed',
+    status: ProgressStatus.COMPLETED,
   },
   {
     id: 12,
@@ -70,7 +70,7 @@ const mockLessons: LessonWithStatus[] = [
     title: "Les Types d'Actifs",
     description: "Découvrir les différents types d'investissements disponibles.",
     games: [],
-    status: 'completed',
+    status: ProgressStatus.COMPLETED,
   },
   {
     id: 13,
@@ -78,7 +78,7 @@ const mockLessons: LessonWithStatus[] = [
     title: 'Le Risque et le Rendement',
     description: 'Comprendre la relation fondamentale entre risque et rendement.',
     games: [],
-    status: 'completed',
+    status: ProgressStatus.COMPLETED,
   },
   // Chapitre 2
   {
@@ -87,7 +87,7 @@ const mockLessons: LessonWithStatus[] = [
     title: 'Diversification du Portefeuille',
     description: 'Apprendre à répartir ses investissements pour réduire les risques.',
     games: [],
-    status: 'available',
+    status: ProgressStatus.CURRENT,
   },
   {
     id: 22,
@@ -95,7 +95,7 @@ const mockLessons: LessonWithStatus[] = [
     title: 'Investissement Passif vs Actif',
     description: "Comparer les stratégies d'investissement passives et actives.",
     games: [],
-    status: 'locked',
+    status: ProgressStatus.LOCKED,
   },
   {
     id: 23,
@@ -103,7 +103,7 @@ const mockLessons: LessonWithStatus[] = [
     title: 'Les ETF et Fonds Indiciels',
     description: 'Comprendre les fonds négociés en bourse et leur utilité.',
     games: [],
-    status: 'locked',
+    status: ProgressStatus.LOCKED,
   },
   {
     id: 24,
@@ -111,7 +111,7 @@ const mockLessons: LessonWithStatus[] = [
     title: 'Rééquilibrage du Portefeuille',
     description: "Maintenir l'allocation d'actifs souhaitée au fil du temps.",
     games: [],
-    status: 'locked',
+    status: ProgressStatus.LOCKED,
   },
   // Chapitre 3
   {
@@ -120,7 +120,7 @@ const mockLessons: LessonWithStatus[] = [
     title: 'Analyse Fondamentale',
     description: 'Évaluer la valeur intrinsèque des entreprises.',
     games: [],
-    status: 'locked',
+    status: ProgressStatus.LOCKED,
   },
   {
     id: 32,
@@ -128,7 +128,7 @@ const mockLessons: LessonWithStatus[] = [
     title: 'Ratios Financiers',
     description: 'Interpréter les indicateurs clés de performance financière.',
     games: [],
-    status: 'locked',
+    status: ProgressStatus.LOCKED,
   },
 ];
 

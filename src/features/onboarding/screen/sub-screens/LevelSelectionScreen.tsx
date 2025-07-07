@@ -1,5 +1,6 @@
 import React from 'react';
 import { VStack, Text, Spacer } from 'native-base';
+import { useTranslation } from 'react-i18next';
 import { OnboardingLayout } from '../../components/organisms/OnboardingLayout';
 import { SelectableItem } from '~/components/molecules/selectableItem';
 import { Button } from '../../../../components/atoms/Button';
@@ -22,11 +23,13 @@ export const LevelSelectionScreen: React.FC<LevelSelectionScreenProps> = ({
   onBack,
   progress,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <OnboardingLayout progress={progress} onBackPress={onBack}>
       <VStack flex={1} space={6}>
         <Text fontSize="2xl" fontWeight="bold" color="gray.800">
-          Comment souhaites-tu débuter ton apprentissage ?
+          {t('onboarding.levelSelection.title')}
         </Text>
 
         <VStack space={3}>
@@ -48,7 +51,7 @@ export const LevelSelectionScreen: React.FC<LevelSelectionScreenProps> = ({
           variant={selectedLevel ? 'primary' : 'disabled'}
           isDisabled={!selectedLevel}
         >
-          Continuer
+          {t('onboarding.levelSelection.continueButton')}
         </Button>
       </VStack>
     </OnboardingLayout>

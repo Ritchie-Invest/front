@@ -40,6 +40,9 @@
         "projectId": "5c2df484-8c85-4390-8911-15c37c322260"
       }
     },
-    "owner": "ritchie-invest"
+    "owner": "ritchie-invest",
+    "plugins": [
+      "expo-localization"
+    ]
   }
 }

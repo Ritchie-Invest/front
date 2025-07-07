@@ -1,5 +1,6 @@
 import React from 'react';
 import { VStack, Text, Spacer } from 'native-base';
+import { useTranslation } from 'react-i18next';
 import { OnboardingLayout } from '../../components/organisms/OnboardingLayout';
 import { AnswerButton } from '~/components/molecules/AnswerButton';
 import { Button } from '../../../../components/atoms/Button';
@@ -22,11 +23,13 @@ export const GoalSelectionScreen: React.FC<GoalSelectionScreenProps> = ({
   onBack,
   progress,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <OnboardingLayout progress={progress} onBackPress={onBack}>
       <VStack flex={1} space={6}>
         <Text fontSize="2xl" fontWeight="bold" color="gray.800">
-          Pourquoi souhaites-tu apprendre à investir ?
+          {t('onboarding.goalSelection.title')}
         </Text>
 
         <VStack space={3}>
@@ -47,7 +50,7 @@ export const GoalSelectionScreen: React.FC<GoalSelectionScreenProps> = ({
           variant={selectedGoal ? 'primary' : 'disabled'}
           isDisabled={!selectedGoal}
         >
-          Continuer
+          {t('onboarding.goalSelection.continueButton')}
         </Button>
       </VStack>
     </OnboardingLayout>

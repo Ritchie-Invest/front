@@ -1,5 +1,6 @@
 import React from 'react';
 import { VStack, Text, Spacer, Box } from 'native-base';
+import { useTranslation } from 'react-i18next';
 import { OnboardingLayout } from '../../components/organisms/OnboardingLayout';
 import { Button } from '../../../../components/atoms/Button';
 
@@ -21,11 +22,13 @@ export const LearningGoalsScreen: React.FC<LearningGoalsScreenProps> = ({
   onBack,
   progress,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <OnboardingLayout progress={progress} onBackPress={onBack}>
       <VStack flex={1} space={6}>
         <Text fontSize="lg" color="gray.600" textAlign="center">
-          En apprenant sur Ritchie, voici ce que tu peux atteindre en 2 mois
+          {t('onboarding.learningGoals.subtitle')}
         </Text>
 
         <VStack space={12} flex={6} justifyContent="center" alignItems="center">
@@ -43,7 +46,7 @@ export const LearningGoalsScreen: React.FC<LearningGoalsScreenProps> = ({
 
         <Spacer />
 
-        <Button onPress={onContinue}>Continuer</Button>
+        <Button onPress={onContinue}>{t('onboarding.learningGoals.continueButton')}</Button>
       </VStack>
     </OnboardingLayout>
   );

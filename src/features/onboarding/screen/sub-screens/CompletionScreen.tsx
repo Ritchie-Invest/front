@@ -1,5 +1,6 @@
 import React from 'react';
 import { VStack, Text, Spacer } from 'native-base';
+import { useTranslation } from 'react-i18next';
 import { OnboardingLayout } from '../../components/organisms/OnboardingLayout';
 import { Button } from '../../../../components/atoms/Button';
 
@@ -18,6 +19,8 @@ export const CompletionScreen: React.FC<CompletionScreenProps> = ({
   onBack,
   progress,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <OnboardingLayout progress={progress} onBackPress={onBack}>
       <VStack flex={1} justifyContent="center" alignItems="center" space={6}>
@@ -34,7 +37,7 @@ export const CompletionScreen: React.FC<CompletionScreenProps> = ({
         <Spacer />
 
         <Button onPress={onContinue} width="100%">
-          Commencer
+          {t('onboarding.completion.startButton')}
         </Button>
       </VStack>
     </OnboardingLayout>

@@ -1,15 +1,17 @@
 import React from 'react';
 import { VStack, HStack, Text, Icon } from 'native-base';
+import { useTranslation } from 'react-i18next';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Card } from '~/components/molecules/card';
 import { Button } from 'native-base';
 import { StatusBadge } from '~/components/atoms/statusBadge';
+import { ProgressStatus } from '~/models/status';
 
 interface LessonCardProps {
   id: number;
   title: string;
   description: string;
-  status: 'available' | 'completed' | 'locked';
+  status: ProgressStatus;
   onAction: (lessonId: number, action: 'start' | 'review') => void;
 }
 
@@ -20,8 +22,9 @@ export const LessonCard: React.FC<LessonCardProps> = ({
   status,
   onAction,
 }) => {
-  const isCompleted = status === 'completed';
-  const isLocked = status === 'locked';
+  const { t } = useTranslation();
+  const isCompleted = status === ProgressStatus.COMPLETED;
+  const isLocked = status === ProgressStatus.LOCKED;
 
   const handleButtonPress = () => {
     if (!isLocked) {
@@ -31,17 +34,17 @@ export const LessonCard: React.FC<LessonCardProps> = ({
 
   const getIconProps = () => {
     switch (status) {
-      case 'completed':
+      case ProgressStatus.COMPLETED:
         return {
           name: 'checkmark-circle' as const,
           color: 'green.500',
         };
-      case 'available':
+      case ProgressStatus.CURRENT:
         return {
           name: 'play-circle-outline' as const,
           color: 'blue.500',
         };
-      case 'locked':
+      case ProgressStatus.LOCKED:
         return {
           name: 'lock-closed' as const,
           color: 'gray.400',
@@ -80,7 +83,7 @@ export const LessonCard: React.FC<LessonCardProps> = ({
               color="gray.600"
               fontWeight="bold"
             >
-              VERROUILLÉ
+              {t('status.progress.locked').toUpperCase()}
             </Text>
           )}
         </HStack>
@@ -98,14 +101,14 @@ export const LessonCard: React.FC<LessonCardProps> = ({
           <StatusBadge status={status} />
           {!isLocked && (
             <Button variant={isCompleted ? 'secondary' : 'primary'} onPress={handleButtonPress}>
-              {isCompleted ? 'Revoir' : 'Commencer'}
+              {isCompleted ? t('lesson.review') : t('lesson.start')}
             </Button>
           )}
         </HStack>
 
         {isLocked && (
           <Text fontSize="xs" color="gray.500" fontStyle="italic" mt={1}>
-            Terminez la leçon précédente pour débloquer
+            {t('lesson.unlockMessage')}
           </Text>
         )}
       </VStack>

@@ -1,4 +1,35 @@
 {
-  "hello": "Hello",
-  "welcome": "Welcome"
+  "login": {
+    "title": "Login",
+    "button": "Sign in",
+    "createAccount": "Create account",
+    "forgotPassword": "Forgot password?",
+    "or": "or",
+    "google": "Continue with Google",
+    "apple": "Continue with Apple"
+  },
+  "register": {
+    "title": "Create an account",
+    "button": "Sign up",
+    "success": "Account created!",
+    "error": "Error during registration",
+    "backToLogin": "Back to login"
+  },
+  "forgot": {
+    "title": "Forgot password",
+    "button": "Reset password",
+    "success": "Email sent!",
+    "error": {
+      "invalidEmail": "Invalid email address",
+      "generic": "Error while sending email"
+    },
+    "backToLogin": "Back to login"
+  },
+  "form": {
+    "email": "Email",
+    "password": "Password"
+  },
+  "errors": {
+    "unknown": "Unknown error"
+  }
 }

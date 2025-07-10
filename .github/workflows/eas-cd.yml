@@ -2,10 +2,28 @@ name: EAS CD
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
 
 jobs:
+  prebuild-develop:
+    if: github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - name: Expo Prebuild
+        run: pnpm expo prebuild --clean
+
   build-android:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -26,6 +44,7 @@ jobs:
         run: eas build --platform android --non-interactive --profile production
 
   build-ios:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

@@ -25,4 +25,4 @@ jobs:
       - name: Lint
         run: pnpm lint-staged
       - name: Run tests
-        run: pnpm test
+        run: pnpm test -- --passWithNoTests

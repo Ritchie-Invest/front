@@ -4,14 +4,14 @@
     "slug": "ritchie-invest",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "src/assets/icons/icon.png",
     "userInterfaceStyle": "light",
     "assetBundlePatterns": [
       "**/*"
     ],
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/icon/splash-icon.png",
+      "image": "src/assets/icons/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -25,7 +25,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icons/adaptive-icon.png",
+        "foregroundImage": "src/assets/icons/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
@@ -33,7 +33,7 @@
       "versionCode": 2
     },
     "web": {
-      "favicon": "./assets/icons/favicon.png"
+      "favicon": "src/assets/icons/favicon.png"
     },
     "extra": {
       "eas": {

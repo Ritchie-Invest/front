@@ -1,12 +1,12 @@
 name: EAS CD
 
 on:
-  push:
+  pull_request:
     branches: [main, develop]
 
 jobs:
   prebuild-develop:
-    if: github.ref == 'refs/heads/develop'
+    if: (github.event_name == 'pull_request' && github.base_ref == 'develop')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,7 +23,7 @@ jobs:
         run: pnpm expo prebuild --clean
 
   build-android:
-    if: github.ref == 'refs/heads/main'
+    if: (github.event_name == 'pull_request' && github.base_ref == 'main')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -44,7 +44,7 @@ jobs:
         run: eas build --platform android --non-interactive --profile production
 
   build-ios:
-    if: github.ref == 'refs/heads/main'
+    if: (github.event_name == 'pull_request' && github.base_ref == 'main')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

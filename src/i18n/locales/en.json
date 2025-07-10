@@ -1,4 +1,58 @@
 {
   "hello": "Hello",
-  "welcome": "Welcome"
+  "welcome": "Welcome",
+  "onboarding": {
+    "welcome": {
+      "title": "The app that teaches you to invest at your own pace for free",
+      "startButton": "Get Started",
+      "loginButton": "I already have an account"
+    },
+    "questions": {
+      "title": "Welcome",
+      "description": "To better prepare your learning, I need to ask you a few questions",
+      "continueButton": "Continue"
+    },
+    "levelSelection": {
+      "title": "How would you like to start your learning?",
+      "continueButton": "Continue"
+    },
+    "learningGoals": {
+      "subtitle": "By learning on Ritchie, here's what you can achieve in 2 months",
+      "continueButton": "Continue"
+    },
+    "goalSelection": {
+      "title": "Why do you want to learn to invest?",
+      "continueButton": "Continue"
+    },
+    "completion": {
+      "startButton": "Start"
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Your Investment Journey",
+      "description": "Discover investing step by step, from complete beginner to confident investor.",
+      "progressTitle": "Your Progress",
+      "levelsCompleted": "levels completed"
+    },
+    "chapter": {
+      "current": "CURRENT",
+      "completedLevels": "levels completed",
+      "unlockMessage": "Complete the previous chapter to unlock"
+    }
+  },
+  "status": {
+    "published": "Published",
+    "draft": "Draft",
+    "progress": {
+      "locked": "Locked",
+      "current": "Current",
+      "completed": "Completed"
+    }
+  },
+  "lesson": {
+    "start": "Start",
+    "review": "Review",
+    "unlockMessage": "Complete the previous lesson to unlock"
+  }
 }

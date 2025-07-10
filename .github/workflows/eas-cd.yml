@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: 18
           cache: 'pnpm'
-      - name: Install dependencies
+      - name: Install dependencies with pnpm
         run: pnpm install
       - name: Expo Prebuild
         run: pnpm expo prebuild --clean

@@ -11,7 +11,7 @@ export default {
     assetBundlePatterns: ["**/*"],
     newArchEnabled: true,
     splash: {
-      image: "./assets/icons/splash-icon.png",
+      image: "./src/assets/icons/splash-icon.png",
       resizeMode: "contain",
       backgroundColor: "#ffffff",
     },
@@ -33,7 +33,7 @@ export default {
       versionCode: 2,
     },
     web: {
-      favicon: "./assets/icons/favicon.png",
+      favicon: "./src/assets/icons/favicon.png",
       bundler: "metro",
     },
     experiments: {

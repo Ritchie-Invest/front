@@ -31,5 +31,61 @@
   },
   "errors": {
     "unknown": "Erreur inconnue"
+  },
+  "hello": "Bonjour",
+  "welcome": "Bienvenue",
+  "onboarding": {
+    "welcome": {
+      "title": "L'application qui t'apprends à investir à ton rythme gratuitement",
+      "startButton": "Commencer",
+      "loginButton": "J'ai déjà un compte"
+    },
+    "questions": {
+      "title": "Bienvenue",
+      "description": "Pour mieux préparer ton apprentissage, j'aurais besoin de te poser quelques questions",
+      "continueButton": "Continuer"
+    },
+    "levelSelection": {
+      "title": "Comment souhaites-tu débuter ton apprentissage ?",
+      "continueButton": "Continuer"
+    },
+    "learningGoals": {
+      "subtitle": "En apprenant sur Ritchie, voici ce que tu peux atteindre en 2 mois",
+      "continueButton": "Continuer"
+    },
+    "goalSelection": {
+      "title": "Pourquoi souhaites-tu apprendre à investir ?",
+      "continueButton": "Continuer"
+    },
+    "completion": {
+      "startButton": "Commencer"
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Votre Parcours d'Investissement",
+      "description": "Découvrez l'investissement étape par étape, du débutant complet à l'investisseur confirmé.",
+      "progressTitle": "Votre Progression",
+      "levelsCompleted": "niveaux complétés"
+    },
+    "chapter": {
+      "current": "EN COURS",
+      "completedLevels": "niveaux complétés",
+      "unlockMessage": "Terminez le chapitre précédent pour débloquer"
+    }
+  },
+  "status": {
+    "published": "Publié",
+    "draft": "Brouillon",
+    "progress": {
+      "locked": "Verrouillé",
+      "current": "En cours",
+      "completed": "Terminé"
+    }
+  },
+  "lesson": {
+    "start": "Commencer",
+    "review": "Revoir",
+    "unlockMessage": "Terminez la leçon précédente pour débloquer"
   }
 }

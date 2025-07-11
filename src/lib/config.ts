@@ -9,4 +9,7 @@ export const config = {
 
   // Forgot Password Configuration
   FORGOT_PASSWORD_ENABLED: Constants.expoConfig?.extra?.FORGOT_PASSWORD_ENABLED || false,
+
+  // Signup Configuration
+  SIGNUP_ENABLED: Constants.expoConfig?.extra?.SIGNUP_ENABLED || false,
 } as const;

@@ -6,7 +6,7 @@ export default {
     slug: "ritchie-invest",
     version: "1.0.0",
     orientation: "portrait",
-    icon: "./assets/icons/icon.png",
+    icon: "src/assets/icons/icon.png",
     userInterfaceStyle: "light",
     assetBundlePatterns: ["**/*"],
     newArchEnabled: true,
@@ -25,7 +25,7 @@ export default {
     },
     android: {
       adaptiveIcon: {
-        foregroundImage: "./assets/icons/adaptive-icon.png",
+        foregroundImage: "src/assets/icons/adaptive-icon.png",
         backgroundColor: "#ffffff",
       },
       edgeToEdgeEnabled: true,
@@ -43,6 +43,7 @@ export default {
       API_URL: process.env.API_URL,
       SSO_LOGIN_ENABLED: process.env.SSO_LOGIN_ENABLED,
       FORGOT_PASSWORD_ENABLED: process.env.FORGOT_PASSWORD_ENABLED,
+      SIGNUP_ENABLED: process.env.SIGNUP_ENABLED,
       eas: {
         projectId: "5c2df484-8c85-4390-8911-15c37c322260",
       },

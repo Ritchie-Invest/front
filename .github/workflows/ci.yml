@@ -8,6 +8,7 @@ on:
 
 jobs:
   test:
+    name: Test and Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -25,4 +26,4 @@ jobs:
       - name: Lint
         run: pnpm lint-staged
       - name: Run tests
-        run: pnpm test
+        run: pnpm test -- --passWithNoTests

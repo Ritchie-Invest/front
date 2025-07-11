@@ -14,7 +14,12 @@ import { loginSchema } from '../validation/loginSchema';
 import { useFormValidation } from '../../../hooks/useFormValidation';
 import { AuthScreen } from '../models/authScreen';
 
-export const LoginForm = () => {
+interface LoginFormProps {
+  onSuccess: () => void;
+  signupEnabled?: boolean;
+}
+
+export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, signupEnabled }) => {
   const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,6 +30,7 @@ export const LoginForm = () => {
   const ssoLogin = useSSOLogin();
   const showSSOButton = config.SSO_LOGIN_ENABLED;
   const showForgotPassword = config.FORGOT_PASSWORD_ENABLED;
+  const showSignUp = typeof signupEnabled === 'boolean' ? signupEnabled : config.SIGNUP_ENABLED;
 
   const handleSubmit = () => {
     const { isValid, errors } = useFormValidation(loginSchema, { email, password });
@@ -39,6 +45,9 @@ export const LoginForm = () => {
     login.mutate(
       { email, password },
       {
+        onSuccess: () => {
+          onSuccess();
+        },
         onError: (error: any) => {
           const message = error.response?.data?.message || error.message;
           setError(message || t('errors.loginFailed'));
@@ -92,7 +101,9 @@ export const LoginForm = () => {
           </Button>
 
           <HStack justifyContent="space-between">
-            <TextLink onPress={() => setScreen('register')}>{t('login.createAccount')}</TextLink>
+            {showSignUp && (
+              <TextLink onPress={() => setScreen('register')}>{t('login.signUp')}</TextLink>
+            )}
             {showForgotPassword && (
               <TextLink onPress={() => setScreen('forgotPassword')}>
                 {t('login.forgotPassword')}

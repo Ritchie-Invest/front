@@ -1,17 +1,66 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './i18n';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { NativeBaseProvider } from 'native-base';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AppNavigator } from './navigation/AppNavigator';
+import { useAuthStore } from './features/auth/store/authStore';
 
 const queryClient = new QueryClient();
 
 export default function App() {
+  const token = useAuthStore((s) => s.token);
+  const [isReady, setIsReady] = useState(false);
+  const [isOnboardingCompleted, setIsOnboardingCompleted] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
+
+  useEffect(() => {
+    setIsOnboardingCompleted(!!token);
+    if (!token) setShowLogin(false);
+    setIsReady(true);
+  }, [token]);
+
+  if (!isReady) return null;
+
+  const handleOnboardingComplete = () => {
+    setIsOnboardingCompleted(false);
+    setShowRegister(true);
+    setShowLogin(false);
+  };
+
+  const handleLogin = () => {
+    setShowLogin(true);
+  };
+
+  const handleLoginSuccess = () => {
+    setShowLogin(false);
+    setIsOnboardingCompleted(true);
+  };
+
+  const handleLogout = () => {
+    setIsOnboardingCompleted(false);
+    setShowLogin(true);
+  };
+
+  const handleBackToLogin = () => {
+    setShowRegister(false);
+    setShowLogin(true);
+  };
+
   return (
-    <NativeBaseProvider>
-      <QueryClientProvider client={queryClient}>
-        <AppNavigator />
-      </QueryClientProvider>
-    </NativeBaseProvider>
+    <QueryClientProvider client={queryClient}>
+      <NativeBaseProvider>
+        <AppNavigator
+          isOnboardingCompleted={isOnboardingCompleted}
+          showLogin={showLogin}
+          showRegister={showRegister}
+          handleLoginSuccess={handleLoginSuccess}
+          handleOnboardingComplete={handleOnboardingComplete}
+          handleLogin={handleLogin}
+          handleLogout={handleLogout}
+          handleBackToLogin={handleBackToLogin}
+        />
+      </NativeBaseProvider>
+    </QueryClientProvider>
   );
 }

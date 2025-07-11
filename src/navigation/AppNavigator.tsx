@@ -1,29 +1,58 @@
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useAuthStore } from '../features/auth/store/authStore';
+import HomeScreen from '../features/landing/screens/home';
+import { OnboardingFlow } from '../features/onboarding/screens/OnboardingFlow';
 import { LoginScreen } from '../features/auth/screens/LoginScreen';
-import { HomeScreen } from '../features/home/screens/HomeScreen';
+import { RegisterScreen } from '../features/auth/screens/RegisterScreen';
 
 export type RootStackParamList = {
   Home: undefined;
   Login: undefined;
 };
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator();
 
-export const AppNavigator = () => {
-  const token = useAuthStore((s) => s.token);
-  const isAuthenticated = Boolean(token);
-
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        {isAuthenticated ? (
-          <Stack.Screen name="Home" component={HomeScreen} />
+export const AppNavigator = ({
+  isOnboardingCompleted,
+  showLogin,
+  showRegister,
+  handleLoginSuccess,
+  handleOnboardingComplete,
+  handleLogin,
+  handleLogout,
+  handleBackToLogin,
+}: {
+  isOnboardingCompleted: boolean;
+  showLogin: boolean;
+  showRegister: boolean;
+  handleLoginSuccess: () => void;
+  handleOnboardingComplete: () => void;
+  handleLogin: () => void;
+  handleLogout: () => void;
+  handleBackToLogin: () => void;
+}) => (
+  <NavigationContainer>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {!isOnboardingCompleted ? (
+        showRegister ? (
+          <Stack.Screen name="Register">
+            {() => <RegisterScreen onBackToLogin={handleBackToLogin} />}
+          </Stack.Screen>
+        ) : showLogin ? (
+          <Stack.Screen name="Login">
+            {() => <LoginScreen onLoginSuccess={handleLoginSuccess} signupEnabled={false} />}
+          </Stack.Screen>
         ) : (
-          <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-};
+          <Stack.Screen name="Onboarding">
+            {() => <OnboardingFlow onComplete={handleOnboardingComplete} onLogin={handleLogin} />}
+          </Stack.Screen>
+        )
+      ) : (
+        <Stack.Screen name="Home" options={{ headerShown: true, title: '' }}>
+          {() => <HomeScreen onLogout={handleLogout} />}
+        </Stack.Screen>
+      )}
+    </Stack.Navigator>
+  </NavigationContainer>
+);

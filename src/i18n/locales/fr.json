@@ -1,4 +1,37 @@
 {
+  "login": {
+    "title": "Connexion",
+    "button": "Se connecter",
+    "createAccount": "Créer un compte",
+    "forgotPassword": "Mot de passe oublié ?",
+    "or": "ou",
+    "google": "Continuer avec Google",
+    "apple": "Continuer avec Apple"
+  },
+  "register": {
+    "title": "Créer un compte",
+    "button": "S'inscrire",
+    "success": "Compte créé !",
+    "error": "Erreur lors de l'inscription",
+    "backToLogin": "Retour à la connexion"
+  },
+  "forgot": {
+    "title": "Mot de passe oublié",
+    "button": "Réinitialiser le mot de passe",
+    "success": "Email envoyé !",
+    "error": {
+      "invalidEmail": "Adresse email invalide",
+      "generic": "Erreur lors de l'envoi"
+    },
+    "backToLogin": "Retour à la connexion"
+  },
+  "form": {
+    "email": "Email",
+    "password": "Mot de passe"
+  },
+  "errors": {
+    "unknown": "Erreur inconnue"
+  },
   "hello": "Bonjour",
   "welcome": "Bienvenue",
   "onboarding": {

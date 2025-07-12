@@ -26,7 +26,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, signupEnabled }
   const [screen, setScreen] = useState<AuthScreen>('login');
 
   const login = useLogin();
-  const showSSOButton = config.SSO_LOGIN_ENABLED;
   const showForgotPassword = config.FORGOT_PASSWORD_ENABLED;
   const showSignUp = typeof signupEnabled === 'boolean' ? signupEnabled : config.SIGNUP_ENABLED;
 

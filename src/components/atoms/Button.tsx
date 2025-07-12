@@ -11,8 +11,6 @@ type Props = {
 } & Omit<IButtonProps, 'variant'>;
 
 export const Button = ({ children, onPress, isLoading, variant = 'primary', ...rest }: Props) => {
-  const colorScheme = 'primary';
-
   const getVariantProps = () => {
     switch (variant) {
       case 'secondary':
@@ -33,13 +31,14 @@ export const Button = ({ children, onPress, isLoading, variant = 'primary', ...r
       case 'outline':
         return {
           variant: 'outline',
-          colorScheme,
+          borderColor: 'blue.500',
         };
       case 'primary':
       default:
         return {
-          variant: 'solid',
-          colorScheme,
+          bg: 'blue.500',
+          _text: { color: 'white' },
+          _pressed: { bg: 'blue.600' },
         };
     }
   };

@@ -17,6 +17,12 @@
     ]
   },
   "dependencies": {
+    "@expo/metro-runtime": "~5.0.4",
+    "@react-native-async-storage/async-storage": "^2.1.2",
+    "axios": "^1.9.0",
+    "eas": "^0.1.0",
+    "expo-constants": "^17.1.6",
+    "expo-linking": "^7.1.5",
     "@expo/config-plugins": "~10.1.2",
     "@expo/prebuild-config": "~9.0.11",
     "@expo/vector-icons": "^14.1.0",
@@ -31,6 +37,7 @@
     "native-base": "^3.4.28",
     "normalize-css-color": "^1.0.2",
     "react": "19.0.0",
+    "react-dom": "^19.0.0",
     "react-i18next": "^15.6.0",
     "react-native": "0.79.5",
     "react-native-reanimated": "^3.18.0",
@@ -63,5 +70,5 @@
     "typescript": "~5.8.3"
   },
   "private": true,
-  "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee"
+  "packageManager": "pnpm@9.12.3"
 }

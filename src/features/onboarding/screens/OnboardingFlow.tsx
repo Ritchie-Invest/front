@@ -26,7 +26,6 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ onComplete, onLo
     getProgress,
   } = useOnboarding();
 
-  // Gérer la redirection automatique quand on arrive à l'étape 6 avec un niveau différent de 'beginner'
   useEffect(() => {
     if (state.currentStep === 6 && state.selectedLevel && state.selectedLevel !== 'beginner') {
       completeOnboarding();
@@ -111,7 +110,6 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ onComplete, onLo
         );
 
       case 6:
-        // Afficher le CompletionScreen seulement si le niveau est 'beginner'
         if (state.selectedLevel === 'beginner') {
           return (
             <CompletionScreen
@@ -123,7 +121,6 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ onComplete, onLo
             />
           );
         }
-        // Si ce n'est pas 'beginner', le useEffect s'occupera de la redirection
         return null;
 
       default:

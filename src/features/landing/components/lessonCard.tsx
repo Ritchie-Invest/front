@@ -5,24 +5,26 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { Card } from '~/components/molecules/card';
 import { Button } from 'native-base';
 import { StatusBadge } from '~/components/atoms/statusBadge';
-import { ProgressStatus } from '~/models/status';
+import { Lesson } from '../models/responses/lesson';
+import { ProgressStatus } from '../types/ProgressStatus';
 
 interface LessonCardProps {
-  id: number;
-  title: string;
-  description: string;
-  status: ProgressStatus;
-  onAction: (lessonId: number, action: 'start' | 'review') => void;
+  lesson: Lesson;
+  onAction: (lessonId: string, action: 'start' | 'review') => void;
 }
 
-export const LessonCard: React.FC<LessonCardProps> = ({
-  id,
-  title,
-  description,
-  status,
-  onAction,
-}) => {
+export const LessonCard: React.FC<LessonCardProps> = ({ lesson, onAction }) => {
   const { t } = useTranslation();
+
+  const { id, title, description, isUnlocked, completedModules, totalModules } = lesson;
+
+  const getStatus = (): ProgressStatus => {
+    if (!isUnlocked) return ProgressStatus.LOCKED;
+    if (completedModules === totalModules) return ProgressStatus.COMPLETED;
+    return ProgressStatus.CURRENT;
+  };
+
+  const status = getStatus();
   const isCompleted = status === ProgressStatus.COMPLETED;
   const isLocked = status === ProgressStatus.LOCKED;
 

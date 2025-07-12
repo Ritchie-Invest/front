@@ -4,21 +4,27 @@ import { VStack, HStack, Text, Progress } from 'native-base';
 import { useTranslation } from 'react-i18next';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Card } from '~/components/molecules/card';
-import { ProgressStatus } from '~/models/status';
+import { Chapter } from '../models/responses/chapter';
+import { ProgressStatus } from '../types/ProgressStatus';
 
 interface ChapterCardProps {
-  title: string;
-  description: string;
-  completedLessons: number;
-  totalLessons: number;
-  status: ProgressStatus;
+  chapter: Chapter;
 }
 
 export const ChapterCard = React.forwardRef<any, ChapterCardProps>((props, ref) => {
-  const { title, description, completedLessons, totalLessons, status, ...rest } = props;
+  const { chapter, ...rest } = props;
   const { t } = useTranslation();
 
+  const { title, description, completedLessons, totalLessons, isUnlocked } = chapter;
   const progressValue = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
+
+  const getStatus = (): ProgressStatus => {
+    if (!isUnlocked) return ProgressStatus.LOCKED;
+    if (completedLessons === totalLessons) return ProgressStatus.COMPLETED;
+    return ProgressStatus.CURRENT;
+  };
+
+  const status = getStatus();
 
   const getStatusProps = () => {
     switch (status) {

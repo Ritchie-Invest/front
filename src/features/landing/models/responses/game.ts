@@ -1,4 +1,4 @@
-import { GameType } from './status';
+import { GameType } from '../../types/GameType';
 
 export interface Game {
   id: number;

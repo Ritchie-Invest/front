@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, ScrollView } from 'native-base';
 import { Hero } from './hero';
 import { ChaptersTimeline } from './timeline';
-import { useLessonsProgress } from '~/features/lessons/hooks/usesLessonProgress';
+import { useProgress } from '~/features/landing/hooks/useProgress';
 
 interface LessonsOverviewProps {
   showProgress?: boolean;
@@ -22,7 +22,7 @@ export const LessonsOverview: React.FC<LessonsOverviewProps> = ({
     scrollViewRef,
     handleChapterLayout,
     handleLessonAction,
-  } = useLessonsProgress();
+  } = useProgress();
 
   return (
     <Box flex={1} bg="white">

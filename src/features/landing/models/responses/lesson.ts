@@ -1,8 +1,12 @@
 import { Game } from './game';
 
 export interface Lesson {
-  id: number;
+  id: string;
   title: string;
   description: string;
+  order: number;
+  isUnlocked: boolean;
+  completedModules: number;
+  totalModules: number;
   games: Game[];
 }

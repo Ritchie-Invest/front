@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { login } from '../services/authService';
+import { login, getUserFromToken } from '../services/authService';
 import { useAuthStore } from '../store/authStore';
 
 export const useLogin = () => {
@@ -8,7 +8,13 @@ export const useLogin = () => {
   return useMutation({
     mutationFn: async ({ email, password }: { email: string; password: string }) => {
       const data = await login(email, password);
-      loginStore(data.accessToken, data.user);
+      const user = getUserFromToken(data.accessToken);
+
+      if (!user) {
+        throw new Error('Unable to decode user information from token');
+      }
+
+      loginStore(data.accessToken, user);
       return data;
     },
   });

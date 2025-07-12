@@ -8,17 +8,17 @@ import { useAuthStore } from './features/auth/store/authStore';
 const queryClient = new QueryClient();
 
 export default function App() {
-  const token = useAuthStore((s) => s.token);
+  const accessToken = useAuthStore((s) => s.accessToken);
   const [isReady, setIsReady] = useState(false);
   const [isOnboardingCompleted, setIsOnboardingCompleted] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
 
   useEffect(() => {
-    setIsOnboardingCompleted(!!token);
-    if (!token) setShowLogin(false);
+    setIsOnboardingCompleted(!!accessToken);
+    if (!accessToken) setShowLogin(false);
     setIsReady(true);
-  }, [token]);
+  }, [accessToken]);
 
   if (!isReady) return null;
 

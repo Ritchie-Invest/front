@@ -2,11 +2,10 @@ import { User } from '../models/user';
 
 export interface LoginResponse {
   accessToken: string;
-  user: User;
 }
 
 export interface RegisterResponse {
-  message: string;
+  accessToken: string;
 }
 
 export interface ForgotPasswordResponse {

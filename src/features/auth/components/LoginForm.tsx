@@ -7,7 +7,6 @@ import { Button } from '../../../components/atoms/Button';
 import { InputField } from '../../../components/atoms/InputField';
 import { TextLink } from '../../../components/atoms/TextLink';
 import { useLogin } from '../hooks/useLogin';
-import { useSSOLogin } from '../hooks/useSSOLogin';
 import { RegisterForm } from './RegisterForm';
 import { ForgotPasswordForm } from './ForgotPasswordForm';
 import { loginSchema } from '../validation/loginSchema';
@@ -27,7 +26,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, signupEnabled }
   const [screen, setScreen] = useState<AuthScreen>('login');
 
   const login = useLogin();
-  const ssoLogin = useSSOLogin();
   const showSSOButton = config.SSO_LOGIN_ENABLED;
   const showForgotPassword = config.FORGOT_PASSWORD_ENABLED;
   const showSignUp = typeof signupEnabled === 'boolean' ? signupEnabled : config.SIGNUP_ENABLED;
@@ -56,7 +54,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, signupEnabled }
     );
   };
 
-  if (screen === 'register') return <RegisterForm onBackToLogin={() => setScreen('login')} />;
+  if (screen === 'register')
+    return <RegisterForm onBackToLogin={() => setScreen('login')} onSuccess={onSuccess} />;
   if (screen === 'forgotPassword')
     return <ForgotPasswordForm onBackToLogin={() => setScreen('login')} />;
 
@@ -110,28 +109,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, signupEnabled }
               </TextLink>
             )}
           </HStack>
-          {showSSOButton && (
-            <>
-              <Text textAlign="center" fontSize="sm" color="gray.500">
-                {t('login.or')}
-              </Text>
-              <Button
-                variant="outline"
-                onPress={() => ssoLogin.mutate('google')}
-                isLoading={ssoLogin.isPending}
-              >
-                {t('login.google')}
-              </Button>
-
-              <Button
-                variant="outline"
-                onPress={() => ssoLogin.mutate('apple')}
-                isLoading={ssoLogin.isPending}
-              >
-                {t('login.apple')}
-              </Button>
-            </>
-          )}
         </VStack>
       </ScrollView>
     </KeyboardAvoidingView>

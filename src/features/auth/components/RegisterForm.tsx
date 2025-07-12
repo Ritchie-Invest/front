@@ -11,9 +11,10 @@ import { useTranslation } from 'react-i18next';
 
 type RegisterFormProps = {
   onBackToLogin?: () => void;
+  onSuccess?: () => void;
 };
 
-export const RegisterForm = ({ onBackToLogin }: RegisterFormProps) => {
+export const RegisterForm = ({ onBackToLogin, onSuccess }: RegisterFormProps) => {
   const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -34,8 +35,12 @@ export const RegisterForm = ({ onBackToLogin }: RegisterFormProps) => {
     register.mutate(
       { email, password },
       {
-        onSuccess: () => {
-          onBackToLogin?.();
+        onSuccess: (data) => {
+          if (onSuccess) {
+            onSuccess();
+          } else {
+            onBackToLogin?.();
+          }
         },
         onError: (error: any) => {
           const message = error.response?.data?.message || error.message;

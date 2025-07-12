@@ -37,7 +37,9 @@ export const AppNavigator = ({
       {!isOnboardingCompleted ? (
         showRegister ? (
           <Stack.Screen name="Register">
-            {() => <RegisterScreen onBackToLogin={handleBackToLogin} />}
+            {() => (
+              <RegisterScreen onBackToLogin={handleBackToLogin} onSuccess={handleLoginSuccess} />
+            )}
           </Stack.Screen>
         ) : showLogin ? (
           <Stack.Screen name="Login">

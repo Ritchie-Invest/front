@@ -1,9 +1,7 @@
-// /src/features/lessons/services/lessonsService.ts
 import { Chapter } from '../../../models/chapter';
 import { Lesson } from '../../../models/lesson';
 import { ProgressStatus } from '../../../models/status';
 
-// Types étendus pour l'affichage
 export type ChapterWithProgress = Chapter & {
   completedLessons: number;
   totalLessons: number;
@@ -55,7 +53,6 @@ const mockChapters: ChapterWithProgress[] = [
 ];
 
 const mockLessons: LessonWithStatus[] = [
-  // Chapitre 1
   {
     id: 11,
     chapterId: 1,
@@ -80,7 +77,6 @@ const mockLessons: LessonWithStatus[] = [
     games: [],
     status: ProgressStatus.COMPLETED,
   },
-  // Chapitre 2
   {
     id: 21,
     chapterId: 2,
@@ -113,7 +109,6 @@ const mockLessons: LessonWithStatus[] = [
     games: [],
     status: ProgressStatus.LOCKED,
   },
-  // Chapitre 3
   {
     id: 31,
     chapterId: 3,

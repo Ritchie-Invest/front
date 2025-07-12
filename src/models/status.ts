@@ -1,4 +1,3 @@
-// Enum pour les statuts de progression
 export enum ProgressStatus {
   LOCKED = 'locked',
   CURRENT = 'current',
@@ -14,7 +13,6 @@ export enum GameType {
   ORDER = 'order',
 }
 
-// Helpers pour convertir isPublished en statut d'affichage
 export const getPublishStatus = (isPublished: boolean): 'published' | 'draft' => {
   return isPublished ? 'published' : 'draft';
 };

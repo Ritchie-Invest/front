@@ -1,4 +1,3 @@
-// /src/features/lessons/hooks/useLessonsProgress.ts
 import { useEffect, useRef, useState } from 'react';
 import { ScrollView as RNScrollView } from 'react-native';
 import { lessonsService } from '../services/lessonService';
@@ -8,7 +7,7 @@ export const useLessonsProgress = () => {
   const scrollViewRef = useRef<RNScrollView>(null);
   const [chapterLayouts, setChapterLayouts] = useState<Record<number, number>>({});
 
-  const user = mockUser; // À remplacer par useUser() du store global
+  const user = mockUser;
   const chapters = lessonsService.getChaptersWithProgress();
   const lessons = lessonsService.getAllLessons();
 
@@ -16,7 +15,6 @@ export const useLessonsProgress = () => {
   const totalLessons = chapters.reduce((sum, chapter) => sum + chapter.totalLessons, 0);
   const progressValue = Math.round((completedLessons / totalLessons) * 100);
 
-  // Méthode pour enregistrer la position de chaque chapitre
   const handleChapterLayout = (chapterId: number, event: any) => {
     const { y } = event.nativeEvent.layout;
     setChapterLayouts((prev) => ({
@@ -25,7 +23,6 @@ export const useLessonsProgress = () => {
     }));
   };
 
-  // Auto-scroll vers le chapitre actuel
   useEffect(() => {
     const timer = setTimeout(() => {
       const currentChapterY = chapterLayouts[user.currentChapterId];
@@ -40,9 +37,7 @@ export const useLessonsProgress = () => {
     return () => clearTimeout(timer);
   }, [chapterLayouts, user.currentChapterId]);
 
-  const handleLessonAction = (lessonId: number, action: 'start' | 'review') => {
-    console.log(`Action: ${action} on lesson ${lessonId}`);
-  };
+  const handleLessonAction = (lessonId: number, action: 'start' | 'review') => {};
 
   return {
     user,

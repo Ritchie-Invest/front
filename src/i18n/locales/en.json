@@ -11,7 +11,7 @@
   "register": {
     "title": "Create an account",
     "button": "Sign up",
-    "success": "Account created!",
+    "success": "Account created! You can now log in.",
     "error": "Error during registration",
     "backToLogin": "Back to login"
   },

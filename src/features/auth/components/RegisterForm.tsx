@@ -19,6 +19,7 @@ export const RegisterForm = ({ onBackToLogin, onSuccess }: RegisterFormProps) =>
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const register = useRegister();
 
@@ -32,15 +33,15 @@ export const RegisterForm = ({ onBackToLogin, onSuccess }: RegisterFormProps) =>
     }
 
     setError(null);
+    setSuccessMessage(null);
     register.mutate(
       { email, password },
       {
         onSuccess: (data) => {
-          if (onSuccess) {
-            onSuccess();
-          } else {
+          setSuccessMessage(t('register.success'));
+          setTimeout(() => {
             onBackToLogin?.();
-          }
+          }, 2000);
         },
         onError: (error: any) => {
           const message = error.response?.data?.message || error.message;
@@ -86,13 +87,15 @@ export const RegisterForm = ({ onBackToLogin, onSuccess }: RegisterFormProps) =>
             </Text>
           )}
 
-          <Button onPress={handleSubmit} isLoading={register.isPending}>
+          {successMessage && (
+            <Text color="green.500" fontSize="sm">
+              {successMessage}
+            </Text>
+          )}
+
+          <Button onPress={handleSubmit} isLoading={register.isPending} disabled={!!successMessage}>
             {t('register.button')}
           </Button>
-
-          {register.isSuccess && <Text color="green.500">{t('register.success')}</Text>}
-
-          {register.isError && <Text color="red.500">{t('register.error')}</Text>}
 
           <TextLink onPress={() => onBackToLogin?.()}>{t('register.backToLogin')}</TextLink>
         </VStack>

@@ -5,7 +5,11 @@ export interface LoginResponse {
 }
 
 export interface RegisterResponse {
-  accessToken: string;
+  id: string;
+  email: string;
+  type: string;
+  updatedAt: Date;
+  createdAt: Date;
 }
 
 export interface ForgotPasswordResponse {

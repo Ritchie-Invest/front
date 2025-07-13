@@ -7,6 +7,7 @@ import { Button } from 'native-base';
 import { StatusBadge } from '~/components/atoms/statusBadge';
 import { Lesson } from '../models/responses/lesson';
 import { ProgressStatus } from '../types/ProgressStatus';
+import { computeProgressStatus } from '../utils/computeProgressStatus';
 
 interface LessonCardProps {
   lesson: Lesson;
@@ -18,13 +19,7 @@ export const LessonCard: React.FC<LessonCardProps> = ({ lesson, onAction }) => {
 
   const { id, title, description, isUnlocked, completedModules, totalModules } = lesson;
 
-  const getStatus = (): ProgressStatus => {
-    if (!isUnlocked) return ProgressStatus.LOCKED;
-    if (completedModules === totalModules) return ProgressStatus.COMPLETED;
-    return ProgressStatus.CURRENT;
-  };
-
-  const status = getStatus();
+  const status = computeProgressStatus(isUnlocked, completedModules, totalModules);
   const isCompleted = status === ProgressStatus.COMPLETED;
   const isLocked = status === ProgressStatus.LOCKED;
 

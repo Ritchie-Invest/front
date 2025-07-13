@@ -6,6 +6,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { Card } from '~/components/molecules/card';
 import { Chapter } from '../models/responses/chapter';
 import { ProgressStatus } from '../types/ProgressStatus';
+import { computeProgressStatus } from '../utils/computeProgressStatus';
 
 interface ChapterCardProps {
   chapter: Chapter;
@@ -18,13 +19,7 @@ export const ChapterCard = React.forwardRef<any, ChapterCardProps>((props, ref) 
   const { title, description, completedLessons, totalLessons, isUnlocked } = chapter;
   const progressValue = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
 
-  const getStatus = (): ProgressStatus => {
-    if (!isUnlocked) return ProgressStatus.LOCKED;
-    if (completedLessons === totalLessons) return ProgressStatus.COMPLETED;
-    return ProgressStatus.CURRENT;
-  };
-
-  const status = getStatus();
+  const status = computeProgressStatus(isUnlocked, completedLessons, totalLessons);
 
   const getStatusProps = () => {
     switch (status) {

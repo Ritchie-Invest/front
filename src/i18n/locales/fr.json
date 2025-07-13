@@ -11,7 +11,7 @@
   "register": {
     "title": "Créer un compte",
     "button": "S'inscrire",
-    "success": "Compte créé !",
+    "success": "Compte créé ! Vous pouvez maintenant vous connecter.",
     "error": "Erreur lors de l'inscription",
     "backToLogin": "Retour à la connexion"
   },

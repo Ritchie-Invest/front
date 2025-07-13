@@ -1,5 +1,3 @@
-import { Game } from './game';
-
 export interface Lesson {
   id: string;
   title: string;
@@ -8,5 +6,5 @@ export interface Lesson {
   isUnlocked: boolean;
   completedModules: number;
   totalModules: number;
-  games: Game[];
+  gameModuleId: string | null;
 }

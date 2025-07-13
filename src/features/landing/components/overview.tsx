@@ -15,7 +15,6 @@ export const LessonsOverview: React.FC<LessonsOverviewProps> = ({
 }) => {
   const {
     chapters,
-    lessons,
     completedLessons,
     totalLessons,
     progressValue,
@@ -37,7 +36,6 @@ export const LessonsOverview: React.FC<LessonsOverviewProps> = ({
 
         <ChaptersTimeline
           chapters={chapters}
-          lessons={lessons}
           onChapterLayout={handleChapterLayout}
           onLessonAction={handleLessonAction}
         />

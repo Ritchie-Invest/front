@@ -2,14 +2,15 @@ import React from 'react';
 import { VStack, HStack, Text, Pressable } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { MainStackParamList } from '../../navigation/MainNavigator';
+import { MainStackParamList } from '~/navigation/AppNavigator';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useActiveTab, TabName } from '../../navigation/hooks';
+import { useActiveTab } from '~/features/navigation/hooks/useActiveTab';
+import { TabName, TabNameType } from '~/features/navigation/Type/TabNames';
 
 type NavigationProp = NativeStackNavigationProp<MainStackParamList>;
 
 interface TabItemProps {
-  name: TabName;
+  name: TabNameType;
   icon: string;
   label: string;
   onPress: () => void;
@@ -39,16 +40,6 @@ const Navbar: React.FC = () => {
     navigation.navigate('InvestmentDashboard');
   };
 
-  const handleProgressPress = () => {
-    // TODO: Implement progress screen
-    console.log('Progress pressed');
-  };
-
-  const handleProfilePress = () => {
-    // TODO: Implement profile screen
-    console.log('Profile pressed');
-  };
-
   return (
     <HStack
       bg="white"
@@ -58,35 +49,19 @@ const Navbar: React.FC = () => {
       py={2}
     >
       <TabItem
-        name="Landing"
+        name={TabName.Landing}
         icon="menu-book"
         label="Leçons"
         onPress={handleLessonsPress}
-        isActive={activeTab === 'Landing'}
+        isActive={activeTab === TabName.Landing}
       />
 
       <TabItem
-        name="InvestmentDashboard"
+        name={TabName.InvestmentDashboard}
         icon="trending-up"
         label="Portfolio"
         onPress={handleInvestmentPress}
-        isActive={activeTab === 'InvestmentDashboard'}
-      />
-
-      <TabItem
-        name="Progress"
-        icon="bar-chart"
-        label="Progrès"
-        onPress={handleProgressPress}
-        isActive={activeTab === 'Progress'}
-      />
-
-      <TabItem
-        name="Profile"
-        icon="person"
-        label="Profil"
-        onPress={handleProfilePress}
-        isActive={activeTab === 'Profile'}
+        isActive={activeTab === TabName.InvestmentDashboard}
       />
     </HStack>
   );

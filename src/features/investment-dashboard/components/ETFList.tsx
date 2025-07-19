@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList } from 'react-native';
 import { VStack, Text, Box } from 'native-base';
 import { ETFListItem } from './ETFListItem';
-import { PortfolioPosition } from '../models';
+import { PortfolioPosition } from '../models/portfolio';
 
 interface ETFListProps {
   positions: PortfolioPosition[];

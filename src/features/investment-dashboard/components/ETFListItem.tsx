@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Text, HStack, VStack, Icon } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Card } from '../../../components/molecules/card';
-import { PortfolioPosition } from '../models';
+import { PortfolioPosition } from '../models/portfolio';
 
 interface ETFListItemProps {
   position: PortfolioPosition;

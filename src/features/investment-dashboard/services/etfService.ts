@@ -1,4 +1,4 @@
-import { ETF, ETFWithCurrentPrice } from '../models';
+import { ETF, ETFWithCurrentPrice } from '../models/etf';
 
 // Mock data à remplacer par les vrais services
 const mockETFs: ETF[] = [

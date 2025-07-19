@@ -1,8 +1,9 @@
 import React from 'react';
 import { RefreshControl } from 'react-native';
 import { ScrollView, VStack, Box, Text } from 'native-base';
-import { PortfolioBalance, ETFList } from '../components';
-import { usePortfolio } from '../hooks';
+import { PortfolioBalance } from '../components/PortfolioBalance';
+import { ETFList } from '../components/ETFList';
+import { usePortfolio } from '../hooks/usePortfolio';
 
 export const InvestmentDashboardScreen: React.FC = () => {
   const { portfolio, positions, totalValue, loading, error, refetch } = usePortfolio();

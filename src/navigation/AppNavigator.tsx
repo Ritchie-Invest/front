@@ -7,7 +7,7 @@ import { LoginScreen } from '../features/auth/screens/LoginScreen';
 import { RegisterScreen } from '../features/auth/screens/RegisterScreen';
 import HomeScreen from '../features/landing/screens/home';
 import { InvestmentDashboardScreen } from '../features/investment-dashboard/screens/InvestmentDashboardScreen';
-import Navbar from '../components/organisms/navbar';
+import Navbar from '../features/navigation/components/organisms/navbar';
 
 export type RootStackParamList = {
   Main: undefined;

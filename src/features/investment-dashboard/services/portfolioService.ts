@@ -1,5 +1,4 @@
-import { Portfolio, PortfolioPosition } from '../models';
-
+import { Portfolio, PortfolioPosition } from '../models/portfolio';
 // Mock data à remplacer par les vrais services
 const mockPortfolio: Portfolio = {
   portfolioId: 1,

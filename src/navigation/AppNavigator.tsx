@@ -1,17 +1,30 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from '../features/landing/screens/home';
+import { Box } from 'native-base';
 import { OnboardingFlow } from '../features/onboarding/screens/OnboardingFlow';
 import { LoginScreen } from '../features/auth/screens/LoginScreen';
 import { RegisterScreen } from '../features/auth/screens/RegisterScreen';
+import HomeScreen from '../features/landing/screens/home';
+import { InvestmentDashboardScreen } from '../features/investment-dashboard/screens/InvestmentDashboardScreen';
+import Navbar from '../components/organisms/navbar';
 
 export type RootStackParamList = {
-  Home: undefined;
+  Main: undefined;
   Login: undefined;
+  Register: undefined;
+  Onboarding: undefined;
+};
+
+export type MainStackParamList = {
+  Landing: undefined;
+  InvestmentDashboard: undefined;
+  Progress: undefined;
+  Profile: undefined;
 };
 
 const Stack = createNativeStackNavigator();
+const MainStack = createNativeStackNavigator<MainStackParamList>();
 
 export const AppNavigator = ({
   isOnboardingCompleted,
@@ -51,8 +64,25 @@ export const AppNavigator = ({
           </Stack.Screen>
         )
       ) : (
-        <Stack.Screen name="Home" options={{ headerShown: true, title: '' }}>
-          {() => <HomeScreen onLogout={handleLogout} />}
+        <Stack.Screen name="Main" options={{ headerShown: false }}>
+          {() => (
+            <Box flex={1} safeArea>
+              <MainStack.Navigator
+                screenOptions={{
+                  headerShown: true,
+                  headerTitle: '',
+                }}
+              >
+                <MainStack.Screen name="Landing">
+                  {() => <HomeScreen onLogout={handleLogout} />}
+                </MainStack.Screen>
+                <MainStack.Screen name="InvestmentDashboard" options={{ headerTitle: 'Portfolio' }}>
+                  {() => <InvestmentDashboardScreen />}
+                </MainStack.Screen>
+              </MainStack.Navigator>
+              <Navbar />
+            </Box>
+          )}
         </Stack.Screen>
       )}
     </Stack.Navigator>

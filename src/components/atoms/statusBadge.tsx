@@ -1,7 +1,7 @@
 import React from 'react';
 import { Badge, Text } from 'native-base';
 import { useTranslation } from 'react-i18next';
-import { ProgressStatus } from '~/models/status';
+import { ProgressStatus } from '~/features/landing/types/ProgressStatus';
 
 interface StatusBadgeProps {
   status: ProgressStatus;

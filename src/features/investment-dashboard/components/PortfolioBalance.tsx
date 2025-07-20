@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Text, HStack } from 'native-base';
-
+import { formatCurrency } from '../utils/formatCurrency';
 interface PortfolioBalanceProps {
   balance: number;
   totalValue: number;
@@ -12,13 +12,6 @@ export const PortfolioBalance: React.FC<PortfolioBalanceProps> = ({
   totalValue,
   loading = false,
 }) => {
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('fr-FR', {
-      style: 'currency',
-      currency: 'EUR',
-    }).format(amount);
-  };
-
   if (loading) {
     return (
       <Box alignItems="center" py={6}>

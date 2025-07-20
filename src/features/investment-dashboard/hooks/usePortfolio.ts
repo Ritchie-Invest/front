@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Portfolio, PortfolioPosition } from '../models';
-import { portfolioService } from '../services';
+import { Portfolio, PortfolioPosition } from '../models/portfolio';
+import { portfolioService } from '../services/portfolioService';
 
 export const usePortfolio = () => {
   const [portfolio, setPortfolio] = useState<Portfolio | null>(null);

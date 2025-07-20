@@ -66,22 +66,29 @@ export const AppNavigator = ({
       ) : (
         <Stack.Screen name="Main" options={{ headerShown: false }}>
           {() => (
-            <Box flex={1} safeArea>
-              <MainStack.Navigator
-                screenOptions={{
-                  headerShown: true,
-                  headerTitle: '',
-                }}
-              >
-                <MainStack.Screen name="Landing">
-                  {() => <HomeScreen onLogout={handleLogout} />}
-                </MainStack.Screen>
-                <MainStack.Screen name="InvestmentDashboard" options={{ headerTitle: 'Portfolio' }}>
-                  {() => <InvestmentDashboardScreen />}
-                </MainStack.Screen>
-              </MainStack.Navigator>
-              <Navbar />
-            </Box>
+            <MainStack.Navigator
+              screenOptions={{
+                headerShown: true,
+                headerTitle: '',
+              }}
+            >
+              <MainStack.Screen name="Landing">
+                {() => (
+                  <Box flex={1} safeArea>
+                    <HomeScreen onLogout={handleLogout} />
+                    <Navbar />
+                  </Box>
+                )}
+              </MainStack.Screen>
+              <MainStack.Screen name="InvestmentDashboard" options={{ headerTitle: 'Portfolio' }}>
+                {() => (
+                  <Box flex={1} safeArea>
+                    <InvestmentDashboardScreen />
+                    <Navbar />
+                  </Box>
+                )}
+              </MainStack.Screen>
+            </MainStack.Navigator>
           )}
         </Stack.Screen>
       )}

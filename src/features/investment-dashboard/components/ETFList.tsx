@@ -2,10 +2,10 @@ import React from 'react';
 import { FlatList } from 'react-native';
 import { VStack, Text, Box } from 'native-base';
 import { ETFListItem } from './ETFListItem';
-import { PortfolioPosition } from '../models/portfolio';
+import { ETFWithCurrentPrice } from '../models/etf';
 
 interface ETFListProps {
-  positions: PortfolioPosition[];
+  positions: ETFWithCurrentPrice[];
   loading?: boolean;
 }
 
@@ -24,10 +24,10 @@ export const ETFList: React.FC<ETFListProps> = ({ positions, loading = false }) 
     return (
       <Box flex={1} justifyContent="center" alignItems="center" py={8}>
         <Text fontSize="lg" color="gray.500" textAlign="center">
-          Aucun ETF dans votre portfolio
+          Aucun ETF disponible
         </Text>
         <Text fontSize="sm" color="gray.400" textAlign="center" mt={2}>
-          Commencez à investir pour voir vos positions ici
+          Les ETF seront bientôt disponibles
         </Text>
       </Box>
     );
@@ -36,12 +36,12 @@ export const ETFList: React.FC<ETFListProps> = ({ positions, loading = false }) 
   return (
     <VStack space={0} flex={1}>
       <Text fontSize="xl" fontWeight="bold" color="gray.800" mb={4}>
-        Mes ETF
+        ETF Disponibles
       </Text>
       <FlatList
         data={positions}
-        keyExtractor={(item) => item.etfId.toString()}
-        renderItem={({ item }) => <ETFListItem position={item} />}
+        keyExtractor={(item) => item.etfID.toString()}
+        renderItem={({ item }) => <ETFListItem etf={item} />}
         showsVerticalScrollIndicator={false}
       />
     </VStack>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { ETFWithCurrentPrice } from '../models';
-import { etfService } from '../services';
+import { ETFWithCurrentPrice } from '../models/etf';
+import { etfService } from '../services/etfService';
 
 export const useETFs = () => {
   const [etfs, setETFs] = useState<ETFWithCurrentPrice[]>([]);

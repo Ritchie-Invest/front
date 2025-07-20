@@ -2,20 +2,14 @@ import React from 'react';
 import { Box, Text, HStack, VStack, Icon } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Card } from '../../../components/molecules/card';
-import { PortfolioPosition } from '../models/portfolio';
+import { ETFWithCurrentPrice } from '../models/etf';
+import { formatCurrency } from '../utils/formatCurrency';
 
 interface ETFListItemProps {
-  position: PortfolioPosition;
+  etf: ETFWithCurrentPrice;
 }
 
-export const ETFListItem: React.FC<ETFListItemProps> = ({ position }) => {
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('fr-FR', {
-      style: 'currency',
-      currency: 'EUR',
-    }).format(amount);
-  };
-
+export const ETFListItem: React.FC<ETFListItemProps> = ({ etf }) => {
   const formatPercentage = (percentage: number) => {
     return `${percentage >= 0 ? '+' : ''}${percentage.toFixed(2)}%`;
   };
@@ -26,34 +20,30 @@ export const ETFListItem: React.FC<ETFListItemProps> = ({ position }) => {
         <VStack flex={1} space={1}>
           <HStack alignItems="center" space={2}>
             <Text fontSize="lg" fontWeight="bold" color="gray.800">
-              {position.ticker}
+              {etf.ticker}
             </Text>
             <Text fontSize="sm" color="gray.500" flex={1} numberOfLines={1}>
-              {position.name}
+              {etf.name}
             </Text>
           </HStack>
           <Text fontSize="sm" color="gray.600">
-            {position.quantity} parts × {formatCurrency(position.currentPrice)}
+            Prix actuel: {formatCurrency(etf.currentPrice)}
           </Text>
         </VStack>
 
         <VStack alignItems="flex-end" space={1}>
           <Text fontSize="lg" fontWeight="semibold" color="gray.800">
-            {formatCurrency(position.totalValue)}
+            {formatCurrency(etf.currentPrice)}
           </Text>
           <HStack alignItems="center" space={1}>
             <Icon
               as={MaterialIcons}
-              name={position.isGaining ? 'trending-up' : 'trending-down'}
+              name={etf.isGaining ? 'trending-up' : 'trending-down'}
               size="sm"
-              color={position.isGaining ? 'green.500' : 'red.500'}
+              color={etf.isGaining ? 'green.500' : 'red.500'}
             />
-            <Text
-              fontSize="sm"
-              fontWeight="medium"
-              color={position.isGaining ? 'green.500' : 'red.500'}
-            >
-              {formatPercentage(position.priceChangePercentage)}
+            <Text fontSize="sm" fontWeight="medium" color={etf.isGaining ? 'green.500' : 'red.500'}>
+              {formatPercentage(etf.priceChangePercentage)}
             </Text>
           </HStack>
         </VStack>

@@ -1,5 +1,5 @@
 import { ETF, ETFWithCurrentPrice, ETFPriceData } from '../models/etf';
-import { ETFHistoricalData } from '../models/etfHistoric';
+
 // Mock data à remplacer par les vrais services
 const mockETFs: ETF[] = [
   {

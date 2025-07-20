@@ -1,5 +1,4 @@
 import { Portfolio, PortfolioPosition } from '../models/portfolio';
-// Mock data à remplacer par les vrais services
 const mockPortfolio: Portfolio = {
   portfolioId: 1,
   balance: 10000,
@@ -45,7 +44,6 @@ const mockPositions: PortfolioPosition[] = [
 
 export const portfolioService = {
   getPortfolio: async (): Promise<Portfolio> => {
-    // Simulate API delay
     await new Promise((resolve) => setTimeout(resolve, 400));
 
     return mockPortfolio;

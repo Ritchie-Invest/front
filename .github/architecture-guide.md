@@ -73,7 +73,7 @@ src/lib/
 ├── config.ts      # Configuration et constantes globales
 ├── models/        # Types et interfaces globaux
 ├── services/      # Services transversaux
-├── store/         # Store global (Zustand/Redux)
+├── store/         # Store global (Zustand)
 ├── utils/         # Fonctions utilitaires pures
 └── validation/    # Règles de validation globales
 ```

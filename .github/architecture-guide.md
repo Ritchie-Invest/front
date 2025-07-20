@@ -83,6 +83,7 @@ src/lib/
 ## Meilleures Pratiques
 
 - Jamais d'import depuis `features` dans `components` ou `lib`.
+  Cette règle existe pour éviter les dépendances circulaires et préserver l'intégrité architecturale. Les `features` encapsulent la logique métier et ne doivent pas introduire de couplage avec des composants génériques ou des services globaux, afin de maintenir une séparation claire des responsabilités et de faciliter la maintenance.
 - Chaque feature doit exposer ses fonctionnalités via son `index.ts`.
 - Les modèles globaux sont dans `lib/models`, les spécifiques dans `features/{feature}/models`.
 - La validation suit le même principe : globale dans `lib`, spécifique dans les features.

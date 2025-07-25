@@ -1,6 +1,6 @@
 import React from 'react';
 import { VStack, HStack, IconButton, Box, Progress } from 'native-base';
-import { View } from 'react-native-safe-area-context';
+import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 interface OnboardingLayoutProps {

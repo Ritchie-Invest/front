@@ -25,7 +25,7 @@ const HomeScreen = ({ onLogout }: { onLogout: () => void }) => {
   }, [navigation, logout, onLogout]);
 
   return (
-    <Box flex={1} safeArea>
+    <Box flex={1}>
       <LessonsOverview />
     </Box>
   );

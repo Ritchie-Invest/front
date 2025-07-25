@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-export interface LineChartPoint {
+export interface LineChartComponentPoint {
   y: number;
   x: number;
   extraData: {
@@ -10,7 +10,7 @@ export interface LineChartPoint {
   };
 }
 
-export function useLineChartData(priceHistory: any[]): LineChartPoint[] {
+export function useLineChartComponentData(priceHistory: any[]): LineChartComponentPoint[] {
   return useMemo(() => {
     return priceHistory
       .filter((item) => {
@@ -35,7 +35,7 @@ export function useLineChartData(priceHistory: any[]): LineChartPoint[] {
 }
 import { formatPrice, formatDateForOverlay } from '../index';
 
-export interface LineChartPoint {
+export interface LineChartComponentPoint {
   y: number;
   x: number;
   extraData: {

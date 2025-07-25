@@ -7,7 +7,7 @@ import {
   DateRangeType,
   ETFWithPriceHistory,
   useETFDetail,
-  ETFChartContainer,
+  LineChartContainer,
   ETFDetails,
   TimeRangeSelector,
   ETFDetailServiceAdapter,
@@ -79,7 +79,7 @@ export const ETFDetailScreen: React.FC<ETFDetailScreenProps> = ({
 
           <TimeRangeSelector selectedRange={selectedRange} onRangeChange={handleRangeChange} />
 
-          <ETFChartContainer priceHistory={data.priceHistory} />
+          <LineChartContainer priceHistory={data.priceHistory} />
         </VStack>
       </ScrollView>
     </Box>

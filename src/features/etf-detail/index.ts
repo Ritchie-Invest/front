@@ -1,6 +1,6 @@
 export { ETFDetailScreen } from './screens/ETFDetailScreen';
 
-export { ETFChartContainer } from './components/ETFChartContainer';
+export { LineChartContainer } from './components/LineChartContainer';
 export { ETFDetails } from './components/ETFDetails';
 export { ETFStats } from './components/ETFStats';
 export { TimeRangeSelector } from './components/TimeRangeSelector';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { VStack, HStack, IconButton, Box, Progress } from 'native-base';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 interface OnboardingLayoutProps {
@@ -17,7 +17,7 @@ export const OnboardingLayout: React.FC<OnboardingLayoutProps> = ({
   showBackButton = true,
 }) => {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+    <View style={{ flex: 1, backgroundColor: 'white' }}>
       <VStack flex={1} bg="white">
         <HStack alignItems="center" px="8" py="2" space={3}>
           {showBackButton && (
@@ -42,6 +42,6 @@ export const OnboardingLayout: React.FC<OnboardingLayoutProps> = ({
           {children}
         </VStack>
       </VStack>
-    </SafeAreaView>
+    </View>
   );
 };

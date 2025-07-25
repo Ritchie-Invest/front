@@ -3,6 +3,7 @@ import { ScrollView as RNScrollView } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
 import { useAuthStore } from '../../auth/store/authStore';
 import { progressService } from '../services/progressService';
+import { Chapter } from '../models/responses/chapter';
 
 export const useProgress = () => {
   const scrollViewRef = useRef<RNScrollView>(null);
@@ -22,11 +23,17 @@ export const useProgress = () => {
     staleTime: 5 * 60 * 1000,
   });
 
-  const chapters = chaptersData?.chapters || [];
-  const lessons = chapters.flatMap((chapter) => chapter.lessons);
+  const chapters: Chapter[] = chaptersData?.chapters || [];
+  const lessons = chapters.flatMap((chapter: Chapter) => chapter.lessons);
 
-  const completedLessons = chapters.reduce((sum, chapter) => sum + chapter.completedLessons, 0);
-  const totalLessons = chapters.reduce((sum, chapter) => sum + chapter.totalLessons, 0);
+  const completedLessons = chapters.reduce(
+    (sum: number, chapter: Chapter) => sum + chapter.completedLessons,
+    0,
+  );
+  const totalLessons = chapters.reduce(
+    (sum: number, chapter: Chapter) => sum + chapter.totalLessons,
+    0,
+  );
   const progressValue = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
 
   const handleChapterLayout = (chapterId: string, event: any) => {
@@ -41,9 +48,10 @@ export const useProgress = () => {
     if (!chapters.length) return;
 
     const timer = setTimeout(() => {
-      const currentChapter = chapters
-        .filter((chapter) => chapter.isUnlocked)
-        .sort((a, b) => b.order - a.order)[0];
+      const unlockedChapters = chapters.filter((chapter: Chapter) => chapter.isUnlocked);
+      const currentChapter = unlockedChapters.sort(
+        (a: Chapter, b: Chapter) => b.order - a.order,
+      )[0];
 
       if (currentChapter) {
         const currentChapterY = chapterLayouts[currentChapter.id];

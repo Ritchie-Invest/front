@@ -75,7 +75,7 @@ export const AppNavigator = ({
             >
               <MainStack.Screen name="Landing">
                 {() => (
-                  <Box flex={1} safeArea>
+                  <Box flex={1}>
                     <HomeScreen onLogout={handleLogout} />
                     <Navbar />
                   </Box>
@@ -83,7 +83,7 @@ export const AppNavigator = ({
               </MainStack.Screen>
               <MainStack.Screen name="InvestmentDashboard" options={{ headerTitle: 'Portfolio' }}>
                 {() => (
-                  <Box flex={1} safeArea>
+                  <Box flex={1}>
                     <InvestmentDashboardScreen />
                     <Navbar />
                   </Box>

@@ -11,6 +11,7 @@ export { ETFDetailService } from './services/etfDetailService';
 export { ETFDetailServiceAdapter } from './adapters/etfDetailServiceAdapter';
 
 export type { ETFPriceData, ETFWithPriceHistory } from './model/etfPriceData';
+export type { LineChartComponentPoint } from './model/LineChartPoint';
 export type { DateRangeType } from './types/dateRange';
 export { DATE_RANGE_OPTIONS } from './types/dateRange';
 

@@ -1,9 +1,8 @@
-import { Transaction, OperationType } from '../../transaction-history/model/transaction';
+import { Transaction } from '../';
 
 export class TransactionService {
   static async getTransactionsForUser(userId: number): Promise<Transaction[]> {
     await new Promise((resolve) => setTimeout(resolve, 500));
-    // Mock data
     return [
       {
         etfId: 1,

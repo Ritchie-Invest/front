@@ -7,6 +7,7 @@ import { LoginScreen } from '../features/auth/screens/LoginScreen';
 import { RegisterScreen } from '../features/auth/screens/RegisterScreen';
 import HomeScreen from '../features/landing/screens/home';
 import { InvestmentDashboardScreen } from '../features/investment-dashboard/screens/InvestmentDashboardScreen';
+import { ETFDetailScreen } from '../features/etf-detail/screens/ETFDetailScreen';
 import Navbar from '../features/navigation/components/organisms/navbar';
 
 export type RootStackParamList = {
@@ -22,6 +23,8 @@ export type MainStackParamList = {
   ETFDetails: { etfID: number };
   Progress: undefined;
   Profile: undefined;
+  Register: undefined;
+  Onboarding: undefined;
 };
 
 const Stack = createNativeStackNavigator();
@@ -75,7 +78,7 @@ export const AppNavigator = ({
             >
               <MainStack.Screen name="Landing">
                 {() => (
-                  <Box flex={1} safeArea>
+                  <Box flex={1}>
                     <HomeScreen onLogout={handleLogout} />
                     <Navbar />
                   </Box>
@@ -83,9 +86,16 @@ export const AppNavigator = ({
               </MainStack.Screen>
               <MainStack.Screen name="InvestmentDashboard" options={{ headerTitle: 'Portfolio' }}>
                 {() => (
-                  <Box flex={1} safeArea>
+                  <Box flex={1}>
                     <InvestmentDashboardScreen />
                     <Navbar />
+                  </Box>
+                )}
+              </MainStack.Screen>
+              <MainStack.Screen name="ETFDetails" options={{ headerTitle: 'Détails ETF' }}>
+                {() => (
+                  <Box flex={1}>
+                    <ETFDetailScreen />
                   </Box>
                 )}
               </MainStack.Screen>

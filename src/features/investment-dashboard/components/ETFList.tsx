@@ -1,8 +1,14 @@
 import React from 'react';
-import { FlatList } from 'react-native';
-import { VStack, Text, Box } from 'native-base';
-import { ETFListItem } from './ETFListItem';
+import { HStack, Text, Icon } from 'native-base';
+import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ETFWithCurrentPrice } from '../models/etf';
+import { formatCurrency } from '../utils/formatCurrency';
+import { MainStackParamList } from '../../../navigation/AppNavigator';
+import { List } from '../../../components/organisms/list';
+
+type NavigationProp = NativeStackNavigationProp<MainStackParamList, 'InvestmentDashboard'>;
 
 interface ETFListProps {
   positions: ETFWithCurrentPrice[];
@@ -10,40 +16,50 @@ interface ETFListProps {
 }
 
 export const ETFList: React.FC<ETFListProps> = ({ positions, loading = false }) => {
-  if (loading) {
-    return (
-      <Box flex={1} justifyContent="center" alignItems="center" py={8}>
-        <Text fontSize="lg" color="gray.400">
-          Chargement des ETF...
-        </Text>
-      </Box>
-    );
-  }
+  const navigation = useNavigation<NavigationProp>();
 
-  if (positions.length === 0) {
-    return (
-      <Box flex={1} justifyContent="center" alignItems="center" py={8}>
-        <Text fontSize="lg" color="gray.500" textAlign="center">
-          Aucun ETF disponible
-        </Text>
-        <Text fontSize="sm" color="gray.400" textAlign="center" mt={2}>
-          Les ETF seront bientôt disponibles
-        </Text>
-      </Box>
-    );
-  }
+  const formatPercentage = (percentage: number) =>
+    `${percentage >= 0 ? '+' : ''}${percentage.toFixed(2)}%`;
 
   return (
-    <VStack space={0} flex={1}>
-      <Text fontSize="xl" fontWeight="bold" color="gray.800" mb={4}>
-        ETF Disponibles
-      </Text>
-      <FlatList
-        data={positions}
-        keyExtractor={(item) => item.etfID.toString()}
-        renderItem={({ item }) => <ETFListItem etf={item} />}
-        showsVerticalScrollIndicator={false}
-      />
-    </VStack>
+    <List
+      data={positions}
+      loading={loading}
+      title="ETF Disponibles"
+      renderLeft={(etf) => (
+        <>
+          <HStack alignItems="center" space={2}>
+            <Text fontSize="lg" fontWeight="bold" color="gray.800">
+              {etf.ticker}
+            </Text>
+            <Text fontSize="sm" color="gray.500">
+              {etf.name}
+            </Text>
+          </HStack>
+          <Text fontSize="sm" color="gray.600">
+            Prix actuel: {formatCurrency(etf.currentPrice)}
+          </Text>
+        </>
+      )}
+      renderRight={(etf) => (
+        <>
+          <Text fontSize="lg" fontWeight="semibold" color="gray.800">
+            {formatCurrency(etf.currentPrice)}
+          </Text>
+          <HStack alignItems="center" space={1}>
+            <Icon
+              as={MaterialIcons}
+              name={etf.isGaining ? 'trending-up' : 'trending-down'}
+              size="sm"
+              color={etf.isGaining ? 'green.500' : 'red.500'}
+            />
+            <Text fontSize="sm" fontWeight="medium" color={etf.isGaining ? 'green.500' : 'red.500'}>
+              {formatPercentage(etf.priceChangePercentage)}
+            </Text>
+          </HStack>
+        </>
+      )}
+      onItemPress={(etf) => navigation.navigate('ETFDetails', { etfID: etf.etfID })}
+    />
   );
 };

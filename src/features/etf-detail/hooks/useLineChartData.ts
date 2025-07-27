@@ -1,14 +1,7 @@
 import { useMemo } from 'react';
-
-export interface LineChartComponentPoint {
-  y: number;
-  x: number;
-  extraData: {
-    formattedValue: string;
-    formattedTime: string;
-    originalData: any;
-  };
-}
+import { formatDate } from '~/lib/utils/formatDate';
+import { formatCurrency } from '~/lib/utils/formatCurrency';
+import { LineChartComponentPoint } from '../model/LineChartPoint';
 
 export function useLineChartComponentData(priceHistory: any[]): LineChartComponentPoint[] {
   return useMemo(() => {
@@ -25,22 +18,11 @@ export function useLineChartComponentData(priceHistory: any[]): LineChartCompone
           y: Number(value),
           x: date.getTime(),
           extraData: {
-            formattedValue: formatPrice(Number(value)),
-            formattedTime: formatDateForOverlay(date),
+            formattedValue: formatCurrency(Number(value)),
+            formattedTime: formatDate(date, 'overlay'),
             originalData: item,
           },
         };
       });
   }, [priceHistory]);
-}
-import { formatPrice, formatDateForOverlay } from '../index';
-
-export interface LineChartComponentPoint {
-  y: number;
-  x: number;
-  extraData: {
-    formattedValue: string;
-    formattedTime: string;
-    originalData: any;
-  };
 }

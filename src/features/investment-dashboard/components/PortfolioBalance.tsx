@@ -1,6 +1,8 @@
 import React from 'react';
 import { Pressable } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
+import type { MainStackParamList } from '../../../navigation/AppNavigator';
 import { Box, Text, HStack } from 'native-base';
 import { formatCurrency } from '../../../lib/utils/formatCurrency';
 
@@ -11,13 +13,12 @@ interface PortfolioBalanceProps {
   onItemPress?: (item: any) => void;
 }
 
-export const PortfolioBalance: React.FC<PortfolioBalanceProps> = ({
+export const PortfolioBalance = ({
   balance,
   totalValue,
   loading = false,
-  onItemPress,
-}) => {
-  const navigation = useNavigation();
+}: PortfolioBalanceProps) => {
+  const navigation = useNavigation<StackNavigationProp<MainStackParamList, 'TransactionHistory'>>();
   if (loading) {
     return (
       <Box alignItems="center" py={6}>

@@ -1,7 +1,7 @@
 import { Transaction, OperationType } from '../index';
 
 export class TransactionService {
-  static async getTransactionsForUser(userId: number): Promise<Transaction[]> {
+  static async getTransactionsForUser(): Promise<Transaction[]> {
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     return [

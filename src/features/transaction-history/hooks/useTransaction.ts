@@ -1,27 +1,25 @@
 import { useState, useCallback, useEffect } from 'react';
-import { Transaction, TransactionService } from '../index';
+import { Transaction } from '../index';
+import { TransactionServiceAdapter } from '../adapters/TransactionService.adapter';
 
-import { useAuthStore } from '../../auth/store/authStore';
-
-export const useTransactions = (transactionService: TransactionService) => {
+export const useTransactions = () => {
+  const transactionService = new TransactionServiceAdapter();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const user = useAuthStore((s) => s.user);
 
   const fetchTransactions = useCallback(async () => {
-    if (!user?.id) return;
     setLoading(true);
     setError(null);
     try {
-      const data = await transactionService.getTransactionsForUser(user.id);
+      const data = await transactionService.getTransactionsForUser();
       setTransactions(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Une erreur est survenue');
     } finally {
       setLoading(false);
     }
-  }, [user, transactionService]);
+  }, []);
 
   useEffect(() => {
     fetchTransactions();

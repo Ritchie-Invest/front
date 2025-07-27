@@ -1,26 +1,16 @@
 import React from 'react';
 import { HStack, Text, VStack } from 'native-base';
 import { List } from '../../../components/organisms/list';
-import {
-  useTransactions,
-  TransactionService,
-  Transaction,
-  getTypeColor,
-  getTypeSymbol,
-} from '../index';
+import { useTransactions, Transaction, getTypeColor, getTypeSymbol } from '../index';
 import { formatCurrency } from '~/lib/utils/formatCurrency';
 import { formatDate } from '../../../lib/utils/formatDate';
 
 interface TransactionListProps {
-  transactionDataService: TransactionService;
   onTransactionPress?: (transaction: Transaction) => void;
 }
 
-export const TransactionList: React.FC<TransactionListProps> = ({
-  transactionDataService,
-  onTransactionPress,
-}) => {
-  const { transactions, loading, error } = useTransactions(transactionDataService);
+export const TransactionList: React.FC<TransactionListProps> = ({ onTransactionPress }) => {
+  const { transactions, loading, error } = useTransactions();
 
   if (error) {
     return (

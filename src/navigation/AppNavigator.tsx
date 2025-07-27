@@ -2,6 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Box } from 'native-base';
+import { Box } from 'native-base';
 import { OnboardingFlow } from '../features/onboarding/screens/OnboardingFlow';
 import { LoginScreen } from '../features/auth/screens/LoginScreen';
 import { RegisterScreen } from '../features/auth/screens/RegisterScreen';
@@ -12,7 +13,18 @@ import Navbar from '../features/navigation/components/organisms/navbar';
 
 export type RootStackParamList = {
   Main: undefined;
+  Main: undefined;
   Login: undefined;
+  Register: undefined;
+  Onboarding: undefined;
+};
+
+export type MainStackParamList = {
+  Landing: undefined;
+  InvestmentDashboard: undefined;
+  ETFDetails: { etfID: number };
+  Progress: undefined;
+  Profile: undefined;
   Register: undefined;
   Onboarding: undefined;
 };
@@ -26,6 +38,7 @@ export type MainStackParamList = {
 };
 
 const Stack = createNativeStackNavigator();
+const MainStack = createNativeStackNavigator<MainStackParamList>();
 const MainStack = createNativeStackNavigator<MainStackParamList>();
 
 export const AppNavigator = ({

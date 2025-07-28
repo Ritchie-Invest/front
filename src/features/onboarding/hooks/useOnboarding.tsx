@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { OnboardingState } from '../models/onboarding.types';
 
-export const useOnboarding = () => {
+export const useOnboarding = (onComplete?: () => void) => {
   const [state, setState] = useState<OnboardingState>({
     currentStep: 0,
     isCompleted: false,
@@ -35,13 +35,35 @@ export const useOnboarding = () => {
     return Math.round((state.currentStep / totalSteps) * 100);
   };
 
+  const handleStart = () => {
+    nextStep();
+  };
+  const handleGoalSelect = (goalId: string) => {
+    setSelectedGoal(goalId);
+  };
+  const handleLevelSelect = (levelId: string) => {
+    setSelectedLevel(levelId);
+  };
+  const handleComplete = () => {
+    completeOnboarding();
+    if (onComplete) onComplete();
+  };
+
+  useEffect(() => {
+    if (state.currentStep === 6 && state.selectedLevel && state.selectedLevel !== 'beginner') {
+      completeOnboarding();
+      if (onComplete) onComplete();
+    }
+  }, [state.currentStep, state.selectedLevel, completeOnboarding, onComplete]);
+
   return {
     state,
-    setSelectedGoal,
-    setSelectedLevel,
+    handleStart,
+    handleGoalSelect,
+    handleLevelSelect,
+    handleComplete,
     nextStep,
     previousStep,
-    completeOnboarding,
     getProgress,
   };
 };

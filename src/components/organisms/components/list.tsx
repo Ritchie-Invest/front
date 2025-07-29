@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList } from 'react-native';
 import { VStack, Text, Box } from 'native-base';
-import { ListItem } from '~/components/molecules/ListItem';
+import { ListItem } from '../../molecules/components/ListItem';
 
 interface ListProps<T> {
   data: T[];
@@ -60,8 +60,8 @@ export function List<T>({
       )}
       <FlatList
         data={data}
-        keyExtractor={(_: T, idx: number) => idx.toString()}
-        renderItem={({ item }: { item: T }) => (
+        keyExtractor={(_, idx) => idx.toString()}
+        renderItem={({ item }) => (
           <ListItem
             onPress={() => onItemPress?.(item)}
             isSelected={isItemSelected?.(item)}

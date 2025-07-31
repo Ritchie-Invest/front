@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { MainStackParamList } from '../../../navigation/AppNavigator';
 import { Box, Text, HStack } from 'native-base';
-import { formatCurrency } from '../../../lib/utils/formatCurrency';
+import { formatCurrency } from '../../../utils/formatCurrency';
 
 interface PortfolioBalanceProps {
   balance: number;

@@ -2,8 +2,8 @@ import React from 'react';
 import { HStack, Text, VStack } from 'native-base';
 import { List } from '../../../components/organisms/list';
 import { useTransactions, Transaction, getTypeColor, getTypeSymbol } from '../index';
-import { formatCurrency } from '~/lib/utils/formatCurrency';
-import { formatDate } from '../../../lib/utils/formatDate';
+import { formatCurrency } from '~/utils/formatCurrency';
+import { formatDate } from '../../../utils/formatDate';
 
 interface TransactionListProps {
   onTransactionPress?: (transaction: Transaction) => void;

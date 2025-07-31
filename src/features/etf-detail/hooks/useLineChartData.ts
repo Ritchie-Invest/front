@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import { formatDate } from '~/lib/utils/formatDate';
-import { formatCurrency } from '~/lib/utils/formatCurrency';
+import { formatDate } from '~/utils/formatDate';
+import { formatCurrency } from '~/utils/formatCurrency';
 import { LineChartComponentPoint } from '../index';
 
 export function useLineChartComponentData(priceHistory: any[]): LineChartComponentPoint[] {

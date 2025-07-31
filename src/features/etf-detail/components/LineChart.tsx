@@ -3,7 +3,7 @@ import { View, Dimensions, Text } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import LineChart from 'react-native-simple-line-chart';
 import { LineChartComponentPoint } from '../model/LineChartPoint';
-import { formatDate } from '~/lib/utils/formatDate';
+import { formatDate } from '~/utils/formatDate';
 
 interface LineChartComponentProps {
   data: LineChartComponentPoint[];

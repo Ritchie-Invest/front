@@ -1,60 +1,37 @@
 import React, { useEffect } from 'react';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { useOnboarding } from '../hooks/useOnboarding';
 import { WelcomeScreen } from './sub-screens/WelcomeScreen';
+import { WelcomeQuestionsScreen } from './sub-screens/WelcomeQuestionsScreen';
 import { GoalSelectionScreen } from './sub-screens/GoalSelectionScreen';
-import { LevelSelectionScreen } from './sub-screens/LevelSelectionScreen';
 import { CompletionScreen } from './sub-screens/CompletionScreen';
 import { LearningGoalsScreen } from './sub-screens/LearningGoalsScreen';
-import { WelcomeQuestionsScreen } from './sub-screens/WelcomeQuestionsScreen';
+import { LevelSelectionScreen } from './sub-screens/LevelSelectionScreen';
 import { ONBOARDING_GOALS } from '../data/onboardingGoals.data';
 import { ONBOARDING_LEVELS } from '../data/onboardingLevels.data';
 import { LEARNING_GOALS } from '../data/onboardingLearningGoals.data';
 
-interface OnboardingFlowProps {
+interface OnboardingLayoutProps {
   onComplete: () => void;
   onLogin: () => void;
 }
 
-export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ onComplete, onLogin }) => {
+export const OnboardingLayout: React.FC<OnboardingLayoutProps> = ({ onComplete, onLogin }) => {
   const {
     state,
-    setSelectedGoal,
-    setSelectedLevel,
+    handleStart,
+    handleGoalSelect,
+    handleLevelSelect,
+    handleComplete,
     nextStep,
     previousStep,
-    completeOnboarding,
     getProgress,
-  } = useOnboarding();
-
-  useEffect(() => {
-    if (state.currentStep === 6 && state.selectedLevel && state.selectedLevel !== 'beginner') {
-      completeOnboarding();
-      onComplete();
-    }
-  }, [state.currentStep, state.selectedLevel, completeOnboarding, onComplete]);
-
-  const handleStart = () => {
-    nextStep();
-  };
-
-  const handleGoalSelect = (goalId: string) => {
-    setSelectedGoal(goalId);
-  };
-
-  const handleLevelSelect = (levelId: string) => {
-    setSelectedLevel(levelId);
-  };
-
-  const handleComplete = () => {
-    completeOnboarding();
-    onComplete();
-  };
+  } = useOnboarding(onComplete);
 
   const renderCurrentScreen = () => {
     switch (state.currentStep) {
       case 0:
         return <WelcomeScreen onStart={handleStart} onLogin={onLogin} />;
-
       case 1:
         return (
           <WelcomeQuestionsScreen
@@ -63,7 +40,6 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ onComplete, onLo
             progress={getProgress()}
           />
         );
-
       case 2:
         return (
           <GoalSelectionScreen
@@ -75,7 +51,6 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ onComplete, onLo
             progress={getProgress()}
           />
         );
-
       case 3:
         return (
           <CompletionScreen
@@ -86,7 +61,6 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ onComplete, onLo
             progress={getProgress()}
           />
         );
-
       case 4:
         return (
           <LearningGoalsScreen
@@ -96,7 +70,6 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ onComplete, onLo
             progress={getProgress()}
           />
         );
-
       case 5:
         return (
           <LevelSelectionScreen
@@ -108,7 +81,6 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ onComplete, onLo
             progress={getProgress()}
           />
         );
-
       case 6:
         if (state.selectedLevel === 'beginner') {
           return (
@@ -122,11 +94,25 @@ export const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ onComplete, onLo
           );
         }
         return null;
-
       default:
         return <WelcomeScreen onStart={handleStart} onLogin={onLogin} />;
     }
   };
 
-  return renderCurrentScreen();
+  return (
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>{renderCurrentScreen()}</View>
+    </SafeAreaView>
+  );
 };
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  container: {
+    flex: 1,
+    paddingVertical: 32,
+  },
+});

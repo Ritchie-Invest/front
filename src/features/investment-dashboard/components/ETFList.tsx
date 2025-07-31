@@ -4,7 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ETFWithCurrentPrice } from '../models/etf';
-import { formatCurrency } from '../utils/formatCurrency';
+import { formatCurrency } from '../../../lib/utils/formatCurrency';
 import { MainStackParamList } from '../../../navigation/AppNavigator';
 import { List } from '../../../components/organisms/list';
 

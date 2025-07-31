@@ -2,18 +2,12 @@ import React from 'react';
 import { View, Dimensions, Text } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import LineChart from 'react-native-simple-line-chart';
-import type { LineChartComponentPoint } from '../hooks/useLineChartData';
+import { LineChartComponentPoint } from '../model/LineChartPoint';
+import { formatDate } from '~/lib/utils/formatDate';
 
 interface LineChartComponentProps {
   data: LineChartComponentPoint[];
 }
-
-const formatDateShort = (date: Date): string => {
-  return date.toLocaleDateString('fr-FR', {
-    day: '2-digit',
-    month: '2-digit',
-  });
-};
 
 export const LineChartComponent: React.FC<LineChartComponentProps> = ({ data }) => {
   const screenWidth = Dimensions.get('window').width;
@@ -30,7 +24,7 @@ export const LineChartComponent: React.FC<LineChartComponentProps> = ({ data }) 
 
   const xAxisLabels = data
     .filter((_, index) => index % Math.max(1, Math.floor(data.length / 5)) === 0)
-    .map((point) => formatDateShort(new Date(point.x)));
+    .map((point) => formatDate(new Date(point.x), 'short'));
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

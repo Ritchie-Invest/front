@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList } from 'react-native';
 import { VStack, Text, Box } from 'native-base';
-import { ListItem } from '../molecules/ListItem';
+import { ListItem } from '../../molecules/components/ListItem';
 
 interface ListProps<T> {
   data: T[];

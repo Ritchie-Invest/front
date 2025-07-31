@@ -1,7 +1,7 @@
 import { ChartDataAdapter, GenericChartPoint } from '~/components/molecules/models/LineChart';
 import { ETFPriceData } from '../model/etfPriceData';
-import { formatDate } from '~/lib/utils/formatDate';
-import { formatCurrency } from '~/lib/utils/formatCurrency';
+import { formatDate } from '~/utils/formatDate';
+import { formatCurrency } from '~/utils/formatCurrency';
 export class ETFChartDataAdapter implements ChartDataAdapter<ETFPriceData> {
   adaptData(priceHistory: ETFPriceData[]): GenericChartPoint[] {
     return priceHistory

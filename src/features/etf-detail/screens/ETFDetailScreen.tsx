@@ -12,6 +12,7 @@ import {
   TimeRangeSelector,
   ETFDetailServiceAdapter,
 } from '../index';
+import { BuyAndSellButtons } from '../components/BuyAndSellButtons';
 
 type ETFDetailScreenRouteProp = RouteProp<MainStackParamList, 'ETFDetails'>;
 
@@ -82,6 +83,7 @@ export const ETFDetailScreen: React.FC<ETFDetailScreenProps> = ({
           <LineChartContainer priceHistory={data.priceHistory} />
         </VStack>
       </ScrollView>
+      <BuyAndSellButtons etfData={data} isLoading={loading} />
     </Box>
   );
 };

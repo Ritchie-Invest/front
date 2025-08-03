@@ -8,6 +8,8 @@ import { RegisterScreen } from '../features/auth/screens/RegisterScreen';
 import HomeScreen from '../features/landing/screens/home';
 import { InvestmentDashboardScreen } from '../features/investment-dashboard/screens/InvestmentDashboardScreen';
 import { ETFDetailScreen } from '../features/etf-detail/screens/ETFDetailScreen';
+import { ETFTradingScreen } from '../features/etf-trading/screens/Transaction';
+import { TransactionType } from '../features/etf-trading/types/Transaction';
 import Navbar from '../features/navigation/components/organisms/navbar';
 
 export type RootStackParamList = {
@@ -21,6 +23,15 @@ export type MainStackParamList = {
   Landing: undefined;
   InvestmentDashboard: undefined;
   ETFDetails: { etfID: number };
+  ETFTrading: {
+    etfID: number;
+    action: TransactionType;
+    etfData: {
+      ticker: string;
+      name: string;
+      currentPrice: number;
+    };
+  };
   Progress: undefined;
   Profile: undefined;
   Register: undefined;
@@ -98,6 +109,25 @@ export const AppNavigator = ({
                     <ETFDetailScreen />
                   </Box>
                 )}
+              </MainStack.Screen>
+              <MainStack.Screen name="ETFTrading" options={{ headerTitle: 'Trading ETF' }}>
+                {({ route }) => {
+                  const etfWithHistory = {
+                    ...route.params.etfData,
+                    etfID: route.params.etfID,
+                    priceHistory: [], // On peut laisser vide ou charger les données dans le composant
+                  };
+
+                  return (
+                    <Box flex={1}>
+                      <ETFTradingScreen
+                        etfID={route.params.etfID}
+                        action={route.params.action}
+                        etfData={etfWithHistory}
+                      />
+                    </Box>
+                  );
+                }}
               </MainStack.Screen>
             </MainStack.Navigator>
           )}

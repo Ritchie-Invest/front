@@ -1,19 +1,19 @@
-import { ETF } from '~/models/etf';
-import { ETFWithCurrentPrice } from '../models/ETF';
+import { ETF } from '~/features/etf/models/etf';
+import { ETFWithCurrentPrice } from '../models/ETFWithCurrentPrice';
 
 const mockETFs: ETF[] = [
   {
-    etfID: '1',
+    etfId: '1',
     ticker: 'SPY',
     name: 'SPDR S&P 500 ETF Trust',
   },
   {
-    etfID: '2',
+    etfId: '2',
     ticker: 'QQQ',
     name: 'Invesco QQQ Trust',
   },
   {
-    etfID: '3',
+    etfId: '3',
     ticker: 'VTI',
     name: 'Vanguard Total Stock Market ETF',
   },

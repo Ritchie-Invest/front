@@ -33,7 +33,7 @@ export const validateETF = (etf: unknown): boolean => {
 
   const etfData = etf as any;
   return (
-    validateETFId(etfData.etfID) &&
+    validateETFId(etfData.etfId) &&
     typeof etfData.ticker === 'string' &&
     etfData.ticker.length >= ETF_VALIDATION_RULES.TICKER.minLength &&
     etfData.ticker.length <= ETF_VALIDATION_RULES.TICKER.maxLength &&

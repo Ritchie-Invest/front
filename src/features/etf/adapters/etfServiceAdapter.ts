@@ -1,6 +1,6 @@
 import { ETFDataService } from '../contracts/ETFContract';
 import { ETFService } from '../services/etfService';
-import { ETFWithCurrentPrice } from '../models/ETF';
+import { ETFWithCurrentPrice } from '../models/ETFWithCurrentPrice';
 import { validateETFList } from '../validation/ETFValidation';
 
 export class ETFServiceAdapter implements ETFDataService {

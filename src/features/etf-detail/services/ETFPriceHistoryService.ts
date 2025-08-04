@@ -12,7 +12,7 @@ export class ETFPriceHistoryService {
     const priceHistory = this.generateMockPriceHistory(dateRange);
 
     return {
-      etfID: etfId,
+      etfId: etfId,
       ticker: 'IWDA',
       name: 'iShares Core MSCI World UCITS ETF',
       currentPrice: priceHistory[priceHistory.length - 1].close,

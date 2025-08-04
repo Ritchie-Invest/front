@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ETFWithCurrentPrice } from '../models/ETF';
+import { ETFWithCurrentPrice } from '../models/ETFWithCurrentPrice';
 import { ETFDataService } from '../contracts/ETFContract';
 import { ETFServiceAdapter } from '../adapters/ETFServiceAdapter';
 

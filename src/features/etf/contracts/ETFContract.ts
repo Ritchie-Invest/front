@@ -1,4 +1,4 @@
-import { ETFWithCurrentPrice } from '../models/etf';
+import { ETFWithCurrentPrice } from '../models/ETF';
 
 export interface ETFDataService {
   getAllETFs(): Promise<ETFWithCurrentPrice[]>;

@@ -8,7 +8,7 @@ const mockPortfolio: Portfolio = {
 
 const mockPositions: PortfolioPosition[] = [
   {
-    etfId: 1,
+    etfId: '1',
     ticker: 'SPY',
     name: 'SPDR S&P 500 ETF Trust',
     quantity: 10,
@@ -19,7 +19,7 @@ const mockPositions: PortfolioPosition[] = [
     isGaining: true,
   },
   {
-    etfId: 2,
+    etfId: '2',
     ticker: 'QQQ',
     name: 'Invesco QQQ Trust',
     quantity: 15,
@@ -30,7 +30,7 @@ const mockPositions: PortfolioPosition[] = [
     isGaining: false,
   },
   {
-    etfId: 3,
+    etfId: '3',
     ticker: 'VTI',
     name: 'Vanguard Total Stock Market ETF',
     quantity: 20,

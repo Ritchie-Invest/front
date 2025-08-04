@@ -11,7 +11,7 @@ interface ETFTransactionData {
   ownedQuantity: number;
 }
 
-export const useETFTransaction = (etfId: number) => {
+export const useETFTransaction = (etfId: string) => {
   const [etfData, setETFData] = useState<ETFWithPriceHistory | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

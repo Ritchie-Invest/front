@@ -1,19 +1,19 @@
 import { ETF } from '~/models/etf';
-import { ETFWithCurrentPrice } from '../models/etf';
+import { ETFWithCurrentPrice } from '../models/ETF';
 
 const mockETFs: ETF[] = [
   {
-    etfID: 1,
+    etfID: '1',
     ticker: 'SPY',
     name: 'SPDR S&P 500 ETF Trust',
   },
   {
-    etfID: 2,
+    etfID: '2',
     ticker: 'QQQ',
     name: 'Invesco QQQ Trust',
   },
   {
-    etfID: 3,
+    etfID: '3',
     ticker: 'VTI',
     name: 'Vanguard Total Stock Market ETF',
   },
@@ -36,7 +36,7 @@ const calculateETFWithCurrentPrice = (etf: ETF): ETFWithCurrentPrice => {
   };
 };
 
-export const etfService = {
+export const ETFService = {
   getAllETFs: async (): Promise<ETFWithCurrentPrice[]> => {
     await new Promise((resolve) => setTimeout(resolve, 500));
 

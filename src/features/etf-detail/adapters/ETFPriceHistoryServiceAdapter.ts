@@ -3,9 +3,9 @@ import { ETFDataService } from '../contracts/ETFPriceHistoryContracts';
 import { validateETFId, validateDateRange } from '../../etf/validation/ETFValidation';
 
 export class ETFPriceHistoryServiceAdapter implements ETFDataService {
-  async getETFWithPriceHistory(etfId: number, dateRange: string): Promise<any> {
+  async getETFWithPriceHistory(etfId: string, dateRange: string): Promise<any> {
     if (!validateETFId(etfId)) {
-      throw new Error(`Invalid ETF ID: ${etfId}. Must be a positive number.`);
+      throw new Error(`Invalid ETF ID: ${etfId}. Must be a non-empty string.`);
     }
 
     if (!validateDateRange(dateRange)) {

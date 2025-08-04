@@ -8,7 +8,7 @@ interface useETFPriceHistoryState<T> {
 }
 
 export const useETFPriceHistory = <T>(
-  etfId: number,
+  etfId: string,
   dateRange: string,
   dataService: ETFDataService,
 ) => {

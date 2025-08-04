@@ -2,7 +2,7 @@ import { ETFWithPriceHistory, DateRangeType, DATE_RANGE_OPTIONS } from '../index
 
 export class ETFPriceHistoryService {
   static async getETFWithPriceHistory(
-    etfId: number,
+    etfId: string,
     dateRange: DateRangeType,
   ): Promise<ETFWithPriceHistory> {
     await new Promise((resolve) => setTimeout(resolve, 500));

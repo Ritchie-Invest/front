@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ScrollView, RefreshControl } from 'react-native';
 import { Box, VStack, Spinner, Text, Center } from 'native-base';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { MainStackParamList } from '../../../navigation/AppNavigator';
 import {
@@ -12,7 +13,7 @@ import {
   TimeRangeSelector,
   ETFDetailServiceAdapter,
 } from '../index';
-
+import { BuyAndSellButtons } from '../components/BuyAndSellButtons';
 type ETFDetailScreenRouteProp = RouteProp<MainStackParamList, 'ETFDetails'>;
 
 interface ETFDetailScreenProps {
@@ -69,19 +70,25 @@ export const ETFDetailScreen: React.FC<ETFDetailScreenProps> = ({
   }
 
   return (
-    <Box flex={1} bg="gray.50">
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
-        refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} />}
-      >
-        <VStack space={4} p={4} pb={8}>
-          <ETFDetails etf={data} />
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'gray.500' }}>
+      <Box flex={1}>
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}
+          refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} />}
+        >
+          <VStack space={4} p={4}>
+            <ETFDetails etf={data} />
 
-          <TimeRangeSelector selectedRange={selectedRange} onRangeChange={handleRangeChange} />
+            <TimeRangeSelector selectedRange={selectedRange} onRangeChange={handleRangeChange} />
 
-          <LineChartContainer priceHistory={data.priceHistory} />
-        </VStack>
-      </ScrollView>
-    </Box>
+            <LineChartContainer priceHistory={data.priceHistory} />
+          </VStack>
+        </ScrollView>
+
+        <Box position="absolute" bottom={4} left={4} right={4}>
+          <BuyAndSellButtons etfID={etfID} />
+        </Box>
+      </Box>
+    </SafeAreaView>
   );
 };

@@ -8,7 +8,11 @@ import { RegisterScreen } from '../features/auth/screens/RegisterScreen';
 import HomeScreen from '../features/landing/screens/home';
 import { InvestmentDashboardScreen } from '../features/investment-dashboard/screens/InvestmentDashboardScreen';
 import { ETFDetailScreen } from '../features/etf-detail/screens/ETFDetailScreen';
+import { ETFTransactionScreen } from '~/features/etf-transaction/screens/ETFTransactionScreen';
+import { TransactionType } from '~/features/etf-transaction/types/TransactionType';
+
 import Navbar from '../features/navigation/components/organisms/navbar';
+import { Trans } from 'react-i18next';
 
 export type RootStackParamList = {
   Main: undefined;
@@ -21,6 +25,7 @@ export type MainStackParamList = {
   Landing: undefined;
   InvestmentDashboard: undefined;
   ETFDetails: { etfID: number };
+  ETFTransaction: { etfID: number; transactionType: TransactionType };
   Progress: undefined;
   Profile: undefined;
   Register: undefined;
@@ -93,9 +98,26 @@ export const AppNavigator = ({
                 )}
               </MainStack.Screen>
               <MainStack.Screen name="ETFDetails" options={{ headerTitle: 'Détails ETF' }}>
-                {() => (
+                {({ route }) => (
                   <Box flex={1}>
                     <ETFDetailScreen />
+                  </Box>
+                )}
+              </MainStack.Screen>
+              <MainStack.Screen
+                name="ETFTransaction"
+                options={({ route }) => ({
+                  headerTitle:
+                    route.params?.transactionType === TransactionType.Buy
+                      ? 'Achat ETF'
+                      : route.params?.transactionType === TransactionType.Sell
+                        ? 'Vente ETF'
+                        : 'Transaction',
+                })}
+              >
+                {() => (
+                  <Box flex={1}>
+                    <ETFTransactionScreen />
                   </Box>
                 )}
               </MainStack.Screen>

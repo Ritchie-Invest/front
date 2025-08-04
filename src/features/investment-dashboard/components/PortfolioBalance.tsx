@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Text, HStack } from 'native-base';
-import { formatCurrency } from '../utils/formatCurrency';
+import { formatCurrency } from '../../../utils/formatCurrency';
 interface PortfolioBalanceProps {
   balance: number;
   totalValue: number;

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ETFDataService } from '../index';
+import { ETFPriceHistoryServiceAdapter } from '../adapters/ETFPriceHistoryServiceAdapter';
 
 interface useETFPriceHistoryState<T> {
   data: T | null;
@@ -10,7 +10,7 @@ interface useETFPriceHistoryState<T> {
 export const useETFPriceHistory = <T>(
   etfId: string,
   dateRange: string,
-  dataService: ETFDataService,
+  dataService: ETFPriceHistoryServiceAdapter = new ETFPriceHistoryServiceAdapter(),
 ) => {
   const [state, setState] = useState<useETFPriceHistoryState<T>>({
     data: null,
@@ -34,7 +34,7 @@ export const useETFPriceHistory = <T>(
 
   useEffect(() => {
     fetchData();
-  }, [etfId, dateRange]);
+  }, [etfId, dateRange, dataService]);
 
   return {
     ...state,

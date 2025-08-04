@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { ScrollView, RefreshControl } from 'react-native';
 import { Box, VStack, Spinner, Text, Center } from 'native-base';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { MainStackParamList } from '../../../navigation/AppNavigator';
 import { DateRangeType } from '../types/dateRange';
 import { ETFWithPriceHistory } from '../models/ETFPriceHistory';
-import { LineChartContainer } from '../components/LineChartContainer';
-import { useETFPriceHistory } from '../hooks/useETFPriceHistory';
 import { ETFPriceHistoryServiceAdapter } from '~/features/etf-detail/adapters/ETFPriceHistoryServiceAdapter';
 import { ETFDetails } from '../components/ETFDetails';
 import { TimeRangeSelector } from '../components/TimeRangeSelector';
+import { LineChartContainer } from '../components/LineChartContainer';
+import { useETFPriceHistory } from '../hooks/useETFPriceHistory';
 
 type ETFDetailScreenRouteProp = RouteProp<MainStackParamList, 'ETFDetails'>;
 
@@ -17,17 +17,21 @@ interface ETFDetailScreenProps {
   dataService?: any;
 }
 
-export const ETFDetailScreen: React.FC<ETFDetailScreenProps> = ({
-  dataService = new ETFPriceHistoryServiceAdapter(),
-}) => {
+export const ETFDetailScreen: React.FC<ETFDetailScreenProps> = ({ dataService }) => {
   const route = useRoute<ETFDetailScreenRouteProp>();
   const { etfID } = route.params;
+
+  // Utilisez useMemo pour éviter de recréer l'adapter à chaque rendu
+  const memoizedDataService = useMemo(
+    () => dataService || new ETFPriceHistoryServiceAdapter(),
+    [dataService],
+  );
 
   const [selectedRange, setSelectedRange] = useState<DateRangeType>('1M');
   const { data, loading, error, refetch } = useETFPriceHistory<ETFWithPriceHistory>(
     etfID,
     selectedRange,
-    dataService,
+    memoizedDataService,
   );
 
   const handleRangeChange = (range: DateRangeType) => {

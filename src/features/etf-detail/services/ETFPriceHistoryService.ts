@@ -1,4 +1,6 @@
-import { ETFWithPriceHistory, DateRangeType, DATE_RANGE_OPTIONS } from '../index';
+import { ETFWithPriceHistory } from '../models/ETFPriceHistory';
+import { DateRangeType } from '../types/dateRange';
+import { DATE_RANGE_OPTIONS } from '../types/dateRange';
 
 export class ETFPriceHistoryService {
   static async getETFWithPriceHistory(

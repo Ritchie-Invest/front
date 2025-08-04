@@ -1,5 +1,7 @@
+import { ETFWithPriceHistory } from '../models/ETFPriceHistory';
+
 export interface ETFDataService {
-  getETFWithPriceHistory(etfId: string, dateRange: string): Promise<any>;
+  getETFWithPriceHistory(etfId: string, dateRange: string): Promise<ETFWithPriceHistory>;
 }
 
 export interface ChartProvider {

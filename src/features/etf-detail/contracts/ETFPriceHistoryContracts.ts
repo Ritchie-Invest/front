@@ -1,5 +1,5 @@
 export interface ETFDataService {
-  getETFWithPriceHistory(etfId: number, dateRange: string): Promise<any>;
+  getETFWithPriceHistory(etfId: string, dateRange: string): Promise<any>;
 }
 
 export interface ChartProvider {

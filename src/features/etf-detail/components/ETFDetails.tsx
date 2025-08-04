@@ -1,7 +1,9 @@
 import React from 'react';
 import { VStack, HStack, Text, Icon } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
-import { ETFWithPriceHistory, formatPrice, calculatePriceChange } from '../index';
+import { calculatePriceChange } from '../utils/chartHelpers';
+import { formatPrice } from '../utils/chartHelpers';
+import { ETFWithPriceHistory } from '~/features/etf-detail/models/ETFPriceHistory';
 
 interface ETFDetailsProps {
   etf: ETFWithPriceHistory;

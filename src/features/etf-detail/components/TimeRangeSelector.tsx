@@ -1,6 +1,7 @@
 import React from 'react';
 import { HStack, Pressable, Text } from 'native-base';
-import { DateRangeType, DATE_RANGE_OPTIONS } from '../index';
+import { DateRangeType } from '../types/dateRange';
+import { DATE_RANGE_OPTIONS } from '../types/dateRange';
 
 interface TimeRangeSelectorProps {
   selectedRange: DateRangeType;

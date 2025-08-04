@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react';
 import { ETFDataService } from '../index';
 
-interface UseETFDetailState<T> {
+interface useETFPriceHistoryState<T> {
   data: T | null;
   loading: boolean;
   error: string | null;
 }
 
-export const useETFDetail = <T>(etfId: number, dateRange: string, dataService: ETFDataService) => {
-  const [state, setState] = useState<UseETFDetailState<T>>({
+export const useETFPriceHistory = <T>(
+  etfId: number,
+  dateRange: string,
+  dataService: ETFDataService,
+) => {
+  const [state, setState] = useState<useETFPriceHistoryState<T>>({
     data: null,
     loading: true,
     error: null,

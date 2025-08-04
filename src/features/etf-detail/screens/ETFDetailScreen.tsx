@@ -3,15 +3,12 @@ import { ScrollView, RefreshControl } from 'react-native';
 import { Box, VStack, Spinner, Text, Center } from 'native-base';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { MainStackParamList } from '../../../navigation/AppNavigator';
-import {
-  DateRangeType,
-  ETFWithPriceHistory,
-  useETFDetail,
-  LineChartContainer,
-  ETFDetails,
-  TimeRangeSelector,
-  ETFDetailServiceAdapter,
-} from '../index';
+import { DateRangeType } from '../types/dateRange';
+import { ETFWithPriceHistory } from '../models/ETFPriceHistory';
+import { LineChartContainer, useETFPriceHistory } from '../index';
+import { ETFPriceHistoryServiceAdapter } from '~/features/etf-detail/adapters/ETFPriceHistoryServiceAdapter';
+import { ETFDetails } from '../components/ETFDetails';
+import { TimeRangeSelector } from '../components/TimeRangeSelector';
 
 type ETFDetailScreenRouteProp = RouteProp<MainStackParamList, 'ETFDetails'>;
 
@@ -20,13 +17,13 @@ interface ETFDetailScreenProps {
 }
 
 export const ETFDetailScreen: React.FC<ETFDetailScreenProps> = ({
-  dataService = new ETFDetailServiceAdapter(),
+  dataService = new ETFPriceHistoryServiceAdapter(),
 }) => {
   const route = useRoute<ETFDetailScreenRouteProp>();
   const { etfID } = route.params;
 
   const [selectedRange, setSelectedRange] = useState<DateRangeType>('1M');
-  const { data, loading, error, refetch } = useETFDetail<ETFWithPriceHistory>(
+  const { data, loading, error, refetch } = useETFPriceHistory<ETFWithPriceHistory>(
     etfID,
     selectedRange,
     dataService,

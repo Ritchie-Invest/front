@@ -5,12 +5,12 @@ export { ETFDetails } from './components/ETFDetails';
 export { ETFStats } from './components/ETFStats';
 export { TimeRangeSelector } from './components/TimeRangeSelector';
 
-export { useETFDetail } from './hooks/useETFDetail';
+export { useETFPriceHistory } from './hooks/useETFPriceHistory';
 
-export { ETFDetailService } from './services/etfDetailService';
-export { ETFDetailServiceAdapter } from './adapters/etfDetailServiceAdapter';
+export { ETFDetailService } from './services/ETFPriceHistoryService';
+export { ETFPriceHistoryServiceAdapter } from './adapters/ETFPriceHistoryServiceAdapter';
 
-export type { ETFPriceData, ETFWithPriceHistory } from './model/etfPriceData';
+export type { ETFPriceData, ETFWithPriceHistory } from './models/ETFPriceHistory';
 export type { DateRangeType } from './types/dateRange';
 export { DATE_RANGE_OPTIONS } from './types/dateRange';
 
@@ -22,10 +22,10 @@ export {
   validateETFId,
   validateDateRange,
   validatePriceData,
-} from './validation/etfValidation';
+} from '../etf/validation/ETFValidation';
 
 export type {
   ETFDataService,
   ChartProvider,
   HeaderProvider,
-} from './contracts/etfDetail.contracts';
+} from './contracts/ETFPriceHistoryContracts';

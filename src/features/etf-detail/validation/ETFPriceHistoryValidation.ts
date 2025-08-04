@@ -1,8 +1,8 @@
 export const ETF_VALIDATION_RULES = {
   ETF_ID: {
     required: true,
-    type: 'number',
-    min: 1,
+    type: 'string',
+    minLength: 1,
   },
   TICKER: {
     required: true,
@@ -29,8 +29,8 @@ export const ETF_VALIDATION_RULES = {
   },
 } as const;
 
-export const validateETFId = (etfId: unknown): etfId is number => {
-  return typeof etfId === 'number' && etfId > 0;
+export const validateETFId = (etfId: unknown): etfId is string => {
+  return typeof etfId === 'string' && etfId.length > 0;
 };
 
 export const validateDateRange = (dateRange: unknown): dateRange is string => {

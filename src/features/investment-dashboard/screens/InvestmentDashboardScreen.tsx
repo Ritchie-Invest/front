@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Text, VStack } from 'native-base';
 import { PortfolioBalance } from '../components/PortfolioBalance';
-import { usePortfolio } from '../hooks/usePortfolio';
+import { usePortfolio } from '~/features/etf-portfolio/hooks/usePortfolio';
 import { useETFs } from '../hooks/useETFs';
 import { ETFList } from '../components/ETFList';
 

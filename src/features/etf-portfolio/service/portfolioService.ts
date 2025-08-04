@@ -1,4 +1,5 @@
 import { Portfolio, PortfolioPosition } from '../models/portfolio';
+
 const mockPortfolio: Portfolio = {
   portfolioId: 1,
   balance: 10000,
@@ -45,22 +46,24 @@ const mockPositions: PortfolioPosition[] = [
 export const portfolioService = {
   getPortfolio: async (): Promise<Portfolio> => {
     await new Promise((resolve) => setTimeout(resolve, 400));
-
     return mockPortfolio;
   },
 
   getPortfolioPositions: async (): Promise<PortfolioPosition[]> => {
     await new Promise((resolve) => setTimeout(resolve, 600));
-
     return mockPositions;
+  },
+
+  getPortfolioPositionByETF: async (etfId: number): Promise<PortfolioPosition | null> => {
+    await new Promise((resolve) => setTimeout(resolve, 300));
+    const positions = await portfolioService.getPortfolioPositions();
+    return positions.find((position) => position.etfId === etfId) || null;
   },
 
   getTotalPortfolioValue: async (): Promise<number> => {
     await new Promise((resolve) => setTimeout(resolve, 200));
-
     const positions = await portfolioService.getPortfolioPositions();
     const positionsValue = positions.reduce((sum, position) => sum + position.totalValue, 0);
-
     return mockPortfolio.balance + positionsValue;
   },
 };

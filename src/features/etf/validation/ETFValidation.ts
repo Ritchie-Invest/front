@@ -1,7 +1,7 @@
 import { ETF } from '../models/ETF';
 
 export const ETF_VALIDATION_RULES = {
-  ETF_ID: {
+  ID: {
     required: true,
     type: 'string',
     minLength: 1,

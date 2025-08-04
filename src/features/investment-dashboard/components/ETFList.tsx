@@ -3,7 +3,7 @@ import { HStack, Text, Icon } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ETFWithCurrentPrice } from '../models/ETFWithCurrentPrice';
+import { ETFWithCurrentPrice } from '~/features/etf/models/ETFWithCurrentPrice';
 import { formatCurrency } from '../utils/formatCurrency';
 import { MainStackParamList } from '../../../navigation/AppNavigator';
 import { List } from '../../../components/organisms/list';

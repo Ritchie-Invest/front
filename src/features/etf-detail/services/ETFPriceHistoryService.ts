@@ -11,12 +11,20 @@ export class ETFPriceHistoryService {
 
     const priceHistory = this.generateMockPriceHistory(dateRange);
 
+    const firstPrice = priceHistory[0]?.close ?? 0;
+    const lastPrice = priceHistory[priceHistory.length - 1]?.close ?? 0;
+    const priceChangePercentage =
+      firstPrice !== 0 ? ((lastPrice - firstPrice) / firstPrice) * 100 : 0;
+    const isGaining = lastPrice >= firstPrice;
+
     return {
       id: id,
       ticker: 'IWDA',
       name: 'iShares Core MSCI World UCITS ETF',
-      currentPrice: priceHistory[priceHistory.length - 1].close,
+      currentPrice: lastPrice,
       priceHistory,
+      priceChangePercentage,
+      isGaining,
     };
   }
 

@@ -1,7 +1,6 @@
-import { ETF } from '../../etf/models/ETF';
+import { ETFWithCurrentPrice } from '~/features/etf/models/ETFWithCurrentPrice';
 
-export interface ETFWithPriceHistory extends ETF {
-  currentPrice: number;
+export interface ETFWithPriceHistory extends ETFWithCurrentPrice {
   priceHistory: ETFPriceData[];
 }
 

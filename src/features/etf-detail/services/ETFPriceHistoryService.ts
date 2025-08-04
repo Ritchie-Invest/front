@@ -4,7 +4,7 @@ import { DATE_RANGE_OPTIONS } from '../types/dateRange';
 
 export class ETFPriceHistoryService {
   static async getETFWithPriceHistory(
-    etfId: string,
+    id: string,
     dateRange: DateRangeType,
   ): Promise<ETFWithPriceHistory> {
     await new Promise((resolve) => setTimeout(resolve, 500));
@@ -12,7 +12,7 @@ export class ETFPriceHistoryService {
     const priceHistory = this.generateMockPriceHistory(dateRange);
 
     return {
-      etfId: etfId,
+      id: id,
       ticker: 'IWDA',
       name: 'iShares Core MSCI World UCITS ETF',
       currentPrice: priceHistory[priceHistory.length - 1].close,

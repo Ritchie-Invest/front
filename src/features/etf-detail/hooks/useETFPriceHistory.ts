@@ -8,7 +8,7 @@ interface useETFPriceHistoryState<T> {
 }
 
 export const useETFPriceHistory = <T>(
-  etfId: string,
+  id: string,
   dateRange: string,
   dataService: ETFPriceHistoryServiceAdapter = new ETFPriceHistoryServiceAdapter(),
 ) => {
@@ -21,7 +21,7 @@ export const useETFPriceHistory = <T>(
   const fetchData = async () => {
     try {
       setState((prev) => ({ ...prev, loading: true, error: null }));
-      const data = await dataService.getETFWithPriceHistory(etfId, dateRange);
+      const data = await dataService.getETFWithPriceHistory(id, dateRange);
       setState({ data, loading: false, error: null });
     } catch (error) {
       setState((prev) => ({
@@ -34,7 +34,7 @@ export const useETFPriceHistory = <T>(
 
   useEffect(() => {
     fetchData();
-  }, [etfId, dateRange, dataService]);
+  }, [id, dateRange, dataService]);
 
   return {
     ...state,

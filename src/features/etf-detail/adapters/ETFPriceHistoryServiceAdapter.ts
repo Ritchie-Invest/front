@@ -1,18 +1,18 @@
 import { ETFPriceHistoryService } from '../services/ETFPriceHistoryService';
-import { ETFDataService } from '../contracts/ETFPriceHistoryContracts';
+import { ETFListContract } from '../contracts/ETFPriceHistoryContracts';
 import { validateETFId } from '../../etf/validation/ETFValidation';
 import { validateDateRange } from '../validation/ETFPriceHistoryValidation';
 
-export class ETFPriceHistoryServiceAdapter implements ETFDataService {
-  async getETFWithPriceHistory(etfId: string, dateRange: string): Promise<any> {
-    if (!validateETFId(etfId)) {
-      throw new Error(`Invalid ETF ID: ${etfId}. Must be a non-empty string.`);
+export class ETFPriceHistoryServiceAdapter implements ETFListContract {
+  async getETFWithPriceHistory(id: string, dateRange: string): Promise<any> {
+    if (!validateETFId(id)) {
+      throw new Error(`Invalid ETF ID: ${id}. Must be a non-empty string.`);
     }
 
     if (!validateDateRange(dateRange)) {
       throw new Error(`Invalid date range: ${dateRange}. Must be one of: 7D, 1M, 6M, 1Y`);
     }
 
-    return ETFPriceHistoryService.getETFWithPriceHistory(etfId, dateRange as any);
+    return ETFPriceHistoryService.getETFWithPriceHistory(id, dateRange as any);
   }
 }

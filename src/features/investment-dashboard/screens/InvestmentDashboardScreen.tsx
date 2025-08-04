@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Text, VStack } from 'native-base';
 import { PortfolioBalance } from '../components/PortfolioBalance';
 import { usePortfolio } from '../hooks/usePortfolio';
-import { useETFs } from '~/features/etf/hooks/useETFs';
+import { useETFs } from '~/features/investment-dashboard/hooks/useETFList';
 import { ETFList } from '../components/ETFList';
 
 export const InvestmentDashboardScreen: React.FC = () => {

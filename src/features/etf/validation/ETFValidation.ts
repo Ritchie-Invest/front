@@ -1,3 +1,5 @@
+import { ETF } from '../models/ETF';
+
 export const ETF_VALIDATION_RULES = {
   ETF_ID: {
     required: true,
@@ -17,23 +19,18 @@ export const ETF_VALIDATION_RULES = {
     minLength: 1,
     maxLength: 200,
   },
-  PRICE: {
-    required: true,
-    type: 'number',
-    min: 0,
-  },
 } as const;
 
-export const validateETFId = (etfId: unknown): etfId is string => {
-  return typeof etfId === 'string' && etfId.length > 0;
+export const validateETFId = (id: unknown): id is string => {
+  return typeof id === 'string' && id.length > 0;
 };
 
-export const validateETF = (etf: unknown): boolean => {
+export const validateETF = (etf: ETF): boolean => {
   if (!etf || typeof etf !== 'object') return false;
 
   const etfData = etf as any;
   return (
-    validateETFId(etfData.etfId) &&
+    validateETFId(etfData.id) &&
     typeof etfData.ticker === 'string' &&
     etfData.ticker.length >= ETF_VALIDATION_RULES.TICKER.minLength &&
     etfData.ticker.length <= ETF_VALIDATION_RULES.TICKER.maxLength &&
@@ -42,22 +39,4 @@ export const validateETF = (etf: unknown): boolean => {
     etfData.name.length >= ETF_VALIDATION_RULES.NAME.minLength &&
     etfData.name.length <= ETF_VALIDATION_RULES.NAME.maxLength
   );
-};
-
-export const validateETFWithCurrentPrice = (etf: unknown): boolean => {
-  if (!validateETF(etf)) return false;
-
-  const etfData = etf as any;
-  return (
-    typeof etfData.currentPrice === 'number' &&
-    etfData.currentPrice >= ETF_VALIDATION_RULES.PRICE.min &&
-    typeof etfData.priceChangePercentage === 'number' &&
-    typeof etfData.isGaining === 'boolean'
-  );
-};
-
-export const validateETFList = (etfs: unknown): boolean => {
-  if (!Array.isArray(etfs)) return false;
-
-  return etfs.every(validateETFWithCurrentPrice);
 };

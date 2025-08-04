@@ -59,7 +59,7 @@ export const ETFList: React.FC<ETFListProps> = ({ positions, loading = false }) 
           </HStack>
         </>
       )}
-      onItemPress={(etf) => navigation.navigate('ETFDetails', { etfId: etf.etfId })}
+      onItemPress={(etf) => navigation.navigate('ETFDetails', { id: etf.id })}
     />
   );
 };

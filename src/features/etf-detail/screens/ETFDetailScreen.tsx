@@ -19,7 +19,7 @@ interface ETFDetailScreenProps {
 
 export const ETFDetailScreen: React.FC<ETFDetailScreenProps> = ({ dataService }) => {
   const route = useRoute<ETFDetailScreenRouteProp>();
-  const { etfId } = route.params;
+  const { id } = route.params;
 
   // Utilisez useMemo pour éviter de recréer l'adapter à chaque rendu
   const memoizedDataService = useMemo(
@@ -29,7 +29,7 @@ export const ETFDetailScreen: React.FC<ETFDetailScreenProps> = ({ dataService })
 
   const [selectedRange, setSelectedRange] = useState<DateRangeType>('1M');
   const { data, loading, error, refetch } = useETFPriceHistory<ETFWithPriceHistory>(
-    etfId,
+    id,
     selectedRange,
     memoizedDataService,
   );

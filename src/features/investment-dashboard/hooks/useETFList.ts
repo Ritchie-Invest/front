@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { ETFWithCurrentPrice } from '../models/ETFWithCurrentPrice';
-import { ETFDataService } from '../contracts/ETFContract';
-import { ETFServiceAdapter } from '../adapters/ETFServiceAdapter';
+import { ETFWithCurrentPrice } from '../../etf/models/ETFWithCurrentPrice';
+import { ETFListContract } from '../contracts/ETFListContract';
+import { ETFListServiceAdapter } from '../adapters/ETFListServiceAdapter';
 
-export const useETFs = (dataService: ETFDataService = new ETFServiceAdapter()) => {
+export const useETFs = (dataService: ETFListContract = new ETFListServiceAdapter()) => {
   const [etfs, setETFs] = useState<ETFWithCurrentPrice[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

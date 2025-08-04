@@ -1,46 +1,26 @@
-export const ETF_VALIDATION_RULES = {
-  ETF_ID: {
-    required: true,
-    type: 'string',
-    minLength: 1,
-  },
-  TICKER: {
-    required: true,
-    type: 'string',
-    minLength: 1,
-    maxLength: 10,
-    pattern: /^[A-Z0-9]+$/,
-  },
-  NAME: {
-    required: true,
-    type: 'string',
-    minLength: 1,
-    maxLength: 200,
-  },
-  PRICE: {
-    required: true,
-    type: 'number',
-    min: 0,
-  },
+import {
+  ETF_VALIDATION_RULES,
+  validateETF,
+  validateETFId,
+} from '../../etf/validation/ETFValidation';
+import { DATE_RANGE_OPTIONS } from '../types/dateRange';
+
+export const PRICE_HISTORY_VALIDATION_RULES = {
   DATE_RANGE: {
     required: true,
     type: 'string',
-    allowedValues: ['7D', '1M', '6M', '1Y'],
+    allowedValues: DATE_RANGE_OPTIONS.map((option) => option.value),
   },
 } as const;
-
-export const validateETFId = (etfId: unknown): etfId is string => {
-  return typeof etfId === 'string' && etfId.length > 0;
-};
 
 export const validateDateRange = (dateRange: unknown): dateRange is string => {
   return (
     typeof dateRange === 'string' &&
-    ETF_VALIDATION_RULES.DATE_RANGE.allowedValues.includes(dateRange as any)
+    PRICE_HISTORY_VALIDATION_RULES.DATE_RANGE.allowedValues.includes(dateRange as any)
   );
 };
 
-export const validatePriceData = (data: unknown): boolean => {
+export const validateHistoryPriceData = (data: unknown): boolean => {
   if (!data || typeof data !== 'object') return false;
 
   const priceData = data as any;
@@ -53,3 +33,25 @@ export const validatePriceData = (data: unknown): boolean => {
     priceData.timestamp instanceof Date
   );
 };
+
+export const validatePriceHistory = (priceHistory: unknown): boolean => {
+  if (!Array.isArray(priceHistory)) return false;
+
+  return priceHistory.every(validateHistoryPriceData);
+};
+
+export const validateETFWithPriceHistory = (etf: unknown): boolean => {
+  if (!etf || typeof etf !== 'object') return false;
+
+  const etfData = etf as any;
+
+  if (!validateETF(etfData)) return false;
+
+  return (
+    typeof etfData.currentPrice === 'number' &&
+    etfData.currentPrice >= ETF_VALIDATION_RULES.PRICE.min &&
+    validatePriceHistory(etfData.priceHistory)
+  );
+};
+
+export { ETF_VALIDATION_RULES, validateETF, validateETFId };

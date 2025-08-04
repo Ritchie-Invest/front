@@ -1,6 +1,7 @@
 import { ETFPriceHistoryService } from '../services/ETFPriceHistoryService';
 import { ETFDataService } from '../contracts/ETFPriceHistoryContracts';
-import { validateETFId, validateDateRange } from '../../etf/validation/ETFValidation';
+import { validateETFId } from '../../etf/validation/ETFValidation';
+import { validateDateRange } from '../validation/ETFPriceHistoryValidation';
 
 export class ETFPriceHistoryServiceAdapter implements ETFDataService {
   async getETFWithPriceHistory(etfId: string, dateRange: string): Promise<any> {

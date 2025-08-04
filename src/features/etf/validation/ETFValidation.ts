@@ -22,36 +22,10 @@ export const ETF_VALIDATION_RULES = {
     type: 'number',
     min: 0,
   },
-  DATE_RANGE: {
-    required: true,
-    type: 'string',
-    allowedValues: ['7D', '1M', '6M', '1Y'],
-  },
 } as const;
 
 export const validateETFId = (etfId: unknown): etfId is string => {
   return typeof etfId === 'string' && etfId.length > 0;
-};
-
-export const validateDateRange = (dateRange: unknown): dateRange is string => {
-  return (
-    typeof dateRange === 'string' &&
-    ETF_VALIDATION_RULES.DATE_RANGE.allowedValues.includes(dateRange as any)
-  );
-};
-
-export const validatePriceData = (data: unknown): boolean => {
-  if (!data || typeof data !== 'object') return false;
-
-  const priceData = data as any;
-  return (
-    typeof priceData.open === 'number' &&
-    typeof priceData.high === 'number' &&
-    typeof priceData.low === 'number' &&
-    typeof priceData.close === 'number' &&
-    typeof priceData.volume === 'number' &&
-    priceData.timestamp instanceof Date
-  );
 };
 
 export const validateETF = (etf: unknown): boolean => {

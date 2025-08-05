@@ -1,7 +1,7 @@
 import React from 'react';
-import { Box, VStack, ScrollView } from 'native-base';
-import { useCallback } from 'react';
-import { TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { Box, VStack, ScrollView, KeyboardAvoidingView } from 'native-base';
+import { useCallback, useState } from 'react';
+import { TouchableWithoutFeedback, Keyboard, Platform } from 'react-native';
 import { RouteProp, useRoute, useFocusEffect } from '@react-navigation/native';
 import { MainStackParamList } from '../../../navigation/AppNavigator';
 import { ETFTransactionHeader } from '../components/Header';
@@ -15,41 +15,55 @@ type ETFTransactionScreenRouteProp = RouteProp<MainStackParamList, 'ETFTransacti
 export const ETFTransactionScreen: React.FC = () => {
   const route = useRoute<ETFTransactionScreenRouteProp>();
   const { transactionType } = route.params;
-  const { clearInputsOnly, message, messageType } = useTransactionStore();
+  const { clearInputsOnly } = useTransactionStore();
+  const [transactionResult, setTransactionResult] = useState<{
+    success: boolean;
+    message: string;
+  } | null>(null);
 
   useFocusEffect(
     useCallback(() => {
       clearInputsOnly();
+      setTransactionResult(null);
     }, [clearInputsOnly]),
   );
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <Box flex={1} bg="white">
-        <ScrollView
-          flex={1}
-          contentContainerStyle={{ flexGrow: 1 }}
-          showsVerticalScrollIndicator={false}
-        >
-          <VStack space={4} p={4} flex={1} minHeight="100%">
-            {message && messageType ? (
-              <Box flex={1} justifyContent="center">
-                <TransactionStatus success={messageType === 'success'} message={message} />
-              </Box>
-            ) : (
-              <>
-                <ETFTransactionHeader />
-                <Box flex={1} justifyContent="center" minHeight="200">
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <Box flex={1} bg="white">
+          <ScrollView
+            flex={1}
+            contentContainerStyle={{ flexGrow: 1 }}
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="handled"
+          >
+            <VStack space={4} p={4} flex={1}>
+              {transactionResult ? (
+                <Box flex={1} justifyContent="center" alignItems="center">
+                  <TransactionStatus
+                    success={transactionResult.success}
+                    message={transactionResult.message}
+                    onReset={() => setTransactionResult(null)}
+                  />
+                </Box>
+              ) : (
+                <Box flex={1} justifyContent={'space-around'}>
+                  <ETFTransactionHeader />
                   <AmountInput />
+                  <TransactionButton
+                    transactionType={transactionType}
+                    onTransactionResult={setTransactionResult}
+                  />
                 </Box>
-                <Box pb={20}>
-                  <TransactionButton transactionType={transactionType} />
-                </Box>
-              </>
-            )}
-          </VStack>
-        </ScrollView>
-      </Box>
-    </TouchableWithoutFeedback>
+              )}
+            </VStack>
+          </ScrollView>
+        </Box>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };

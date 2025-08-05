@@ -12,18 +12,25 @@ type NavigationProp = NativeStackNavigationProp<MainStackParamList>;
 interface TransactionStatusProps {
   success: boolean;
   message: string;
+  onReset?: () => void;
 }
 
-export const TransactionStatus: React.FC<TransactionStatusProps> = ({ success, message }) => {
+export const TransactionStatus: React.FC<TransactionStatusProps> = ({
+  success,
+  message,
+  onReset,
+}) => {
   const navigation = useNavigation<NavigationProp>();
   const { clearTransaction } = useTransactionStore();
 
   const handleNewTransaction = () => {
     clearTransaction();
+    onReset?.();
   };
 
   const handleBackToDashboard = () => {
     clearTransaction();
+    onReset?.();
     navigation.navigate('InvestmentDashboard');
   };
 

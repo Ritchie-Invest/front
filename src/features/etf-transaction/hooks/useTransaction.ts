@@ -1,67 +1,54 @@
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 import { TransactionServiceAdapter } from '../adapters/TransactionServiceAdapter';
 import { TransactionRequest } from '../models/requests';
+import { TransactionResponse } from '../models/responses';
 import { TransactionType } from '../types/TransactionType';
 import { useConversion } from './useConversion';
 import { useTransactionStore } from '../store/TransactionStore';
 
 export interface UseTransactionReturn {
   isLoading: boolean;
-  message: string | null;
-  messageType: boolean | null;
-  executeTransaction: (transactionRequest: TransactionRequest) => Promise<void>;
-  handleTransaction: (transactionType: TransactionType) => Promise<void>;
-  clearMessage: () => void;
+  executeTransaction: (transactionRequest: TransactionRequest) => Promise<TransactionResponse>;
+  handleTransaction: (transactionType: TransactionType) => Promise<TransactionResponse | null>;
 }
 
 export const useTransaction = (): UseTransactionReturn => {
   const { amount, shares, isValidAmount, selectedETF } = useConversion();
-  const { isLoading, message, messageType, setLoading, setMessage, clearMessage } =
-    useTransactionStore();
+  const { isLoading, setLoading } = useTransactionStore();
   const transactionAdapter = new TransactionServiceAdapter();
 
   const executeTransaction = useCallback(
-    async (transactionRequest: TransactionRequest) => {
+    async (transactionRequest: TransactionRequest): Promise<TransactionResponse> => {
       setLoading(true);
-      setMessage(null, null);
 
       try {
         const response = await transactionAdapter.executeTransaction(transactionRequest);
-
-        if (response.status === 'success') {
-          const actionText =
-            transactionRequest.transactionType === TransactionType.Buy ? 'Achat' : 'Vente';
-          setMessage(`${actionText} réalisé avec succès !`, true);
-        }
+        return response;
       } catch (error) {
-        setMessage(error instanceof Error ? error.message : 'Une erreur est survenue', false);
+        throw error;
       } finally {
         setLoading(false);
       }
     },
-    [setLoading, setMessage],
+    [setLoading],
   );
 
   const handleTransaction = useCallback(
-    async (transactionType: TransactionType) => {
+    async (transactionType: TransactionType): Promise<TransactionResponse | null> => {
       if (!selectedETF) {
-        setMessage('Veuillez sélectionner un ETF', false);
-        return;
+        throw new Error('Veuillez sélectionner un ETF');
       }
 
       if (!amount || amount.trim() === '') {
-        setMessage('Veuillez saisir un montant', false);
-        return;
+        throw new Error('Veuillez saisir un montant');
       }
 
       if (!isValidAmount) {
-        setMessage('Veuillez saisir un montant valide', false);
-        return;
+        throw new Error('Veuillez saisir un montant valide');
       }
 
       if (shares <= 0) {
-        setMessage("Le montant saisi ne permet pas d'acheter de parts", false);
-        return;
+        throw new Error("Le montant saisi ne permet pas d'acheter de parts");
       }
 
       const transactionRequest: TransactionRequest = {
@@ -71,17 +58,14 @@ export const useTransaction = (): UseTransactionReturn => {
         transactionType,
       };
 
-      await executeTransaction(transactionRequest);
+      return await executeTransaction(transactionRequest);
     },
-    [isValidAmount, selectedETF, shares, amount, executeTransaction, setMessage],
+    [isValidAmount, selectedETF, shares, amount, executeTransaction],
   );
 
   return {
     isLoading,
-    message,
-    messageType,
     executeTransaction,
     handleTransaction,
-    clearMessage,
   };
 };

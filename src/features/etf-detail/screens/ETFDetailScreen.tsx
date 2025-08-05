@@ -1,41 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { ScrollView, RefreshControl } from 'react-native';
 import { Box, VStack, Spinner, Text, Center } from 'native-base';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { RouteProp, useRoute } from '@react-navigation/native';
-import { MainStackParamList } from '../../../navigation/AppNavigator';
-import {
-  DateRangeType,
-  ETFWithPriceHistory,
-  useETFDetail,
-  LineChartContainer,
-  ETFDetails,
-  TimeRangeSelector,
-  ETFDetailServiceAdapter,
-} from '../index';
+import { DateRangeType } from '../types/dateRange';
+import { ETFWithPriceHistory } from '../models/ETFPriceHistory';
+import { ETFPriceHistoryServiceAdapter } from '~/features/etf-detail/adapters/ETFPriceHistoryServiceAdapter';
+import { ETFDetails } from '../components/ETFDetails';
+import { TimeRangeSelector } from '../components/TimeRangeSelector';
+import { LineChartContainer } from '../components/LineChartContainer';
+import { useETFPriceHistory } from '../hooks/useETFPriceHistory';
 import { BuyAndSellButtons } from '../components/BuyAndSellButtons';
-type ETFDetailScreenRouteProp = RouteProp<MainStackParamList, 'ETFDetails'>;
+import { useETFStore } from '~/features/etf/store/ETFStore';
 
 interface ETFDetailScreenProps {
   dataService?: any;
 }
 
-export const ETFDetailScreen: React.FC<ETFDetailScreenProps> = ({
-  dataService = new ETFDetailServiceAdapter(),
-}) => {
-  const route = useRoute<ETFDetailScreenRouteProp>();
-  const { etfID } = route.params;
+export const ETFDetailScreen: React.FC<ETFDetailScreenProps> = ({ dataService }) => {
+  const { selectedETF } = useETFStore();
+
+  const memoizedDataService = useMemo(
+    () => dataService || new ETFPriceHistoryServiceAdapter(),
+    [dataService],
+  );
 
   const [selectedRange, setSelectedRange] = useState<DateRangeType>('1M');
-  const { data, loading, error, refetch } = useETFDetail<ETFWithPriceHistory>(
-    etfID,
+  const { data, loading, error, refetch } = useETFPriceHistory<ETFWithPriceHistory>(
+    selectedETF?.id ?? '',
     selectedRange,
-    dataService,
+    memoizedDataService,
   );
 
   const handleRangeChange = (range: DateRangeType) => {
     setSelectedRange(range);
   };
+
+  if (!selectedETF) {
+    return (
+      <Center flex={1} bg="gray.50">
+        <Text color="gray.600">Aucun ETF sélectionné</Text>
+      </Center>
+    );
+  }
 
   if (loading && !data) {
     return (
@@ -70,10 +76,10 @@ export const ETFDetailScreen: React.FC<ETFDetailScreenProps> = ({
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: 'gray.500' }}>
-      <Box flex={1}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }} edges={['bottom']}>
+      <VStack flex={1} pt={4}>
         <ScrollView
-          contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}
+          style={{ flex: 1 }}
           refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} />}
         >
           <VStack space={4} p={4}>
@@ -85,10 +91,10 @@ export const ETFDetailScreen: React.FC<ETFDetailScreenProps> = ({
           </VStack>
         </ScrollView>
 
-        <Box position="absolute" bottom={4} left={4} right={4}>
-          <BuyAndSellButtons etfID={etfID} />
+        <Box p={4}>
+          <BuyAndSellButtons />
         </Box>
-      </Box>
+      </VStack>
     </SafeAreaView>
   );
 };

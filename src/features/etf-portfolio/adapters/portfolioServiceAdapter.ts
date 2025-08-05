@@ -11,7 +11,7 @@ export class PortfolioServiceAdapter implements PortfolioDataService {
     return portfolioService.getPortfolioPositions();
   }
 
-  async getPortfolioPositionByETF(etfId: number): Promise<PortfolioPosition | null> {
+  async getPortfolioPositionByETF(etfId: string): Promise<PortfolioPosition | null> {
     return portfolioService.getPortfolioPositionByETF(etfId);
   }
 

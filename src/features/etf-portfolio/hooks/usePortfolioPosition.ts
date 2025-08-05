@@ -4,7 +4,7 @@ import { portfolioService } from '../service/portfolioService';
 import { PortfolioDataService } from '../contracts/portfolio.contract';
 
 export const usePortfolioPosition = (
-  etfId: number,
+  etfId: string,
   dataService: PortfolioDataService = portfolioService,
 ) => {
   const [position, setPosition] = useState<PortfolioPosition | null>(null);

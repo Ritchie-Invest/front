@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react';
-import { ETFDataService } from '../index';
+import { ETFPriceHistoryServiceAdapter } from '../adapters/ETFPriceHistoryServiceAdapter';
 
-interface UseETFDetailState<T> {
+interface useETFPriceHistoryState<T> {
   data: T | null;
   loading: boolean;
   error: string | null;
 }
 
-export const useETFDetail = <T>(etfId: number, dateRange: string, dataService: ETFDataService) => {
-  const [state, setState] = useState<UseETFDetailState<T>>({
+export const useETFPriceHistory = <T>(
+  id: string,
+  dateRange: string,
+  dataService: ETFPriceHistoryServiceAdapter = new ETFPriceHistoryServiceAdapter(),
+) => {
+  const [state, setState] = useState<useETFPriceHistoryState<T>>({
     data: null,
     loading: true,
     error: null,
@@ -17,7 +21,7 @@ export const useETFDetail = <T>(etfId: number, dateRange: string, dataService: E
   const fetchData = async () => {
     try {
       setState((prev) => ({ ...prev, loading: true, error: null }));
-      const data = await dataService.getETFWithPriceHistory(etfId, dateRange);
+      const data = await dataService.getETFWithPriceHistory(id, dateRange);
       setState({ data, loading: false, error: null });
     } catch (error) {
       setState((prev) => ({
@@ -30,7 +34,7 @@ export const useETFDetail = <T>(etfId: number, dateRange: string, dataService: E
 
   useEffect(() => {
     fetchData();
-  }, [etfId, dateRange]);
+  }, [id, dateRange, dataService]);
 
   return {
     ...state,

@@ -5,29 +5,29 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { MainStackParamList } from '../../../navigation/AppNavigator';
 import { Button } from '../../../components/atoms/Button';
 import { TransactionType } from '../../etf-transaction/types/TransactionType';
+import { useETFStore } from '~/features/etf/store/ETFStore';
 
 type NavigationProp = NativeStackNavigationProp<MainStackParamList>;
 
-interface BuyAndSellButtonsProps {
-  etfID: number;
-}
-
-export const BuyAndSellButtons: React.FC<BuyAndSellButtonsProps> = ({ etfID }) => {
+export const BuyAndSellButtons: React.FC = () => {
   const navigation = useNavigation<NavigationProp>();
+  const { selectedETF } = useETFStore();
 
   const handleBuyPress = () => {
     navigation.navigate('ETFTransaction', {
-      etfID,
       transactionType: TransactionType.Buy,
     });
   };
 
   const handleSellPress = () => {
     navigation.navigate('ETFTransaction', {
-      etfID,
       transactionType: TransactionType.Sell,
     });
   };
+
+  if (!selectedETF) {
+    return null;
+  }
 
   return (
     <HStack space={3} width="100%">

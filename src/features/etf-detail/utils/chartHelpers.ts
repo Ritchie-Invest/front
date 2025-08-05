@@ -1,4 +1,4 @@
-import { ETFPriceData } from '../model/etfPriceData';
+import { ETFPriceData } from '../models/ETFPriceHistory';
 
 export interface ChartDataPoint {
   value: number;

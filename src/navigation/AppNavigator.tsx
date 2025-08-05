@@ -6,7 +6,7 @@ import { OnboardingLayout } from '../features/onboarding/screens/OnboardingLayou
 import { LoginScreen } from '../features/auth/screens/LoginScreen';
 import { RegisterScreen } from '../features/auth/screens/RegisterScreen';
 import HomeScreen from '../features/landing/screens/home';
-import { InvestmentDashboardScreen } from '../features/investment-dashboard/screens/InvestmentDashboardScreen';
+import { ETFDashboard } from '~/features/etf-dashboard/screens/ETFDashboard';
 import { ETFDetailScreen } from '../features/etf-detail/screens/ETFDetailScreen';
 import { ETFTransactionScreen } from '~/features/etf-transaction/screens/ETFTransactionScreen';
 import { TransactionType } from '~/features/etf-transaction/types/TransactionType';
@@ -24,8 +24,8 @@ export type RootStackParamList = {
 export type MainStackParamList = {
   Landing: undefined;
   InvestmentDashboard: undefined;
-  ETFDetails: { etfID: number };
-  ETFTransaction: { etfID: number; transactionType: TransactionType };
+  ETFDetails: { id: string };
+  ETFTransaction: { transactionType: TransactionType };
   Progress: undefined;
   Profile: undefined;
   Register: undefined;
@@ -92,7 +92,7 @@ export const AppNavigator = ({
               <MainStack.Screen name="InvestmentDashboard" options={{ headerTitle: 'Portfolio' }}>
                 {() => (
                   <Box flex={1}>
-                    <InvestmentDashboardScreen />
+                    <ETFDashboard />
                     <Navbar />
                   </Box>
                 )}

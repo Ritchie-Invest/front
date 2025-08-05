@@ -1,26 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Text, VStack } from 'native-base';
 import { PortfolioBalance } from '../components/PortfolioBalance';
 import { usePortfolio } from '~/features/etf-portfolio/hooks/usePortfolio';
-import { useETFs } from '../hooks/useETFs';
+import { useETFList } from '../hooks/useETFList';
 import { ETFList } from '../components/ETFList';
+import { useETFStore } from '../../etf/store/ETFStore';
 
-export const InvestmentDashboardScreen: React.FC = () => {
+export const ETFDashboard: React.FC = () => {
+  const { clearSelectedETF } = useETFStore();
   const {
     portfolio,
     totalValue,
     loading: portfolioLoading,
     error: portfolioError,
-    refetch: refetchPortfolio,
   } = usePortfolio();
-  const { etfs, loading: etfsLoading, error: etfsError, refetch: refetchETFs } = useETFs();
+  const { etfs, loading: etfsLoading, error: etfsError, refetch: refetchETFs } = useETFList();
+
+  useEffect(() => {
+    clearSelectedETF();
+  }, []); // Tableau de dépendances vide pour n'exécuter qu'une fois
 
   const loading = portfolioLoading || etfsLoading;
   const error = portfolioError || etfsError;
-
-  const refetch = async () => {
-    await Promise.all([refetchPortfolio(), refetchETFs()]);
-  };
 
   if (error) {
     return (

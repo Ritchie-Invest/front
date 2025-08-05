@@ -4,22 +4,26 @@ import { baseFontSize } from 'native-base/lib/typescript/theme/tools';
 
 type Props = {
   placeholder: string;
-  value: string;
-  onChangeText: (text: string) => void;
+  value: string | number;
+  onChange: (value: string) => void;
   type?: 'text' | 'email' | 'password' | 'numeric';
   accessibilityLabel?: string;
   borderWidth?: number;
   bg?: string;
+  fontSize?: number;
+  textAlign?: 'left' | 'right' | 'center';
 };
 
 export const InputField = ({
   placeholder,
   value,
-  onChangeText,
+  onChange,
   type = 'text',
   accessibilityLabel,
   borderWidth = 1,
   bg = 'white',
+  fontSize = 12,
+  textAlign = 'left',
 }: Props) => {
   const isPassword = type === 'password';
   const keyboardType =
@@ -57,10 +61,16 @@ export const InputField = ({
       width="100%"
     >
       <TextInput
-        style={{ fontSize: 50, color: 'black', width: '100%' }}
+        style={{
+          fontSize: fontSize,
+          color: 'black',
+          width: '100%',
+          textAlign: textAlign,
+          backgroundColor: bg,
+        }}
         placeholder={placeholder}
-        value={value}
-        onChangeText={onChangeText}
+        value={value !== undefined && value !== null ? String(value) : ''}
+        onChangeText={onChange}
         secureTextEntry={isPassword}
         keyboardType={keyboardType}
         autoCapitalize={type === 'email' || isPassword ? 'none' : 'sentences'}

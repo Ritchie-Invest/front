@@ -6,42 +6,32 @@ import { useConversion } from '../hooks/useConversion';
 export const AmountInput: React.FC = () => {
   const { amount, shares, setAmount, isValidAmount } = useConversion();
 
-  const handleAmountChange = (value: string) => {
-    const numericValue = parseFloat(value);
-    if (!isNaN(numericValue) && numericValue >= 0) {
-      setAmount(numericValue);
-    } else if (value === '') {
-      setAmount(0);
-    }
-  };
+  const screenHeight = window.innerHeight;
 
   return (
-    <VStack space={4} p={4}>
+    <VStack space={4} p={4} justifyContent="center" width="100%" height="400px">
       <VStack space={2}>
-        <HStack alignItems="center" space={2}>
-          <Box flex={1}>
+        <HStack alignItems="center" justifyContent="center" space={2}>
+          <Box>
             <InputField
               placeholder="0"
-              value={amount === '' ? '' : amount.toString()}
-              onChangeText={handleAmountChange}
+              value={amount}
+              onChange={setAmount}
               type="numeric"
               accessibilityLabel="Montant en euros"
-              bg="white"
-              borderWidth={1}
+              bg="transparent"
+              borderWidth={0}
+              fontSize={45}
+              textAlign="right"
             />
           </Box>
-          <Text fontSize="lg" fontWeight="bold" color="black" minW="30px">
+          <Text fontSize={50} fontWeight="bold" color="black" minW="30px">
             €
           </Text>
         </HStack>
-        <HStack alignItems="center" space={2}>
-          <Box flex={1} justifyContent="center">
-            <Text fontSize="md" color="black" fontFamily="mono">
-              {shares.toFixed(6)}
-            </Text>
-          </Box>
-          <Text fontSize="sm" color="gray.600" minW="40px">
-            parts
+        <HStack alignItems="center" justifyContent="center" space={2}>
+          <Text fontSize="md" color="gray.600">
+            {shares === 0 ? shares.toFixed(0) : shares.toFixed(6)} parts
           </Text>
         </HStack>
       </VStack>

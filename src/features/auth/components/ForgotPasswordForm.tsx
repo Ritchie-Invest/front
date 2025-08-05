@@ -58,7 +58,7 @@ export const ForgotPasswordForm = ({ onBackToLogin }: ForgotPasswordFormProps) =
           <InputField
             placeholder={t('form.email')}
             value={email}
-            onChangeText={setEmail}
+            onChange={setEmail}
             type="email"
           />
 

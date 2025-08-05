@@ -24,15 +24,12 @@ export const useETFHeader = (etfId: string, ticker: string, currentValue: number
         throw new Error('Invalid ETF ID format');
       }
 
-      // Utiliser le PossessedValueService pour récupérer la valeur possédée
       const possessedValueRequest: PossessedValueRequest = {
-        userId: 'current-user', // À récupérer depuis le contexte utilisateur si disponible
         etfId: etfId,
       };
 
       const possessedValueResponse = PossessedValueService.getPossessedValue(possessedValueRequest);
 
-      // Construire les données de l'header
       const headerData: ETFHeaderData = {
         ticker,
         currentPrice: currentValue,

@@ -11,6 +11,10 @@ type Props = {
 } & Omit<IButtonProps, 'variant'>;
 
 export const Button = ({ children, onPress, isLoading, variant = 'primary', ...rest }: Props) => {
+  const handlePress = () => {
+    onPress();
+  };
+
   const getVariantProps = () => {
     switch (variant) {
       case 'secondary':
@@ -45,7 +49,7 @@ export const Button = ({ children, onPress, isLoading, variant = 'primary', ...r
 
   return (
     <NBButton
-      onPress={onPress}
+      onPress={handlePress}
       isLoading={isLoading}
       rounded="md"
       height="50"

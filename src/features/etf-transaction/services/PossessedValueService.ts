@@ -1,6 +1,6 @@
 import { useETFStore } from '../../etf/store/ETFStore';
-import { PossessedValueRequest } from '../models/PosessedValueRequest';
-import { PossessedValueResponse } from '../models/PosessedValueResponse';
+import { PossessedValueRequest } from '../models/requests';
+import { PossessedValueResponse } from '../models/responses';
 
 export class PossessedValueService {
   static getPossessedValue(possessedValueRequest: PossessedValueRequest): PossessedValueResponse {

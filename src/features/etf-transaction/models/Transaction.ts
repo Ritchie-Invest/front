@@ -1,8 +1,7 @@
 import { TransactionType } from '../types/TransactionType';
 
 export interface Transaction {
-  etfID: number;
-  ticker: string;
-  currentPrice: number;
+  amount: number;
+  shares: number;
   transactionType: TransactionType;
 }

@@ -18,7 +18,7 @@ export const ETFDashboard: React.FC = () => {
 
   useEffect(() => {
     clearSelectedETF();
-  }, []); // Tableau de dépendances vide pour n'exécuter qu'une fois
+  }, []);
 
   const loading = portfolioLoading || etfsLoading;
   const error = portfolioError || etfsError;

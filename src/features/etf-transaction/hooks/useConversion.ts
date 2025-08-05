@@ -1,6 +1,7 @@
-import { useState, useCallback } from 'react';
-import { ConvertService } from '../services/ConversionService';
+import { useState, useCallback, useMemo } from 'react';
+import { ConversionServiceAdapter } from '../adapters/ConversionServiceAdapter';
 import { useETFStore } from '~/features/etf/store/ETFStore';
+import { useTransactionStore } from '../store/TransactionStore';
 
 export interface UseConversionReturn {
   amount: string;
@@ -12,14 +13,14 @@ export interface UseConversionReturn {
 }
 
 export const useConversion = (): UseConversionReturn => {
-  const [amount, setAmountState] = useState<string>('');
-  const [shares, setShares] = useState<number>(0);
   const selectedETF = useETFStore((state) => state.selectedETF);
+  const { amount, shares, setAmount: setStoreAmount, setShares } = useTransactionStore();
+  const conversionAdapter = new ConversionServiceAdapter();
 
   const setAmount = useCallback(
     (value: string) => {
       if (!value || typeof value !== 'string') {
-        setAmountState('');
+        setStoreAmount('');
         setShares(0);
         return;
       }
@@ -31,11 +32,11 @@ export const useConversion = (): UseConversionReturn => {
         cleanValue = parts[0] + '.' + parts.slice(1).join('');
       }
 
-      setAmountState(cleanValue);
+      setStoreAmount(cleanValue);
 
       const numericValue = parseFloat(cleanValue);
       if (!isNaN(numericValue) && numericValue > 0 && selectedETF?.id) {
-        const response = ConvertService.convertEuroToShares({
+        const response = conversionAdapter.convertEuroToShares({
           euroAmount: numericValue,
           etfId: selectedETF.id,
         });
@@ -44,18 +45,22 @@ export const useConversion = (): UseConversionReturn => {
         setShares(0);
       }
     },
-    [selectedETF?.id],
+    [selectedETF?.id, setStoreAmount, setShares],
   );
 
   const clearAmount = useCallback(() => {
-    setAmountState('');
+    setStoreAmount('');
     setShares(0);
-  }, []);
+  }, [setStoreAmount, setShares]);
 
-  const isValidAmount = useCallback(() => {
-    if (!amount || amount === '') return false;
-    const numericValue = parseFloat(amount);
-    return !isNaN(numericValue) && numericValue > 0;
+  const isValidAmount = useMemo(() => {
+    const isValid = !!(
+      amount &&
+      amount !== '' &&
+      !isNaN(parseFloat(amount)) &&
+      parseFloat(amount) > 0
+    );
+    return isValid;
   }, [amount]);
 
   return {
@@ -63,7 +68,7 @@ export const useConversion = (): UseConversionReturn => {
     shares,
     setAmount,
     clearAmount,
-    isValidAmount: isValidAmount(),
+    isValidAmount,
     selectedETF,
   };
 };

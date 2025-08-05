@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { PossessedValueService } from '../services/PossessedValueService';
-import { PossessedValueRequest } from '../models/PosessedValueRequest';
+import { PossessedValueServiceAdapter } from '../adapters/PossessedValueServiceAdapter';
+import { PossessedValueRequest } from '../models/requests';
 
 export interface ETFHeaderData {
   ticker: string;
@@ -12,6 +12,7 @@ export const useETFHeader = (etfId: string, ticker: string, currentValue: number
   const [data, setData] = useState<ETFHeaderData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const possessedValueAdapter = new PossessedValueServiceAdapter();
 
   const fetchETFHeaderData = async () => {
     try {
@@ -28,7 +29,7 @@ export const useETFHeader = (etfId: string, ticker: string, currentValue: number
         etfId: etfId,
       };
 
-      const possessedValueResponse = PossessedValueService.getPossessedValue(possessedValueRequest);
+      const possessedValueResponse = possessedValueAdapter.getPossessedValue(possessedValueRequest);
 
       const headerData: ETFHeaderData = {
         ticker,

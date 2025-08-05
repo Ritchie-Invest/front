@@ -1,6 +1,6 @@
 import { useETFStore } from '../../etf/store/ETFStore';
-import { ConversionRequest } from '../models/ConversionRequest';
-import { ConversionResponse } from '../models/ConversionResponse';
+import { ConversionRequest } from '../models/requests';
+import { ConversionResponse } from '../models/responses';
 
 export class ConvertService {
   static convertEuroToShares(conversionRequest: ConversionRequest): ConversionResponse {

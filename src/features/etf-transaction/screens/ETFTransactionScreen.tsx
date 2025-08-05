@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, VStack } from 'native-base';
+import { Box, VStack, ScrollView } from 'native-base';
 import { useCallback } from 'react';
 import { TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { RouteProp, useRoute, useFocusEffect } from '@react-navigation/native';
@@ -15,28 +15,40 @@ type ETFTransactionScreenRouteProp = RouteProp<MainStackParamList, 'ETFTransacti
 export const ETFTransactionScreen: React.FC = () => {
   const route = useRoute<ETFTransactionScreenRouteProp>();
   const { transactionType } = route.params;
-  const { clearTransaction, message, messageType } = useTransactionStore();
+  const { clearInputsOnly, message, messageType } = useTransactionStore();
 
   useFocusEffect(
     useCallback(() => {
-      clearTransaction();
-    }, [clearTransaction]),
+      clearInputsOnly();
+    }, [clearInputsOnly]),
   );
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Box flex={1} bg="white">
-        <VStack space={4} p={4} flex={1} justifyContent="space-around">
-          {message && messageType ? (
-            <TransactionStatus success={messageType} message={message} />
-          ) : (
-            <>
-              <ETFTransactionHeader />
-              <AmountInput />
-              <TransactionButton transactionType={transactionType} />
-            </>
-          )}
-        </VStack>
+        <ScrollView
+          flex={1}
+          contentContainerStyle={{ flexGrow: 1 }}
+          showsVerticalScrollIndicator={false}
+        >
+          <VStack space={4} p={4} flex={1} minHeight="100%">
+            {message && messageType ? (
+              <Box flex={1} justifyContent="center">
+                <TransactionStatus success={messageType === 'success'} message={message} />
+              </Box>
+            ) : (
+              <>
+                <ETFTransactionHeader />
+                <Box flex={1} justifyContent="center" minHeight="200">
+                  <AmountInput />
+                </Box>
+                <Box pb={20}>
+                  <TransactionButton transactionType={transactionType} />
+                </Box>
+              </>
+            )}
+          </VStack>
+        </ScrollView>
       </Box>
     </TouchableWithoutFeedback>
   );

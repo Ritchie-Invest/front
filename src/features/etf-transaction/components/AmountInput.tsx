@@ -32,7 +32,7 @@ export const AmountInput: React.FC = () => {
   const screenHeight = window.innerHeight;
 
   return (
-    <VStack space={4} p={4} justifyContent="center" width="100%" height="400px">
+    <VStack space={4} p={4} justifyContent="center" width="100%">
       <VStack space={2}>
         <HStack alignItems="center" justifyContent="center" space={2}>
           <Box>

@@ -8,11 +8,11 @@ export interface TransactionState {
   shares: number;
   isLoading: boolean;
   message: string | null;
-  messageType: boolean | null;
+  messageType: 'success' | 'error' | null;
   setAmount: (amount: string) => void;
   setShares: (shares: number) => void;
   setLoading: (loading: boolean) => void;
-  setMessage: (message: string | null, type: boolean | null) => void;
+  setMessage: (message: string | null, type: 'success' | 'error' | null) => void;
   clearMessage: () => void;
   clearTransaction: () => void;
   clearInputsOnly: () => void;

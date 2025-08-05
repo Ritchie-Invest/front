@@ -12,7 +12,6 @@ import { ETFTransactionScreen } from '~/features/etf-transaction/screens/ETFTran
 import { TransactionType } from '~/features/etf-transaction/types/TransactionType';
 
 import Navbar from '../features/navigation/components/organisms/navbar';
-import { Trans } from 'react-i18next';
 
 export type RootStackParamList = {
   Main: undefined;
@@ -98,7 +97,7 @@ export const AppNavigator = ({
                 )}
               </MainStack.Screen>
               <MainStack.Screen name="ETFDetails" options={{ headerTitle: 'Détails ETF' }}>
-                {({ route }) => (
+                {() => (
                   <Box flex={1}>
                     <ETFDetailScreen />
                   </Box>
@@ -115,11 +114,7 @@ export const AppNavigator = ({
                         : 'Transaction',
                 })}
               >
-                {() => (
-                  <Box flex={1}>
-                    <ETFTransactionScreen />
-                  </Box>
-                )}
+                {() => <ETFTransactionScreen />}
               </MainStack.Screen>
             </MainStack.Navigator>
           )}

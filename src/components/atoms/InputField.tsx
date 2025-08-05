@@ -1,12 +1,15 @@
 import { TextInput, StyleSheet } from 'react-native';
 import { Box, useTheme } from 'native-base';
+import { baseFontSize } from 'native-base/lib/typescript/theme/tools';
 
 type Props = {
   placeholder: string;
   value: string;
   onChangeText: (text: string) => void;
-  type?: 'text' | 'email' | 'password';
+  type?: 'text' | 'email' | 'password' | 'numeric';
   accessibilityLabel?: string;
+  borderWidth?: number;
+  bg?: string;
 };
 
 export const InputField = ({
@@ -15,10 +18,12 @@ export const InputField = ({
   onChangeText,
   type = 'text',
   accessibilityLabel,
+  borderWidth = 1,
+  bg = 'white',
 }: Props) => {
-  const theme = useTheme();
   const isPassword = type === 'password';
-  const keyboardType = type === 'email' ? 'email-address' : 'default';
+  const keyboardType =
+    type === 'email' ? 'email-address' : type === 'numeric' ? 'numeric' : 'default';
 
   const getAutoComplete = () => {
     switch (type) {
@@ -43,12 +48,16 @@ export const InputField = ({
   };
 
   return (
-    <Box borderWidth="1" borderColor="coolGray.300" borderRadius="md" bg="white">
+    <Box
+      borderWidth={borderWidth}
+      borderColor="coolGray.300"
+      borderRadius="md"
+      bg={bg}
+      p={2}
+      width="100%"
+    >
       <TextInput
-        style={{
-          height: 40,
-          paddingHorizontal: 16,
-        }}
+        style={{ fontSize: 50, color: 'black', width: '100%' }}
         placeholder={placeholder}
         value={value}
         onChangeText={onChangeText}

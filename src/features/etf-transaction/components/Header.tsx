@@ -4,24 +4,12 @@ import { formatCurrency } from '~/utils/formatCurrency';
 import { useETFHeader } from '../hooks/useETFHeader';
 import { useETFStore } from '~/features/etf/store/ETFStore';
 
-interface ETFTransactionHeaderProps {
-  // Props optionnelles pour la compatibilité, mais on utilisera le store en priorité
-  etfId?: string;
-  ticker?: string;
-  currentValue?: number;
-}
-
-export const ETFTransactionHeader: React.FC<ETFTransactionHeaderProps> = ({
-  etfId: propEtfId,
-  ticker: propTicker,
-  currentValue: propCurrentValue,
-}) => {
+export const ETFTransactionHeader: React.FC = ({}) => {
   const { selectedETF } = useETFStore();
 
-  // Utiliser les données du store en priorité, sinon les props
-  const etfId = selectedETF?.id || propEtfId || '';
-  const ticker = selectedETF?.ticker || propTicker || '';
-  const currentValue = selectedETF?.currentPrice || propCurrentValue || 0;
+  const etfId = selectedETF?.id || '';
+  const ticker = selectedETF?.ticker || '';
+  const currentValue = selectedETF?.currentPrice || 0;
 
   const { data, loading, error } = useETFHeader(etfId, ticker, currentValue);
 

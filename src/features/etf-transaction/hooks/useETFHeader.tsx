@@ -1,21 +1,14 @@
 import { useState, useEffect } from 'react';
-import { PortfolioDataService } from '~/features/etf-portfolio/contracts/portfolio.contract';
-import { PortfolioServiceAdapter } from '~/features/etf-portfolio/adapters/portfolioServiceAdapter';
-import { PortfolioPosition } from '~/features/etf-portfolio/models/portfolio';
+import { PossessedValueService } from '../services/PossessedValueService';
+import { PossessedValueRequest } from '../models/PosessedValueRequest';
 
 export interface ETFHeaderData {
   ticker: string;
   currentPrice: number;
   ownedValue: number;
-  ownedQuantity: number;
 }
 
-export const useETFHeader = (
-  etfId: string,
-  ticker: string,
-  currentValue: number,
-  portfolioService: PortfolioDataService = new PortfolioServiceAdapter(),
-) => {
+export const useETFHeader = (etfId: string, ticker: string, currentValue: number) => {
   const [data, setData] = useState<ETFHeaderData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -25,22 +18,25 @@ export const useETFHeader = (
       setLoading(true);
       setError(null);
 
-      // Convertir string ID en number pour le service portfolio
       const numericEtfId = parseInt(etfId, 10);
 
       if (isNaN(numericEtfId)) {
         throw new Error('Invalid ETF ID format');
       }
 
-      // Récupérer la position du portfolio pour cet ETF
-      const portfolioPosition = await portfolioService.getPortfolioPositionByETF(numericEtfId);
+      // Utiliser le PossessedValueService pour récupérer la valeur possédée
+      const possessedValueRequest: PossessedValueRequest = {
+        userId: 'current-user', // À récupérer depuis le contexte utilisateur si disponible
+        etfId: etfId,
+      };
+
+      const possessedValueResponse = PossessedValueService.getPossessedValue(possessedValueRequest);
 
       // Construire les données de l'header
       const headerData: ETFHeaderData = {
         ticker,
         currentPrice: currentValue,
-        ownedValue: portfolioPosition ? portfolioPosition.totalValue : 0,
-        ownedQuantity: portfolioPosition ? portfolioPosition.quantity : 0,
+        ownedValue: possessedValueResponse.value,
       };
 
       setData(headerData);

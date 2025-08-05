@@ -114,7 +114,12 @@ export const AppNavigator = ({
                         : 'Transaction',
                 })}
               >
-                {() => <ETFTransactionScreen />}
+                {() => (
+                  <>
+                    <ETFTransactionScreen />
+                    <Navbar />
+                  </>
+                )}
               </MainStack.Screen>
             </MainStack.Navigator>
           )}

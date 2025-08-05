@@ -11,7 +11,7 @@ export class TransactionService {
       throw new Error('Montant ou nombre de parts invalide');
     }
 
-    const isSuccess = Math.random() > 0.05;
+    const isSuccess = true;
 
     if (!isSuccess) {
       throw new Error('Erreur lors de la transaction');

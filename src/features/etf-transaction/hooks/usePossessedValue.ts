@@ -26,6 +26,7 @@ export const usePossessedValue = (): UsePossessedValueReturn => {
         const response: PossessedValueResponse = possessedValueAdapter.getPossessedValue(request);
         setPossessedValue(response.value);
       } catch (err) {
+        console.error('[usePossessedValue] Erreur:', err);
         setError(err instanceof Error ? err.message : 'Une erreur est survenue');
         setPossessedValue(0);
       } finally {

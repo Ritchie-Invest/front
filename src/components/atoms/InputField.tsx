@@ -1,4 +1,4 @@
-import { TextInput, StyleSheet } from 'react-native';
+import { TextInput, StyleSheet, Keyboard, Platform } from 'react-native';
 import { Box, useTheme } from 'native-base';
 import { baseFontSize } from 'native-base/lib/typescript/theme/tools';
 
@@ -12,6 +12,9 @@ type Props = {
   bg?: string;
   fontSize?: number;
   textAlign?: 'left' | 'right' | 'center';
+  returnKeyType?: 'done' | 'next' | 'send' | 'go' | 'search';
+  onSubmitEditing?: () => void;
+  blurOnSubmit?: boolean;
 };
 
 export const InputField = ({
@@ -24,10 +27,29 @@ export const InputField = ({
   bg = 'white',
   fontSize = 12,
   textAlign = 'left',
+  returnKeyType = 'done',
+  onSubmitEditing,
+  blurOnSubmit = true,
 }: Props) => {
   const isPassword = type === 'password';
   const keyboardType =
-    type === 'email' ? 'email-address' : type === 'numeric' ? 'numeric' : 'default';
+    type === 'email'
+      ? 'email-address'
+      : type === 'numeric'
+        ? Platform.OS === 'android'
+          ? 'number-pad'
+          : 'numeric'
+        : 'default';
+
+  const handleSubmitEditing = () => {
+    if (onSubmitEditing) {
+      onSubmitEditing();
+    } else {
+      if (type === 'numeric') {
+        Keyboard.dismiss();
+      }
+    }
+  };
 
   const getAutoComplete = () => {
     switch (type) {
@@ -77,6 +99,10 @@ export const InputField = ({
         accessibilityLabel={accessibilityLabel || placeholder}
         textContentType={getTextContentType()}
         autoComplete={getAutoComplete()}
+        returnKeyType={returnKeyType}
+        onSubmitEditing={handleSubmitEditing}
+        blurOnSubmit={blurOnSubmit}
+        enablesReturnKeyAutomatically={true}
       />
     </Box>
   );

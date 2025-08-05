@@ -8,16 +8,20 @@ export interface TransactionState {
   shares: number;
   isLoading: boolean;
   message: string | null;
-  messageType: 'success' | 'error' | null;
+  messageType: boolean | null;
   setAmount: (amount: string) => void;
   setShares: (shares: number) => void;
   setLoading: (loading: boolean) => void;
-  setMessage: (message: string | null, type: 'success' | 'error' | null) => void;
+  setMessage: (message: string | null, type: boolean | null) => void;
   clearMessage: () => void;
   clearTransaction: () => void;
+  clearInputsOnly: () => void;
 }
 
-type PersistedTransactionState = Pick<TransactionState, 'amount' | 'shares'>;
+type PersistedTransactionState = Pick<
+  TransactionState,
+  'amount' | 'shares' | 'message' | 'messageType'
+>;
 
 const zustandStorage = createJSONStorage<PersistedTransactionState>(() => AsyncStorage);
 
@@ -42,6 +46,12 @@ export const useTransactionStore = create<TransactionState>()(
           message: null,
           messageType: null,
         }),
+      clearInputsOnly: () =>
+        set({
+          amount: '',
+          shares: 0,
+          isLoading: false,
+        }),
     }),
     {
       name: 'transaction-storage',
@@ -49,6 +59,8 @@ export const useTransactionStore = create<TransactionState>()(
       partialize: (state) => ({
         amount: state.amount,
         shares: state.shares,
+        message: state.message,
+        messageType: state.messageType,
       }),
     },
   ),

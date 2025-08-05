@@ -8,7 +8,7 @@ import { useTransactionStore } from '../store/TransactionStore';
 export interface UseTransactionReturn {
   isLoading: boolean;
   message: string | null;
-  messageType: 'success' | 'error' | null;
+  messageType: boolean | null;
   executeTransaction: (transactionRequest: TransactionRequest) => Promise<void>;
   handleTransaction: (transactionType: TransactionType) => Promise<void>;
   clearMessage: () => void;
@@ -31,10 +31,10 @@ export const useTransaction = (): UseTransactionReturn => {
         if (response.status === 'success') {
           const actionText =
             transactionRequest.transactionType === TransactionType.Buy ? 'Achat' : 'Vente';
-          setMessage(`${actionText} réalisé avec succès !`, 'success');
+          setMessage(`${actionText} réalisé avec succès !`, true);
         }
       } catch (error) {
-        setMessage(error instanceof Error ? error.message : 'Une erreur est survenue', 'error');
+        setMessage(error instanceof Error ? error.message : 'Une erreur est survenue', false);
       } finally {
         setLoading(false);
       }
@@ -45,22 +45,22 @@ export const useTransaction = (): UseTransactionReturn => {
   const handleTransaction = useCallback(
     async (transactionType: TransactionType) => {
       if (!selectedETF) {
-        setMessage('Veuillez sélectionner un ETF', 'error');
+        setMessage('Veuillez sélectionner un ETF', false);
         return;
       }
 
       if (!amount || amount.trim() === '') {
-        setMessage('Veuillez saisir un montant', 'error');
+        setMessage('Veuillez saisir un montant', false);
         return;
       }
 
       if (!isValidAmount) {
-        setMessage('Veuillez saisir un montant valide', 'error');
+        setMessage('Veuillez saisir un montant valide', false);
         return;
       }
 
       if (shares <= 0) {
-        setMessage("Le montant saisi ne permet pas d'acheter de parts", 'error');
+        setMessage("Le montant saisi ne permet pas d'acheter de parts", false);
         return;
       }
 

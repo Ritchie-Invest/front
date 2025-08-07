@@ -1,5 +1,9 @@
 import { PortfolioItemType } from '../types/portfolioItemType';
 
+export interface PortfolioBalanceProps {
+  onPress?: () => void;
+}
+
 export interface PortfolioItemConfig {
   label: string;
   color: string;

@@ -9,7 +9,7 @@ import HomeScreen from '../features/landing/screens/home';
 import { InvestmentDashboardScreen } from '../features/investment-dashboard/screens/InvestmentDashboardScreen';
 import { ETFDetailScreen } from '../features/etf-detail/index';
 import Navbar from '../features/navigation/components/organisms/navbar';
-import { TransactionHistoryScreen } from '../features/transaction-history/index';
+import { PortfolioDetailScreen } from '../features/etf-portfolio-detail/index';
 
 export type RootStackParamList = {
   Main: undefined;
@@ -26,7 +26,7 @@ export type MainStackParamList = {
   Profile: undefined;
   Register: undefined;
   Onboarding: undefined;
-  TransactionHistory: undefined;
+  PortfolioDetail: undefined;
 };
 
 const Stack = createNativeStackNavigator();
@@ -101,13 +101,10 @@ export const AppNavigator = ({
                   </Box>
                 )}
               </MainStack.Screen>
-              <MainStack.Screen
-                name="TransactionHistory"
-                options={{ headerTitle: 'Vos transactions' }}
-              >
+              <MainStack.Screen name="PortfolioDetail" options={{ headerTitle: 'Votre portfolio' }}>
                 {() => (
                   <Box flex={1}>
-                    <TransactionHistoryScreen />
+                    <PortfolioDetailScreen />
                     <Navbar />
                   </Box>
                 )}

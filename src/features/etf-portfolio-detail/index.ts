@@ -4,4 +4,4 @@ export type { OperationType } from './types/OperationType';
 export { TransactionServiceAdapter } from './adapters/TransactionService.adapter';
 export { useTransactions, getTypeColor, getTypeSymbol } from './hooks/useTransaction';
 export { TransactionList } from './components/TransactionList';
-export { TransactionHistoryScreen } from './screens/TransactionHistoryScreen';
+export { PortfolioDetailScreen } from './screens/PortfolioDetailScreen';

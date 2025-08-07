@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Text } from 'native-base';
 import { formatCurrency } from '../../../utils/formatCurrency';
 import { usePortfolioItem } from '../hooks/usePortfolioItem';
-import { UsePortfolioItemProps } from '../models/portfolioItem';
+import { UsePortfolioItemProps } from '../models/portfolioBalance';
 import { PortfolioItemType } from '../types/portfolioItemType';
 
 export const PortfolioItem: React.FC<UsePortfolioItemProps> = ({ type, value, label }) => {

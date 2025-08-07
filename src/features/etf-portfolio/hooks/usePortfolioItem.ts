@@ -4,7 +4,7 @@ import {
   PortfolioItemConfig,
   UsePortfolioItemProps,
   UsePortfolioItemReturn,
-} from '../models/portfolioItem';
+} from '../models/portfolioBalance';
 
 const getItemConfig = (type: PortfolioItemType): PortfolioItemConfig => {
   switch (type) {

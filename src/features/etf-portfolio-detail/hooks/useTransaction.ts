@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
-import { Transaction } from '../index';
+import { Transaction } from '~/features/etf/models/Transaction';
 import { TransactionServiceAdapter } from '../adapters/TransactionServiceAdapter';
+import { TransactionType } from '~/features/etf/types/TransactionType';
 
 export const useTransactions = () => {
   const transactionService = new TransactionServiceAdapter();
@@ -33,10 +34,10 @@ export const useTransactions = () => {
   };
 };
 
-export const getTypeColor = (type: string) => {
-  return type === 'BUY' ? 'red.500' : 'blue.500';
+export const getTypeColor = (type: TransactionType) => {
+  return type === TransactionType.Buy ? 'red.500' : 'blue.500';
 };
 
-export const getTypeSymbol = (type: string) => {
-  return type === 'BUY' ? '-' : '+';
+export const getTypeSymbol = (type: TransactionType) => {
+  return type === TransactionType.Buy ? '-' : '+';
 };

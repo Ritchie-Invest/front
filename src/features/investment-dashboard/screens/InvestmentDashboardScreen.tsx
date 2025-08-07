@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Text, VStack } from 'native-base';
 import { PortfolioBalance } from '~/features/etf-portfolio/components/PortfolioBalance';
 import { usePortfolio } from '~/features/etf-portfolio/hooks/usePortfolio';
-import { useETFs } from '../hooks/useETFs';
+import { useETFs } from '~/features/investment-dashboard/hooks/useETFList';
 import { ETFList } from '../components/ETFList';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';

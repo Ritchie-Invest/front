@@ -11,14 +11,14 @@ type ETFDetailScreenRouteProp = RouteProp<MainStackParamList, 'ETFDetails'>;
 
 export const ETFDetailScreen: React.FC = () => {
   const route = useRoute<ETFDetailScreenRouteProp>();
-  const { etfID } = route.params;
+  const { id } = route.params;
   const { setETFId, reset } = useETFDetailStore();
 
   useEffect(() => {
-    setETFId(etfID);
+    setETFId(id);
 
     return () => reset();
-  }, [etfID, setETFId, reset]);
+  }, [id, setETFId, reset]);
 
   return (
     <Box flex={1} bg="white">

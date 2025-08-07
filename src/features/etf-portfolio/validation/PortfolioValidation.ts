@@ -1,4 +1,4 @@
-import { validateETFId } from '../../etf-detail/validation/etfValidation';
+import { validateETFId } from '~/features/etf/validation/ETFValidation';
 
 export const PORTFOLIO_VALIDATION_RULES = {
   PORTFOLIO_ID: {
@@ -22,8 +22,8 @@ export const PORTFOLIO_VALIDATION_RULES = {
   },
   ETF_ID: {
     required: true,
-    type: 'number',
-    min: 1,
+    type: 'string',
+    minLength: 1,
   },
   TICKER: {
     required: true,

@@ -59,7 +59,7 @@ const Navbar: React.FC = () => {
       <TabItem
         name={TabName.InvestmentDashboard}
         icon="trending-up"
-        label="Portfolio"
+        label="Investissement"
         onPress={handleInvestmentPress}
         isActive={activeTab === TabName.InvestmentDashboard}
       />

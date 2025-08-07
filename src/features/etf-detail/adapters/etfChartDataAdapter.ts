@@ -1,5 +1,5 @@
 import { ChartDataAdapter, GenericChartPoint } from '~/components/molecules/models/LineChart';
-import { ETFPriceData } from '../model/ETFPriceData';
+import { ETFPriceData } from '~/features/etf/models/ETFPriceData';
 import { formatDate } from '~/utils/formatDate';
 import { formatCurrency } from '~/utils/formatCurrency';
 

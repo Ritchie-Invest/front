@@ -1,22 +1,30 @@
-import { ETFWithPriceHistory } from '../model/ETFPriceData';
+import { ETFWithPriceHistory } from '../models/ETFPriceHistory';
 import { DateRangeType } from '~/components/molecules/types/dateRange';
 import { DATE_RANGE_OPTIONS } from '~/components/molecules/types/dateRange';
 
-export class ETFDetailService {
+export class ETFPriceHistoryService {
   static async getETFWithPriceHistory(
-    etfId: number,
+    id: string,
     dateRange: DateRangeType,
   ): Promise<ETFWithPriceHistory> {
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     const priceHistory = this.generateMockPriceHistory(dateRange);
 
+    const firstPrice = priceHistory[0]?.close ?? 0;
+    const lastPrice = priceHistory[priceHistory.length - 1]?.close ?? 0;
+    const priceChangePercentage =
+      firstPrice !== 0 ? ((lastPrice - firstPrice) / firstPrice) * 100 : 0;
+    const isGaining = lastPrice >= firstPrice;
+
     return {
-      etfID: etfId,
+      id: id,
       ticker: 'IWDA',
       name: 'iShares Core MSCI World UCITS ETF',
-      currentPrice: priceHistory[priceHistory.length - 1].close,
+      currentPrice: lastPrice,
       priceHistory,
+      priceChangePercentage,
+      isGaining,
     };
   }
 

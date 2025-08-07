@@ -1,5 +1,5 @@
 export interface ETF {
-  etfID: number;
+  id: string;
   ticker: string;
   name: string;
 }

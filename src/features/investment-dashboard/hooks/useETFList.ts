@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { ETFWithCurrentPrice } from '../models/etf';
-import { etfService } from '../services/etfService';
+import { ETFWithCurrentPrice } from '../../etf/models/ETFWithCurrentPrice';
+import { ETFListContract } from '../contracts/ETFListContract';
+import { ETFListServiceAdapter } from '../adapters/ETFListServiceAdapter';
 
-export const useETFs = () => {
+export const useETFs = (dataService: ETFListContract = new ETFListServiceAdapter()) => {
   const [etfs, setETFs] = useState<ETFWithCurrentPrice[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -11,7 +12,7 @@ export const useETFs = () => {
     try {
       setLoading(true);
       setError(null);
-      const data = await etfService.getAllETFs();
+      const data = await dataService.getAllETFs();
       setETFs(data);
     } catch (err) {
       setError('Failed to fetch ETFs');

@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { VStack, HStack, Text, Icon, Spinner, Center } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { formatCurrency } from '~/utils/formatCurrency';
-import { useETFDetails } from '../hooks/useETFDetails';
+import { useETFPriceHistory } from '../hooks/useETFPriceHistory';
 
 const ETFStaticInfo = memo(({ ticker, name }: { ticker: string; name: string }) => (
   <HStack justifyContent="space-between" alignItems="flex-start">
@@ -73,7 +73,7 @@ const ETFDynamicData = memo(
 
 export const ETFDetails: React.FC = memo(() => {
   const { staticLoading, dynamicLoading, error, staticData, priceChange, isPositive } =
-    useETFDetails();
+    useETFPriceHistory();
 
   if (staticLoading) {
     return (
@@ -93,14 +93,11 @@ export const ETFDetails: React.FC = memo(() => {
 
   return (
     <VStack space={2} mb={6}>
-      {/* Partie statique - ne se re-render jamais une fois les données chargées */}
       <ETFStaticInfo ticker={staticData.ticker} name={staticData.name} />
 
       <VStack space={1}>
-        {/* Prix actuel - statique */}
         <ETFPriceDisplay currentPrice={staticData.currentPrice} />
 
-        {/* Changement de prix - dynamique, peut avoir un loading séparé */}
         <ETFDynamicData
           priceChange={priceChange}
           isPositive={isPositive}

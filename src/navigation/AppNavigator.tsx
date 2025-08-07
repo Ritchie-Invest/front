@@ -21,7 +21,7 @@ export type RootStackParamList = {
 export type MainStackParamList = {
   Landing: undefined;
   InvestmentDashboard: undefined;
-  ETFDetails: { etfID: number };
+  ETFDetails: { id: string };
   Progress: undefined;
   Profile: undefined;
   Register: undefined;
@@ -86,7 +86,10 @@ export const AppNavigator = ({
                   </Box>
                 )}
               </MainStack.Screen>
-              <MainStack.Screen name="InvestmentDashboard" options={{ headerTitle: 'Portfolio' }}>
+              <MainStack.Screen
+                name="InvestmentDashboard"
+                options={{ headerTitle: 'Investissement' }}
+              >
                 {() => (
                   <Box flex={1}>
                     <InvestmentDashboardScreen />

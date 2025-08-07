@@ -1,4 +1,5 @@
-import { Transaction, OperationType } from '../index';
+import { Transaction } from '~/features/etf/models/Transaction';
+import { TransactionType } from '~/features/etf/types/TransactionType';
 
 export class TransactionService {
   static async getTransactionsForUser(): Promise<Transaction[]> {
@@ -7,26 +8,26 @@ export class TransactionService {
     return [
       {
         id: '1-2025-07-01-1',
-        assetName: 'MSCI World',
-        type: 'BUY' as OperationType,
-        quantity: 10,
-        value: 1200,
+        etfTicker: 'MSCI World',
+        type: TransactionType.Buy,
+        shares: 10,
+        amount: 1200,
         date: new Date('2025-07-01T10:00:00Z'),
       },
       {
         id: '1-2025-07-10-2',
-        assetName: 'MSCI World',
-        type: 'SELL' as OperationType,
-        quantity: 5,
-        value: 800,
+        etfTicker: 'MSCI World',
+        type: TransactionType.Sell,
+        shares: 5,
+        amount: 800,
         date: new Date('2025-07-10T14:30:00Z'),
       },
       {
         id: '2-2025-07-15-3',
-        assetName: 'S&P 500',
-        type: 'BUY' as OperationType,
-        quantity: 2,
-        value: 500,
+        etfTicker: 'S&P 500',
+        type: TransactionType.Buy,
+        shares: 2,
+        amount: 500,
         date: new Date('2025-07-15T09:15:00Z'),
       },
     ];

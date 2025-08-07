@@ -1,7 +1,7 @@
 export type OperationType = 'Buy' | 'Sell';
 
 export interface Transaction {
-  etfId: number;
+  etfId: string;
   userId: number;
   transactionValue: number;
   operationType: OperationType;

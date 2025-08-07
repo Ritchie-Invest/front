@@ -2,10 +2,10 @@ import React from 'react';
 import { HStack, Text, VStack } from 'native-base';
 import { List } from '~/components/organisms/components/list';
 import { useTransactions, getTypeColor, getTypeSymbol } from '../hooks/useTransaction';
-import { Transaction } from '../models/transaction';
+import { Transaction } from '~/features/etf/models/Transaction';
 import { formatCurrency } from '~/utils/formatCurrency';
-import { formatDate } from '../../../utils/formatDate';
-
+import { formatDate } from '~/utils/formatDate';
+import { TransactionType } from '~/features/etf/types/TransactionType';
 interface TransactionListProps {
   onTransactionPress?: (transaction: Transaction) => void;
 }
@@ -31,7 +31,7 @@ export const TransactionList: React.FC<TransactionListProps> = ({ onTransactionP
       renderLeft={(transaction) => (
         <VStack space={1}>
           <Text fontSize="md" fontWeight="semibold" color="gray.800">
-            {transaction.assetName}
+            {transaction.etfTicker}
           </Text>
           <Text fontSize="sm" color="gray.500">
             {formatDate(transaction.date)}
@@ -43,11 +43,14 @@ export const TransactionList: React.FC<TransactionListProps> = ({ onTransactionP
           <HStack alignItems="center" space={2} justifyContent="flex-end">
             <VStack alignItems="flex-end" space={1}>
               <Text fontSize="sm" color="gray.600">
-                {transaction.type === 'BUY' ? 'Achat' : 'Vente'}
+                {transaction.type === TransactionType.Buy ? 'Achat' : 'Vente'}
               </Text>
               <Text fontSize="lg" fontWeight="bold" color={getTypeColor(transaction.type)}>
                 {getTypeSymbol(transaction.type)}
-                {formatCurrency(transaction.value)}
+                {formatCurrency(transaction.amount)}
+              </Text>
+              <Text fontSize="sm" color="gray.600">
+                {transaction.shares} parts
               </Text>
             </VStack>
           </HStack>

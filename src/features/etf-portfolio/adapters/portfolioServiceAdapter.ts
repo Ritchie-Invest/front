@@ -1,7 +1,6 @@
 import { PortfolioDataService } from '../contracts/portfolio.contract';
 import { portfolioService } from '../service/portfolioService';
 import { Portfolio, PortfolioPosition } from '../models/portfolio';
-import { validateETFId } from '../../etf-detail/validation/etfValidation';
 import {
   validatePortfolioData,
   validatePortfolioPositionData,
@@ -30,11 +29,7 @@ export class PortfolioServiceAdapter implements PortfolioDataService {
     return positions;
   }
 
-  async getPortfolioPositionByETF(etfId: number): Promise<PortfolioPosition | null> {
-    if (!validateETFId(etfId)) {
-      throw new Error('Invalid ETF ID provided');
-    }
-
+  async getPortfolioPositionByETF(etfId: string): Promise<PortfolioPosition | null> {
     const position = await portfolioService.getPortfolioPositionByETF(etfId);
 
     if (position !== null && !validatePortfolioPositionData(position)) {

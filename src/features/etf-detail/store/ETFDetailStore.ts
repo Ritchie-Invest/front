@@ -1,10 +1,10 @@
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
-import { ETFDetailServiceAdapter } from '../adapters/ETFDetailServiceAdapter';
-import { ETFDetailState } from '../model/ETFDetail';
+import { ETFPriceHistoryServiceAdapter } from '../adapters/ETFPriceHistoryServiceAdapter';
+import { ETFDetailState } from '../models/ETFDetail';
 import { DateRangeType } from '~/components/molecules/types/dateRange';
 
-const etfDetailService = new ETFDetailServiceAdapter();
+const etfDetailService = new ETFPriceHistoryServiceAdapter();
 
 export const useETFDetailStore = create<ETFDetailState>()(
   subscribeWithSelector((set, get) => ({

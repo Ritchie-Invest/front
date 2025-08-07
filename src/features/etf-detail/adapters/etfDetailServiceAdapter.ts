@@ -1,4 +1,4 @@
-import { ETFDetailService } from '../services/ETFDetailService';
+import { ETFDetailService } from '../services/etfDetailService';
 import { ETFDataService } from '../contracts/etfDetail.contracts';
 
 export class ETFDetailServiceAdapter implements ETFDataService {

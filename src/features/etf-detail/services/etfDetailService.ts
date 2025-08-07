@@ -1,4 +1,4 @@
-import { ETFWithPriceHistory } from '../model/ETFPriceData';
+import { ETFWithPriceHistory } from '../models/ETFPriceData';
 import { DateRangeType } from '~/components/molecules/types/dateRange';
 import { DATE_RANGE_OPTIONS } from '~/components/molecules/types/dateRange';
 

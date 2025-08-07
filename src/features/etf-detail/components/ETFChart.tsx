@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { Box, Spinner, Center, Text } from 'native-base';
 import { LineChartContainer } from '~/components/organisms/components/LineChartContainer';
 import { useETFChart } from '../hooks/useETFChart';
-import { ETFChartProps } from '../model/ETFChartComponent';
+import { ETFChartProps } from '../models/ETFChartComponent';
 
 export const ETFChart: React.FC<ETFChartProps> = memo(({ config, timeRangeConfig }) => {
   const {

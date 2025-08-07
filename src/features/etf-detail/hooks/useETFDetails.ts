@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useETFStaticData, useETFData, useETFLoading, useETFError } from '../store/ETFDetailStore';
-import { ETFPriceData } from '../model/ETFPriceData';
+import { ETFPriceData } from '../models/ETFPriceData';
 
 const calculatePriceChange = (
   priceHistory: ETFPriceData[],

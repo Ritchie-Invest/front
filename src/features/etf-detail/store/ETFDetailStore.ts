@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
-import { ETFDetailServiceAdapter } from '../adapters/ETFDetailServiceAdapter';
+import { ETFDetailServiceAdapter } from '../adapters/etfDetailServiceAdapter';
 import { ETFDetailState } from '../models/ETFDetail';
 import { DateRangeType } from '~/components/molecules/types/dateRange';
 

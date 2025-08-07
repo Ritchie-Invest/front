@@ -8,7 +8,7 @@ import {
 import { DateRangeType } from '~/components/molecules/types/dateRange';
 import type { LineChartConfig } from '~/components/molecules/models/LineChart';
 import { TimeRangeSelectorConfig } from '~/components/molecules/models/TimeRange';
-import { ETFChartDataAdapter } from '../adapters/ETFChartDataAdapter';
+import { ETFChartDataAdapter } from '../adapters/etfChartDataAdapter';
 
 const etfChartAdapter = new ETFChartDataAdapter();
 

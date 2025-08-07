@@ -28,21 +28,21 @@ export const TransactionList: React.FC<TransactionListProps> = ({ onTransactionP
       loading={loading}
       title="Historique des transactions"
       renderLeft={(transaction) => (
-        <>
+        <VStack space={1}>
           <Text fontSize="md" fontWeight="semibold" color="gray.800">
             {transaction.assetName}
           </Text>
           <Text fontSize="sm" color="gray.500">
             {formatDate(transaction.date)}
           </Text>
-        </>
+        </VStack>
       )}
       renderRight={(transaction) => (
         <>
           <HStack alignItems="center" space={2} justifyContent="flex-end">
-            <VStack alignItems="flex-end">
+            <VStack alignItems="flex-end" space={1}>
               <Text fontSize="sm" color="gray.600">
-                {transaction.type === 'BUY' ? 'Achat' : 'Vente'} • {transaction.quantity} unités
+                {transaction.type === 'BUY' ? 'Achat' : 'Vente'}
               </Text>
               <Text fontSize="lg" fontWeight="bold" color={getTypeColor(transaction.type)}>
                 {getTypeSymbol(transaction.type)}

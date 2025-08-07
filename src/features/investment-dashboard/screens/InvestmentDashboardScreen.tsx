@@ -4,8 +4,12 @@ import { PortfolioBalance } from '~/features/etf-portfolio/components/PortfolioB
 import { usePortfolio } from '~/features/etf-portfolio/hooks/usePortfolio';
 import { useETFs } from '../hooks/useETFs';
 import { ETFList } from '../components/ETFList';
+import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
+import type { MainStackParamList } from '../../../navigation/AppNavigator';
 
 export const InvestmentDashboardScreen: React.FC = () => {
+  const navigation = useNavigation<StackNavigationProp<MainStackParamList>>();
   const { loading: portfolioLoading, error: portfolioError } = usePortfolio();
   const { etfs, loading: etfsLoading, error: etfsError } = useETFs();
 
@@ -28,7 +32,11 @@ export const InvestmentDashboardScreen: React.FC = () => {
   return (
     <Box flex={1} bg="white">
       <VStack space={6} px={4} py={6}>
-        <PortfolioBalance />
+        <PortfolioBalance
+          onPress={() => {
+            navigation.navigate('PortfolioDetail');
+          }}
+        />
       </VStack>
       <ETFList positions={etfs} loading={loading} />
     </Box>

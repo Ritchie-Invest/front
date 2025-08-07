@@ -2,7 +2,7 @@ import React from 'react';
 import { VStack, HStack, Text, Icon } from 'native-base';
 import { useTranslation } from 'react-i18next';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Card } from '~/components/molecules/card';
+import { Card } from '~/components/molecules/components/card';
 import { Button } from 'native-base';
 import { StatusBadge } from '~/components/atoms/statusBadge';
 import { Lesson } from '../models/responses/lesson';

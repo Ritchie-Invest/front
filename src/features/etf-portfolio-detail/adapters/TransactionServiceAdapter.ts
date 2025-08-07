@@ -1,5 +1,5 @@
-import { Transaction } from '../index';
-import { TransactionService } from '../index';
+import { Transaction } from '../models/transaction';
+import { TransactionService } from '../services/transactionService';
 
 export class TransactionServiceAdapter implements TransactionService {
   async getTransactionsForUser(): Promise<Transaction[]> {

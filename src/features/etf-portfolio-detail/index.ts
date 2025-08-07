@@ -1,7 +1,6 @@
-export { TransactionService } from './services/transactionService';
-export type { Transaction } from './models/transaction';
-export type { OperationType } from './types/OperationType';
-export { TransactionServiceAdapter } from './adapters/TransactionService.adapter';
-export { useTransactions, getTypeColor, getTypeSymbol } from './hooks/useTransaction';
-export { TransactionList } from './components/TransactionList';
+export { PortfolioChart } from './components/PortfolioChart';
 export { PortfolioDetailScreen } from './screens/PortfolioDetailScreen';
+export { usePortfolioChart } from './hooks/usePortfolioChart';
+export { PortfolioChartDataAdapter } from './adapters/PortfolioChartDataAdapter';
+export { PortfolioValuesServiceAdapter } from './adapters/PortfolioChartAdapter.ts';
+export type { PortfolioChartProps } from './models/PortfolioChartComponent';

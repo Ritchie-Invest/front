@@ -1,7 +1,8 @@
 import React from 'react';
 import { HStack, Text, VStack } from 'native-base';
-import { List } from '../../../components/organisms/list';
-import { useTransactions, Transaction, getTypeColor, getTypeSymbol } from '../index';
+import { List } from '~/components/organisms/components/list';
+import { useTransactions, getTypeColor, getTypeSymbol } from '../hooks/useTransaction';
+import { Transaction } from '../models/transaction';
 import { formatCurrency } from '~/utils/formatCurrency';
 import { formatDate } from '../../../utils/formatDate';
 

@@ -7,10 +7,10 @@ import { LoginScreen } from '../features/auth/screens/LoginScreen';
 import { RegisterScreen } from '../features/auth/screens/RegisterScreen';
 import HomeScreen from '../features/landing/screens/home';
 import { InvestmentDashboardScreen } from '../features/investment-dashboard/screens/InvestmentDashboardScreen';
-import { ETFDetailScreen } from '../features/etf-detail/index';
-import Navbar from '../features/navigation/components/organisms/navbar';
-import { PortfolioDetailScreen } from '../features/etf-portfolio-detail/index';
+import { ETFDetailScreen } from '~/features/etf-detail/screens/ETFDetailScreen';
+import { PortfolioDetailScreen } from '~/features/etf-portfolio-detail/screens/PortfolioDetailScreen';
 
+import Navbar from '../features/navigation/components/organisms/navbar';
 export type RootStackParamList = {
   Main: undefined;
   Login: undefined;

@@ -27,7 +27,7 @@ export const Card: React.FC<CardProps> = ({ variant = 'default', children, ...pr
       case 'default':
       default:
         return {
-          bg: 'gray.50',
+          bg: 'white',
           p: 4,
           rounded: 'lg',
         };

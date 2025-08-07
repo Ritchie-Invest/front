@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { Transaction } from '../index';
-import { TransactionServiceAdapter } from '../adapters/TransactionService.adapter';
+import { TransactionServiceAdapter } from '../adapters/TransactionServiceAdapter';
 
 export const useTransactions = () => {
   const transactionService = new TransactionServiceAdapter();

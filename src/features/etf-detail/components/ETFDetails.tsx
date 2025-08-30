@@ -1,7 +1,8 @@
 import React from 'react';
 import { VStack, HStack, Text, Icon } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
-import { ETFWithPriceHistory, formatPrice, calculatePriceChange } from '../index';
+import { ETFWithPriceHistory, calculatePriceChange } from '../index';
+import { formatCurrency } from '~/utils/formatCurrency';
 
 interface ETFDetailsProps {
   etf: ETFWithPriceHistory;
@@ -26,7 +27,7 @@ export const ETFDetails: React.FC<ETFDetailsProps> = ({ etf }) => {
 
       <VStack space={1}>
         <Text fontSize="3xl" fontWeight="bold" color="gray.900">
-          {formatPrice(etf.currentPrice)}
+          {formatCurrency(etf.currentPrice)}
         </Text>
 
         <HStack alignItems="center" space={1}>
@@ -37,7 +38,7 @@ export const ETFDetails: React.FC<ETFDetailsProps> = ({ etf }) => {
             color={isPositive ? 'green.500' : 'red.500'}
           />
           <Text fontSize="md" fontWeight="medium" color={isPositive ? 'green.500' : 'red.500'}>
-            {formatPrice(Math.abs(priceChange.amount))} (
+            {formatCurrency(Math.abs(priceChange.amount))} (
             {Math.abs(priceChange.percentage).toFixed(2)}%)
           </Text>
         </HStack>

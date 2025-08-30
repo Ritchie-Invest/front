@@ -3,15 +3,9 @@ import { ScrollView, RefreshControl } from 'react-native';
 import { Box, VStack, Spinner, Text, Center } from 'native-base';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { MainStackParamList } from '../../../navigation/AppNavigator';
-import {
-  DateRangeType,
-  ETFWithPriceHistory,
-  useETFDetail,
-  LineChartContainer,
-  ETFDetails,
-  TimeRangeSelector,
-  ETFDetailServiceAdapter,
-} from '../index';
+import { DateRangeType } from '~/components/molecules/types/dateRange';
+import { ETFWithPriceHistory, useETFDetail, ETFDetails, ETFDetailServiceAdapter } from '../index';
+import { ETFChart } from '../components/ETFChart';
 
 type ETFDetailScreenRouteProp = RouteProp<MainStackParamList, 'ETFDetails'>;
 
@@ -38,7 +32,7 @@ export const ETFDetailScreen: React.FC<ETFDetailScreenProps> = ({
 
   if (loading && !data) {
     return (
-      <Center flex={1} bg="gray.50">
+      <Center flex={1}>
         <Spinner size="large" color="blue.500" />
         <Text mt={4} color="gray.600">
           Chargement des données...
@@ -49,7 +43,7 @@ export const ETFDetailScreen: React.FC<ETFDetailScreenProps> = ({
 
   if (error) {
     return (
-      <Center flex={1} bg="gray.50" px={4}>
+      <Center flex={1} px={4}>
         <Text textAlign="center" color="red.500" fontSize="md">
           {error}
         </Text>
@@ -62,14 +56,14 @@ export const ETFDetailScreen: React.FC<ETFDetailScreenProps> = ({
 
   if (!data) {
     return (
-      <Center flex={1} bg="gray.50">
+      <Center flex={1}>
         <Text color="gray.600">Aucune donnée disponible</Text>
       </Center>
     );
   }
 
   return (
-    <Box flex={1} bg="gray.50">
+    <Box flex={1} bg="white">
       <ScrollView
         contentContainerStyle={{ flexGrow: 1 }}
         refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} />}
@@ -77,9 +71,11 @@ export const ETFDetailScreen: React.FC<ETFDetailScreenProps> = ({
         <VStack space={4} p={4} pb={8}>
           <ETFDetails etf={data} />
 
-          <TimeRangeSelector selectedRange={selectedRange} onRangeChange={handleRangeChange} />
-
-          <LineChartContainer priceHistory={data.priceHistory} />
+          <ETFChart
+            priceHistory={data.priceHistory}
+            selectedRange={selectedRange}
+            onRangeChange={handleRangeChange}
+          />
         </VStack>
       </ScrollView>
     </Box>

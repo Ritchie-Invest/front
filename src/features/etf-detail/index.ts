@@ -6,9 +6,9 @@ export { ETFStats } from './components/ETFStats';
 export { useETFDetail, calculatePriceChange } from './hooks/useETFDetail';
 
 export { ETFDetailService } from './services/ETFDetailService';
-export { ETFDetailServiceAdapter } from './adapters/etfDetailServiceAdapter';
+export { ETFDetailServiceAdapter } from './adapters/ETFDetailServiceAdapter';
 
-export type { ETFPriceData, ETFWithPriceHistory } from './model/etfPriceData';
+export type { ETFPriceData, ETFWithPriceHistory } from './model/ETFPriceData';
 export type { DateRangeType } from '../../components/molecules/types/dateRange';
 export { DATE_RANGE_OPTIONS } from '../../components/molecules/types/dateRange';
 
@@ -23,4 +23,4 @@ export type {
   ETFDataService,
   ChartProvider,
   HeaderProvider,
-} from './contracts/etfDetail.contracts';
+} from './contracts/ETFDetail.contracts';

@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Portfolio, PortfolioPosition } from '../models/portfolio';
-import { portfolioService } from '../services/portfolioService';
+import { PortfolioDataService } from '../contracts/portfolio.contract';
+import { PortfolioServiceAdapter } from '../adapters/portfolioServiceAdapter';
 
-export const usePortfolio = () => {
+export const usePortfolio = (dataService: PortfolioDataService = new PortfolioServiceAdapter()) => {
   const [portfolio, setPortfolio] = useState<Portfolio | null>(null);
   const [positions, setPositions] = useState<PortfolioPosition[]>([]);
   const [totalValue, setTotalValue] = useState<number>(0);
@@ -15,9 +16,9 @@ export const usePortfolio = () => {
       setError(null);
 
       const [portfolioData, positionsData, totalValueData] = await Promise.all([
-        portfolioService.getPortfolio(),
-        portfolioService.getPortfolioPositions(),
-        portfolioService.getTotalPortfolioValue(),
+        dataService.getPortfolio(),
+        dataService.getPortfolioPositions(),
+        dataService.getTotalPortfolioValue(),
       ]);
 
       setPortfolio(portfolioData);

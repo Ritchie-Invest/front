@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { VStack, HStack, Text, Icon, Spinner, Center } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { formatCurrency } from '~/utils/formatCurrency';
-import { useETFDetails } from '../hooks/useETFDetails';
+import { useETFDetail } from '../hooks/useETFDetail';
 
 const ETFStaticInfo = memo(({ ticker, name }: { ticker: string; name: string }) => {
   return (
@@ -79,7 +79,7 @@ const ETFDynamicData = memo(
 
 export const ETFDetails: React.FC = memo(() => {
   const { staticLoading, dynamicLoading, error, staticData, priceChange, isPositive } =
-    useETFDetails();
+    useETFDetail();
 
   if (staticLoading) {
     return (

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { ETFPriceHistoryServiceAdapter } from '../adapters/ETFPriceHistoryServiceAdapter';
 import { ETFPriceData } from '../models/ETFPriceData';
 
@@ -11,8 +11,9 @@ interface useETFPriceHistoryState<T> {
 export const useETFPriceHistory = <T>(
   id: string,
   dateRange: string,
-  dataService: ETFPriceHistoryServiceAdapter = new ETFPriceHistoryServiceAdapter(),
+  dataService?: ETFPriceHistoryServiceAdapter,
 ) => {
+  const service = useMemo(() => dataService || new ETFPriceHistoryServiceAdapter(), [dataService]);
   const [state, setState] = useState<useETFPriceHistoryState<T>>({
     data: null,
     loading: true,
@@ -22,7 +23,7 @@ export const useETFPriceHistory = <T>(
   const fetchData = async () => {
     try {
       setState((prev) => ({ ...prev, loading: true, error: null }));
-      const data = await dataService.getETFWithPriceHistory(id, dateRange);
+      const data = await service.getETFWithPriceHistory(id, dateRange);
       setState({ data, loading: false, error: null });
     } catch (error) {
       setState((prev) => ({
@@ -34,8 +35,10 @@ export const useETFPriceHistory = <T>(
   };
 
   useEffect(() => {
-    fetchData();
-  }, [id, dateRange, dataService]);
+    if (id && dateRange) {
+      fetchData();
+    }
+  }, [id, dateRange, service]);
 
   return {
     ...state,

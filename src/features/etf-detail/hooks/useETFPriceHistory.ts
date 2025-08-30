@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ETFPriceHistoryServiceAdapter } from '../adapters/ETFPriceHistoryServiceAdapter';
+import { ETFPriceData } from '../models/ETFPriceData';
 
 interface useETFPriceHistoryState<T> {
   data: T | null;

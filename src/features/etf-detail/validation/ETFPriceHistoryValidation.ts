@@ -2,7 +2,7 @@ import {
   ETF_WITH_CURRENT_PRICE_VALIDATION_RULES,
   validateETFWithCurrentPrice,
 } from '~/features/etf/validation/ETFWithCurrentPriceValidation';
-import { DATE_RANGE_OPTIONS } from '../types/dateRange';
+import { DATE_RANGE_OPTIONS } from '../../../components/molecules/types/dateRange';
 
 export const PRICE_HISTORY_VALIDATION_RULES = {
   DATE_RANGE: {

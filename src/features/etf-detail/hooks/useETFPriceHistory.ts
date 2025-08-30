@@ -41,3 +41,18 @@ export const useETFPriceHistory = <T>(
     refetch: fetchData,
   };
 };
+
+export const calculatePriceChange = (
+  priceHistory: ETFPriceData[],
+): { amount: number; percentage: number } => {
+  if (priceHistory.length < 2) {
+    return { amount: 0, percentage: 0 };
+  }
+
+  const firstPrice = priceHistory[0].close;
+  const lastPrice = priceHistory[priceHistory.length - 1].close;
+  const amount = lastPrice - firstPrice;
+  const percentage = (amount / firstPrice) * 100;
+
+  return { amount, percentage };
+};

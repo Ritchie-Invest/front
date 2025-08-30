@@ -1,5 +1,5 @@
 import { DateRangeType } from '~/components/molecules/types/dateRange';
-import { ETFWithPriceHistory } from './ETFPriceData';
+import { ETFWithPriceHistory } from './ETFPriceHistory';
 
 export interface ETFStaticData {
   ticker: string;

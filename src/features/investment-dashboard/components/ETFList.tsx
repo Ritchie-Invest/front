@@ -3,9 +3,10 @@ import { HStack, Text, Icon } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ETFWithCurrentPrice } from '../models/etf';
-import { formatCurrency } from '../../../utils/formatCurrency';
 import { MainStackParamList } from '../../../navigation/AppNavigator';
+import { ETFWithCurrentPrice } from '~/features/etf/models/ETFWithCurrentPrice';
+import { formatCurrency } from '../../../utils/formatCurrency';
+
 import { List } from '../../../components/organisms/components/list';
 
 type NavigationProp = NativeStackNavigationProp<MainStackParamList, 'InvestmentDashboard'>;
@@ -59,7 +60,7 @@ export const ETFList: React.FC<ETFListProps> = ({ positions, loading = false }) 
           </HStack>
         </>
       )}
-      onItemPress={(etf) => navigation.navigate('ETFDetails', { etfID: etf.etfID })}
+      onItemPress={(etf) => navigation.navigate('ETFDetails', { id: etf.id })}
     />
   );
 };

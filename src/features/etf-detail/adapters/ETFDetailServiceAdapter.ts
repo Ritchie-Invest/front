@@ -1,8 +1,8 @@
-import { ETFDetailService } from '../services/ETFDetailService';
+import { ETFPriceHistoryService } from '../services/ETFPriceHistoryService';
 import { ETFDataService } from '../contracts/ETFDetail.contracts';
 
 export class ETFDetailServiceAdapter implements ETFDataService {
-  async getETFWithPriceHistory(etfId: number, dateRange: string): Promise<any> {
-    return ETFDetailService.getETFWithPriceHistory(etfId, dateRange as any);
+  async getETFWithPriceHistory(id: string, dateRange: string): Promise<any> {
+    return ETFPriceHistoryService.getETFWithPriceHistory(id, dateRange as any);
   }
 }

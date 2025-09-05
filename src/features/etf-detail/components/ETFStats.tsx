@@ -1,7 +1,8 @@
 import React from 'react';
 import { HStack, VStack, Text, Box } from 'native-base';
-import { ETFPriceData } from '../index';
+import { ETFPriceData } from '../models/ETFPriceData';
 import { formatCurrency } from '~/utils/formatCurrency';
+
 interface ETFStatsProps {
   priceHistory: ETFPriceData[];
 }

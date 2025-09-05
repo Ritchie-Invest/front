@@ -1,4 +1,4 @@
-import { validateETFId } from '../../etf-detail/validation/etfValidation';
+import { validateETFId } from '~/features/etf/validation/ETFValidation';
 
 export const PORTFOLIO_VALIDATION_RULES = {
   PORTFOLIO_ID: {
@@ -97,7 +97,7 @@ export const validatePortfolioPositionData = (data: unknown): boolean => {
 
   const position = data as any;
   return (
-    validateETFId(position.etfId) &&
+    validateETFId(position.id) &&
     typeof position.ticker === 'string' &&
     position.ticker.length > 0 &&
     position.ticker.length <= 10 &&

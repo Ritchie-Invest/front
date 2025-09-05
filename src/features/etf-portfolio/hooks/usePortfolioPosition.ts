@@ -4,7 +4,7 @@ import { portfolioService } from '../service/portfolioService';
 import { PortfolioDataService } from '../contracts/portfolio.contract';
 
 export const usePortfolioPosition = (
-  etfId: number,
+  id: string,
   dataService: PortfolioDataService = portfolioService,
 ) => {
   const [position, setPosition] = useState<PortfolioPosition | null>(null);
@@ -15,7 +15,7 @@ export const usePortfolioPosition = (
     try {
       setLoading(true);
       setError(null);
-      const positionData = await dataService.getPortfolioPositionByETF(etfId);
+      const positionData = await dataService.getPortfolioPositionByETF(id);
       setPosition(positionData);
     } catch (err) {
       setError('Failed to fetch portfolio position');
@@ -26,10 +26,10 @@ export const usePortfolioPosition = (
   };
 
   useEffect(() => {
-    if (etfId) {
+    if (id) {
       fetchPosition();
     }
-  }, [etfId]);
+  }, [id]);
 
   return {
     position,

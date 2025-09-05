@@ -9,7 +9,7 @@ const mockPortfolio: Portfolio = {
 
 const mockPositions: PortfolioPosition[] = [
   {
-    etfId: 1,
+    id: '1',
     ticker: 'SPY',
     name: 'SPDR S&P 500 ETF Trust',
     quantity: 10,
@@ -20,7 +20,7 @@ const mockPositions: PortfolioPosition[] = [
     isGaining: true,
   },
   {
-    etfId: 2,
+    id: '2',
     ticker: 'QQQ',
     name: 'Invesco QQQ Trust',
     quantity: 15,
@@ -31,7 +31,7 @@ const mockPositions: PortfolioPosition[] = [
     isGaining: false,
   },
   {
-    etfId: 3,
+    id: '3',
     ticker: 'VTI',
     name: 'Vanguard Total Stock Market ETF',
     quantity: 20,
@@ -54,10 +54,10 @@ export const portfolioService = {
     return mockPositions;
   },
 
-  getPortfolioPositionByETF: async (etfId: number): Promise<PortfolioPosition | null> => {
+  getPortfolioPositionByETF: async (id: string): Promise<PortfolioPosition | null> => {
     await new Promise((resolve) => setTimeout(resolve, 300));
     const positions = await portfolioService.getPortfolioPositions();
-    return positions.find((position) => position.etfId === etfId) || null;
+    return positions.find((position) => position.id === id) || null;
   },
 
   getTotalPortfolioValue: async (): Promise<number> => {

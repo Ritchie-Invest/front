@@ -1,22 +1,22 @@
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
-import { ETFDetailServiceAdapter } from '../adapters/ETFDetailServiceAdapter';
+import { ETFPriceHistoryServiceAdapter } from '../adapters/ETFPriceHistoryServiceAdapter';
 import { ETFDetailState } from '../models/ETFDetail';
 import { DateRangeType } from '~/components/molecules/types/dateRange';
 
-const etfDetailService = new ETFDetailServiceAdapter();
+const etfPriceHistoryService = new ETFPriceHistoryServiceAdapter();
 
 export const useETFDetailStore = create<ETFDetailState>()(
   subscribeWithSelector((set, get) => ({
-    etfId: null,
+    id: null,
     selectedRange: DateRangeType.OneMonth,
     etfData: null,
     staticData: null,
     loading: false,
     error: null,
 
-    setETFId: (etfId) => {
-      set({ etfId });
+    setETFId: (id) => {
+      set({ id });
       get().fetchETFData();
     },
 
@@ -26,13 +26,13 @@ export const useETFDetailStore = create<ETFDetailState>()(
     },
 
     fetchETFData: async () => {
-      const { etfId, selectedRange, staticData } = get();
+      const { id, selectedRange, staticData } = get();
 
-      if (!etfId) return;
+      if (!id) return;
 
       try {
         set({ loading: true, error: null });
-        const etfData = await etfDetailService.getETFWithPriceHistory(etfId, selectedRange);
+        const etfData = await etfPriceHistoryService.getETFWithPriceHistory(id, selectedRange);
 
         const newStaticData = {
           ticker: etfData.ticker,
@@ -58,7 +58,7 @@ export const useETFDetailStore = create<ETFDetailState>()(
 
     reset: () =>
       set({
-        etfId: null,
+        id: null,
         selectedRange: DateRangeType.OneMonth,
         etfData: null,
         staticData: null,

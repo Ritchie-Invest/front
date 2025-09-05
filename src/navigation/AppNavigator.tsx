@@ -9,12 +9,16 @@ import HomeScreen from '../features/landing/screens/home';
 import { InvestmentDashboardScreen } from '../features/investment-dashboard/screens/InvestmentDashboardScreen';
 import { ETFDetailScreen } from '../features/etf-detail/screens/ETFDetailScreen';
 import Navbar from '../features/navigation/components/organisms/navbar';
+import ModuleScreen from '../features/games/screens/ModuleScreen';
+import CompleteScreen from '../features/games/screens/CompleteScreen';
 
 export type RootStackParamList = {
   Main: undefined;
   Login: undefined;
   Register: undefined;
   Onboarding: undefined;
+  ModuleScreen: { lessonId: string; moduleId: string };
+  CompleteScreen: { lessonId: string };
 };
 
 export type MainStackParamList = {
@@ -25,6 +29,14 @@ export type MainStackParamList = {
   Profile: undefined;
   Register: undefined;
   Onboarding: undefined;
+  ModuleScreen: {
+    lessonId: string;
+    moduleId: string;
+    currentGameModuleIndex?: number;
+    totalGameModules?: number;
+    reviewMode?: boolean;
+  };
+  CompleteScreen: { lessonId: string };
 };
 
 const Stack = createNativeStackNavigator();
@@ -98,6 +110,12 @@ export const AppNavigator = ({
                     <ETFDetailScreen />
                   </Box>
                 )}
+              </MainStack.Screen>
+              <MainStack.Screen name="ModuleScreen" options={{ headerTitle: '' }}>
+                {() => <ModuleScreen />}
+              </MainStack.Screen>
+              <MainStack.Screen name="CompleteScreen" options={{ headerTitle: '' }}>
+                {({ route }) => <CompleteScreen lessonId={route.params.lessonId} />}
               </MainStack.Screen>
             </MainStack.Navigator>
           )}

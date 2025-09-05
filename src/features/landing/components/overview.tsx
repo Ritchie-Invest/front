@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, ScrollView } from 'native-base';
 import { Hero } from './hero';
 import { ChaptersTimeline } from './timeline';
-import { useProgress } from '~/features/landing/hooks/useProgress';
+import { useProgress } from '~/hooks/useProgress';
 
 interface LessonsOverviewProps {
   showProgress?: boolean;

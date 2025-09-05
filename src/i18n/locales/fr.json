@@ -87,5 +87,22 @@
     "start": "Commencer",
     "review": "Revoir",
     "unlockMessage": "Terminez la leçon précédente pour débloquer"
+  },
+  "qcm": {
+    "completeSentence": "Complète la phrase",
+    "success": "Bravo !",
+    "error": "Oups !",
+    "loading": "Chargement du qcm...",
+    "correctAnswer": "Bonne réponse :",
+    "continue": "Continuer",
+    "understood": "Compris",
+    "review": "Mode révision",
+    "highlightedCorrectAnswer": "La bonne réponse est mise en évidence."
+  },
+  "completion": {
+    "congrats": "Haut la main!",
+    "failed": "Essaye encore",
+    "lessonSuccess": "Leçon complétée avec succès.",
+    "lessonFailed": "Tu n'as pas réussi à compléter la leçon."
   }
 }

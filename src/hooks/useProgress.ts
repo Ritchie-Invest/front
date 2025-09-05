@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { ScrollView as RNScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
-import { useAuthStore } from '../../auth/store/authStore';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { MainStackParamList } from '../navigation/AppNavigator';
+import { useAuthStore } from '../features/auth/store/authStore';
 import { progressService } from '../services/progressService';
-import { Chapter } from '../models/responses/chapter';
+import { Chapter } from '../features/landing/models/responses/chapter';
 
 export const useProgress = () => {
   const scrollViewRef = useRef<RNScrollView>(null);
@@ -16,6 +19,7 @@ export const useProgress = () => {
     data: chaptersData,
     isLoading,
     error,
+    refetch,
   } = useQuery({
     queryKey: ['chapters', 'progress'],
     queryFn: () => progressService.getUserProgress(),
@@ -36,6 +40,8 @@ export const useProgress = () => {
   );
   const progressValue = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
 
+  const navigation = useNavigation<NativeStackNavigationProp<MainStackParamList>>();
+
   const handleChapterLayout = (chapterId: string, event: any) => {
     const { y } = event.nativeEvent.layout;
     setChapterLayouts((prev) => ({
@@ -48,10 +54,9 @@ export const useProgress = () => {
     if (!chapters.length) return;
 
     const timer = setTimeout(() => {
-      const unlockedChapters = chapters.filter((chapter: Chapter) => chapter.isUnlocked);
-      const currentChapter = unlockedChapters.sort(
-        (a: Chapter, b: Chapter) => b.order - a.order,
-      )[0];
+      const currentChapter = chapters
+        .filter((chapter: Chapter) => chapter.isUnlocked)
+        .sort((a: Chapter, b: Chapter) => b.order - a.order)[0];
 
       if (currentChapter) {
         const currentChapterY = chapterLayouts[currentChapter.id];
@@ -67,7 +72,19 @@ export const useProgress = () => {
     return () => clearTimeout(timer);
   }, [chapterLayouts, chapters]);
 
-  const handleLessonAction = (lessonId: string, action: 'start' | 'review') => {};
+  const handleLessonAction = (lessonId: string, action: 'start' | 'review') => {
+    const lesson = lessons.find((l) => l.id === lessonId);
+    const moduleId = lesson?.gameModuleId;
+    if (moduleId && lesson) {
+      navigation.navigate('ModuleScreen', {
+        lessonId,
+        moduleId,
+        currentGameModuleIndex: action === 'review' ? 1 : lesson.completedModules,
+        totalGameModules: lesson.totalModules,
+        reviewMode: action === 'review',
+      });
+    }
+  };
 
   return {
     user,
@@ -81,5 +98,6 @@ export const useProgress = () => {
     handleLessonAction,
     isLoading,
     error,
+    refetch,
   };
 };

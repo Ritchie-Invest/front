@@ -1,58 +1,53 @@
-import React from 'react';
+import React, { memo } from 'react';
+import { Box, Spinner, Center, Text } from 'native-base';
 import { LineChartContainer } from '~/components/organisms/components/LineChartContainer';
-import { ETFChartDataAdapter } from '../adapters/etfChartDataAdapter';
-import { ETFPriceData } from '../model/etfPriceData';
-import { DateRangeType } from '~/components/molecules/types/dateRange';
-import type { LineChartConfig } from '~/components/molecules/models/LineChart';
-import { TimeRangeSelectorConfig } from '~/components/molecules/models/TimeRange';
+import { useETFChart } from '../hooks/useETFChart';
+import { ETFChartProps } from '../models/ETFChartComponent';
 
-interface ETFChartProps {
-  priceHistory: ETFPriceData[];
-  selectedRange: DateRangeType;
-  onRangeChange: (range: DateRangeType) => void;
-  title?: string;
-  config?: LineChartConfig;
-  timeRangeConfig?: TimeRangeSelectorConfig;
-}
+export const ETFChart: React.FC<ETFChartProps> = memo(({ config, timeRangeConfig }) => {
+  const {
+    etfData,
+    loading,
+    error,
+    selectedRange,
+    handleRangeChange,
+    adapter,
+    defaultConfig,
+    defaultTimeRangeConfig,
+  } = useETFChart();
 
-const etfChartAdapter = new ETFChartDataAdapter();
+  const chartConfig = config || defaultConfig;
+  const rangeConfig = timeRangeConfig || defaultTimeRangeConfig;
 
-const defaultEtfChartConfig: LineChartConfig = {
-  height: 240,
-  lineColor: '#3B82F6',
-  activePointColor: '#3B82F6',
-  showVerticalLine: true,
-  verticalLineColor: '#E5E7EB',
-  endPointRadius: 4,
-  animated: true,
-};
+  if (loading) {
+    return (
+      <Box bg="white" p={4} rounded="lg" shadow={1} mb={4} height={chartConfig.height}>
+        <Center flex={1}>
+          <Spinner size="lg" color="blue.500" />
+        </Center>
+      </Box>
+    );
+  }
 
-const defaultTimeRangeConfig: TimeRangeSelectorConfig = {
-  activeColor: 'blue.500',
-  inactiveColor: 'gray.100',
-  activeTextColor: 'white',
-  inactiveTextColor: 'gray.700',
-  justifyContent: 'center',
-  marginBottom: 4,
-};
+  if (error || !etfData) {
+    return (
+      <Box bg="white" p={4} rounded="lg" shadow={1} mb={4} height={chartConfig.height}>
+        <Center flex={1}>
+          <Text color="red.500">Erreur lors du chargement du graphique</Text>
+        </Center>
+      </Box>
+    );
+  }
 
-export const ETFChart: React.FC<ETFChartProps> = ({
-  priceHistory,
-  selectedRange,
-  onRangeChange,
-  title = 'Évolution du prix',
-  config = defaultEtfChartConfig,
-  timeRangeConfig = defaultTimeRangeConfig,
-}) => {
   return (
     <LineChartContainer
-      data={priceHistory}
-      adapter={etfChartAdapter}
+      data={etfData.priceHistory}
+      adapter={adapter as any}
       selectedTimeRange={selectedRange}
-      onTimeRangeChange={onRangeChange}
-      title={title}
-      config={config}
-      timeRangeConfig={timeRangeConfig}
+      onTimeRangeChange={handleRangeChange}
+      title="Évolution du prix"
+      config={chartConfig}
+      timeRangeConfig={rangeConfig}
       emptyStateText="Aucune donnée de prix disponible"
       containerStyle={{
         bg: 'white',
@@ -63,4 +58,4 @@ export const ETFChart: React.FC<ETFChartProps> = ({
       }}
     />
   );
-};
+});

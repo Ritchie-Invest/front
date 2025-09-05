@@ -1,3 +1,9 @@
+export interface LineChartProps {
+  data: GenericChartPoint[];
+  config?: LineChartConfig;
+  emptyStateText?: string;
+}
+
 export interface GenericChartPoint {
   y: number;
   x: number;

@@ -1,4 +1,6 @@
-import { ETFWithPriceHistory, DateRangeType, DATE_RANGE_OPTIONS } from '../index';
+import { ETFWithPriceHistory } from '../models/ETFPriceData';
+import { DateRangeType } from '~/components/molecules/types/dateRange';
+import { DATE_RANGE_OPTIONS } from '~/components/molecules/types/dateRange';
 
 export class ETFDetailService {
   static async getETFWithPriceHistory(
@@ -49,33 +51,35 @@ export class ETFDetailService {
     return priceHistory;
   }
 
+  static generatePoints(endDate: Date, oneMonthDays: number = 30, step: number = 3): Date[] {
+    const dates: Date[] = [];
+    for (let i = oneMonthDays; i >= 0; i -= step) {
+      const date = new Date(endDate);
+      date.setDate(date.getDate() - i);
+      dates.push(date);
+    }
+    return dates;
+  }
+
   private static generateDatePoints(endDate: Date, dateRange: DateRangeType): Date[] {
     const dates: Date[] = [];
     const end = new Date(endDate);
 
     switch (dateRange) {
-      case '7D': {
+      case DateRangeType.SevenDays: {
         const sevenDaysCount =
-          DATE_RANGE_OPTIONS.find((option) => option.value === '7D')?.days || 7;
-        for (let i = sevenDaysCount - 1; i >= 0; i--) {
-          const date = new Date(end);
-          date.setDate(date.getDate() - i);
-          dates.push(date);
-        }
-        break;
+          DATE_RANGE_OPTIONS.find((option) => option.value === DateRangeType.SevenDays)?.days ?? 7;
+        return this.generatePoints(end, sevenDaysCount, 1);
       }
-      case '1M': {
-        const oneMonthDays = DATE_RANGE_OPTIONS.find((option) => option.value === '1M')?.days || 30;
-        for (let i = oneMonthDays; i >= 0; i -= 3) {
-          const date = new Date(end);
-          date.setDate(date.getDate() - i);
-          dates.push(date);
-        }
-        break;
+      case DateRangeType.OneMonth: {
+        const oneMonthDays =
+          DATE_RANGE_OPTIONS.find((option) => option.value === DateRangeType.OneMonth)?.days ?? 30;
+        return this.generatePoints(end, oneMonthDays, 1);
       }
-      case '6M': {
+      case DateRangeType.SixMonths: {
         const sixMonthsCount = Math.floor(
-          (DATE_RANGE_OPTIONS.find((option) => option.value === '6M')?.days || 180) / 30,
+          (DATE_RANGE_OPTIONS.find((option) => option.value === DateRangeType.SixMonths)?.days ||
+            180) / 30,
         );
         for (let monthOffset = sixMonthsCount - 1; monthOffset >= 0; monthOffset--) {
           const firstDate = new Date(end.getFullYear(), end.getMonth() - monthOffset, 1);
@@ -86,9 +90,10 @@ export class ETFDetailService {
         }
         break;
       }
-      case '1Y': {
+      case DateRangeType.OneYear: {
         const oneYearMonths = Math.floor(
-          (DATE_RANGE_OPTIONS.find((option) => option.value === '1Y')?.days || 365) / 30,
+          (DATE_RANGE_OPTIONS.find((option) => option.value === DateRangeType.OneYear)?.days ||
+            365) / 30,
         );
         for (let monthOffset = oneYearMonths - 1; monthOffset >= 0; monthOffset--) {
           const firstDate = new Date(end.getFullYear(), end.getMonth() - monthOffset, 1);

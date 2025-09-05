@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 import { HStack, Pressable, Text } from 'native-base';
 import { TimeRangeOption, TimeRangeSelectorConfig } from '../models/TimeRange';
 
@@ -19,13 +19,13 @@ const defaultConfig: TimeRangeSelectorConfig = {
   marginBottom: 4,
 };
 
-export const TimeRangeSelector = <T extends string | number>({
+const TimeRangeSelectorImpl = <T extends string | number>({
   options,
   selectedRange,
   onRangeChange,
   config = {},
 }: TimeRangeSelectorProps<T>) => {
-  const selectorConfig = { ...defaultConfig, ...config };
+  const selectorConfig = useMemo(() => ({ ...defaultConfig, ...config }), [config]);
 
   return (
     <HStack
@@ -65,3 +65,5 @@ export const TimeRangeSelector = <T extends string | number>({
     </HStack>
   );
 };
+
+export const TimeRangeSelector = memo(TimeRangeSelectorImpl) as typeof TimeRangeSelectorImpl;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, ScrollView } from 'native-base';
+import { Box, ScrollView } from '@gluestack-ui/themed';
 import { Hero } from './hero';
 import { ChaptersTimeline } from './timeline';
 import { useProgress } from '~/features/landing/hooks/useProgress';

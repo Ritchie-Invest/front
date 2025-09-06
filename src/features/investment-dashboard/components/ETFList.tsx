@@ -1,5 +1,5 @@
 import React from 'react';
-import { HStack, Text, Icon } from 'native-base';
+import { HStack, Text, Icon } from '@gluestack-ui/themed';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -30,31 +30,31 @@ export const ETFList: React.FC<ETFListProps> = ({ positions, loading = false }) 
       renderLeft={(etf) => (
         <>
           <HStack alignItems="center" space={2}>
-            <Text fontSize="lg" fontWeight="bold" color="gray.800">
+            <Text fontSize={18} fontWeight="bold" color="$black">
               {etf.ticker}
             </Text>
-            <Text fontSize="sm" color="gray.500">
+            <Text fontSize={14} color="$gray500">
               {etf.name}
             </Text>
           </HStack>
-          <Text fontSize="sm" color="gray.600">
+          <Text fontSize={14} color="$gray600">
             Prix actuel: {formatCurrency(etf.currentPrice)}
           </Text>
         </>
       )}
       renderRight={(etf) => (
         <>
-          <Text fontSize="lg" fontWeight="semibold" color="gray.800">
+          <Text fontSize={18} fontWeight="semibold" color="$black">
             {formatCurrency(etf.currentPrice)}
           </Text>
           <HStack alignItems="center" space={1}>
             <Icon
               as={MaterialIcons}
               name={etf.isGaining ? 'trending-up' : 'trending-down'}
-              size="sm"
+              size={16}
               color={etf.isGaining ? 'green.500' : 'red.500'}
             />
-            <Text fontSize="sm" fontWeight="medium" color={etf.isGaining ? 'green.500' : 'red.500'}>
+            <Text fontSize={14} fontWeight="medium" color={etf.isGaining ? 'green.500' : 'red.500'}>
               {formatPercentage(etf.priceChangePercentage)}
             </Text>
           </HStack>

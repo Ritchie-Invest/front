@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { ScrollView } from 'react-native';
-import { Box, VStack } from 'native-base';
+import { Box, VStack } from '@gluestack-ui/themed';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { MainStackParamList } from '../../../navigation/AppNavigator';
 import { ETFDetails } from '../components/ETFDetails';
@@ -20,9 +20,9 @@ export const ETFDetailScreen: React.FC = () => {
   }, [route.params?.id, setETFId]);
 
   return (
-    <Box flex={1} bg="white">
+    <Box flex={1} bg="$white">
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <VStack space={4} p={4} pb={8}>
+        <VStack space="lg" p="$4" pb="$8">
           <ETFDetails />
           <ETFChart />
         </VStack>

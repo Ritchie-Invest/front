@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { VStack, Text } from 'native-base';
+import { VStack, Text } from '@gluestack-ui/themed';
 import { KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
 import { useForgotPassword } from '../hooks/useForgotPassword';
 import { Button } from '../../../components/atoms/Button';
@@ -50,8 +50,8 @@ export const ForgotPasswordForm = ({ onBackToLogin }: ForgotPasswordFormProps) =
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
       >
-        <VStack space={4} px={4} flex={1} justifyContent="center">
-          <Text fontSize="lg" textAlign="center">
+        <VStack space="lg" px={4} flex={1} justifyContent="center">
+          <Text fontSize={18} textAlign="center">
             {t('forgot.title')}
           </Text>
 
@@ -62,14 +62,14 @@ export const ForgotPasswordForm = ({ onBackToLogin }: ForgotPasswordFormProps) =
             type="email"
           />
 
-          {error && <Text color="red.500">{error}</Text>}
+          {error && <Text color="$red500">{error}</Text>}
 
           <Button onPress={handleSubmit} isLoading={forgotPassword.isPending}>
             {t('forgot.button')}
           </Button>
 
-          {forgotPassword.isSuccess && <Text color="green.500">{t('forgot.success')}</Text>}
-          {forgotPassword.isError && <Text color="red.500">{t('forgot.error.generic')}</Text>}
+          {forgotPassword.isSuccess && <Text color="$green500">{t('forgot.success')}</Text>}
+          {forgotPassword.isError && <Text color="$red500">{t('forgot.error.generic')}</Text>}
 
           <TextLink onPress={() => onBackToLogin?.()}>{t('forgot.backToLogin')}</TextLink>
         </VStack>

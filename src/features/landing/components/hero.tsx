@@ -1,5 +1,5 @@
 import React from 'react';
-import { VStack, HStack, Text, Progress } from 'native-base';
+import { VStack, HStack, Text, Progress } from '@gluestack-ui/themed';
 import { useTranslation } from 'react-i18next';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { Card } from '~/components/molecules/components/card';
@@ -14,32 +14,30 @@ export const Hero: React.FC<HeroProps> = ({ progressValue, completedLessons, tot
   const { t } = useTranslation();
 
   return (
-    <VStack space={6} mb={6}>
-      {/* Titre et description */}
-      <VStack space={2}>
-        <HStack alignItems="center" space={2}>
+    <VStack space="lg" mb={6}>
+      <VStack space="sm">
+        <HStack alignItems="center" space="sm">
           <FontAwesome5 name="bullseye" size={16} color="#ec4899" />
-          <Text fontSize="xl" fontWeight="bold" color="blue.900">
+          <Text fontSize={20} fontWeight="bold" color="$blue900">
             {t('home.hero.title')}
           </Text>
         </HStack>
-        <Text fontSize="sm" color="gray.600">
-          {t('home.hero.description')}
+        <Text fontSize={14} color="$text600">
+          {t('home.hero.subtitle')}
         </Text>
       </VStack>
 
-      {/* Carte de progression */}
       <Card>
         <HStack justifyContent="space-between" alignItems="center">
-          <Text bold>{t('home.hero.progressTitle')}</Text>
-          <HStack alignItems="center" space={1}>
+          <Text fontWeight="bold">{t('home.hero.progressTitle')}</Text>
+          <HStack alignItems="center" space="xs">
             <FontAwesome5 name="trophy" color="#eab308" size={16} />
             <Text>
               {completedLessons} / {totalLessons} {t('home.hero.levelsCompleted')}
             </Text>
           </HStack>
         </HStack>
-        <Progress value={progressValue} mt={3} colorScheme="blue" />
+        <Progress value={progressValue} mt={3} size="md" />
       </Card>
     </VStack>
   );

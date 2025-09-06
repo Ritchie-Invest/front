@@ -1,5 +1,6 @@
 import React from 'react';
-import { VStack, Text, Spacer } from 'native-base';
+import { View } from 'react-native';
+import { VStack, Text } from '@gluestack-ui/themed';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../components/atoms/Button';
 
@@ -12,15 +13,17 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart, onLogin }
   const { t } = useTranslation();
 
   return (
-    <VStack flex={1} bg="white" px="4" justifyContent="center">
-      <VStack space={6} alignItems="center">
-        <Text fontSize="2xl" fontWeight="bold" textAlign="center" color="gray.800">
+    <View
+      style={{ flex: 1, backgroundColor: 'white', paddingHorizontal: 16, justifyContent: 'center' }}
+    >
+      <VStack space="lg" alignItems="center">
+        <Text fontSize={24} fontWeight="bold" textAlign="center" color="$text900">
           {t('onboarding.welcome.title')}
         </Text>
 
-        <Spacer />
+        <View style={{ flex: 1 }} />
 
-        <VStack space={4} width="100%">
+        <VStack space="md" style={{ width: '100%' }}>
           <Button onPress={onStart}>{t('onboarding.welcome.startButton')}</Button>
 
           <Button variant="secondary" onPress={onLogin}>
@@ -28,6 +31,6 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart, onLogin }
           </Button>
         </VStack>
       </VStack>
-    </VStack>
+    </View>
   );
 };

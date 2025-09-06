@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, HStack, Pressable } from 'native-base';
+import { Box, HStack, Pressable } from '@gluestack-ui/themed';
 import { PortfolioItem } from './PortfolioItem';
 import { PortfolioItemType } from '../types/portfolioItemType';
 import { usePortfolio } from '../hooks/usePortfolio';
@@ -10,7 +10,7 @@ export const PortfolioBalance: React.FC<PortfolioBalanceProps> = ({ onPress }) =
 
   if (loading) {
     return (
-      <Box alignItems="center" py={6}>
+      <Box alignItems="center" py="$6">
         <PortfolioItem type={PortfolioItemType.TotalValue} />
       </Box>
     );
@@ -20,10 +20,10 @@ export const PortfolioBalance: React.FC<PortfolioBalanceProps> = ({ onPress }) =
   const investmentValue = totalValue - balance;
 
   const content = (
-    <Box alignItems="center" py={6}>
+    <Box alignItems="center" py="$6">
       <PortfolioItem type={PortfolioItemType.TotalValue} value={totalValue} />
 
-      <HStack space={4} mt={4}>
+      <HStack space="lg" mt="$4">
         <PortfolioItem type={PortfolioItemType.Liquidity} value={balance} />
         <PortfolioItem type={PortfolioItemType.Investment} value={investmentValue} />
       </HStack>

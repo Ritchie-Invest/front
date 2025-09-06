@@ -1,5 +1,5 @@
 import React, { memo, useMemo } from 'react';
-import { HStack, Pressable, Text } from 'native-base';
+import { HStack, Pressable, Text } from '@gluestack-ui/themed';
 import { TimeRangeOption, TimeRangeSelectorConfig } from '../models/TimeRange';
 
 interface TimeRangeSelectorProps<T = string> {
@@ -55,7 +55,7 @@ const TimeRangeSelectorImpl = <T extends string | number>({
                 ? selectorConfig.activeTextColor
                 : selectorConfig.inactiveTextColor
             }
-            fontSize="sm"
+            fontSize={14}
             fontWeight="medium"
           >
             {option.label}

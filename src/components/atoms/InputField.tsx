@@ -1,5 +1,5 @@
-import { TextInput, StyleSheet } from 'react-native';
-import { Box, useTheme } from 'native-base';
+import React from 'react';
+import { Input, InputField as GInputField } from '@gluestack-ui/themed';
 
 type Props = {
   placeholder: string;
@@ -16,7 +16,6 @@ export const InputField = ({
   type = 'text',
   accessibilityLabel,
 }: Props) => {
-  const theme = useTheme();
   const isPassword = type === 'password';
   const keyboardType = type === 'email' ? 'email-address' : 'default';
 
@@ -43,12 +42,8 @@ export const InputField = ({
   };
 
   return (
-    <Box borderWidth="1" borderColor="coolGray.300" borderRadius="md" bg="white">
-      <TextInput
-        style={{
-          height: 40,
-          paddingHorizontal: 16,
-        }}
+    <Input>
+      <GInputField
         placeholder={placeholder}
         value={value}
         onChangeText={onChangeText}
@@ -59,6 +54,6 @@ export const InputField = ({
         textContentType={getTextContentType()}
         autoComplete={getAutoComplete()}
       />
-    </Box>
+    </Input>
   );
 };

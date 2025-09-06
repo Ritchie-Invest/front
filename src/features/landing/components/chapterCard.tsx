@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { VStack, HStack, Text, Progress } from 'native-base';
+import { VStack, HStack, Text, Progress } from '@gluestack-ui/themed';
 import { useTranslation } from 'react-i18next';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Card } from '~/components/molecules/components/card';
@@ -69,36 +69,36 @@ export const ChapterCard = React.forwardRef<any, ChapterCardProps>((props, ref) 
   const statusProps = getStatusProps();
 
   return (
-    <View ref={ref}>
+    <View ref={ref} style={{ marginBottom: 16 }}>
       <Card
         variant={statusProps.cardVariant}
-        mb={4}
-        opacity={statusProps.opacity}
-        borderWidth={status === ProgressStatus.LOCKED ? 1 : 0}
-        borderColor={status === ProgressStatus.LOCKED ? 'gray.300' : 'transparent'}
-        bg={
-          status === ProgressStatus.LOCKED
-            ? 'gray.50'
-            : status === ProgressStatus.COMPLETED
-              ? 'emerald.500'
-              : status === ProgressStatus.CURRENT
-                ? 'blue.600'
-                : undefined
-        }
+        style={{
+          opacity: statusProps.opacity,
+          borderWidth: status === ProgressStatus.LOCKED ? 1 : 0,
+          borderColor: status === ProgressStatus.LOCKED ? '#d1d5db' : 'transparent',
+          backgroundColor:
+            status === ProgressStatus.LOCKED
+              ? '#f9fafb'
+              : status === ProgressStatus.COMPLETED
+                ? '#10b981'
+                : status === ProgressStatus.CURRENT
+                  ? '#2563eb'
+                  : undefined,
+        }}
       >
-        <VStack space={2}>
-          <HStack space={2} alignItems="center">
+        <VStack space="sm">
+          <HStack space="sm" alignItems="center">
             <Ionicons name={statusProps.iconName} color={statusProps.iconColor} size={16} />
-            <Text fontSize="lg" bold color={statusProps.textColor}>
+            <Text fontSize={18} fontWeight="bold" color={statusProps.textColor}>
               {title}
             </Text>
             {status === ProgressStatus.CURRENT && (
               <Text
-                fontSize="xs"
+                fontSize={12}
                 bg="white:alpha.30"
                 px={2}
                 py={1}
-                rounded="md"
+                borderRadius="$md"
                 color="white"
                 fontWeight="bold"
               >
@@ -111,19 +111,19 @@ export const ChapterCard = React.forwardRef<any, ChapterCardProps>((props, ref) 
           </Text>
           <Text
             color={statusProps.textColor}
-            fontSize="xs"
+            fontSize={12}
             opacity={status === ProgressStatus.LOCKED ? 0.7 : 1}
           >
             {completedLessons}/{totalLessons} {t('home.chapter.completedLevels')}
           </Text>
           <Progress
             value={progressValue}
-            colorScheme={statusProps.progressColorScheme}
+            size="md"
             bg={statusProps.progressBg}
             opacity={status === ProgressStatus.LOCKED ? 0.5 : 1}
           />
           {status === ProgressStatus.LOCKED && (
-            <Text fontSize="xs" color="gray.500" fontStyle="italic">
+            <Text fontSize={12} color="$text500" fontStyle="italic">
               {t('home.chapter.unlockMessage')}
             </Text>
           )}

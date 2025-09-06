@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Text } from 'native-base';
+import { Box, Text } from '@gluestack-ui/themed';
 import { formatCurrency } from '../../../utils/formatCurrency';
 import { usePortfolioItem } from '../hooks/usePortfolioItem';
 import { UsePortfolioItemProps } from '../models/portfolioBalance';
@@ -15,7 +15,7 @@ export const PortfolioItem: React.FC<UsePortfolioItemProps> = ({ type, value, la
   if (loading) {
     return (
       <Box alignItems="center">
-        <Text fontSize="md" color="gray.400">
+        <Text fontSize={16} color="$text400">
           Chargement...
         </Text>
       </Box>
@@ -25,7 +25,7 @@ export const PortfolioItem: React.FC<UsePortfolioItemProps> = ({ type, value, la
   return (
     <Box alignItems="center">
       {type !== PortfolioItemType.TotalValue && (
-        <Text fontSize="md" color="gray.500" mb={1}>
+        <Text fontSize={16} color="$text500" mb={1}>
           {displayLabel}
         </Text>
       )}
@@ -38,7 +38,7 @@ export const PortfolioItem: React.FC<UsePortfolioItemProps> = ({ type, value, la
         {formatCurrency(displayValue)}
       </Text>
       {type === PortfolioItemType.TotalValue && (
-        <Text fontSize="lg" color="gray.600">
+        <Text fontSize={18} color="$text600">
           {displayLabel}
         </Text>
       )}

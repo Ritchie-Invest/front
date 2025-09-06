@@ -1,5 +1,5 @@
 import React from 'react';
-import { VStack, Text, Spacer } from 'native-base';
+import { VStack, Text, Box } from '@gluestack-ui/themed';
 import { useTranslation } from 'react-i18next';
 import { OnboardingLayout } from '../../components/organisms/OnboardingLayout';
 import { AnswerButton } from '~/components/molecules/components/AnswerButton';
@@ -27,12 +27,12 @@ export const GoalSelectionScreen: React.FC<GoalSelectionScreenProps> = ({
 
   return (
     <OnboardingLayout progress={progress} onBackPress={onBack}>
-      <VStack flex={1} space={6}>
-        <Text fontSize="2xl" fontWeight="bold" color="gray.800">
+      <VStack flex={1} space="lg">
+        <Text fontSize={24} fontWeight="bold" color="$text900">
           {t('onboarding.goalSelection.title')}
         </Text>
 
-        <VStack space={3}>
+        <VStack space="md">
           {goals.map((goal) => (
             <AnswerButton
               key={goal.id}
@@ -43,13 +43,9 @@ export const GoalSelectionScreen: React.FC<GoalSelectionScreenProps> = ({
           ))}
         </VStack>
 
-        <Spacer />
+        <Box flex={1} />
 
-        <Button
-          onPress={onContinue}
-          variant={selectedGoal ? 'primary' : 'disabled'}
-          isDisabled={!selectedGoal}
-        >
+        <Button onPress={onContinue} variant={selectedGoal ? 'primary' : 'disabled'}>
           {t('onboarding.goalSelection.continueButton')}
         </Button>
       </VStack>

@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from 'react';
-import { Box, Button } from 'native-base';
+import { Box, Button, ButtonText } from '@gluestack-ui/themed';
 import { LessonsOverview } from '../components/overview';
 import { useNavigation } from '@react-navigation/native';
 import { useAuthStore } from '../../auth/store/authStore';
@@ -18,7 +18,7 @@ const HomeScreen = ({ onLogout }: { onLogout: () => void }) => {
           }}
           variant="ghost"
         >
-          Déconnexion
+          <ButtonText>Déconnexion</ButtonText>
         </Button>
       ),
     });

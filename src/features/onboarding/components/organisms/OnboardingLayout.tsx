@@ -1,5 +1,5 @@
 import React from 'react';
-import { VStack, HStack, IconButton, Box, Progress } from 'native-base';
+import { VStack, HStack, Box, Progress, Pressable } from '@gluestack-ui/themed';
 import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -18,27 +18,19 @@ export const OnboardingLayout: React.FC<OnboardingLayoutProps> = ({
 }) => {
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
-      <VStack flex={1} bg="white">
-        <HStack alignItems="center" px="8" py="2" space={3}>
+      <VStack flex={1} bg="$white">
+        <HStack alignItems="center" px="$8" py="$2" space="md">
           {showBackButton && (
-            <IconButton
-              icon={<Ionicons name="arrow-back" size={24} color="black" />}
-              onPress={onBackPress}
-              variant="ghost"
-            />
+            <Pressable onPress={onBackPress} p="$2">
+              <Ionicons name="arrow-back" size={24} color="black" />
+            </Pressable>
           )}
           <Box flex={1}>
-            <Progress
-              value={progress}
-              bg="gray.200"
-              _filledTrack={{ bg: 'blue.500' }}
-              height="2"
-              borderRadius="2"
-            />
+            <Progress value={progress} bg="$gray200" height="$2" borderRadius="$2" />
           </Box>
         </HStack>
 
-        <VStack flex={1} px="8" height="100%">
+        <VStack flex={1} px="$8" height="100%">
           {children}
         </VStack>
       </VStack>

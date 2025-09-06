@@ -1,5 +1,5 @@
 import React from 'react';
-import { VStack, HStack, Text, Pressable } from 'native-base';
+import { VStack, HStack, Text, Pressable } from '@gluestack-ui/themed';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { MainStackParamList } from '~/navigation/AppNavigator';
@@ -21,7 +21,7 @@ const TabItem: React.FC<TabItemProps> = ({ icon, label, onPress, isActive }) => 
   <Pressable onPress={onPress}>
     <VStack alignItems="center">
       <MaterialIcons name={icon as any} color={isActive ? '#3b82f6' : '#9ca3af'} size={24} />
-      <Text fontSize="xs" color={isActive ? 'blue.500' : 'gray.400'}>
+      <Text fontSize={12} color={isActive ? '$blue500' : '$gray400'}>
         {label}
       </Text>
     </VStack>
@@ -42,9 +42,9 @@ const Navbar: React.FC = () => {
 
   return (
     <HStack
-      bg="white"
+      bg="$white"
       borderTopWidth={1}
-      borderColor="gray.200"
+      borderColor="$gray200"
       justifyContent="space-around"
       py={2}
     >

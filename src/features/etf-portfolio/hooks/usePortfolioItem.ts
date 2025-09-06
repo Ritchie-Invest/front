@@ -12,28 +12,28 @@ const getItemConfig = (type: PortfolioItemType): PortfolioItemConfig => {
       return {
         label: 'Valeur totale du portfolio',
         color: 'blue.600',
-        fontSize: '3xl' as const,
+        fontSize: '$3xl' as const,
         fontWeight: 'bold' as const,
       };
     case PortfolioItemType.Liquidity:
       return {
         label: 'Liquidités',
         color: 'green.600',
-        fontSize: 'lg' as const,
+        fontSize: '$lg' as const,
         fontWeight: 'semibold' as const,
       };
     case PortfolioItemType.Investment:
       return {
         label: 'Investissements',
         color: 'blue.600',
-        fontSize: 'lg' as const,
+        fontSize: '$lg' as const,
         fontWeight: 'semibold' as const,
       };
     default:
       return {
         label: '',
         color: 'gray.600',
-        fontSize: 'lg' as const,
+        fontSize: '$lg' as const,
         fontWeight: 'normal' as const,
       };
   }

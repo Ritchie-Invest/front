@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge, Text } from 'native-base';
+import { Box, Text } from '@gluestack-ui/themed';
 import { useTranslation } from 'react-i18next';
 import { ProgressStatus } from '~/features/landing/types/ProgressStatus';
 
@@ -14,27 +14,23 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
     switch (status) {
       case ProgressStatus.COMPLETED:
         return {
-          bg: 'green.500',
+          backgroundColor: '#22c55e',
           text: t('status.progress.completed'),
-          textColor: 'white',
         };
       case ProgressStatus.CURRENT:
         return {
-          bg: 'blue.500',
+          backgroundColor: '#3b82f6',
           text: t('status.progress.current'),
-          textColor: 'white',
         };
       case ProgressStatus.LOCKED:
         return {
-          bg: 'gray.400',
+          backgroundColor: '#9ca3af',
           text: t('status.progress.locked'),
-          textColor: 'white',
         };
       default:
         return {
-          bg: 'blue.500',
+          backgroundColor: '#3b82f6',
           text: t('status.progress.current'),
-          textColor: 'white',
         };
     }
   };
@@ -42,10 +38,10 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
   const statusProps = getStatusProps();
 
   return (
-    <Badge variant="solid" bg={statusProps.bg} rounded="md">
-      <Text fontSize="xs" color={statusProps.textColor}>
+    <Box bg={statusProps.backgroundColor} borderRadius={6} px={8} py={4}>
+      <Text fontSize={12} color="$white">
         {statusProps.text}
       </Text>
-    </Badge>
+    </Box>
   );
 };

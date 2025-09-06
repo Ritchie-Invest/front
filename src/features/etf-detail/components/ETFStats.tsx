@@ -1,5 +1,5 @@
 import React from 'react';
-import { HStack, VStack, Text, Box } from 'native-base';
+import { HStack, VStack, Text, Box } from '@gluestack-ui/themed';
 import { ETFPriceData } from '../models/ETFPriceData';
 import { formatCurrency } from '~/utils/formatCurrency';
 
@@ -22,33 +22,41 @@ export const ETFStats: React.FC<ETFStatsProps> = ({ priceHistory }) => {
 
   const StatItem = ({ label, value }: { label: string; value: string }) => (
     <VStack alignItems="center" flex={1}>
-      <Text fontSize="xs" color="gray.500" textAlign="center">
+      <Text fontSize={12} color="$text500" textAlign="center">
         {label}
       </Text>
-      <Text fontSize="sm" fontWeight="medium" color="gray.800" textAlign="center">
+      <Text fontSize={14} fontWeight="medium" color="$text900" textAlign="center">
         {value}
       </Text>
     </VStack>
   );
 
   return (
-    <Box bg="white" p={4} rounded="lg" shadow={1}>
-      <Text fontSize="lg" fontWeight="semibold" mb={4} color="gray.800">
+    <Box
+      bg="$white"
+      p={4}
+      rounded="$lg"
+      shadowOffset={{ width: 0, height: 1 }}
+      shadowOpacity={0.1}
+      shadowRadius={2}
+      elevation={1}
+    >
+      <Text fontSize={18} fontWeight="semibold" mb={4} color="$text900">
         Statistiques
       </Text>
 
-      <VStack space={4}>
-        <HStack space={2}>
+      <VStack space="lg">
+        <HStack space="sm">
           <StatItem label="Plus haut" value={formatCurrency(maxPrice)} />
           <StatItem label="Plus bas" value={formatCurrency(minPrice)} />
         </HStack>
 
-        <HStack space={2}>
+        <HStack space="sm">
           <StatItem label="Volume moyen" value={Math.round(avgVolume).toLocaleString()} />
           <StatItem label="Volume actuel" value={latestData.volume.toLocaleString()} />
         </HStack>
 
-        <HStack space={2}>
+        <HStack space="sm">
           <StatItem label="Ouverture" value={formatCurrency(latestData.open)} />
           <StatItem label="Clôture" value={formatCurrency(latestData.close)} />
         </HStack>

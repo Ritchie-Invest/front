@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, Box, Text } from 'native-base';
+import { Pressable, Box, Text } from '@gluestack-ui/themed';
 
 interface SelectableItemProps {
   title: string;
@@ -34,12 +34,12 @@ export const SelectableItem: React.FC<SelectableItemProps> = ({
       <Box {...getCardStyle()} borderRadius="12" p="4" mb="3" position="relative">
         {variant === 'recommended' && (
           <Box position="absolute" top="-8" right="4" bg="blue.500" px="3" py="1" borderRadius="12">
-            <Text color="white" fontSize="xs" fontWeight="bold">
+            <Text color="white" fontSize={12} fontWeight="bold">
               Recommandé
             </Text>
           </Box>
         )}
-        <Text fontSize="md" fontWeight="medium">
+        <Text fontSize={16} fontWeight="medium">
           {title}
         </Text>
       </Box>

@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { Button as NBButton, IButtonProps } from 'native-base';
+import { Button as GButton, ButtonText, ButtonSpinner } from '@gluestack-ui/themed';
 
 type Variant = 'primary' | 'secondary' | 'outline' | 'disabled';
 
@@ -8,51 +8,42 @@ type Props = {
   onPress: () => void;
   isLoading?: boolean;
   variant?: Variant;
-} & Omit<IButtonProps, 'variant'>;
+};
 
 export const Button = ({ children, onPress, isLoading, variant = 'primary', ...rest }: Props) => {
-  const getVariantProps = () => {
+  const getVariantProps = (): { variant: 'solid' | 'outline' | 'link'; isDisabled?: boolean } => {
     switch (variant) {
       case 'secondary':
         return {
-          bg: 'white',
-          _text: { color: 'black' },
-          borderWidth: 1,
-          borderColor: 'gray.300',
-          _pressed: { bg: 'gray.100' },
+          variant: 'outline',
         };
       case 'disabled':
         return {
-          bg: 'gray.300',
-          _text: { color: 'gray.500' },
-          _pressed: { bg: 'gray.300' },
+          variant: 'solid',
           isDisabled: true,
         };
       case 'outline':
         return {
           variant: 'outline',
-          borderColor: 'blue.500',
         };
       case 'primary':
       default:
         return {
-          bg: 'blue.500',
-          _text: { color: 'white' },
-          _pressed: { bg: 'blue.600' },
+          variant: 'solid',
         };
     }
   };
 
   return (
-    <NBButton
+    <GButton
       onPress={onPress}
-      isLoading={isLoading}
-      rounded="md"
-      height="50"
+      isDisabled={isLoading || variant === 'disabled'}
+      height="$12"
       {...getVariantProps()}
       {...rest}
     >
-      {children}
-    </NBButton>
+      {isLoading && <ButtonSpinner mr="$1" />}
+      <ButtonText>{children}</ButtonText>
+    </GButton>
   );
 };

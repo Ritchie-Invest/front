@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import { formatPrice } from '../utils/chartHelpers';
-import { formatDateForOverlay } from '../utils/chartHelpers';
+import { formatCurrency } from '~/utils/formatCurrency';
+import { formatDate } from '~/utils/formatDate';
 
 export interface LineChartComponentPoint {
   y: number;
@@ -27,8 +27,8 @@ export function useLineChartComponentData(priceHistory: any[]): LineChartCompone
           y: Number(value),
           x: date.getTime(),
           extraData: {
-            formattedValue: formatPrice(Number(value)),
-            formattedTime: formatDateForOverlay(date),
+            formattedValue: formatCurrency(Number(value)),
+            formattedTime: formatDate(date),
             originalData: item,
           },
         };

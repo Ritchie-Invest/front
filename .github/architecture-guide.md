@@ -1,6 +1,6 @@
 # Architecture et Guide de Contribution Front-End
 
-Ce projet suit les principes d'une architecture modulaire par features, avec une séparation claire des responsabilités et une approche Atomic Design pour les composants, en respectant les principes SOLID pour garantir un code maintenable et évolutif.
+Ce projet suit les principes d'une architecture modulaire par features, avec une séparation claire des responsabilités et une approche Atomic Design pour les composants, en respectant les principes SOLID pour garantir un code maintenable et évolutif. 
 
 ---
 

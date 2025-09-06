@@ -3,37 +3,25 @@ import { HStack, Text, Icon } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ETFWithCurrentPrice } from '~/features/etf/models/ETFWithCurrentPrice';
-import { formatCurrency } from '~/utils/formatCurrency';
 import { MainStackParamList } from '../../../navigation/AppNavigator';
-import { List } from '~/components/organisms/components/list';
-import { useETFStore } from '../../etf/store/ETFStore';
+import { ETFWithCurrentPrice } from '~/features/etf/models/ETFWithCurrentPrice';
+import { formatCurrency } from '../../../utils/formatCurrency';
+import { useETFList } from '../hooks/useETFList';
+
+import { List } from '../../../components/organisms/components/list';
 
 type NavigationProp = NativeStackNavigationProp<MainStackParamList, 'InvestmentDashboard'>;
 
-interface ETFListProps {
-  positions: ETFWithCurrentPrice[];
-  loading?: boolean;
-}
-
-export const ETFList: React.FC<ETFListProps> = ({ positions, loading = false }) => {
+export const ETFList: React.FC = () => {
   const navigation = useNavigation<NavigationProp>();
+  const { etfs, loading, formatPercentage } = useETFList();
 
-  const { setSelectedETF } = useETFStore();
-
-  const formatPercentage = (percentage: number) =>
-    `${percentage >= 0 ? '+' : ''}${percentage.toFixed(2)}%`;
-
-  const handleItemPress = (etf: ETFWithCurrentPrice) => {
-    setSelectedETF(etf);
-    navigation.navigate('ETFDetails', { id: etf.id });
-  };
   return (
-    <List
-      data={positions}
+    <List<ETFWithCurrentPrice>
+      data={etfs}
       loading={loading}
       title="ETF Disponibles"
-      renderLeft={(etf) => (
+      renderLeft={(etf: ETFWithCurrentPrice) => (
         <>
           <HStack alignItems="center" space={2}>
             <Text fontSize="lg" fontWeight="bold" color="gray.800">
@@ -48,7 +36,7 @@ export const ETFList: React.FC<ETFListProps> = ({ positions, loading = false }) 
           </Text>
         </>
       )}
-      renderRight={(etf) => (
+      renderRight={(etf: ETFWithCurrentPrice) => (
         <>
           <Text fontSize="lg" fontWeight="semibold" color="gray.800">
             {formatCurrency(etf.currentPrice)}
@@ -66,7 +54,7 @@ export const ETFList: React.FC<ETFListProps> = ({ positions, loading = false }) 
           </HStack>
         </>
       )}
-      onItemPress={handleItemPress}
+      onItemPress={(etf: ETFWithCurrentPrice) => navigation.navigate('ETFDetails', { id: etf.id })}
     />
   );
 };

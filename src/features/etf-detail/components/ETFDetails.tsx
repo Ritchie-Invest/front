@@ -1,17 +1,33 @@
-import React from 'react';
-import { VStack, HStack, Text, Icon } from 'native-base';
+import React, { memo } from 'react';
+import { VStack, HStack, Text, Icon, Spinner, Center } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
-import { calculatePriceChange } from '../utils/chartHelpers';
-import { formatPrice } from '../utils/chartHelpers';
-import { ETFWithPriceHistory } from '~/features/etf-detail/models/ETFPriceHistory';
+import { formatCurrency } from '~/utils/formatCurrency';
+import { useETFDetails } from '../hooks/useETFDetails';
 
-interface ETFDetailsProps {
-  etf: ETFWithPriceHistory;
-}
+export const ETFDetails: React.FC = memo(() => {
+  const {
+    staticData: etf,
+    staticLoading: isLoading,
+    error,
+    priceChange,
+    isPositive,
+  } = useETFDetails();
 
-export const ETFDetails: React.FC<ETFDetailsProps> = ({ etf }) => {
-  const priceChange = calculatePriceChange(etf.priceHistory);
-  const isPositive = priceChange.percentage >= 0;
+  if (isLoading) {
+    return (
+      <Center py={10}>
+        <Spinner />
+      </Center>
+    );
+  }
+
+  if (error || !etf) {
+    return (
+      <Center py={10}>
+        <Text color="red.500">Erreur lors du chargement des détails de l'ETF.</Text>
+      </Center>
+    );
+  }
 
   return (
     <VStack space={2} mb={6}>
@@ -28,7 +44,7 @@ export const ETFDetails: React.FC<ETFDetailsProps> = ({ etf }) => {
 
       <VStack space={1}>
         <Text fontSize="3xl" fontWeight="bold" color="gray.900">
-          {formatPrice(etf.currentPrice)}
+          {formatCurrency(etf.currentPrice)}
         </Text>
 
         <HStack alignItems="center" space={1}>
@@ -39,11 +55,11 @@ export const ETFDetails: React.FC<ETFDetailsProps> = ({ etf }) => {
             color={isPositive ? 'green.500' : 'red.500'}
           />
           <Text fontSize="md" fontWeight="medium" color={isPositive ? 'green.500' : 'red.500'}>
-            {formatPrice(Math.abs(priceChange.amount))} (
+            {formatCurrency(Math.abs(priceChange.amount))} (
             {Math.abs(priceChange.percentage).toFixed(2)}%)
           </Text>
         </HStack>
       </VStack>
     </VStack>
   );
-};
+});

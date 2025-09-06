@@ -57,10 +57,10 @@ export const portfolioService = {
     return mockPositions;
   },
 
-  getPortfolioPositionByETF: async (etfId: string): Promise<PortfolioPosition | null> => {
+  getPortfolioPositionByETF: async (id: string): Promise<PortfolioPosition | null> => {
     await new Promise((resolve) => setTimeout(resolve, 300));
     const positions = await portfolioService.getPortfolioPositions();
-    return positions.find((position) => position.etfId === etfId) || null;
+    return positions.find((position) => position.id === id) || null;
   },
 
   getTotalPortfolioValue: async (): Promise<number> => {

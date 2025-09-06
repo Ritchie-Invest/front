@@ -1,6 +1,7 @@
 import React from 'react';
 import { HStack, VStack, Text, Box } from 'native-base';
-import { ETFPriceData, formatPrice } from '../index';
+import { ETFPriceData } from '../models/ETFPriceData';
+import { formatCurrency } from '~/utils/formatCurrency';
 
 interface ETFStatsProps {
   priceHistory: ETFPriceData[];
@@ -38,8 +39,8 @@ export const ETFStats: React.FC<ETFStatsProps> = ({ priceHistory }) => {
 
       <VStack space={4}>
         <HStack space={2}>
-          <StatItem label="Plus haut" value={formatPrice(maxPrice)} />
-          <StatItem label="Plus bas" value={formatPrice(minPrice)} />
+          <StatItem label="Plus haut" value={formatCurrency(maxPrice)} />
+          <StatItem label="Plus bas" value={formatCurrency(minPrice)} />
         </HStack>
 
         <HStack space={2}>
@@ -48,8 +49,8 @@ export const ETFStats: React.FC<ETFStatsProps> = ({ priceHistory }) => {
         </HStack>
 
         <HStack space={2}>
-          <StatItem label="Ouverture" value={formatPrice(latestData.open)} />
-          <StatItem label="Clôture" value={formatPrice(latestData.close)} />
+          <StatItem label="Ouverture" value={formatCurrency(latestData.open)} />
+          <StatItem label="Clôture" value={formatCurrency(latestData.close)} />
         </HStack>
       </VStack>
     </Box>

@@ -24,7 +24,7 @@ export type RootStackParamList = {
 export type MainStackParamList = {
   Landing: undefined;
   InvestmentDashboard: undefined;
-  ETFDetails: { etfID: number };
+  ETFDetails: { id: string };
   Progress: undefined;
   Profile: undefined;
   Register: undefined;

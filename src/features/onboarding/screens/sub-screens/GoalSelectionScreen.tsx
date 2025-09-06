@@ -2,7 +2,7 @@ import React from 'react';
 import { VStack, Text, Spacer } from 'native-base';
 import { useTranslation } from 'react-i18next';
 import { OnboardingLayout } from '../../components/organisms/OnboardingLayout';
-import { AnswerButton } from '~/components/molecules/AnswerButton';
+import { AnswerButton } from '~/components/molecules/components/AnswerButton';
 import { Button } from '../../../../components/atoms/Button';
 import { OnboardingGoal } from '../../models/onboarding.types';
 

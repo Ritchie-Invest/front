@@ -9,6 +9,8 @@ import { AmountInput } from '../components/AmountInput';
 import { TransactionButton } from '../components/TransactionButton';
 import { TransactionStatus } from '../components/TransactionStatus';
 import { useTransactionStore } from '../store/TransactionStore';
+import { PortfolioItem } from '~/features/etf-portfolio/components/PortfolioItem';
+import { PortfolioItemType } from '~/features/etf-portfolio/types/portfolioItemType';
 
 type ETFTransactionScreenRouteProp = RouteProp<MainStackParamList, 'ETFTransaction'>;
 
@@ -31,17 +33,16 @@ export const ETFTransactionScreen: React.FC = () => {
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Box flex={1} bg="white">
           <ScrollView
-            flex={1}
             contentContainerStyle={{ flexGrow: 1 }}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled"
           >
-            <VStack space={4} p={4} flex={1}>
+            <VStack safeAreaBottom space={4} p={4} minHeight="full">
               {transactionResult ? (
                 <Box flex={1} justifyContent="center" alignItems="center">
                   <TransactionStatus
@@ -51,14 +52,17 @@ export const ETFTransactionScreen: React.FC = () => {
                   />
                 </Box>
               ) : (
-                <Box flex={1} justifyContent={'space-around'}>
+                <VStack safeAreaBottom space={6} flex={1} justifyContent="space-between">
                   <ETFTransactionHeader />
-                  <AmountInput />
+                  <VStack flex={1} justifyContent="center" space={3}>
+                    <AmountInput />
+                    <PortfolioItem type={PortfolioItemType.Liquidity} />
+                  </VStack>
                   <TransactionButton
                     transactionType={transactionType}
                     onTransactionResult={setTransactionResult}
                   />
-                </Box>
+                </VStack>
               )}
             </VStack>
           </ScrollView>

@@ -117,7 +117,6 @@ export const AppNavigator = ({
                 {() => (
                   <>
                     <ETFTransactionScreen />
-                    <Navbar />
                   </>
                 )}
               </MainStack.Screen>

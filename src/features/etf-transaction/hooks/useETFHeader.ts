@@ -19,9 +19,7 @@ export const useETFHeader = (etfId: string, ticker: string, currentValue: number
       setLoading(true);
       setError(null);
 
-      const numericEtfId = parseInt(etfId, 10);
-
-      if (isNaN(numericEtfId)) {
+      if (!etfId || etfId.trim() === '') {
         throw new Error('Invalid ETF ID format');
       }
 

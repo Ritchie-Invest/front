@@ -61,5 +61,6 @@ export function getUserFromToken(accessToken: string) {
     id: payload.id,
     email: payload.email,
     type: payload.type,
+    portfolioId: payload.portfolioId,
   };
 }

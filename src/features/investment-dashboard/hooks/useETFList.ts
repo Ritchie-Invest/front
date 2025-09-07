@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import { ETFWithCurrentPrice } from '../../etf/models/ETFWithCurrentPrice';
+import { ETF } from '../../etf/models/ETF';
 import { ETFListContract } from '../contracts/ETFListContract';
 import { ETFListServiceAdapter } from '../adapters/ETFListServiceAdapter';
 
 export const useETFs = (dataService: ETFListContract = new ETFListServiceAdapter()) => {
-  const [etfs, setETFs] = useState<ETFWithCurrentPrice[]>([]);
+  const [etfs, setETFs] = useState<ETF[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 

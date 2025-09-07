@@ -1,7 +1,4 @@
-import {
-  ETF_WITH_CURRENT_PRICE_VALIDATION_RULES,
-  validateETFWithCurrentPrice,
-} from '~/features/etf/validation/ETFWithCurrentPriceValidation';
+import { ETF_VALIDATION_RULES, validateETF } from '~/features/etf/validation/ETFValidation';
 import { DATE_RANGE_OPTIONS } from '../../../components/molecules/types/dateRange';
 
 export const PRICE_HISTORY_VALIDATION_RULES = {
@@ -44,13 +41,13 @@ export const validateETFWithPriceHistory = (etf: unknown): boolean => {
 
   const etfData = etf as any;
 
-  if (!validateETFWithCurrentPrice(etfData)) return false;
+  if (!validateETF(etfData)) return false;
 
   return (
-    typeof etfData.currentPrice === 'number' &&
-    etfData.currentPrice >= ETF_WITH_CURRENT_PRICE_VALIDATION_RULES.CURRENT_PRICE.min &&
+    typeof etfData.price === 'number' &&
+    etfData.price >= ETF_VALIDATION_RULES.PRICE.min &&
     validatePriceHistory(etfData.priceHistory)
   );
 };
 
-export { ETF_WITH_CURRENT_PRICE_VALIDATION_RULES, validateETFWithCurrentPrice };
+export { ETF_VALIDATION_RULES, validateETF };

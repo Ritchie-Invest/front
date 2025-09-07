@@ -21,37 +21,35 @@ export interface UsePortfolioGraphReturn {
 export const usePortfolioGraph = (
   options: UsePortfolioGraphOptions = {},
 ): UsePortfolioGraphReturn => {
-  const { portfolio, totalValue, loading } = usePortfolio();
+  const { portfolio, loading } = usePortfolio();
 
   const { cashColor = colors.primaryActionColor, investmentColor = colors.warningColor } = options;
 
   const portfolioData = useMemo(() => {
     if (!portfolio) return [];
 
-    const balance = portfolio.balance ?? 0;
-    const investmentValue = totalValue - balance;
-
     return [
       {
-        cash: balance,
-        investments: investmentValue,
+        cash: portfolio.cash,
+        investments: portfolio.investments,
       },
     ];
-  }, [portfolio, totalValue]);
+  }, [portfolio]);
 
   const adapter = useMemo(() => {
     return new PortfolioPieChartAdapter(cashColor, investmentColor);
   }, [cashColor, investmentColor]);
 
   const formattedTotalValue = useMemo(() => {
-    return totalValue.toLocaleString('fr-FR', {
+    return (portfolio?.totalValue ?? 0).toLocaleString('fr-FR', {
       style: 'currency',
-      currency: 'EUR',
+      currency: portfolio?.currency ?? 'EUR',
     });
-  }, [totalValue]);
+  }, [portfolio]);
 
-  const balance = portfolio?.balance ?? 0;
-  const investmentValue = totalValue - balance;
+  const totalValue = portfolio?.totalValue ?? 0;
+  const balance = portfolio?.cash ?? 0;
+  const investmentValue = portfolio?.investments ?? 0;
 
   return {
     portfolioData,

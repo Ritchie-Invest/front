@@ -1,10 +1,10 @@
 import React from 'react';
 import { Box, Text, VStack } from '@gluestack-ui/themed';
-import { PortfolioBalance } from '~/features/etf-portfolio/components/PortfolioBalance';
+import { PortfolioGraph } from '~/features/etf-portfolio/components/PortfolioGraph';
 import { usePortfolio } from '~/features/etf-portfolio/hooks/usePortfolio';
 import { useETFs } from '../hooks/useETFList';
 import { ETFList } from '../components/ETFList';
-import { colors, margins, paddings } from '~/lib/theme/theme';
+import { colors, margins, paddings, spacing } from '~/lib/theme/theme';
 
 export const InvestmentDashboardScreen: React.FC = () => {
   const { loading: portfolioLoading, error: portfolioError } = usePortfolio();
@@ -27,11 +27,13 @@ export const InvestmentDashboardScreen: React.FC = () => {
   }
 
   return (
-    <Box flex={1} bg="$white">
-      <VStack space="lg" px="$4" py="$6">
-        <PortfolioBalance />
-      </VStack>
-      <ETFList positions={etfs} loading={loading} />
-    </Box>
+    <VStack flex={1} bg={colors.mainBackgroundColor} space={spacing.spacingMediumFallback}>
+      <Box>
+        <PortfolioGraph />
+      </Box>
+      <Box flex={1} backgroundColor={colors.alternativeBackgroundColor}>
+        <ETFList positions={etfs} loading={loading} />
+      </Box>
+    </VStack>
   );
 };

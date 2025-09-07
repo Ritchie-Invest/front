@@ -2,8 +2,13 @@ import { useEffect, useRef, useState } from 'react';
 import { ScrollView as RNScrollView } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
 import { useAuthStore } from '../../auth/store/authStore';
-import { progressService } from '../services/progressService';
+import { ProgressServiceAdapter } from '../adapters/ProgressServiceAdapter';
 import { Chapter } from '../models/responses/chapter';
+import { Lesson } from '../models/responses/lesson';
+import { ProgressStatus } from '../types/ProgressStatus';
+import { computeProgressStatus } from '../utils/computeProgressStatus';
+
+const progressAdapter = new ProgressServiceAdapter();
 
 export const useProgress = () => {
   const scrollViewRef = useRef<RNScrollView>(null);
@@ -18,7 +23,7 @@ export const useProgress = () => {
     error,
   } = useQuery({
     queryKey: ['chapters', 'progress'],
-    queryFn: () => progressService.getUserProgress(),
+    queryFn: () => progressAdapter.getUserProgress(),
     enabled: !!accessToken,
     staleTime: 5 * 60 * 1000,
   });
@@ -36,6 +41,35 @@ export const useProgress = () => {
   );
   const progressValue = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
 
+  const getCurrentLesson = (): Lesson | null => {
+    for (const chapter of chapters) {
+      if (chapter.status === 'LOCKED') continue;
+
+      for (const lesson of chapter.lessons) {
+        if (lesson.status === 'LOCKED') continue;
+
+        if (lesson.status !== 'COMPLETED') {
+          return lesson;
+        }
+      }
+    }
+    return null;
+  };
+
+  const getCurrentChapter = (): Chapter | null => {
+    const currentLesson = getCurrentLesson();
+    if (!currentLesson) return null;
+
+    return (
+      chapters.find((chapter) =>
+        chapter.lessons.some((lesson) => lesson.id === currentLesson.id),
+      ) || null
+    );
+  };
+
+  const currentLesson = getCurrentLesson();
+  const currentChapter = getCurrentChapter();
+
   const handleChapterLayout = (chapterId: string, event: any) => {
     const { y } = event.nativeEvent.layout;
     setChapterLayouts((prev) => ({
@@ -48,16 +82,15 @@ export const useProgress = () => {
     if (!chapters.length) return;
 
     const timer = setTimeout(() => {
-      const unlockedChapters = chapters.filter((chapter: Chapter) => chapter.isUnlocked);
-      const currentChapter = unlockedChapters.sort(
-        (a: Chapter, b: Chapter) => b.order - a.order,
-      )[0];
+      const availableChapters = chapters.filter((chapter: Chapter) => chapter.status !== 'LOCKED');
+      const targetChapter =
+        currentChapter || availableChapters.sort((a: Chapter, b: Chapter) => b.order - a.order)[0];
 
-      if (currentChapter) {
-        const currentChapterY = chapterLayouts[currentChapter.id];
-        if (currentChapterY !== undefined && scrollViewRef.current) {
+      if (targetChapter) {
+        const targetChapterY = chapterLayouts[targetChapter.id];
+        if (targetChapterY !== undefined && scrollViewRef.current) {
           scrollViewRef.current.scrollTo({
-            y: Math.max(0, currentChapterY - 100),
+            y: Math.max(0, targetChapterY - 100),
             animated: true,
           });
         }
@@ -65,7 +98,7 @@ export const useProgress = () => {
     }, 800);
 
     return () => clearTimeout(timer);
-  }, [chapterLayouts, chapters]);
+  }, [chapterLayouts, chapters, currentChapter]);
 
   const handleLessonAction = (lessonId: string, action: 'start' | 'review') => {};
 
@@ -76,6 +109,8 @@ export const useProgress = () => {
     completedLessons,
     totalLessons,
     progressValue,
+    currentLesson,
+    currentChapter,
     scrollViewRef,
     handleChapterLayout,
     handleLessonAction,

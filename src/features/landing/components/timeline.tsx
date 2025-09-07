@@ -1,31 +1,40 @@
 import React from 'react';
 import { VStack, View } from '@gluestack-ui/themed';
-import { ChapterCard } from './chapterCard';
-import { LessonCard } from './lessonCard';
+import { LessonCircle } from './lessonCircle';
 import { Chapter } from '../models/responses/chapter';
+import { Lesson } from '../models/responses/lesson';
+import { useTimeline } from '../hooks/useTimeline';
+import { margins, spacing } from '~/lib/theme/theme';
 
 interface ChaptersTimelineProps {
   chapters: Chapter[];
+  currentLesson: Lesson | null;
   onChapterLayout: (chapterId: string, event: any) => void;
   onLessonAction: (lessonId: string, action: 'start' | 'review') => void;
 }
 
 export const ChaptersTimeline: React.FC<ChaptersTimelineProps> = ({
   chapters,
-  onChapterLayout,
+  currentLesson,
   onLessonAction,
 }) => {
-  return (
-    <VStack>
-      {chapters.map((chapter) => (
-        <React.Fragment key={chapter.id}>
-          <View onLayout={(event) => onChapterLayout(chapter.id, event)}>
-            <ChapterCard chapter={chapter} />
-          </View>
+  const { chaptersWithPositions } = useTimeline({ chapters, currentLesson });
 
-          <VStack space="md" mb={6} mx={2}>
-            {chapter.lessons.map((lesson) => (
-              <LessonCard key={lesson.id} lesson={lesson} onAction={onLessonAction} />
+  return (
+    <VStack space="xs">
+      {chaptersWithPositions.map(({ chapter, lessons }) => (
+        <React.Fragment key={chapter.id}>
+          <VStack space={spacing.spacingLargeFallback} mb={margins.marginLarge}>
+            {lessons.map(({ lesson, positionStyle, isCurrent }) => (
+              <View
+                key={lesson.id}
+                style={{
+                  alignSelf: 'center',
+                  ...positionStyle,
+                }}
+              >
+                <LessonCircle lesson={lesson} onAction={onLessonAction} isCurrent={isCurrent} />
+              </View>
             ))}
           </VStack>
         </React.Fragment>

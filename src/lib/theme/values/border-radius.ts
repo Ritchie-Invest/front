@@ -5,5 +5,6 @@ const borderRadius = {
   borderRadiusLarge: 24,
   borderRadiusLargeFallback: 'lg' as const,
   borderRadiusExtraLarge: 32,
+  borderRadiusCircle: 9999,
 };
 export { borderRadius };

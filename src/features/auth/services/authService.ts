@@ -35,6 +35,15 @@ export async function register(email: string, password: string): Promise<Registe
   return res.data;
 }
 
+export async function refreshToken(): Promise<LoginResponse> {
+  const res = await axiosInstance.post<LoginResponse>(
+    '/auth/refresh',
+    {},
+    { withCredentials: true },
+  );
+  return res.data;
+}
+
 export async function logout(): Promise<void> {
   await axiosInstance.post('/auth/logout', {}, { withCredentials: true });
 }

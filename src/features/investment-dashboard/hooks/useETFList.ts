@@ -2,8 +2,14 @@ import { useState, useEffect } from 'react';
 import { ETF } from '../../etf/models/ETF';
 import { ETFListContract } from '../contracts/ETFListContract';
 import { ETFListServiceAdapter } from '../adapters/ETFListServiceAdapter';
+import { useNavigation } from '@react-navigation/native';
+import { useSetSelectedETF } from '~/features/etf/store/ETFStore';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { MainStackParamList } from '~/navigation/AppNavigator';
 
-export const useETFs = (dataService: ETFListContract = new ETFListServiceAdapter()) => {
+type NavigationProp = NativeStackNavigationProp<MainStackParamList, 'InvestmentDashboard'>;
+
+export const useETFList = (dataService: ETFListContract = new ETFListServiceAdapter()) => {
   const [etfs, setETFs] = useState<ETF[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -26,10 +32,32 @@ export const useETFs = (dataService: ETFListContract = new ETFListServiceAdapter
     fetchETFs();
   }, []);
 
+  const navigation = useNavigation<NavigationProp>();
+  const setSelectedETF = useSetSelectedETF();
+
+  const formatPercentage = (percentage: number) =>
+    `${percentage >= 0 ? '+' : ''}${percentage.toFixed(2)}%`;
+
+  const isGaining = (etf: ETF) => etf.variationDirection === 'UP';
+
+  const handleETFPress = (etf: ETF) => {
+    setSelectedETF({
+      id: etf.id,
+      ticker: etf.symbol,
+      name: etf.name,
+      currentPrice: etf.price,
+    });
+
+    navigation.navigate('ETFDetails', { id: etf.id });
+  };
+
   return {
     etfs,
     loading,
     error,
     refetch: fetchETFs,
+    formatPercentage,
+    isGaining,
+    handleETFPress,
   };
 };

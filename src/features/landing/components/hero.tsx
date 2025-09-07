@@ -1,8 +1,9 @@
 import React from 'react';
-import { VStack, HStack, Text, Progress } from '@gluestack-ui/themed';
+import { VStack, HStack, Text, Progress, ProgressFilledTrack } from '@gluestack-ui/themed';
 import { useTranslation } from 'react-i18next';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { Card } from '~/components/molecules/components/card';
+import { colors, margins, spacing, typography } from '~/lib/theme/theme';
 
 interface HeroProps {
   progressValue: number;
@@ -14,30 +15,36 @@ export const Hero: React.FC<HeroProps> = ({ progressValue, completedLessons, tot
   const { t } = useTranslation();
 
   return (
-    <VStack space="lg" mb={6}>
-      <VStack space="sm">
-        <HStack alignItems="center" space="sm">
-          <FontAwesome5 name="bullseye" size={16} color="#ec4899" />
-          <Text fontSize={20} fontWeight="bold" color="$blue900">
+    <VStack space={spacing.spaceMinimumFallback} mb={margins.marginMedium}>
+      <VStack space={spacing.spaceMinimumFallback}>
+        <HStack alignItems="center" space={spacing.spaceMinimumFallback}>
+          <FontAwesome5 name="bullseye" size={typography.bodySize} color={colors.errorColor} />
+          <Text
+            fontSize={typography.heading1Size}
+            color={colors.primaryActionActiveColor}
+            fontWeight={typography.fontWeightBold}
+          >
             {t('home.hero.title')}
           </Text>
         </HStack>
-        <Text fontSize={14} color="$text600">
-          {t('home.hero.subtitle')}
+        <Text fontSize={typography.bodySmallSize} color={colors.primaryTextColor}>
+          {t('home.hero.description')}
         </Text>
       </VStack>
 
       <Card>
         <HStack justifyContent="space-between" alignItems="center">
-          <Text fontWeight="bold">{t('home.hero.progressTitle')}</Text>
-          <HStack alignItems="center" space="xs">
-            <FontAwesome5 name="trophy" color="#eab308" size={16} />
+          <Text fontWeight={typography.fontWeightBold}>{t('home.hero.progressTitle')}</Text>
+          <HStack alignItems="center" space={spacing.spacingOneFallback}>
+            <FontAwesome5 name="trophy" color={colors.warningColor} size={typography.bodySize} />
             <Text>
               {completedLessons} / {totalLessons} {t('home.hero.levelsCompleted')}
             </Text>
           </HStack>
         </HStack>
-        <Progress value={progressValue} mt={3} size="md" />
+        <Progress value={progressValue} mt={margins.marginSmall} size="md" orientation="horizontal">
+          <ProgressFilledTrack backgroundColor={colors.primaryActionColor} />
+        </Progress>
       </Card>
     </VStack>
   );

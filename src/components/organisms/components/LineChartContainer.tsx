@@ -7,6 +7,7 @@ import type { LineChartConfig, ChartDataAdapter } from '../../molecules/models/L
 import type { TimeRangeOption } from '~/components/molecules/models/TimeRange';
 import { DateRangeType } from '~/components/molecules/types/dateRange';
 import type { TimeRangeSelectorConfig } from '~/components/molecules/models/TimeRange';
+import { borderRadius, colors, margins, paddings, typography } from '~/lib/theme/theme';
 
 interface LineChartContainerProps<T = any> {
   data: T[];
@@ -51,19 +52,19 @@ export const LineChartContainer = memo(
       return (
         <Box
           {...containerStyle}
-          bg="$white"
+          bg={colors.mainBackgroundColor}
           flex={1}
           justifyContent="center"
           alignItems="center"
-          p="$4"
-          rounded="$lg"
+          p={paddings.paddingVerySmall}
+          rounded={borderRadius.borderRadiusLarge}
           shadowOffset={{ width: 0, height: 2 }}
           shadowOpacity={0.2}
           shadowRadius={3}
           elevation={2}
-          m="$2"
+          m={margins.marginVerySmall}
         >
-          <Text fontSize="$lg" color="$textSecondary">
+          <Text fontSize={typography.heading6Size} color="$textSecondary">
             {emptyStateText || 'Aucune donnée disponible'}
           </Text>
         </Box>
@@ -73,31 +74,36 @@ export const LineChartContainer = memo(
     return (
       <Box
         {...containerStyle}
-        bg="$white"
+        bg={colors.mainBackgroundColor}
         flex={1}
         justifyContent="center"
         alignItems="center"
-        p="$4"
-        rounded="$lg"
+        p={paddings.paddingMedium}
+        rounded={borderRadius.borderRadiusLarge}
         shadowOffset={{ width: 0, height: 2 }}
         shadowOpacity={0.2}
         shadowRadius={3}
         elevation={2}
-        m="$2"
+        m={margins.marginSmall}
       >
         <VStack space="md" width="$full">
           {title && (
-            <Text fontSize="$lg" fontWeight="$bold" textAlign="center">
+            <Text
+              fontSize={typography.heading6Size}
+              fontWeight={typography.fontWeightBold}
+              textAlign="center"
+            >
               {title}
             </Text>
           )}
+
+          <LineChartComponent data={chartData} config={config} />
           <TimeRangeSelector
             options={timeRangeOptions}
             selectedRange={selectedTimeRange}
             onRangeChange={onTimeRangeChange}
             config={timeRangeConfig}
           />
-          <LineChartComponent data={chartData} config={config} />
         </VStack>
       </Box>
     );

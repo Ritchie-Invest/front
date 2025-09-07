@@ -3,6 +3,7 @@ import { VStack, Text, Box } from '@gluestack-ui/themed';
 import { useTranslation } from 'react-i18next';
 import { OnboardingLayout } from '../../components/organisms/OnboardingLayout';
 import { Button } from '../../../../components/atoms/Button';
+import { typography } from '~/lib/theme/theme';
 
 interface CompletionScreenProps {
   title: string;
@@ -29,7 +30,7 @@ export const CompletionScreen: React.FC<CompletionScreenProps> = ({
             {title}
           </Text>
 
-          <Text fontSize={16} textAlign="center" color="$text600">
+          <Text fontSize={typography.bodySize} textAlign="center" color="$text600">
             {description}
           </Text>
         </VStack>

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Pressable, Box, Text } from '@gluestack-ui/themed';
+import { Pressable, Box, Badge, Text } from '@gluestack-ui/themed';
+import { colors, borderRadius, paddings, margins, typography } from '~/lib/theme/theme';
 
 interface SelectableItemProps {
   title: string;
@@ -17,31 +18,49 @@ export const SelectableItem: React.FC<SelectableItemProps> = ({
   const getCardStyle = () => {
     if (isSelected) {
       return {
-        bg: 'blue.50',
-        borderColor: 'blue.500',
+        bg: colors.primaryActionBackgroundColor,
+        borderColor: colors.primaryActionColor,
         borderWidth: 2,
       };
     }
     return {
-      bg: 'white',
-      borderColor: 'gray.200',
+      bg: colors.transparent,
+      borderColor: colors.GreyL30,
       borderWidth: 1,
     };
   };
 
   return (
     <Pressable onPress={onPress}>
-      <Box {...getCardStyle()} borderRadius="12" p="4" mb="3" position="relative">
+      <Box
+        {...getCardStyle()}
+        borderRadius={borderRadius.borderRadiusSmall}
+        p={paddings.paddingSmall}
+        mb={margins.marginSmall}
+        position="relative"
+        height={60}
+        justifyContent="center"
+      >
         {variant === 'recommended' && (
-          <Box position="absolute" top="-8" right="4" bg="blue.500" px="3" py="1" borderRadius="12">
-            <Text color="white" fontSize={12} fontWeight="bold">
+          <Badge
+            position="absolute"
+            bg={colors.primaryActionColor}
+            px={paddings.paddingSmall}
+            py={paddings.paddingSmall}
+            borderRadius={borderRadius.borderRadiusSmall}
+            top={-10}
+            right={-10}
+          >
+            <Text
+              color="white"
+              fontSize={typography.captionSize}
+              fontWeight={typography.fontWeightMedium}
+            >
               Recommandé
             </Text>
-          </Box>
+          </Badge>
         )}
-        <Text fontSize={16} fontWeight="medium">
-          {title}
-        </Text>
+        <Text fontSize={typography.bodySize}>{title}</Text>
       </Box>
     </Pressable>
   );

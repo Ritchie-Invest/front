@@ -7,6 +7,7 @@ import { Card } from '~/components/molecules/components/card';
 import { Chapter } from '../models/responses/chapter';
 import { ProgressStatus } from '../types/ProgressStatus';
 import { computeProgressStatus } from '../utils/computeProgressStatus';
+import { borderRadius, colors, paddings, spacing, typography } from '~/lib/theme/theme';
 
 interface ChapterCardProps {
   chapter: Chapter;
@@ -78,29 +79,37 @@ export const ChapterCard = React.forwardRef<any, ChapterCardProps>((props, ref) 
           borderColor: status === ProgressStatus.LOCKED ? '#d1d5db' : 'transparent',
           backgroundColor:
             status === ProgressStatus.LOCKED
-              ? '#f9fafb'
+              ? colors.componentBackgroundColor
               : status === ProgressStatus.COMPLETED
-                ? '#10b981'
+                ? colors.successBackgroundColor
                 : status === ProgressStatus.CURRENT
-                  ? '#2563eb'
+                  ? colors.primaryActionColor
                   : undefined,
         }}
       >
-        <VStack space="sm">
-          <HStack space="sm" alignItems="center">
-            <Ionicons name={statusProps.iconName} color={statusProps.iconColor} size={16} />
-            <Text fontSize={18} fontWeight="bold" color={statusProps.textColor}>
+        <VStack space={spacing.spaceMinimumFallback}>
+          <HStack space={spacing.spaceMinimumFallback} alignItems="center">
+            <Ionicons
+              name={statusProps.iconName}
+              color={statusProps.iconColor}
+              size={typography.bodySize}
+            />
+            <Text
+              fontSize={typography.bodyLargeSize}
+              fontWeight={typography.fontWeightBold}
+              color={statusProps.textColor}
+            >
               {title}
             </Text>
             {status === ProgressStatus.CURRENT && (
               <Text
-                fontSize={12}
-                bg="white:alpha.30"
-                px={2}
-                py={1}
-                borderRadius="$md"
-                color="white"
-                fontWeight="bold"
+                fontSize={typography.captionSize}
+                bg={colors.componentBackgroundColor}
+                px={paddings.paddingExtraSmall}
+                py={paddings.paddingMinimum}
+                borderRadius={borderRadius.borderRadiusMedium}
+                color={colors.secondaryTextColor}
+                fontWeight={typography.fontWeightBold}
               >
                 {t('home.chapter.current')}
               </Text>

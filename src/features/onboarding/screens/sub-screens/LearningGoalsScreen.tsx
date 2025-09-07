@@ -3,6 +3,7 @@ import { VStack, Text, Box } from '@gluestack-ui/themed';
 import { useTranslation } from 'react-i18next';
 import { OnboardingLayout } from '../../components/organisms/OnboardingLayout';
 import { Button } from '../../../../components/atoms/Button';
+import { typography } from '~/lib/theme/theme';
 
 interface LearningGoal {
   title: string;
@@ -37,7 +38,7 @@ export const LearningGoalsScreen: React.FC<LearningGoalsScreenProps> = ({
               <Text fontSize={18} fontWeight="bold" color="$text900" mb={2}>
                 {goal.title}
               </Text>
-              <Text fontSize={16} color="$text600">
+              <Text fontSize={typography.bodySize} color="$text600">
                 {goal.description}
               </Text>
             </Box>

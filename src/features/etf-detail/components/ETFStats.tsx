@@ -2,6 +2,7 @@ import React from 'react';
 import { HStack, VStack, Text, Box } from '@gluestack-ui/themed';
 import { ETFPriceData } from '../models/ETFPriceData';
 import { formatCurrency } from '~/utils/formatCurrency';
+import { colors, typography } from '~/lib/theme/theme';
 
 interface ETFStatsProps {
   priceHistory: ETFPriceData[];
@@ -10,7 +11,6 @@ interface ETFStatsProps {
 export const ETFStats: React.FC<ETFStatsProps> = ({ priceHistory }) => {
   if (priceHistory.length === 0) return null;
 
-  const prices = priceHistory.map((data) => data.close);
   const volumes = priceHistory.map((data) => data.volume);
   const highs = priceHistory.map((data) => data.high);
   const lows = priceHistory.map((data) => data.low);
@@ -22,10 +22,15 @@ export const ETFStats: React.FC<ETFStatsProps> = ({ priceHistory }) => {
 
   const StatItem = ({ label, value }: { label: string; value: string }) => (
     <VStack alignItems="center" flex={1}>
-      <Text fontSize={12} color="$text500" textAlign="center">
+      <Text fontSize={12} color={colors.primaryTextColor} textAlign="center">
         {label}
       </Text>
-      <Text fontSize={14} fontWeight="medium" color="$text900" textAlign="center">
+      <Text
+        fontSize={typography.bodySmallSize}
+        fontWeight={typography.fontWeightMedium}
+        color={colors.primaryTextColor}
+        textAlign="center"
+      >
         {value}
       </Text>
     </VStack>

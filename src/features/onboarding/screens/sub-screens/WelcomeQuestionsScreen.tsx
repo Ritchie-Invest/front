@@ -4,6 +4,7 @@ import { VStack, Text } from '@gluestack-ui/themed';
 import { useTranslation } from 'react-i18next';
 import { OnboardingLayout } from '../../components/organisms/OnboardingLayout';
 import { Button } from '../../../../components/atoms/Button';
+import { colors, spacing, typography } from '~/lib/theme/theme';
 
 interface WelcomeQuestionsScreenProps {
   onContinue: () => void;
@@ -21,12 +22,21 @@ export const WelcomeQuestionsScreen: React.FC<WelcomeQuestionsScreenProps> = ({
   return (
     <OnboardingLayout progress={progress} onBackPress={onBack}>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <VStack space="md" alignItems="center" style={{ flex: 6, justifyContent: 'center' }}>
-          <Text fontSize={24} fontWeight="bold" textAlign="center" color="$text900">
+        <VStack
+          space={spacing.spacingMediumFallback}
+          alignItems="center"
+          style={{ flex: 6, justifyContent: 'center' }}
+        >
+          <Text
+            fontSize={24}
+            fontWeight={typography.fontWeightBold}
+            textAlign="center"
+            color={colors.primaryTextColor}
+          >
             {t('onboarding.questions.title')}
           </Text>
 
-          <Text fontSize={16} textAlign="center" color="$text600">
+          <Text fontSize={typography.bodySize} textAlign="center" color={colors.primaryTextColor}>
             {t('onboarding.questions.description')}
           </Text>
         </VStack>

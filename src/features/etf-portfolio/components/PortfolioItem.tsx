@@ -4,6 +4,7 @@ import { formatCurrency } from '../../../utils/formatCurrency';
 import { usePortfolioItem } from '../hooks/usePortfolioItem';
 import { UsePortfolioItemProps } from '../models/portfolioBalance';
 import { PortfolioItemType } from '../types/portfolioItemType';
+import { colors, typography } from '~/lib/theme/theme';
 
 export const PortfolioItem: React.FC<UsePortfolioItemProps> = ({ type, value, label }) => {
   const { displayValue, displayLabel, config, loading } = usePortfolioItem({
@@ -15,7 +16,7 @@ export const PortfolioItem: React.FC<UsePortfolioItemProps> = ({ type, value, la
   if (loading) {
     return (
       <Box alignItems="center">
-        <Text fontSize={16} color="$text400">
+        <Text fontSize={typography.bodySize} color={colors.primaryTextColor}>
           Chargement...
         </Text>
       </Box>
@@ -25,7 +26,7 @@ export const PortfolioItem: React.FC<UsePortfolioItemProps> = ({ type, value, la
   return (
     <Box alignItems="center">
       {type !== PortfolioItemType.TotalValue && (
-        <Text fontSize={16} color="$text500" mb={1}>
+        <Text fontSize={typography.bodySize} color="$text500" mb={1}>
           {displayLabel}
         </Text>
       )}

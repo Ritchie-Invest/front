@@ -5,6 +5,7 @@ import { OnboardingLayout } from '../../components/organisms/OnboardingLayout';
 import { SelectableItem } from '~/components/molecules/components/selectableItem';
 import { Button } from '../../../../components/atoms/Button';
 import { OnboardingLevel } from '../../models/onboarding.types';
+import { colors, spacing, typography } from '~/lib/theme/theme';
 
 interface LevelSelectionScreenProps {
   levels: OnboardingLevel[];
@@ -27,12 +28,16 @@ export const LevelSelectionScreen: React.FC<LevelSelectionScreenProps> = ({
 
   return (
     <OnboardingLayout progress={progress} onBackPress={onBack}>
-      <VStack flex={1} space="lg">
-        <Text fontSize={24} fontWeight="bold" color="$text900">
+      <VStack flex={1} space={spacing.spacingLargeFallback}>
+        <Text
+          fontSize={24}
+          fontWeight={typography.fontWeightBoldFallback}
+          color={colors.primaryTextColor}
+        >
           {t('onboarding.levelSelection.title')}
         </Text>
 
-        <VStack space="md">
+        <VStack space={spacing.spacingMediumFallback}>
           {levels.map((level) => (
             <SelectableItem
               key={level.id}

@@ -2,6 +2,7 @@ import React from 'react';
 import { FlatList, View, StyleSheet } from 'react-native';
 import { Text } from '@gluestack-ui/themed';
 import { ListItem } from '../../molecules/components/ListItem';
+import { colors, typography } from '~/lib/theme/theme';
 
 interface ListProps<T> {
   data: T[];
@@ -29,7 +30,7 @@ export function List<T>({
   if (loading) {
     return (
       <View style={styles.centerContainer}>
-        <Text fontSize={16} color="$coolGray400">
+        <Text fontSize={typography.bodySize} color={colors.GreyL30}>
           Chargement...
         </Text>
       </View>
@@ -39,11 +40,11 @@ export function List<T>({
   if (data.length === 0) {
     return (
       <View style={styles.centerContainer}>
-        <Text fontSize={16} color="$coolGray500">
+        <Text fontSize={typography.bodySize} color={colors.Grey}>
           {emptyTitle}
         </Text>
         {emptySubtitle && (
-          <Text fontSize={14} color="$coolGray400" style={styles.subtitle}>
+          <Text fontSize={14} color={colors.GreyL30} style={styles.subtitle}>
             {emptySubtitle}
           </Text>
         )}
@@ -54,7 +55,12 @@ export function List<T>({
   return (
     <View style={styles.container}>
       {title && (
-        <Text fontSize={20} fontWeight="bold" color="$coolGray800" style={styles.title}>
+        <Text
+          fontSize={typography.heading4Size}
+          fontWeight={typography.fontWeightBold}
+          color={colors.DarkGreyFallback}
+          style={styles.title}
+        >
           {title}
         </Text>
       )}

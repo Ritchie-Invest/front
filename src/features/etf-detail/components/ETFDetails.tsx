@@ -3,6 +3,7 @@ import { VStack, HStack, Text, Icon, Spinner, Center } from '@gluestack-ui/theme
 import { MaterialIcons } from '@expo/vector-icons';
 import { formatCurrency } from '~/utils/formatCurrency';
 import { useETFDetails } from '../hooks/useETFDetails';
+import { colors, margins, paddings, spacing, typography } from '~/lib/theme/theme';
 
 export const ETFDetails: React.FC = memo(() => {
   const {
@@ -15,7 +16,7 @@ export const ETFDetails: React.FC = memo(() => {
 
   if (isLoading) {
     return (
-      <Center py="$10">
+      <Center py={paddings.paddingRegular}>
         <Spinner />
       </Center>
     );
@@ -23,14 +24,14 @@ export const ETFDetails: React.FC = memo(() => {
 
   if (error || !etf) {
     return (
-      <Center py="$10">
-        <Text color="$red500">Erreur lors du chargement des détails de l'ETF.</Text>
+      <Center py={paddings.paddingRegular}>
+        <Text color={colors.errorColor}>Erreur lors du chargement des détails de l'ETF.</Text>
       </Center>
     );
   }
 
   return (
-    <VStack space="sm" mb="$6">
+    <VStack space={spacing.spaceMinimumFallback} mb={margins.marginSmall}>
       <HStack justifyContent="space-between" alignItems="flex-start">
         <VStack flex={1}>
           <Text fontSize={24} fontWeight="bold" color="$text900">
@@ -42,19 +43,22 @@ export const ETFDetails: React.FC = memo(() => {
         </VStack>
       </HStack>
 
-      <VStack space={1}>
+      <VStack space="sm">
         <Text fontSize={30} fontWeight="bold" color="$gray900">
           {formatCurrency(etf.currentPrice)}
         </Text>
 
-        <HStack alignItems="center" space={1}>
-          <Icon
-            as={MaterialIcons}
+        <HStack alignItems="center" space={spacing.spacingOneFallback}>
+          <MaterialIcons
             name={isPositive ? 'trending-up' : 'trending-down'}
-            size={16}
-            color={isPositive ? '$green500' : '$red500'}
+            size={typography.bodySize}
+            color={isPositive ? colors.successColor : colors.errorColor}
           />
-          <Text fontSize={16} fontWeight="medium" color={isPositive ? '$green500' : '$red500'}>
+          <Text
+            fontSize={typography.bodySize}
+            fontWeight={typography.fontWeightMedium}
+            color={isPositive ? colors.successColor : colors.errorColor}
+          >
             {formatCurrency(Math.abs(priceChange.amount))} (
             {Math.abs(priceChange.percentage).toFixed(2)}%)
           </Text>

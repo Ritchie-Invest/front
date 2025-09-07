@@ -3,6 +3,7 @@ import { Box, Button, ButtonText } from '@gluestack-ui/themed';
 import { LessonsOverview } from '../components/overview';
 import { useNavigation } from '@react-navigation/native';
 import { useAuthStore } from '../../auth/store/authStore';
+import { paddings } from '~/lib/theme/theme';
 
 const HomeScreen = ({ onLogout }: { onLogout: () => void }) => {
   const navigation = useNavigation();
@@ -16,7 +17,7 @@ const HomeScreen = ({ onLogout }: { onLogout: () => void }) => {
             logout();
             onLogout();
           }}
-          variant="ghost"
+          variant="link"
         >
           <ButtonText>Déconnexion</ButtonText>
         </Button>

@@ -4,6 +4,7 @@ import { PortfolioBalance } from '~/features/etf-portfolio/components/PortfolioB
 import { usePortfolio } from '~/features/etf-portfolio/hooks/usePortfolio';
 import { useETFs } from '../hooks/useETFList';
 import { ETFList } from '../components/ETFList';
+import { colors, margins, paddings } from '~/lib/theme/theme';
 
 export const InvestmentDashboardScreen: React.FC = () => {
   const { loading: portfolioLoading, error: portfolioError } = usePortfolio();
@@ -14,11 +15,11 @@ export const InvestmentDashboardScreen: React.FC = () => {
 
   if (error) {
     return (
-      <Box flex={1} justifyContent="center" alignItems="center" px={4}>
-        <Text fontSize={18} color="$red500" textAlign="center" mb={4}>
+      <Box flex={1} justifyContent="center" alignItems="center" px={paddings.paddingSmall}>
+        <Text fontSize={18} color={colors.errorColor} textAlign="center" mb={margins.marginSmall}>
           Erreur lors du chargement de la page
         </Text>
-        <Text fontSize={14} color="$text500" textAlign="center">
+        <Text fontSize={14} color={colors.primaryTextColor} textAlign="center">
           {error}
         </Text>
       </Box>

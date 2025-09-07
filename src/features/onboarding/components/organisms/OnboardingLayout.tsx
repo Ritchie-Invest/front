@@ -1,7 +1,15 @@
 import React from 'react';
-import { VStack, HStack, Box, Progress, Pressable } from '@gluestack-ui/themed';
+import {
+  VStack,
+  HStack,
+  Box,
+  Progress,
+  Pressable,
+  ProgressFilledTrack,
+} from '@gluestack-ui/themed';
 import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { borderRadius, colors } from '~/lib/theme/theme';
 
 interface OnboardingLayoutProps {
   children: React.ReactNode;
@@ -26,7 +34,14 @@ export const OnboardingLayout: React.FC<OnboardingLayoutProps> = ({
             </Pressable>
           )}
           <Box flex={1}>
-            <Progress value={progress} bg="$gray200" height="$2" borderRadius="$2" />
+            <Progress
+              value={progress}
+              bg={colors.GreyL30}
+              height="$2"
+              borderRadius={borderRadius.borderRadiusMedium}
+            >
+              <ProgressFilledTrack backgroundColor={colors.primaryActionColor} />
+            </Progress>
           </Box>
         </HStack>
 

@@ -9,26 +9,26 @@ import { DateRangeType } from '~/components/molecules/types/dateRange';
 import type { LineChartConfig } from '~/components/molecules/models/LineChart';
 import { TimeRangeSelectorConfig } from '~/components/molecules/models/TimeRange';
 import { ETFChartDataAdapter } from '../adapters/ETFChartDataAdapter';
+import { colors, margins } from '~/lib/theme/theme';
 
 const etfChartAdapter = new ETFChartDataAdapter();
 
 const defaultEtfChartConfig: LineChartConfig = {
   height: 240,
-  lineColor: '#3B82F6',
-  activePointColor: '#3B82F6',
-  showVerticalLine: true,
-  verticalLineColor: '#E5E7EB',
+  lineColor: colors.primaryActionColor,
+  activePointColor: colors.primaryActionColor,
+
   endPointRadius: 4,
   animated: true,
 };
 
 const defaultTimeRangeConfig: TimeRangeSelectorConfig = {
-  activeColor: 'blue.500',
-  inactiveColor: 'gray.100',
-  activeTextColor: 'white',
-  inactiveTextColor: 'gray.700',
+  activeColor: colors.primaryActionColor,
+  inactiveColor: colors.componentBackgroundColor,
+  activeTextColor: colors.secondaryTextColor,
+  inactiveTextColor: colors.Grey,
   justifyContent: 'center',
-  marginBottom: 4,
+  marginBottom: margins.marginVerySmall,
 };
 
 export const useETFChart = () => {

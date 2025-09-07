@@ -6,6 +6,7 @@ import { MainStackParamList } from '~/navigation/AppNavigator';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useActiveTab } from '~/features/navigation/hooks/useActiveTab';
 import { TabName, TabNameType } from '~/features/navigation/Type/TabNames';
+import { borderRadius, colors, paddings } from '~/lib/theme/theme';
 
 type NavigationProp = NativeStackNavigationProp<MainStackParamList>;
 
@@ -20,7 +21,11 @@ interface TabItemProps {
 const TabItem: React.FC<TabItemProps> = ({ icon, label, onPress, isActive }) => (
   <Pressable onPress={onPress}>
     <VStack alignItems="center">
-      <MaterialIcons name={icon as any} color={isActive ? '#3b82f6' : '#9ca3af'} size={24} />
+      <MaterialIcons
+        name={icon as any}
+        color={isActive ? colors.primaryActionColor : '#9ca3af'}
+        size={24}
+      />
       <Text fontSize={12} color={isActive ? '$blue500' : '$gray400'}>
         {label}
       </Text>
@@ -42,11 +47,12 @@ const Navbar: React.FC = () => {
 
   return (
     <HStack
-      bg="$white"
+      bg={colors.mainBackgroundColor}
       borderTopWidth={1}
-      borderColor="$gray200"
+      borderColor={colors.GreyL30}
       justifyContent="space-around"
-      py={2}
+      rounded={borderRadius.borderRadiusSmall}
+      py={paddings.paddingSmall}
     >
       <TabItem
         name={TabName.Landing}

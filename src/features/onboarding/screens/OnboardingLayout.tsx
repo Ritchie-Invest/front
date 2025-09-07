@@ -10,6 +10,7 @@ import { LevelSelectionScreen } from './sub-screens/LevelSelectionScreen';
 import { ONBOARDING_GOALS } from '../data/onboardingGoals.data';
 import { ONBOARDING_LEVELS } from '../data/onboardingLevels.data';
 import { LEARNING_GOALS } from '../data/onboardingLearningGoals.data';
+import { colors } from '~/lib/theme/theme';
 
 interface OnboardingLayoutProps {
   onComplete: () => void;
@@ -109,7 +110,7 @@ export const OnboardingLayout: React.FC<OnboardingLayoutProps> = ({ onComplete, 
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.mainBackgroundColor,
   },
   container: {
     flex: 1,

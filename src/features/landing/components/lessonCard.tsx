@@ -8,6 +8,7 @@ import { StatusBadge } from '~/components/atoms/statusBadge';
 import { Lesson } from '../models/responses/lesson';
 import { ProgressStatus } from '../types/ProgressStatus';
 import { computeProgressStatus } from '../utils/computeProgressStatus';
+import { colors, margins, spacing, typography } from '~/lib/theme/theme';
 
 interface LessonCardProps {
   lesson: Lesson;
@@ -34,22 +35,22 @@ export const LessonCard: React.FC<LessonCardProps> = ({ lesson, onAction }) => {
       case ProgressStatus.COMPLETED:
         return {
           name: 'checkmark-circle' as const,
-          color: 'green.500',
+          color: colors.successColor,
         };
       case ProgressStatus.CURRENT:
         return {
           name: 'play-circle-outline' as const,
-          color: 'blue.500',
+          color: colors.primaryActionColor,
         };
       case ProgressStatus.LOCKED:
         return {
           name: 'lock-closed' as const,
-          color: 'gray.400',
+          color: colors.DarkGrey,
         };
       default:
         return {
           name: 'play-circle-outline' as const,
-          color: 'blue.500',
+          color: colors.primaryActionColor,
         };
     }
   };
@@ -59,14 +60,23 @@ export const LessonCard: React.FC<LessonCardProps> = ({ lesson, onAction }) => {
   return (
     <Card
       variant="lesson"
-      mb={3}
+      mb={margins.marginMediumFallback}
       opacity={isLocked ? 0.6 : 1}
-      bg={isLocked ? '$gray25' : '$green50'}
-      borderColor={isLocked ? '$gray200' : '$green200'}
+      bg={isLocked ? colors.Grey : colors.successColor}
+      borderColor={isLocked ? colors.Grey : colors.successColor}
     >
-      <VStack space="md">
-        <HStack space="sm" alignItems="center" mb={2}>
-          <Icon as={Ionicons} name={iconProps.name} color={iconProps.color} size={16} />
+      <VStack space={spacing.spacingMediumFallback}>
+        <HStack
+          space={spacing.spacingMediumFallback}
+          alignItems="center"
+          mb={margins.marginSmallFallback}
+        >
+          <Icon
+            as={Ionicons}
+            name={iconProps.name}
+            color={iconProps.color}
+            size={typography.bodySize}
+          />
           <Text fontWeight="bold" color={isLocked ? '$gray500' : '$black'}>
             {id}
           </Text>
@@ -85,7 +95,7 @@ export const LessonCard: React.FC<LessonCardProps> = ({ lesson, onAction }) => {
           )}
         </HStack>
 
-        <VStack space="xs">
+        <VStack space={spacing.spacingSmallFallback}>
           <Text fontWeight="bold" mb={1} color={isLocked ? '$gray500' : '$black'}>
             {title}
           </Text>

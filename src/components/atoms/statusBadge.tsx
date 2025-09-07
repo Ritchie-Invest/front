@@ -19,7 +19,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
         };
       case ProgressStatus.CURRENT:
         return {
-          backgroundColor: '#3b82f6',
+          backgroundColor: colors.primaryActionColor,
           text: t('status.progress.current'),
         };
       case ProgressStatus.LOCKED:
@@ -29,7 +29,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
         };
       default:
         return {
-          backgroundColor: '#3b82f6',
+          backgroundColor: colors.primaryActionColor,
           text: t('status.progress.current'),
         };
     }

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Box } from '@gluestack-ui/themed';
 import { ViewProps } from 'react-native';
+import { borderRadius, colors, paddings } from '~/lib/theme/theme';
 
-interface CardProps extends ViewProps {
+interface CardProps extends React.ComponentProps<typeof Box> {
   variant?: 'default' | 'chapter' | 'lesson';
   children: React.ReactNode;
 }
@@ -12,10 +13,10 @@ export const Card: React.FC<CardProps> = ({ variant = 'default', children, style
     switch (variant) {
       case 'chapter':
         return {
-          backgroundColor: '#4ade80', // green.400
-          padding: 16,
-          borderRadius: 16,
-          shadowColor: '#000',
+          backgroundColor: colors.successBackgroundColor,
+          padding: paddings.paddingMedium,
+          borderRadius: borderRadius.borderRadiusMedium,
+          shadowColor: colors.primaryTextColor,
           shadowOffset: { width: 0, height: 1 },
           shadowOpacity: 0.1,
           shadowRadius: 2,
@@ -23,18 +24,18 @@ export const Card: React.FC<CardProps> = ({ variant = 'default', children, style
         };
       case 'lesson':
         return {
-          backgroundColor: '#f0fdf4', // green.50
-          padding: 16,
-          borderRadius: 8,
+          backgroundColor: colors.primaryActionColor,
+          padding: paddings.paddingMedium,
+          borderRadius: borderRadius.borderRadiusMedium,
           borderWidth: 1,
-          borderColor: '#bbf7d0', // green.200
+          borderColor: colors.primaryActionColor,
         };
       case 'default':
       default:
         return {
-          backgroundColor: '#f9fafb', // gray.50
-          padding: 16,
-          borderRadius: 8,
+          backgroundColor: colors.componentBackgroundColor,
+          padding: paddings.paddingMedium,
+          borderRadius: borderRadius.borderRadiusSmall,
         };
     }
   };

@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { VStack, Text } from '@gluestack-ui/themed';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../components/atoms/Button';
+import { colors, paddings, spacing, typography } from '~/lib/theme/theme';
 
 interface WelcomeScreenProps {
   onStart: () => void;
@@ -14,16 +15,26 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart, onLogin }
 
   return (
     <View
-      style={{ flex: 1, backgroundColor: 'white', paddingHorizontal: 16, justifyContent: 'center' }}
+      style={{
+        flex: 1,
+        backgroundColor: colors.mainBackgroundColor,
+        paddingHorizontal: paddings.paddingMedium,
+        justifyContent: 'center',
+      }}
     >
-      <VStack space="lg" alignItems="center">
-        <Text fontSize={24} fontWeight="bold" textAlign="center" color="$text900">
+      <VStack space={spacing.spacingMediumFallback} alignItems="center">
+        <Text
+          fontSize={24}
+          fontWeight={typography.fontWeightBold}
+          textAlign="center"
+          color={colors.primaryTextColor}
+        >
           {t('onboarding.welcome.title')}
         </Text>
 
         <View style={{ flex: 1 }} />
 
-        <VStack space="md" style={{ width: '100%' }}>
+        <VStack space={spacing.spacingMediumFallback} style={{ width: '100%' }}>
           <Button onPress={onStart}>{t('onboarding.welcome.startButton')}</Button>
 
           <Button variant="secondary" onPress={onLogin}>

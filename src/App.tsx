@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './i18n';
 import { GluestackUIProvider } from '@gluestack-ui/themed';
-import { config } from '@gluestack-ui/config';
+import { customConfig } from './lib/theme/theme';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AppNavigator } from './navigation/AppNavigator';
 import { useAuthStore } from './features/auth/store/authStore';
@@ -49,7 +49,7 @@ export default function App() {
   };
 
   return (
-    <GluestackUIProvider config={config}>
+    <GluestackUIProvider config={customConfig}>
       <QueryClientProvider client={queryClient}>
         <AppNavigator
           isOnboardingCompleted={isOnboardingCompleted}

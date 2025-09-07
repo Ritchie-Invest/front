@@ -1,5 +1,6 @@
-import { TextInput, StyleSheet } from 'react-native';
-import { Box, useTheme } from 'native-base';
+import React from 'react';
+import { Input, InputField as GInputField } from '@gluestack-ui/themed';
+import { colors, paddings } from '../../lib/theme/theme';
 
 type Props = {
   placeholder: string;
@@ -7,6 +8,11 @@ type Props = {
   onChangeText: (text: string) => void;
   type?: 'text' | 'email' | 'password';
   accessibilityLabel?: string;
+  variant?: 'outline' | 'rounded' | 'underlined';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  isDisabled?: boolean;
+  isInvalid?: boolean;
+  isReadOnly?: boolean;
 };
 
 export const InputField = ({
@@ -15,50 +21,30 @@ export const InputField = ({
   onChangeText,
   type = 'text',
   accessibilityLabel,
+  variant = 'rounded',
+  size = 'md',
+  isDisabled = false,
+  isInvalid = false,
+  isReadOnly = false,
 }: Props) => {
-  const theme = useTheme();
   const isPassword = type === 'password';
-  const keyboardType = type === 'email' ? 'email-address' : 'default';
-
-  const getAutoComplete = () => {
-    switch (type) {
-      case 'email':
-        return 'email';
-      case 'password':
-        return 'password';
-      default:
-        return undefined;
-    }
-  };
-
-  const getTextContentType = () => {
-    switch (type) {
-      case 'email':
-        return 'emailAddress';
-      case 'password':
-        return 'password';
-      default:
-        return undefined;
-    }
-  };
 
   return (
-    <Box borderWidth="1" borderColor="coolGray.300" borderRadius="md" bg="white">
-      <TextInput
-        style={{
-          height: 40,
-          paddingHorizontal: 16,
-        }}
+    <Input
+      variant={variant}
+      size={size}
+      isDisabled={isDisabled}
+      isInvalid={isInvalid}
+      isReadOnly={isReadOnly}
+      height={48}
+    >
+      <GInputField
         placeholder={placeholder}
         value={value}
         onChangeText={onChangeText}
         secureTextEntry={isPassword}
-        keyboardType={keyboardType}
-        autoCapitalize={type === 'email' || isPassword ? 'none' : 'sentences'}
         accessibilityLabel={accessibilityLabel || placeholder}
-        textContentType={getTextContentType()}
-        autoComplete={getAutoComplete()}
       />
-    </Box>
+    </Input>
   );
 };

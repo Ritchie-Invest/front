@@ -1,58 +1,73 @@
 import React, { ReactNode } from 'react';
-import { Button as NBButton, IButtonProps } from 'native-base';
+import { Button as GButton, ButtonText, ButtonSpinner } from '@gluestack-ui/themed';
+import { borderRadius, colors } from '../../lib/theme/theme';
 
-type Variant = 'primary' | 'secondary' | 'outline' | 'disabled';
+type Variant = 'primary' | 'secondary' | 'outline' | 'disabled' | 'accent' | 'ghost';
 
 type Props = {
   children: ReactNode;
   onPress: () => void;
   isLoading?: boolean;
   variant?: Variant;
-} & Omit<IButtonProps, 'variant'>;
+};
 
 export const Button = ({ children, onPress, isLoading, variant = 'primary', ...rest }: Props) => {
-  const getVariantProps = () => {
+  const getVariantProps = (): {
+    variant: 'solid' | 'outline' | 'link';
+    isDisabled?: boolean;
+    bg?: string;
+    borderColor?: string;
+    $focus?: { bg?: string };
+    $active?: { bg?: string };
+  } => {
     switch (variant) {
       case 'secondary':
         return {
-          bg: 'white',
-          _text: { color: 'black' },
-          borderWidth: 1,
-          borderColor: 'gray.300',
-          _pressed: { bg: 'gray.100' },
+          variant: 'solid',
+          bg: colors.secondaryActionColor,
+          $focus: { bg: colors.secondaryActionFocusColor },
+          $active: { bg: colors.secondaryActionActiveColor },
         };
       case 'disabled':
         return {
-          bg: 'gray.300',
-          _text: { color: 'gray.500' },
-          _pressed: { bg: 'gray.300' },
+          variant: 'solid',
           isDisabled: true,
         };
-      case 'outline':
+      case 'ghost':
         return {
-          variant: 'outline',
-          borderColor: 'blue.500',
+          variant: 'link',
+          bg: colors.transparent,
+          $focus: { bg: colors.GreyL30 },
+          $active: { bg: colors.GreyL30 },
         };
+
       case 'primary':
       default:
         return {
-          bg: 'blue.500',
-          _text: { color: 'white' },
-          _pressed: { bg: 'blue.600' },
+          variant: 'solid',
+          bg: colors.primaryActionColor,
+          $focus: { bg: colors.primaryActionFocusColor },
+          $active: { bg: colors.primaryActionActiveColor },
         };
     }
   };
 
   return (
-    <NBButton
+    <GButton
       onPress={onPress}
-      isLoading={isLoading}
-      rounded="md"
-      height="50"
+      isDisabled={isLoading || variant === 'disabled'}
+      height="$12"
+      width="100%"
+      borderRadius={borderRadius.borderRadiusExtraLarge}
       {...getVariantProps()}
       {...rest}
     >
-      {children}
-    </NBButton>
+      {isLoading && <ButtonSpinner mr="$1" />}
+      <ButtonText
+        color={variant === 'outline' ? colors.primaryTextColor : colors.mainBackgroundColor}
+      >
+        {children}
+      </ButtonText>
+    </GButton>
   );
 };

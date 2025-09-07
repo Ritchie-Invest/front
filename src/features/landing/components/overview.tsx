@@ -1,8 +1,10 @@
 import React from 'react';
-import { Box, ScrollView } from 'native-base';
+import { Box, ScrollView } from '@gluestack-ui/themed';
+import { ScrollView as RNScrollView } from 'react-native';
 import { Hero } from './hero';
 import { ChaptersTimeline } from './timeline';
 import { useProgress } from '~/features/landing/hooks/useProgress';
+import { colors, paddings } from '~/lib/theme/theme';
 
 interface LessonsOverviewProps {
   showProgress?: boolean;
@@ -24,8 +26,8 @@ export const LessonsOverview: React.FC<LessonsOverviewProps> = ({
   } = useProgress();
 
   return (
-    <Box flex={1} bg="white">
-      <ScrollView ref={autoScroll ? scrollViewRef : undefined} px={4} py={4}>
+    <Box flex={1} bg={colors.mainBackgroundColor} p={paddings.paddingSmall}>
+      <ScrollView ref={autoScroll ? (scrollViewRef as any) : undefined} px={4} py={4}>
         {showProgress && (
           <Hero
             progressValue={progressValue}

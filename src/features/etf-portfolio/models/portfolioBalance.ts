@@ -7,7 +7,7 @@ export interface PortfolioBalanceProps {
 export interface PortfolioItemConfig {
   label: string;
   color: string;
-  fontSize: 'lg' | '3xl';
+  fontSize: '$lg' | '$3xl';
   fontWeight: 'normal' | 'semibold' | 'bold';
 }
 

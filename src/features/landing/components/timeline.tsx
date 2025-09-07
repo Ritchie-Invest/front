@@ -1,5 +1,5 @@
 import React from 'react';
-import { VStack, View } from 'native-base';
+import { VStack, View } from '@gluestack-ui/themed';
 import { ChapterCard } from './chapterCard';
 import { LessonCard } from './lessonCard';
 import { Chapter } from '../models/responses/chapter';
@@ -16,14 +16,14 @@ export const ChaptersTimeline: React.FC<ChaptersTimelineProps> = ({
   onLessonAction,
 }) => {
   return (
-    <VStack space={0}>
+    <VStack>
       {chapters.map((chapter) => (
         <React.Fragment key={chapter.id}>
           <View onLayout={(event) => onChapterLayout(chapter.id, event)}>
             <ChapterCard chapter={chapter} />
           </View>
 
-          <VStack space={3} mb={6} mx={2}>
+          <VStack space="md" mb={6} mx={2}>
             {chapter.lessons.map((lesson) => (
               <LessonCard key={lesson.id} lesson={lesson} onAction={onLessonAction} />
             ))}

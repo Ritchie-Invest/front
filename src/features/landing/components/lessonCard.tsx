@@ -1,13 +1,14 @@
 import React from 'react';
-import { VStack, HStack, Text, Icon } from 'native-base';
+import { VStack, HStack, Text, Icon } from '@gluestack-ui/themed';
 import { useTranslation } from 'react-i18next';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Card } from '~/components/molecules/components/card';
-import { Button } from 'native-base';
+import { Button } from '~/components/atoms/Button';
 import { StatusBadge } from '~/components/atoms/statusBadge';
 import { Lesson } from '../models/responses/lesson';
 import { ProgressStatus } from '../types/ProgressStatus';
 import { computeProgressStatus } from '../utils/computeProgressStatus';
+import { borderRadius, colors, margins, paddings, spacing, typography } from '~/lib/theme/theme';
 
 interface LessonCardProps {
   lesson: Lesson;
@@ -34,22 +35,22 @@ export const LessonCard: React.FC<LessonCardProps> = ({ lesson, onAction }) => {
       case ProgressStatus.COMPLETED:
         return {
           name: 'checkmark-circle' as const,
-          color: 'green.500',
+          color: colors.successColor,
         };
       case ProgressStatus.CURRENT:
         return {
           name: 'play-circle-outline' as const,
-          color: 'blue.500',
+          color: colors.primaryActionColor,
         };
       case ProgressStatus.LOCKED:
         return {
           name: 'lock-closed' as const,
-          color: 'gray.400',
+          color: colors.DarkGrey,
         };
       default:
         return {
           name: 'play-circle-outline' as const,
-          color: 'blue.500',
+          color: colors.primaryActionColor,
         };
     }
   };
@@ -59,37 +60,45 @@ export const LessonCard: React.FC<LessonCardProps> = ({ lesson, onAction }) => {
   return (
     <Card
       variant="lesson"
-      mb={3}
+      mb={margins.marginMediumGluestack}
       opacity={isLocked ? 0.6 : 1}
-      bg={isLocked ? 'gray.25' : 'green.50'}
-      borderColor={isLocked ? 'gray.200' : 'green.200'}
+      bg={isLocked ? colors.Grey : colors.successColor}
+      borderColor={isLocked ? colors.Grey : colors.successColor}
     >
-      <VStack space={3}>
-        <HStack space={2} alignItems="center" mb={2}>
-          <Icon as={Ionicons} name={iconProps.name} color={iconProps.color} size="sm" />
-          <Text bold color={isLocked ? 'gray.500' : 'black'}>
+      <VStack space={spacing.spacingMediumFallback}>
+        <HStack
+          space={spacing.spacingMediumFallback}
+          alignItems="center"
+          mb={margins.marginSmallGluestack}
+        >
+          <Icon
+            as={() => <Ionicons name={iconProps.name} />}
+            color={iconProps.color}
+            size={typography.bodySizeFallback}
+          />
+          <Text fontWeight="bold" color={isLocked ? '$gray500' : '$black'}>
             {id}
           </Text>
           {isLocked && (
             <Text
-              fontSize="xs"
-              bg="gray.200"
-              px={2}
-              py={1}
-              rounded="md"
-              color="gray.600"
-              fontWeight="bold"
+              fontSize={typography.captionSize}
+              bg={colors.Grey}
+              px={paddings.paddingExtraSmall}
+              py={paddings.paddingMinimum}
+              borderRadius={borderRadius.borderRadiusSmall}
+              color={colors.primaryTextColor}
+              fontWeight={typography.fontWeightBold}
             >
               {t('status.progress.locked').toUpperCase()}
             </Text>
           )}
         </HStack>
 
-        <VStack space={1}>
-          <Text bold mb={1} color={isLocked ? 'gray.500' : 'black'}>
+        <VStack space={spacing.spacingSmallFallback}>
+          <Text fontWeight="bold" mb={1} color={isLocked ? '$gray500' : '$black'}>
             {title}
           </Text>
-          <Text fontSize="sm" color={isLocked ? 'gray.400' : 'gray.600'}>
+          <Text fontSize={14} color={isLocked ? '$gray400' : '$gray600'}>
             {description}
           </Text>
         </VStack>
@@ -104,7 +113,7 @@ export const LessonCard: React.FC<LessonCardProps> = ({ lesson, onAction }) => {
         </HStack>
 
         {isLocked && (
-          <Text fontSize="xs" color="gray.500" fontStyle="italic" mt={1}>
+          <Text fontSize={12} color="$text500" fontStyle="italic" mt={1}>
             {t('lesson.unlockMessage')}
           </Text>
         )}

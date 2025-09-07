@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Box } from 'native-base';
+import { Box } from '@gluestack-ui/themed';
 import { OnboardingLayout } from '../features/onboarding/screens/OnboardingLayout';
 import { LoginScreen } from '../features/auth/screens/LoginScreen';
 import { RegisterScreen } from '../features/auth/screens/RegisterScreen';
@@ -73,7 +73,7 @@ export const AppNavigator = ({
             <MainStack.Navigator
               screenOptions={{
                 headerShown: true,
-                headerTitle: '',
+                headerTitle: ' ',
               }}
             >
               <MainStack.Screen name="Landing">

@@ -1,41 +1,47 @@
 import React from 'react';
-import { Box, IBoxProps } from 'native-base';
+import { Box } from '@gluestack-ui/themed';
+import { ViewProps } from 'react-native';
+import { borderRadius, colors, paddings } from '~/lib/theme/theme';
 
-interface CardProps extends IBoxProps {
+interface CardProps extends React.ComponentProps<typeof Box> {
   variant?: 'default' | 'chapter' | 'lesson';
   children: React.ReactNode;
 }
 
-export const Card: React.FC<CardProps> = ({ variant = 'default', children, ...props }) => {
-  const getVariantProps = () => {
+export const Card: React.FC<CardProps> = ({ variant = 'default', children, style, ...props }) => {
+  const getVariantStyles = () => {
     switch (variant) {
       case 'chapter':
         return {
-          bg: 'green.400',
-          p: 4,
-          rounded: 'xl',
-          shadow: 1,
+          backgroundColor: colors.successBackgroundColor,
+          padding: paddings.paddingMedium,
+          borderRadius: borderRadius.borderRadiusMedium,
+          shadowColor: colors.primaryTextColor,
+          shadowOffset: { width: 0, height: 1 },
+          shadowOpacity: 0.1,
+          shadowRadius: 2,
+          elevation: 2,
         };
       case 'lesson':
         return {
-          bg: 'green.50',
-          p: 4,
-          rounded: 'lg',
+          backgroundColor: colors.primaryActionColor,
+          padding: paddings.paddingMedium,
+          borderRadius: borderRadius.borderRadiusMedium,
           borderWidth: 1,
-          borderColor: 'green.200',
+          borderColor: colors.primaryActionColor,
         };
       case 'default':
       default:
         return {
-          bg: 'gray.50',
-          p: 4,
-          rounded: 'lg',
+          backgroundColor: colors.componentBackgroundColor,
+          padding: paddings.paddingMedium,
+          borderRadius: borderRadius.borderRadiusSmall,
         };
     }
   };
 
   return (
-    <Box {...getVariantProps()} {...props}>
+    <Box style={[getVariantStyles(), style]} {...props}>
       {children}
     </Box>
   );

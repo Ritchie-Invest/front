@@ -16,7 +16,7 @@ export const ChaptersTimeline: React.FC<ChaptersTimelineProps> = ({
   onLessonAction,
 }) => {
   return (
-    <VStack space="none">
+    <VStack>
       {chapters.map((chapter) => (
         <React.Fragment key={chapter.id}>
           <View onLayout={(event) => onChapterLayout(chapter.id, event)}>

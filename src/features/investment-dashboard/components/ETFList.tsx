@@ -32,7 +32,7 @@ export const ETFList: React.FC<ETFListProps> = ({ positions, loading = false }) 
         <>
           <HStack
             alignItems="center"
-            space={spacing.spaceMinimumFallback}
+            space={spacing.spacingSmallFallback}
             mb={margins.marginMinimum}
           >
             <Text
@@ -56,7 +56,7 @@ export const ETFList: React.FC<ETFListProps> = ({ positions, loading = false }) 
           <Text fontSize={18} fontWeight="semibold" color="$black">
             {formatCurrency(etf.currentPrice)}
           </Text>
-          <HStack alignItems="center" space={spacing.spaceMinimumFallback}>
+          <HStack alignItems="center" space={spacing.spacingSmallFallback}>
             <MaterialIcons
               name={etf.isGaining ? 'trending-up' : 'trending-down'}
               size={typography.bodySize}

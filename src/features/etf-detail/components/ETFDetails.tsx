@@ -31,7 +31,7 @@ export const ETFDetails: React.FC = memo(() => {
   }
 
   return (
-    <VStack space={spacing.spaceMinimumFallback} mb={margins.marginSmall}>
+    <VStack space={spacing.spacingSmallFallback} mb={margins.marginSmall}>
       <HStack justifyContent="space-between" alignItems="flex-start">
         <VStack flex={1}>
           <Text fontSize={24} fontWeight="bold" color="$text900">

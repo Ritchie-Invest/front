@@ -87,8 +87,8 @@ export const ChapterCard = React.forwardRef<any, ChapterCardProps>((props, ref) 
                   : undefined,
         }}
       >
-        <VStack space={spacing.spaceMinimumFallback}>
-          <HStack space={spacing.spaceMinimumFallback} alignItems="center">
+        <VStack space={spacing.spacingSmallFallback}>
+          <HStack space={spacing.spacingSmallFallback} alignItems="center">
             <Ionicons
               name={statusProps.iconName}
               color={statusProps.iconColor}

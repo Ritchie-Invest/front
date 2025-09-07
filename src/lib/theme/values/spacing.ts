@@ -2,9 +2,10 @@ const spacing = {
   spacingOne: 1,
   spacingOneFallback: 'xs' as const,
   spacingMinimum: 2,
-  spaceMinimumFallback: 'sm' as const,
   spacingVerySmall: 4,
   spacingSmall: 8,
+  spacingSmallFallback: 'sm' as const,
+
   spacingMedium: 16,
   spacingMediumFallback: 'md' as const,
   spacingLarge: 24,

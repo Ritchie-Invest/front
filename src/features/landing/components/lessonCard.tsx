@@ -3,12 +3,12 @@ import { VStack, HStack, Text, Icon } from '@gluestack-ui/themed';
 import { useTranslation } from 'react-i18next';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Card } from '~/components/molecules/components/card';
-import { Button } from '@gluestack-ui/themed';
+import { Button } from '~/components/atoms/Button';
 import { StatusBadge } from '~/components/atoms/statusBadge';
 import { Lesson } from '../models/responses/lesson';
 import { ProgressStatus } from '../types/ProgressStatus';
 import { computeProgressStatus } from '../utils/computeProgressStatus';
-import { colors, margins, spacing, typography } from '~/lib/theme/theme';
+import { borderRadius, colors, margins, paddings, spacing, typography } from '~/lib/theme/theme';
 
 interface LessonCardProps {
   lesson: Lesson;
@@ -60,7 +60,7 @@ export const LessonCard: React.FC<LessonCardProps> = ({ lesson, onAction }) => {
   return (
     <Card
       variant="lesson"
-      mb={margins.marginMediumFallback}
+      mb={margins.marginMediumGluestack}
       opacity={isLocked ? 0.6 : 1}
       bg={isLocked ? colors.Grey : colors.successColor}
       borderColor={isLocked ? colors.Grey : colors.successColor}
@@ -69,26 +69,25 @@ export const LessonCard: React.FC<LessonCardProps> = ({ lesson, onAction }) => {
         <HStack
           space={spacing.spacingMediumFallback}
           alignItems="center"
-          mb={margins.marginSmallFallback}
+          mb={margins.marginSmallGluestack}
         >
           <Icon
-            as={Ionicons}
-            name={iconProps.name}
+            as={() => <Ionicons name={iconProps.name} />}
             color={iconProps.color}
-            size={typography.bodySize}
+            size={typography.bodySizeFallback}
           />
           <Text fontWeight="bold" color={isLocked ? '$gray500' : '$black'}>
             {id}
           </Text>
           {isLocked && (
             <Text
-              fontSize={12}
-              bg="$gray200"
-              px={2}
-              py={1}
-              borderRadius="$md"
-              color="$text600"
-              fontWeight="bold"
+              fontSize={typography.captionSize}
+              bg={colors.Grey}
+              px={paddings.paddingExtraSmall}
+              py={paddings.paddingMinimum}
+              borderRadius={borderRadius.borderRadiusSmall}
+              color={colors.primaryTextColor}
+              fontWeight={typography.fontWeightBold}
             >
               {t('status.progress.locked').toUpperCase()}
             </Text>

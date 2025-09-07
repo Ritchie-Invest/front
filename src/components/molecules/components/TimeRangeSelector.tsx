@@ -31,7 +31,7 @@ const TimeRangeSelectorImpl = <T extends string | number>({
 
   return (
     <HStack
-      space={spacing.spaceMinimumFallback}
+      space={spacing.spacingSmallFallback}
       justifyContent={selectorConfig.justifyContent}
       mb={selectorConfig.marginBottom}
     >

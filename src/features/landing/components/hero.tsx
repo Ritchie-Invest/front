@@ -15,9 +15,9 @@ export const Hero: React.FC<HeroProps> = ({ progressValue, completedLessons, tot
   const { t } = useTranslation();
 
   return (
-    <VStack space={spacing.spaceMinimumFallback} mb={margins.marginMedium}>
-      <VStack space={spacing.spaceMinimumFallback}>
-        <HStack alignItems="center" space={spacing.spaceMinimumFallback}>
+    <VStack space={spacing.spacingSmallFallback} mb={margins.marginMedium}>
+      <VStack space={spacing.spacingSmallFallback}>
+        <HStack alignItems="center" space={spacing.spacingSmallFallback}>
           <FontAwesome5 name="bullseye" size={typography.bodySize} color={colors.errorColor} />
           <Text
             fontSize={typography.heading1Size}

@@ -4,6 +4,7 @@ import { Hero } from './hero';
 import { ChaptersTimeline } from './timeline';
 import { useProgress } from '~/features/landing/hooks/useProgress';
 import { colors, paddings } from '~/lib/theme/theme';
+import { colors, paddings } from '~/lib/theme/theme';
 
 interface LessonsOverviewProps {
   showProgress?: boolean;

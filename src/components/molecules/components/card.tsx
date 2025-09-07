@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box } from '@gluestack-ui/themed';
-import { ViewProps } from 'react-native';
 import { borderRadius, colors, paddings } from '~/lib/theme/theme';
+import { ViewProps } from 'react-native';
 
 interface CardProps extends React.ComponentProps<typeof Box> {
   variant?: 'default' | 'chapter' | 'lesson';

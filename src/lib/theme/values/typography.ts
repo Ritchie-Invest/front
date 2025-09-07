@@ -3,7 +3,7 @@ const typography = {
   fontWeightMedium: '500',
   fontWeightBold: '700',
   fontWeightMediumFallback: 'medium',
-  fontWeightBoldFallback: 'bold',
+  fontWeightBoldFallback: 'bold' as const,
 
   heading1Size: 24,
   heading1LineHeight: 40,

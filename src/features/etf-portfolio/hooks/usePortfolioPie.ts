@@ -3,12 +3,12 @@ import { usePortfolio } from './usePortfolio';
 import { PortfolioPieChartAdapter, PortfolioData } from '../adapters/PortfolioPieChartAdapter';
 import { colors } from '~/lib/theme/theme';
 
-export interface UsePortfolioGraphOptions {
+export interface UsePortfolioPieOptions {
   cashColor?: string;
   investmentColor?: string;
 }
 
-export interface UsePortfolioGraphReturn {
+export interface UsePortfolioPieReturn {
   portfolioData: PortfolioData[];
   adapter: PortfolioPieChartAdapter;
   formattedTotalValue: string;
@@ -18,9 +18,7 @@ export interface UsePortfolioGraphReturn {
   investmentValue: number;
 }
 
-export const usePortfolioGraph = (
-  options: UsePortfolioGraphOptions = {},
-): UsePortfolioGraphReturn => {
+export const usePortfolioPie = (options: UsePortfolioPieOptions = {}): UsePortfolioPieReturn => {
   const { portfolio, loading } = usePortfolio();
 
   const { cashColor = colors.primaryActionColor, investmentColor = colors.warningColor } = options;

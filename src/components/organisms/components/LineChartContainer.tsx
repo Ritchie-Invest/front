@@ -7,7 +7,7 @@ import type { LineChartConfig, ChartDataAdapter } from '../../molecules/models/L
 import type { TimeRangeOption } from '~/components/molecules/models/TimeRange';
 import { DateRangeType } from '~/components/molecules/types/dateRange';
 import type { TimeRangeSelectorConfig } from '~/components/molecules/models/TimeRange';
-import { borderRadius, colors, margins, paddings, typography } from '~/lib/theme/theme';
+import { borderRadius, colors, margins, paddings, spacing, typography } from '~/lib/theme/theme';
 
 interface LineChartContainerProps<T = any> {
   data: T[];
@@ -86,24 +86,25 @@ export const LineChartContainer = memo(
         elevation={2}
         m={margins.marginSmall}
       >
-        <VStack space="md" width="$full">
-          {title && (
-            <Text
-              fontSize={typography.heading6Size}
-              fontWeight={typography.fontWeightBold}
-              textAlign="center"
-            >
-              {title}
-            </Text>
-          )}
-
-          <LineChartComponent data={chartData} config={config} />
+        <VStack space={spacing.spacingMediumFallback} width="$full" padding={paddings.paddingSmall}>
           <TimeRangeSelector
             options={timeRangeOptions}
             selectedRange={selectedTimeRange}
             onRangeChange={onTimeRangeChange}
             config={timeRangeConfig}
           />
+          {title && (
+            <Text
+              fontSize={typography.heading5Size}
+              fontWeight={typography.fontWeightBold}
+              textAlign="center"
+              margin={margins.marginMedium}
+            >
+              {title}
+            </Text>
+          )}
+
+          <LineChartComponent data={chartData} config={config} />
         </VStack>
       </Box>
     );

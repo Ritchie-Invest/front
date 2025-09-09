@@ -8,6 +8,7 @@ import { RegisterScreen } from '../features/auth/screens/RegisterScreen';
 import HomeScreen from '../features/landing/screens/home';
 import { InvestmentDashboardScreen } from '../features/investment-dashboard/screens/InvestmentDashboardScreen';
 import { ETFDetailScreen } from '../features/etf-detail/screens/ETFDetailScreen';
+import { PortfolioDetailScreen } from '../features/etf-portfolio-detail/screens/PortfolioDetailScreen';
 import Navbar from '../features/navigation/components/organisms/navbar';
 
 export type RootStackParamList = {
@@ -21,6 +22,7 @@ export type MainStackParamList = {
   Landing: undefined;
   InvestmentDashboard: undefined;
   ETFDetails: { id: string };
+  PortfolioDetail: undefined;
   Progress: undefined;
   Profile: undefined;
   Register: undefined;
@@ -96,6 +98,16 @@ export const AppNavigator = ({
                 {() => (
                   <Box flex={1}>
                     <ETFDetailScreen />
+                  </Box>
+                )}
+              </MainStack.Screen>
+              <MainStack.Screen
+                name="PortfolioDetail"
+                options={{ headerTitle: 'Détails Portfolio' }}
+              >
+                {() => (
+                  <Box flex={1}>
+                    <PortfolioDetailScreen />
                   </Box>
                 )}
               </MainStack.Screen>

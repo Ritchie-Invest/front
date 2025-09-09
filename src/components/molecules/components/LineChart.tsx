@@ -73,14 +73,19 @@ export const LineChartComponent: React.FC<LineChartProps> = memo(
                     >
                       <Text
                         style={{
-                          color: 'white',
+                          color: colors.secondaryTextColor,
                           fontSize: typography.captionSize,
                           fontWeight: 'bold',
                         }}
                       >
                         {point?.extraData?.formattedValue}
                       </Text>
-                      <Text style={{ color: 'white', fontSize: typography.overlineSize }}>
+                      <Text
+                        style={{
+                          color: colors.secondaryTextColor,
+                          fontSize: typography.overlineSize,
+                        }}
+                      >
                         {point?.extraData?.formattedTime}
                       </Text>
                     </View>

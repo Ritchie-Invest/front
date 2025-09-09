@@ -8,7 +8,7 @@ export const TRANSACTION_VALIDATION_RULES = {
     min: 0.01,
     max: 1000000,
   },
-  SHARES: {
+  VOLUME: {
     required: true,
     type: 'number',
     min: 0.0001,
@@ -34,12 +34,12 @@ export const validateAmount = (amount: unknown): amount is number => {
   );
 };
 
-export const validateShares = (shares: unknown): shares is number => {
+export const validateVolume = (volume: unknown): volume is number => {
   return (
-    typeof shares === 'number' &&
-    !isNaN(shares) &&
-    shares >= TRANSACTION_VALIDATION_RULES.SHARES.min &&
-    shares <= TRANSACTION_VALIDATION_RULES.SHARES.max
+    typeof volume === 'number' &&
+    !isNaN(volume) &&
+    volume >= TRANSACTION_VALIDATION_RULES.VOLUME.min &&
+    volume <= TRANSACTION_VALIDATION_RULES.VOLUME.max
   );
 };
 
@@ -56,7 +56,7 @@ export const validateTransaction = (transaction: Transaction): boolean => {
 
   return (
     validateAmount(transaction.amount) &&
-    validateShares(transaction.shares) &&
-    validateTransactionType(transaction.transactionType)
+    validateVolume(transaction.volume) &&
+    validateTransactionType(transaction.type)
   );
 };

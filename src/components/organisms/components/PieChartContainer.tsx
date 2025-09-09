@@ -20,6 +20,7 @@ interface PieChartContainerProps<T = any> {
   };
   totalValue?: string;
   centerComponent?: React.ReactNode;
+  onPress?: () => void;
 }
 
 export const PieChartContainer = <T,>(props: PieChartContainerProps<T>) => {
@@ -31,6 +32,7 @@ export const PieChartContainer = <T,>(props: PieChartContainerProps<T>) => {
     containerStyle = {},
     totalValue,
     centerComponent,
+    onPress,
   } = props;
   const chartData = useMemo(() => adapter.adaptData(data), [adapter, data]);
 
@@ -114,7 +116,12 @@ export const PieChartContainer = <T,>(props: PieChartContainerProps<T>) => {
           </VStack>
         )}
 
-        <PieChartComponent data={chartData} config={finalConfig} emptyStateText={emptyStateText} />
+        <PieChartComponent
+          data={chartData}
+          config={finalConfig}
+          emptyStateText={emptyStateText}
+          onPress={onPress}
+        />
       </VStack>
     </Box>
   );

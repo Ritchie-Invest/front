@@ -1,5 +1,5 @@
 import React, { memo, useMemo } from 'react';
-import { View, Text, Dimensions } from 'react-native';
+import { View, Text, Dimensions, Pressable } from 'react-native';
 import PieChart from 'react-native-pie-chart';
 import { PieChartConfig, PieChartProps } from '../models/PieChart';
 import { borderRadius, colors, paddings, spacing, typography } from '~/lib/theme/theme';
@@ -26,7 +26,7 @@ const defaultConfig: PieChartConfig = {
 };
 
 export const PieChartComponent: React.FC<PieChartProps> = memo(
-  ({ data, config = {}, emptyStateText = 'Aucune donnée disponible' }) => {
+  ({ data, config = {}, emptyStateText = 'Aucune donnée disponible', onPress }) => {
     const chartConfig = useMemo(() => ({ ...defaultConfig, ...config }), [config]);
     const screenWidth = Dimensions.get('screen').width;
 
@@ -59,7 +59,7 @@ export const PieChartComponent: React.FC<PieChartProps> = memo(
 
     return (
       <View style={{ alignItems: 'center', width: '100%' }}>
-        <View>
+        <Pressable onPress={onPress}>
           <PieChart
             widthAndHeight={chartSize}
             series={chartData.map((item) => ({
@@ -73,7 +73,7 @@ export const PieChartComponent: React.FC<PieChartProps> = memo(
               },
             }))}
           />
-        </View>
+        </Pressable>
 
         <View
           style={{

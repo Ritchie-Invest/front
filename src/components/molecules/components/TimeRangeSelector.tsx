@@ -34,6 +34,7 @@ const TimeRangeSelectorImpl = <T extends string | number>({
       space={spacing.spacingSmallFallback}
       justifyContent={selectorConfig.justifyContent}
       mb={selectorConfig.marginBottom}
+      width="$full"
     >
       {options.map((option) => (
         <Pressable
@@ -44,7 +45,7 @@ const TimeRangeSelectorImpl = <T extends string | number>({
               ? selectorConfig.activeColor
               : selectorConfig.inactiveColor
           }
-          p={paddings.paddingVerySmall}
+          p={paddings.paddingSmall}
           rounded={borderRadius.borderRadiusVerySmall}
           $pressed={{
             opacity: 0.7,

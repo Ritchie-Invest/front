@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Portfolio, PortfolioPosition } from '../models/portfolio';
+import { Portfolio } from '../models/portfolio';
 import { PortfolioDataService } from '../contracts/portfolio.contract';
 import { PortfolioServiceAdapter } from '../adapters/portfolioServiceAdapter';
 
 export const usePortfolio = (dataService: PortfolioDataService = new PortfolioServiceAdapter()) => {
   const [portfolio, setPortfolio] = useState<Portfolio | null>(null);
-  const [positions, setPositions] = useState<PortfolioPosition[]>([]);
-  const [totalValue, setTotalValue] = useState<number>(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -15,15 +13,8 @@ export const usePortfolio = (dataService: PortfolioDataService = new PortfolioSe
       setLoading(true);
       setError(null);
 
-      const [portfolioData, positionsData, totalValueData] = await Promise.all([
-        dataService.getPortfolio(),
-        dataService.getPortfolioPositions(),
-        dataService.getTotalPortfolioValue(),
-      ]);
-
+      const portfolioData = await dataService.getPortfolio();
       setPortfolio(portfolioData);
-      setPositions(positionsData);
-      setTotalValue(totalValueData);
     } catch (err) {
       setError('Failed to fetch portfolio data');
       console.error('Error fetching portfolio:', err);
@@ -38,8 +29,6 @@ export const usePortfolio = (dataService: PortfolioDataService = new PortfolioSe
 
   return {
     portfolio,
-    positions,
-    totalValue,
     loading,
     error,
     refetch: fetchPortfolioData,

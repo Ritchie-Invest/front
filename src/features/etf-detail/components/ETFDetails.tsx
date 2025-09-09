@@ -10,7 +10,9 @@ export const ETFDetails: React.FC = memo(() => {
     staticData: etf,
     staticLoading: isLoading,
     error,
-    priceChange,
+    variation,
+    variationPercent,
+    variationDirection,
     isPositive,
   } = useETFDetails();
 
@@ -31,20 +33,30 @@ export const ETFDetails: React.FC = memo(() => {
   }
 
   return (
-    <VStack space={spacing.spacingSmallFallback} mb={margins.marginSmall}>
-      <HStack justifyContent="space-between" alignItems="flex-start">
-        <VStack flex={1}>
-          <Text fontSize={24} fontWeight="bold" color="$text900">
-            {etf.ticker}
-          </Text>
-          <Text fontSize={14} color="$text600" numberOfLines={2}>
-            {etf.name}
-          </Text>
-        </VStack>
-      </HStack>
-
-      <VStack space="sm">
-        <Text fontSize={30} fontWeight="bold" color="$gray900">
+    <HStack justifyContent="space-between" alignItems="flex-start">
+      <VStack
+        space={spacing.spacingMediumFallback}
+        alignItems="flex-start"
+        justifyContent="space-between"
+      >
+        <Text fontSize={typography.heading1Size} fontWeight="bold" color={colors.primaryTextColor}>
+          {etf.ticker}
+        </Text>
+        <Text fontSize={typography.heading3Size} color={colors.primaryTextColor} numberOfLines={2}>
+          {etf.name}
+        </Text>
+      </VStack>
+      <VStack
+        space={spacing.spacingSmallFallback}
+        alignItems="flex-end"
+        justifyContent="space-between"
+      >
+        <Text
+          textAlign="right"
+          fontSize={typography.heading2Size}
+          fontWeight="bold"
+          color={colors.primaryTextColor}
+        >
           {formatCurrency(etf.currentPrice)}
         </Text>
 
@@ -59,11 +71,10 @@ export const ETFDetails: React.FC = memo(() => {
             fontWeight={typography.fontWeightMedium}
             color={isPositive ? colors.successColor : colors.errorColor}
           >
-            {formatCurrency(Math.abs(priceChange.amount))} (
-            {Math.abs(priceChange.percentage).toFixed(2)}%)
+            {formatCurrency(Math.abs(variation))} ({Math.abs(variationPercent).toFixed(2)}%)
           </Text>
         </HStack>
       </VStack>
-    </VStack>
+    </HStack>
   );
 });

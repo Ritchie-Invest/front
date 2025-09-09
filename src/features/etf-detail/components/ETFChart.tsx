@@ -7,7 +7,7 @@ import { borderRadius, colors, margins, paddings, typography } from '~/lib/theme
 
 export const ETFChart: React.FC<ETFChartProps> = memo(({ config, timeRangeConfig }) => {
   const {
-    etfData,
+    priceHistory,
     loading,
     error,
     selectedRange,
@@ -40,7 +40,7 @@ export const ETFChart: React.FC<ETFChartProps> = memo(({ config, timeRangeConfig
     );
   }
 
-  if (error || !etfData) {
+  if (error || !priceHistory || priceHistory.length === 0) {
     return (
       <Box
         bg={colors.mainBackgroundColor}
@@ -63,7 +63,7 @@ export const ETFChart: React.FC<ETFChartProps> = memo(({ config, timeRangeConfig
   return (
     <Box mb={margins.marginVerySmall}>
       <LineChartContainer
-        data={etfData.priceHistory}
+        data={priceHistory}
         adapter={adapter as any}
         selectedTimeRange={selectedRange}
         onTimeRangeChange={handleRangeChange}

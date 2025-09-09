@@ -1,6 +1,9 @@
-import { ETFWithCurrentPrice } from '~/features/etf/models/ETFWithCurrentPrice';
 import { ETFPriceData } from './ETFPriceData';
+import { VariationType } from '~/features/etf/types/VariationType';
 
-export interface ETFWithPriceHistory extends ETFWithCurrentPrice {
-  priceHistory: ETFPriceData[];
+export interface ETFWithPriceHistory {
+  history: ETFPriceData[];
+  variation: number;
+  variationPercent: number;
+  variationDirection: VariationType;
 }

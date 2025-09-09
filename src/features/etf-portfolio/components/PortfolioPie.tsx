@@ -5,7 +5,7 @@ import { PieChartContainer } from '~/components/organisms/components/PieChartCon
 import { usePortfolioGraph } from '../hooks/usePortfolioGraph';
 import { paddings, spacing } from '~/lib/theme/theme';
 
-export const PortfolioGraph: React.FC<PortfolioGraphProps> = ({
+export const PortfolioPie: React.FC<PortfolioGraphProps> = ({
   onPress,
   cashColor,
   investmentColor,

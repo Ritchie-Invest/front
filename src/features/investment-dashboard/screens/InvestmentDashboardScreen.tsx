@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Text, VStack } from '@gluestack-ui/themed';
-import { PortfolioGraph } from '~/features/etf-portfolio/components/PortfolioGraph';
+import { PortfolioPie } from '~/features/etf-portfolio/components/PortfolioPie';
 import { usePortfolio } from '~/features/etf-portfolio/hooks/usePortfolio';
 import { useETFs } from '../hooks/useETFList';
 import { ETFList } from '../components/ETFList';
@@ -29,7 +29,7 @@ export const InvestmentDashboardScreen: React.FC = () => {
   return (
     <VStack flex={1} bg={colors.mainBackgroundColor} space={spacing.spacingMediumFallback}>
       <Box>
-        <PortfolioGraph />
+        <PortfolioPie />
       </Box>
       <Box flex={1} backgroundColor={colors.alternativeBackgroundColor}>
         <ETFList positions={etfs} loading={loading} />

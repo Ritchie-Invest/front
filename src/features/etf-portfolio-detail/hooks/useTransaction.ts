@@ -4,11 +4,12 @@ import { TransactionHistoryServiceAdapter } from '../adapters/TransactionHistory
 import { TransactionType } from '~/features/etf/types/TransactionType';
 import { colors } from '~/lib/theme/theme';
 
-export const useTransactions = (limit?: number) => {
+export const useTransactions = (initialLimit?: number) => {
   const transactionService = new TransactionHistoryServiceAdapter();
   const [transactions, setTransactions] = useState<TransactionApiResponse[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [limit, setLimit] = useState(initialLimit || 10);
 
   const fetchTransactions = useCallback(async () => {
     setLoading(true);
@@ -27,11 +28,22 @@ export const useTransactions = (limit?: number) => {
     fetchTransactions();
   }, [fetchTransactions]);
 
+  const increaseLimit = useCallback(() => {
+    setLimit((prev) => prev + 5);
+  }, []);
+
+  const decreaseLimit = useCallback(() => {
+    setLimit((prev) => Math.max(5, prev - 5));
+  }, []);
+
   return {
     transactions,
     loading,
     error,
     refetch: fetchTransactions,
+    limit,
+    increaseLimit,
+    decreaseLimit,
   };
 };
 

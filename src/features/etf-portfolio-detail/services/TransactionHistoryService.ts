@@ -4,9 +4,8 @@ import { axiosInstance } from '~/lib/api/axios';
 export class TransactionHistoryService {
   static async getTransactionsForUser(limit?: number): Promise<TransactionApiResponse[]> {
     try {
-      const limit = 10;
       const response = await axiosInstance.get<{ transactions: TransactionApiResponse[] }>(
-        `/transaction/user?limit=${limit}`,
+        `/transaction/user?limit=${limit || 10}`,
       );
 
       return response.data.transactions;

@@ -1,4 +1,4 @@
-import { Portfolio } from '../models/portfolio';
+import { Portfolio, PortfolioPosition } from '../models/portfolio';
 import { axiosInstance } from '~/lib/api/axios';
 import { AxiosError } from 'axios';
 import { getUserFromToken } from '~/features/auth/services/authService';
@@ -39,6 +39,33 @@ export const portfolioService = {
       }
 
       throw new Error('Erreur lors de la récupération du portfolio');
+    }
+  },
+
+  getPortfolioPositionByETF: async (id: string): Promise<PortfolioPosition | null> => {
+    try {
+      const accessToken = useAuthStore.getState().accessToken;
+      if (!accessToken) {
+        throw new Error('Utilisateur non connecté ou accessToken manquant');
+      }
+
+      const response = await axiosInstance.get<PortfolioPosition>(`/portfolio/position/${id}`);
+
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching portfolio position:', error);
+
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 404) {
+          return null;
+        } else if (error.response?.status === 400) {
+          throw new Error('Requête invalide pour récupérer la position');
+        } else if (error.response?.status === 500) {
+          throw new Error('Erreur serveur lors de la récupération de la position');
+        }
+      }
+
+      throw new Error('Erreur lors de la récupération de la position du portfolio');
     }
   },
 };

@@ -2,6 +2,7 @@ import { Portfolio, PortfolioPosition } from '../models/portfolio';
 
 export interface PortfolioDataService {
   getPortfolio(): Promise<Portfolio>;
+  getPortfolioPositionByETF(id: string): Promise<PortfolioPosition | null>;
 }
 
 export interface PortfolioPositionProvider {

@@ -12,7 +12,6 @@ export const ETFDetails: React.FC = memo(() => {
     error,
     variation,
     variationPercent,
-    variationDirection,
     isPositive,
   } = useETFDetails();
 

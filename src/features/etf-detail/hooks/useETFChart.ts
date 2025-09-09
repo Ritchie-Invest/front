@@ -1,6 +1,11 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useRoute, RouteProp } from '@react-navigation/native';
-import { useSelectedETF, useSetSelectedETF } from '~/features/etf/store/ETFStore';
+import {
+  useSelectedETF,
+  useSetSelectedETF,
+  useSelectedRange,
+  useSetSelectedRange,
+} from '~/features/etf/store/ETFStore';
 import { MainStackParamList } from '~/navigation/AppNavigator';
 import { ETFPriceHistoryServiceAdapter } from '../adapters/ETFPriceHistoryServiceAdapter';
 import { ETFWithPriceHistory } from '../models/ETFPriceHistory';
@@ -32,7 +37,8 @@ const defaultTimeRangeConfig: TimeRangeSelectorConfig = {
 };
 
 export const useETFChart = (dataService?: ETFPriceHistoryServiceAdapter) => {
-  const [selectedRange, setSelectedRange] = useState<DateRangeType>(DateRangeType.SevenDays);
+  const selectedRange = useSelectedRange();
+  const setSelectedRange = useSetSelectedRange();
   const [priceHistory, setPriceHistory] = useState<ETFWithPriceHistory | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

@@ -2,6 +2,7 @@ export interface PieChartProps {
   data: GenericPieChartData[];
   config?: PieChartConfig;
   emptyStateText?: string;
+  onPress?: () => void;
 }
 
 export interface GenericPieChartData {

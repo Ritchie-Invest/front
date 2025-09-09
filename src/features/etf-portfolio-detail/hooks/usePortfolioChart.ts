@@ -1,35 +1,36 @@
 import { useState, useEffect } from 'react';
-import { Portfolio } from '../../etf-portfolio/models/portfolio';
+import { PortfolioPosition } from '../models/PortfolioPosition';
 import { DateRangeType } from '~/components/molecules/types/dateRange';
 import type { LineChartConfig } from '~/components/molecules/models/LineChart';
 import { TimeRangeSelectorConfig } from '~/components/molecules/models/TimeRange';
 import { PortfolioChartDataAdapter } from '../adapters/PortfolioChartDataAdapter';
-import { PortfolioPositionsServiceAdapter } from '../adapters/PortfolioChartAdapter.ts';
+import { PortfolioPositionsServiceAdapter } from '../adapters/PortfolioPositionsServiceAdapter';
+import { colors } from '~/lib/theme/theme';
 
 const portfolioChartAdapter = new PortfolioChartDataAdapter();
 const portfolioDataService = new PortfolioPositionsServiceAdapter();
 
 const defaultPortfolioChartConfig: LineChartConfig = {
   height: 240,
-  lineColor: '#10B981',
-  activePointColor: '#10B981',
+  lineColor: colors.successColor,
+  activePointColor: colors.successColor,
   showVerticalLine: true,
-  verticalLineColor: '#E5E7EB',
+  verticalLineColor: colors.successColor,
   endPointRadius: 4,
   animated: true,
 };
 
 const defaultTimeRangeConfig: TimeRangeSelectorConfig = {
-  activeColor: 'green.500',
-  inactiveColor: 'gray.100',
-  activeTextColor: 'white',
-  inactiveTextColor: 'gray.700',
-  justifyContent: 'center',
+  activeColor: colors.successColor,
+  inactiveColor: colors.GreyL30,
+  activeTextColor: colors.secondaryTextColor,
+  inactiveTextColor: colors.secondaryTextColor,
+  justifyContent: 'space-between',
   marginBottom: 4,
 };
 
 export const usePortfolioChart = () => {
-  const [portfolioData, setPortfolioData] = useState<Portfolio[]>([]);
+  const [portfolioData, setPortfolioData] = useState<PortfolioPosition[]>([]);
   const [selectedRange, setSelectedRange] = useState<DateRangeType>(DateRangeType.OneMonth);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -39,7 +40,7 @@ export const usePortfolioChart = () => {
       setLoading(true);
       setError(null);
 
-      const data = await portfolioDataService.getPortfolioValues();
+      const data = await portfolioDataService.getPortfolioPositions(selectedRange);
       setPortfolioData(data);
     } catch (err) {
       setError('Erreur lors du chargement des données du portfolio');

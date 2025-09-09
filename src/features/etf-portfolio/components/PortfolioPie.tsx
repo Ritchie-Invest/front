@@ -2,7 +2,7 @@ import React from 'react';
 import { VStack, Pressable } from '@gluestack-ui/themed';
 import { PortfolioGraphProps } from '../models/PortfolioGraph';
 import { PieChartContainer } from '~/components/organisms/components/PieChartContainer';
-import { usePortfolioGraph } from '../hooks/usePortfolioGraph';
+import { usePortfolioPie } from '../hooks/usePortfolioPie';
 import { paddings, spacing } from '~/lib/theme/theme';
 
 export const PortfolioPie: React.FC<PortfolioGraphProps> = ({
@@ -10,7 +10,7 @@ export const PortfolioPie: React.FC<PortfolioGraphProps> = ({
   cashColor,
   investmentColor,
 }) => {
-  const { portfolioData, adapter, formattedTotalValue, loading } = usePortfolioGraph({
+  const { portfolioData, adapter, formattedTotalValue, loading } = usePortfolioPie({
     cashColor,
     investmentColor,
   });
@@ -33,6 +33,7 @@ export const PortfolioPie: React.FC<PortfolioGraphProps> = ({
           showPercentage: true,
         }}
         emptyStateText="Aucune donnée de portfolio disponible"
+        onPress={onPress}
       />
     </VStack>
   );

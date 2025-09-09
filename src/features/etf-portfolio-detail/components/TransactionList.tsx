@@ -1,5 +1,5 @@
 import React from 'react';
-import { HStack, Text, VStack } from '@gluestack-ui/themed';
+import { Box, Center, HStack, Text, VStack } from '@gluestack-ui/themed';
 import { colors, paddings, margins, borderRadius, typography } from '~/lib/theme/theme';
 import { List } from '~/components/organisms/components/list';
 import { useTransactions, getTypeColor, getTypeSymbol } from '../hooks/useTransaction';
@@ -21,6 +21,28 @@ export const TransactionList: React.FC<TransactionListProps> = ({ onTransactionP
           Erreur: {error}
         </Text>
       </VStack>
+    );
+  }
+
+  if (transactions.length < 1) {
+    return (
+      <Box
+        bg={colors.mainBackgroundColor}
+        p={paddings.paddingVerySmall}
+        rounded={borderRadius.borderRadiusLarge}
+        shadowOffset={{ width: 0, height: 1 }}
+        shadowOpacity={0.1}
+        shadowRadius={2}
+        elevation={1}
+        mb={margins.marginVerySmall}
+        height={240}
+      >
+        <Center flex={1}>
+          <Text color={colors.primaryTextColor} textAlign="center">
+            Vous n'avez pas encore effectué de transactions ! Essayez dès maintenant d'investir 🚀
+          </Text>
+        </Center>
+      </Box>
     );
   }
 

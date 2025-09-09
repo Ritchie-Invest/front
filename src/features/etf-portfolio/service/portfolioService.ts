@@ -42,14 +42,14 @@ export const portfolioService = {
     }
   },
 
-  getPortfolioPositionByETF: async (etfId: string): Promise<PortfolioPosition> => {
+  getPortfolioPositionByETF: async (id: string): Promise<PortfolioPosition | null> => {
     try {
       const accessToken = useAuthStore.getState().accessToken;
       if (!accessToken) {
         throw new Error('Utilisateur non connecté ou accessToken manquant');
       }
 
-      const response = await axiosInstance.get<PortfolioPosition>(`/portfolio/positions/${etfId}`);
+      const response = await axiosInstance.get<PortfolioPosition>(`/portfolio/position/${id}`);
 
       return response.data;
     } catch (error) {

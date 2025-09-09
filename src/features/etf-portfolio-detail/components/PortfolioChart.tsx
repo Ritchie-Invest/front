@@ -60,6 +60,28 @@ export const PortfolioChart: React.FC<PortfolioChartProps> = memo(({ config, tim
     );
   }
 
+  if (portfolioData.length < 2) {
+    return (
+      <Box
+        bg={colors.mainBackgroundColor}
+        p={paddings.paddingVerySmall}
+        rounded={borderRadius.borderRadiusLarge}
+        shadowOffset={{ width: 0, height: 1 }}
+        shadowOpacity={0.1}
+        shadowRadius={2}
+        elevation={1}
+        mb={margins.marginVerySmall}
+        height={chartConfig.height}
+      >
+        <Center flex={1}>
+          <Text color={colors.primaryTextColor} textAlign="center">
+            Vous venez de créer votre compte, vous pourrez bientôt voir son évolution ici 💰
+          </Text>
+        </Center>
+      </Box>
+    );
+  }
+
   return (
     <LineChartContainer
       data={portfolioData}

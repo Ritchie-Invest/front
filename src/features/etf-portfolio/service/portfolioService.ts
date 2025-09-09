@@ -56,16 +56,16 @@ export const portfolioService = {
       console.error('Error fetching portfolio position:', error);
 
       if (error instanceof AxiosError) {
-        if (error.response?.status === 404) {
-          return null;
-        } else if (error.response?.status === 400) {
+        if (error.response?.status === 400) {
           throw new Error('Requête invalide pour récupérer la position');
+        } else if (error.response?.status === 404) {
+          throw new Error('Position non trouvée pour cet ETF');
         } else if (error.response?.status === 500) {
           throw new Error('Erreur serveur lors de la récupération de la position');
         }
       }
 
-      throw new Error('Erreur lors de la récupération de la position du portfolio');
+      throw new Error('Erreur lors de la récupération de la position');
     }
   },
 };

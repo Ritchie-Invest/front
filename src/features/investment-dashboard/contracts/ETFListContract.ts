@@ -1,9 +1,9 @@
-import { ETFWithCurrentPrice } from '../../etf/models/ETFWithCurrentPrice';
+import { ETF } from '../../etf/models/ETF';
 
 export interface ETFListContract {
-  getAllETFs(): Promise<ETFWithCurrentPrice[]>;
+  getAllETFs(): Promise<ETF[]>;
 }
 
 export interface ETFListProvider {
-  (): Promise<ETFWithCurrentPrice[]>;
+  (): Promise<ETF[]>;
 }

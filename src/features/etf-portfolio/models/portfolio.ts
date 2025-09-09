@@ -1,8 +1,10 @@
+import { CurrencyType } from '~/features/etf/types/CurrencyType';
+
 export interface Portfolio {
-  portfolioId: number;
-  balance: number;
-  currentValue: number;
-  timestamp: Date;
+  currency: CurrencyType;
+  cash: number;
+  investments: number;
+  totalValue: number;
 }
 
 export interface PortfolioPosition {

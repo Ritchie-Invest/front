@@ -1,9 +1,10 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
 import { Box, VStack } from '@gluestack-ui/themed';
-import { ETFDetails } from '../components/ETFDetails';
+import { ETFDetails } from '~/features/etf/components/ETFDetails';
 import { ETFChart } from '../components/ETFChart';
 import { colors, paddings, spacing } from '~/lib/theme/theme';
+import { BuyAndSellButtons } from '../components/BuyAndSellButtons';
 
 export const ETFDetailScreen: React.FC = () => {
   return (

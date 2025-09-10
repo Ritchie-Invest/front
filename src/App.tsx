@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './i18n';
-import { NativeBaseProvider } from 'native-base';
+import { GluestackUIProvider } from '@gluestack-ui/themed';
+import { customConfig } from './lib/theme/theme';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AppNavigator } from './navigation/AppNavigator';
 import { useAuthStore } from './features/auth/store/authStore';
@@ -48,8 +49,8 @@ export default function App() {
   };
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <NativeBaseProvider>
+    <GluestackUIProvider config={customConfig}>
+      <QueryClientProvider client={queryClient}>
         <AppNavigator
           isOnboardingCompleted={isOnboardingCompleted}
           showLogin={showLogin}
@@ -60,7 +61,7 @@ export default function App() {
           handleLogout={handleLogout}
           handleBackToLogin={handleBackToLogin}
         />
-      </NativeBaseProvider>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </GluestackUIProvider>
   );
 }

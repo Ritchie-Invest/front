@@ -1,17 +1,18 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Box } from 'native-base';
+import { Box } from '@gluestack-ui/themed';
 import { OnboardingLayout } from '../features/onboarding/screens/OnboardingLayout';
 import { LoginScreen } from '../features/auth/screens/LoginScreen';
 import { RegisterScreen } from '../features/auth/screens/RegisterScreen';
 import HomeScreen from '../features/landing/screens/home';
-import { ETFDashboard } from '~/features/etf-dashboard/screens/ETFDashboard';
 import { ETFDetailScreen } from '../features/etf-detail/screens/ETFDetailScreen';
 import { ETFTransactionScreen } from '~/features/etf-transaction/screens/ETFTransactionScreen';
 import { TransactionType } from '~/features/etf-transaction/types/TransactionType';
 
+import { PortfolioDetailScreen } from '../features/etf-portfolio-detail/screens/PortfolioDetailScreen';
 import Navbar from '../features/navigation/components/organisms/navbar';
+import { InvestmentDashboardScreen } from '~/features/investment-dashboard/screens/InvestmentDashboardScreen';
 
 export type RootStackParamList = {
   Main: undefined;
@@ -25,6 +26,7 @@ export type MainStackParamList = {
   InvestmentDashboard: undefined;
   ETFDetails: { id: string };
   ETFTransaction: { transactionType: TransactionType };
+  PortfolioDetail: undefined;
   Progress: undefined;
   Profile: undefined;
   Register: undefined;
@@ -77,7 +79,7 @@ export const AppNavigator = ({
             <MainStack.Navigator
               screenOptions={{
                 headerShown: true,
-                headerTitle: '',
+                headerTitle: ' ',
               }}
             >
               <MainStack.Screen name="Landing">
@@ -91,7 +93,7 @@ export const AppNavigator = ({
               <MainStack.Screen name="InvestmentDashboard" options={{ headerTitle: 'Portfolio' }}>
                 {() => (
                   <Box flex={1}>
-                    <ETFDashboard />
+                    <InvestmentDashboardScreen />
                     <Navbar />
                   </Box>
                 )}
@@ -107,17 +109,27 @@ export const AppNavigator = ({
                 name="ETFTransaction"
                 options={({ route }) => ({
                   headerTitle:
-                    route.params?.transactionType === TransactionType.Buy
+                    route.params?.transactionType === TransactionType.BUY
                       ? 'Achat ETF'
-                      : route.params?.transactionType === TransactionType.Sell
+                      : route.params?.transactionType === TransactionType.SELL
                         ? 'Vente ETF'
                         : 'Transaction',
                 })}
               >
                 {() => (
-                  <>
+                  <Box flex={1}>
                     <ETFTransactionScreen />
-                  </>
+                  </Box>
+                )}
+              </MainStack.Screen>
+              <MainStack.Screen
+                name="PortfolioDetail"
+                options={{ headerTitle: 'Détails Portfolio' }}
+              >
+                {() => (
+                  <Box flex={1}>
+                    <PortfolioDetailScreen />
+                  </Box>
                 )}
               </MainStack.Screen>
             </MainStack.Navigator>

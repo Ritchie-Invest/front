@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { VStack, Text } from 'native-base';
+import { VStack, Text } from '@gluestack-ui/themed';
 import { KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
 import { useRegister } from '../hooks/useRegister';
 import { Button } from '../../../components/atoms/Button';
@@ -62,8 +62,8 @@ export const RegisterForm = ({ onBackToLogin, onSuccess }: RegisterFormProps) =>
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
       >
-        <VStack space={4} px={4} flex={1} justifyContent="center">
-          <Text fontSize="lg" textAlign="center">
+        <VStack space="lg" px={4} flex={1} justifyContent="center">
+          <Text fontSize={18} textAlign="center">
             {t('register.title')}
           </Text>
 
@@ -82,18 +82,18 @@ export const RegisterForm = ({ onBackToLogin, onSuccess }: RegisterFormProps) =>
           />
 
           {error && (
-            <Text color="red.500" fontSize="sm">
+            <Text color="$red500" fontSize={14}>
               {error}
             </Text>
           )}
 
           {successMessage && (
-            <Text color="green.500" fontSize="sm">
+            <Text color="$green500" fontSize={14}>
               {successMessage}
             </Text>
           )}
 
-          <Button onPress={handleSubmit} isLoading={register.isPending} disabled={!!successMessage}>
+          <Button onPress={handleSubmit} isLoading={register.isPending}>
             {t('register.button')}
           </Button>
 

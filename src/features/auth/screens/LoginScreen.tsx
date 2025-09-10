@@ -1,4 +1,4 @@
-import { Box } from 'native-base';
+import { Box } from '@gluestack-ui/themed';
 import { LoginForm } from '../components/LoginForm';
 
 export const LoginScreen = ({

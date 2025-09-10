@@ -1,18 +1,26 @@
+import { TransactionContract } from '../contracts/TransactionContract';
 import { TransactionService } from '../services/TransactionService';
-import { TransactionContract } from '../contracts/TransactionContracts';
-import { TransactionRequest } from '../models/requests';
-import { TransactionResponse } from '../models/responses';
-import { validateTransactionRequest } from '../validation/TransactionValidation';
+import {
+  TransactionApiRequest,
+  PostTransactionApiResponse,
+} from '~/features/etf/models/Transaction';
+import {
+  validateTransactionRequest,
+  validateTransactionResponse,
+} from '../validation/TransactionValidation';
 
 export class TransactionServiceAdapter implements TransactionContract {
-  async executeTransaction(transactionRequest: TransactionRequest): Promise<TransactionResponse> {
-    if (!validateTransactionRequest(transactionRequest)) {
-      throw new Error(
-        `Invalid transaction request: ${JSON.stringify(transactionRequest)}. ` +
-          'Must have valid amount, shares, etfID, and transaction type.',
-      );
+  async executeTransaction(request: TransactionApiRequest): Promise<PostTransactionApiResponse> {
+    const response = await TransactionService.executeTransaction(request);
+
+    if (!validateTransactionRequest(request)) {
+      throw new Error('Invalid transaction request');
     }
 
-    return TransactionService.executeTransaction(transactionRequest);
+    if (!validateTransactionResponse(response)) {
+      throw new Error('Invalid transaction response received from service');
+    }
+
+    return response;
   }
 }

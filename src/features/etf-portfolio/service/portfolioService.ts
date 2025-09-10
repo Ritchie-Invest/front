@@ -1,72 +1,71 @@
 import { Portfolio, PortfolioPosition } from '../models/portfolio';
-
-const mockPortfolio: Portfolio = {
-  portfolioId: 1,
-  balance: 10000,
-  currentValue: 25000,
-  timestamp: new Date('2025-07-19'),
-};
-
-const mockPositions: PortfolioPosition[] = [
-  {
-    id: '1',
-    etfId: '1',
-    ticker: 'SPY',
-    name: 'SPDR S&P 500 ETF Trust',
-    quantity: 10,
-    currentPrice: 453.7,
-    totalValue: 4537,
-    priceChange: 2.4,
-    priceChangePercentage: 0.53,
-    isGaining: true,
-  },
-  {
-    id: '2',
-    etfId: '2',
-    ticker: 'QQQ',
-    name: 'Invesco QQQ Trust',
-    quantity: 15,
-    currentPrice: 383.2,
-    totalValue: 5748,
-    priceChange: -1.6,
-    priceChangePercentage: -0.42,
-    isGaining: false,
-  },
-  {
-    id: '3',
-    etfId: '3',
-    ticker: 'VTI',
-    name: 'Vanguard Total Stock Market ETF',
-    quantity: 20,
-    currentPrice: 247.8,
-    totalValue: 4956,
-    priceChange: 1.3,
-    priceChangePercentage: 0.53,
-    isGaining: true,
-  },
-];
+import { axiosInstance } from '~/lib/api/axios';
+import { AxiosError } from 'axios';
+import { getUserFromToken } from '~/features/auth/services/authService';
+import { useAuthStore } from '~/features/auth/store/authStore';
 
 export const portfolioService = {
   getPortfolio: async (): Promise<Portfolio> => {
-    await new Promise((resolve) => setTimeout(resolve, 400));
-    return mockPortfolio;
-  },
+    try {
+      const accessToken = useAuthStore.getState().accessToken;
+      if (!accessToken) {
+        throw new Error('Utilisateur non connecté ou accessToken manquant');
+      }
+      const user = getUserFromToken(accessToken);
+      const portfolioId = user?.portfolioId || null;
+      if (!portfolioId) {
+        throw new Error('Utilisateur non connecté ou portfolioId manquant');
+      }
 
-  getPortfolioPositions: async (): Promise<PortfolioPosition[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 600));
-    return mockPositions;
+      const response = await axiosInstance.get<Portfolio>('/portfolio');
+
+      return {
+        currency: response.data.currency,
+        cash: response.data.cash,
+        investments: response.data.investments,
+        totalValue: response.data.totalValue,
+      };
+    } catch (error) {
+      console.error('Error fetching portfolio:', error);
+
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 400) {
+          throw new Error('Requête invalide pour récupérer le portfolio');
+        } else if (error.response?.status === 404) {
+          throw new Error('Portfolio non trouvé');
+        } else if (error.response?.status === 500) {
+          throw new Error('Erreur serveur lors de la récupération du portfolio');
+        }
+      }
+
+      throw new Error('Erreur lors de la récupération du portfolio');
+    }
   },
 
   getPortfolioPositionByETF: async (id: string): Promise<PortfolioPosition | null> => {
-    await new Promise((resolve) => setTimeout(resolve, 300));
-    const positions = await portfolioService.getPortfolioPositions();
-    return positions.find((position) => position.id === id) || null;
-  },
+    try {
+      const accessToken = useAuthStore.getState().accessToken;
+      if (!accessToken) {
+        throw new Error('Utilisateur non connecté ou accessToken manquant');
+      }
 
-  getTotalPortfolioValue: async (): Promise<number> => {
-    await new Promise((resolve) => setTimeout(resolve, 200));
-    const positions = await portfolioService.getPortfolioPositions();
-    const positionsValue = positions.reduce((sum, position) => sum + position.totalValue, 0);
-    return mockPortfolio.balance + positionsValue;
+      const response = await axiosInstance.get<PortfolioPosition>(`/portfolio/position/${id}`);
+
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching portfolio position:', error);
+
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 400) {
+          throw new Error('Requête invalide pour récupérer la position');
+        } else if (error.response?.status === 404) {
+          throw new Error('Position non trouvée pour cet ETF');
+        } else if (error.response?.status === 500) {
+          throw new Error('Erreur serveur lors de la récupération de la position');
+        }
+      }
+
+      throw new Error('Erreur lors de la récupération de la position');
+    }
   },
 };

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
-import { VStack, Text, HStack } from 'native-base';
+import { VStack, Text, HStack } from '@gluestack-ui/themed';
 import { useTranslation } from 'react-i18next';
 import { config } from '../../../lib/config';
 import { Button } from '../../../components/atoms/Button';
@@ -69,8 +69,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, signupEnabled }
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
       >
-        <VStack space={4} px={4} flex={1} justifyContent="center">
-          <Text fontSize="lg" textAlign="center">
+        <VStack space="lg" px={4} flex={1} justifyContent="center">
+          <Text fontSize={18} textAlign="center">
             {t('login.title')}
           </Text>
 
@@ -89,7 +89,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, signupEnabled }
           />
 
           {error && (
-            <Text color="red.500" fontSize="sm">
+            <Text color="$red500" fontSize={14}>
               {error}
             </Text>
           )}

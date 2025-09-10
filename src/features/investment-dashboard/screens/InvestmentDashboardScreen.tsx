@@ -1,19 +1,28 @@
 import React from 'react';
-import { Box, Text, VStack } from 'native-base';
-import { PortfolioBalance } from '~/features/etf-portfolio/components/PortfolioBalance';
+import { Box, Text, VStack } from '@gluestack-ui/themed';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { MainStackParamList } from '~/navigation/AppNavigator';
+import { PortfolioPie } from '~/features/etf-portfolio/components/PortfolioPie';
 import { usePortfolio } from '~/features/etf-portfolio/hooks/usePortfolio';
 import { ETFList } from '../components/ETFList';
+import { colors, margins, paddings, spacing } from '~/lib/theme/theme';
 
 export const InvestmentDashboardScreen: React.FC = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<MainStackParamList>>();
   const { loading: portfolioLoading, error: portfolioError } = usePortfolio();
+
+  const handlePortfolioPress = () => {
+    navigation.navigate('PortfolioDetail');
+  };
 
   if (portfolioError) {
     return (
-      <Box flex={1} justifyContent="center" alignItems="center" px={4}>
-        <Text fontSize="lg" color="red.500" textAlign="center" mb={4}>
-          Erreur lors du chargement de la page
+      <Box flex={1} justifyContent="center" alignItems="center" px={paddings.paddingSmall}>
+        <Text fontSize={18} color={colors.errorColor} textAlign="center" mb={margins.marginSmall}>
+          Erreur lors du chargement du portfolio
         </Text>
-        <Text fontSize="sm" color="gray.500" textAlign="center">
+        <Text fontSize={14} color={colors.primaryTextColor} textAlign="center">
           {portfolioError}
         </Text>
       </Box>
@@ -21,11 +30,13 @@ export const InvestmentDashboardScreen: React.FC = () => {
   }
 
   return (
-    <Box flex={1} bg="white">
-      <VStack space={6} px={4} py={6}>
-        <PortfolioBalance />
-      </VStack>
-      <ETFList />
-    </Box>
+    <VStack flex={1} bg={colors.mainBackgroundColor} space={spacing.spacingMediumFallback}>
+      <Box>
+        <PortfolioPie onPress={handlePortfolioPress} />
+      </Box>
+      <Box flex={1} backgroundColor={colors.alternativeBackgroundColor}>
+        <ETFList />
+      </Box>
+    </VStack>
   );
 };

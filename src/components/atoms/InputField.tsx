@@ -1,6 +1,6 @@
-import { TextInput, StyleSheet, Keyboard, Platform } from 'react-native';
-import { Box, useTheme } from 'native-base';
-import { baseFontSize } from 'native-base/lib/typescript/theme/tools';
+import React from 'react';
+import { Input, InputField as GInputField } from '@gluestack-ui/themed';
+import { colors, paddings } from '../../lib/theme/theme';
 
 type Props = {
   placeholder: string;
@@ -8,13 +8,11 @@ type Props = {
   onChange: (value: string) => void;
   type?: 'text' | 'email' | 'password' | 'numeric';
   accessibilityLabel?: string;
-  borderWidth?: number;
-  bg?: string;
-  fontSize?: number;
-  textAlign?: 'left' | 'right' | 'center';
-  returnKeyType?: 'done' | 'next' | 'send' | 'go' | 'search';
-  onSubmitEditing?: () => void;
-  blurOnSubmit?: boolean;
+  variant?: 'outline' | 'rounded' | 'underlined';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  isDisabled?: boolean;
+  isInvalid?: boolean;
+  isReadOnly?: boolean;
 };
 
 export const InputField = ({
@@ -23,87 +21,30 @@ export const InputField = ({
   onChange,
   type = 'text',
   accessibilityLabel,
-  borderWidth = 1,
-  bg = 'white',
-  fontSize = 12,
-  textAlign = 'left',
-  returnKeyType = 'done',
-  onSubmitEditing,
-  blurOnSubmit = true,
+  variant = 'rounded',
+  size = 'md',
+  isDisabled = false,
+  isInvalid = false,
+  isReadOnly = false,
 }: Props) => {
   const isPassword = type === 'password';
-  const keyboardType =
-    type === 'email'
-      ? 'email-address'
-      : type === 'numeric'
-        ? Platform.OS === 'android'
-          ? 'number-pad'
-          : 'numeric'
-        : 'default';
-
-  const handleSubmitEditing = () => {
-    if (onSubmitEditing) {
-      onSubmitEditing();
-    } else {
-      if (type === 'numeric') {
-        Keyboard.dismiss();
-      }
-    }
-  };
-
-  const getAutoComplete = () => {
-    switch (type) {
-      case 'email':
-        return 'email';
-      case 'password':
-        return 'password';
-      default:
-        return undefined;
-    }
-  };
-
-  const getTextContentType = () => {
-    switch (type) {
-      case 'email':
-        return 'emailAddress';
-      case 'password':
-        return 'password';
-      default:
-        return undefined;
-    }
-  };
 
   return (
-    <Box
-      borderWidth={borderWidth}
-      borderColor="coolGray.300"
-      borderRadius="md"
-      bg={bg}
-      p={2}
-      width="100%"
+    <Input
+      variant={variant}
+      size={size}
+      isDisabled={isDisabled}
+      isInvalid={isInvalid}
+      isReadOnly={isReadOnly}
+      height={48}
     >
-      <TextInput
-        style={{
-          fontSize: fontSize,
-          color: 'black',
-          width: '100%',
-          textAlign: textAlign,
-          backgroundColor: bg,
-        }}
+      <GInputField
         placeholder={placeholder}
         value={value !== undefined && value !== null ? String(value) : ''}
         onChangeText={onChange}
         secureTextEntry={isPassword}
-        keyboardType={keyboardType}
-        autoCapitalize={type === 'email' || isPassword ? 'none' : 'sentences'}
         accessibilityLabel={accessibilityLabel || placeholder}
-        textContentType={getTextContentType()}
-        autoComplete={getAutoComplete()}
-        returnKeyType={returnKeyType}
-        onSubmitEditing={handleSubmitEditing}
-        blurOnSubmit={blurOnSubmit}
-        enablesReturnKeyAutomatically={true}
       />
-    </Box>
+    </Input>
   );
 };

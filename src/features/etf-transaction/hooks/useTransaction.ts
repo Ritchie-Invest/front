@@ -1,71 +1,147 @@
-import { useCallback } from 'react';
+import { useState } from 'react';
 import { TransactionServiceAdapter } from '../adapters/TransactionServiceAdapter';
-import { TransactionRequest } from '../models/requests';
-import { TransactionResponse } from '../models/responses';
+import {
+  TransactionApiRequest,
+  PostTransactionApiResponse,
+} from '~/features/etf/models/Transaction';
 import { TransactionType } from '../types/TransactionType';
-import { useConversion } from './useConversion';
-import { useTransactionStore } from '../store/TransactionStore';
+import { useSelectedETF } from '~/features/etf/store/ETFStore';
+import { useRoute, RouteProp } from '@react-navigation/native';
+import { MainStackParamList } from '~/navigation/AppNavigator';
 
-export interface UseTransactionReturn {
-  isLoading: boolean;
-  executeTransaction: (transactionRequest: TransactionRequest) => Promise<TransactionResponse>;
-  handleTransaction: (transactionType: TransactionType) => Promise<TransactionResponse | null>;
-}
+type ETFTransactionRouteProp = RouteProp<MainStackParamList, 'ETFTransaction'>;
 
-export const useTransaction = (): UseTransactionReturn => {
-  const { amount, shares, isValidAmount, selectedETF } = useConversion();
-  const { isLoading, setLoading } = useTransactionStore();
-  const transactionAdapter = new TransactionServiceAdapter();
+type ButtonVariant = 'primary' | 'secondary' | 'disabled';
 
-  const executeTransaction = useCallback(
-    async (transactionRequest: TransactionRequest): Promise<TransactionResponse> => {
-      setLoading(true);
+export const useTransactionForm = () => {
+  const route = useRoute<ETFTransactionRouteProp>();
+  const { transactionType } = route.params;
+  const selectedETF = useSelectedETF();
 
-      try {
-        const response = await transactionAdapter.executeTransaction(transactionRequest);
-        return response;
-      } catch (error) {
-        throw error;
-      } finally {
-        setLoading(false);
-      }
-    },
-    [setLoading],
-  );
+  console.log('useTransactionForm initialized');
+  console.log('Route params:', route.params);
+  console.log('Transaction type:', transactionType);
+  console.log('Selected ETF:', selectedETF);
 
-  const handleTransaction = useCallback(
-    async (transactionType: TransactionType): Promise<TransactionResponse | null> => {
-      if (!selectedETF) {
-        throw new Error('Veuillez sélectionner un ETF');
-      }
+  const [amount, setAmount] = useState<number | null>(null);
+  const { executeTransaction, loading, error, response } = useTransaction();
 
-      if (!amount || amount.trim() === '') {
-        throw new Error('Veuillez saisir un montant');
-      }
+  const handleAmountChange = (value: string) => {
+    console.log('handleAmountChange called with value:', value, 'type:', typeof value);
+    const numericValue = parseFloat(value);
+    console.log('Parsed numeric value:', numericValue, 'isNaN:', isNaN(numericValue));
+    setAmount(isNaN(numericValue) ? null : numericValue);
+    console.log('Amount set to:', isNaN(numericValue) ? null : numericValue);
+  };
 
-      if (!isValidAmount) {
-        throw new Error('Veuillez saisir un montant valide');
-      }
+  const handleSubmit = () => {
+    console.log('handleSubmit called');
+    console.log('Current amount:', amount, 'type:', typeof amount);
+    console.log('Submitting transaction with amount:', amount);
+    const numericAmount = amount;
+    console.log(
+      'numericAmount:',
+      numericAmount,
+      'is valid:',
+      numericAmount !== null && numericAmount > 0,
+    );
+    if (numericAmount === null || numericAmount <= 0) {
+      console.log('Amount is invalid, returning early');
+      return;
+    }
 
-      if (shares <= 0) {
-        throw new Error("Le montant saisi ne permet pas d'acheter de parts");
-      }
+    console.log('Calling executeTransaction with:', numericAmount, transactionType);
+    executeTransaction(numericAmount, transactionType);
+  };
 
-      const transactionRequest: TransactionRequest = {
-        etfID: selectedETF.id,
-        amount: parseFloat(amount),
-        shares,
-        transactionType,
-      };
+  const isBuy = transactionType === TransactionType.BUY;
+  const buttonText = isBuy ? 'Acheter' : 'Vendre';
+  const buttonVariant: ButtonVariant = isBuy ? 'primary' : 'secondary';
+  const isAmountValid = amount !== null && amount > 0;
+  const finalVariant: ButtonVariant = !isAmountValid ? 'disabled' : buttonVariant;
 
-      return await executeTransaction(transactionRequest);
-    },
-    [isValidAmount, selectedETF, shares, amount, executeTransaction],
-  );
+  console.log('Computed values:');
+  console.log('isBuy:', isBuy);
+  console.log('buttonText:', buttonText);
+  console.log('buttonVariant:', buttonVariant);
+  console.log('isAmountValid:', isAmountValid);
+  console.log('finalVariant:', finalVariant);
 
   return {
-    isLoading,
+    amount,
+    setAmount: handleAmountChange,
+    handleSubmit,
+    isBuy,
+    buttonText,
+    buttonVariant,
+    isAmountValid,
+    finalVariant,
+    selectedETF,
+    loading,
+    error,
+    response,
+  };
+};
+
+export const useTransaction = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [response, setResponse] = useState<PostTransactionApiResponse | null>(null);
+  const selectedETF = useSelectedETF();
+
+  const executeTransaction = async (amount: number, transactionType: TransactionType) => {
+    console.log(
+      'executeTransaction called with amount:',
+      amount,
+      'type:',
+      typeof amount,
+      'transactionType:',
+      transactionType,
+    );
+    if (!selectedETF) {
+      console.log('No ETF selected');
+      setError('Aucun ETF sélectionné');
+      return;
+    }
+
+    try {
+      console.log('Starting transaction execution');
+      setLoading(true);
+      setError(null);
+      setResponse(null);
+
+      const request: TransactionApiRequest = {
+        type: transactionType,
+        amount,
+        tickerId: selectedETF.id,
+      };
+      console.log('Request object:', request);
+
+      const adapter = new TransactionServiceAdapter();
+      console.log('Calling adapter.executeTransaction');
+      const result = await adapter.executeTransaction(request);
+      console.log('Transaction result:', result);
+      setResponse(result);
+    } catch (err) {
+      console.log('Transaction error:', err);
+      setError(err instanceof Error ? err.message : 'Une erreur est survenue');
+    } finally {
+      console.log('Transaction execution finished');
+      setLoading(false);
+    }
+  };
+
+  const reset = () => {
+    setError(null);
+    setResponse(null);
+  };
+
+  return {
     executeTransaction,
-    handleTransaction,
+    loading,
+    error,
+    response,
+    reset,
+    selectedETF,
   };
 };

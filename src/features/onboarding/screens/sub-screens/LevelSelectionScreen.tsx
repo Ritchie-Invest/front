@@ -1,10 +1,11 @@
 import React from 'react';
-import { VStack, Text, Spacer } from 'native-base';
+import { VStack, Text, Box } from '@gluestack-ui/themed';
 import { useTranslation } from 'react-i18next';
 import { OnboardingLayout } from '../../components/organisms/OnboardingLayout';
 import { SelectableItem } from '~/components/molecules/components/selectableItem';
 import { Button } from '../../../../components/atoms/Button';
 import { OnboardingLevel } from '../../models/onboarding.types';
+import { colors, spacing, typography } from '~/lib/theme/theme';
 
 interface LevelSelectionScreenProps {
   levels: OnboardingLevel[];
@@ -27,12 +28,16 @@ export const LevelSelectionScreen: React.FC<LevelSelectionScreenProps> = ({
 
   return (
     <OnboardingLayout progress={progress} onBackPress={onBack}>
-      <VStack flex={1} space={6}>
-        <Text fontSize="2xl" fontWeight="bold" color="gray.800">
+      <VStack flex={1} space={spacing.spacingLargeFallback}>
+        <Text
+          fontSize={24}
+          fontWeight={typography.fontWeightBoldFallback}
+          color={colors.primaryTextColor}
+        >
           {t('onboarding.levelSelection.title')}
         </Text>
 
-        <VStack space={3}>
+        <VStack space={spacing.spacingMediumFallback}>
           {levels.map((level) => (
             <SelectableItem
               key={level.id}
@@ -44,13 +49,9 @@ export const LevelSelectionScreen: React.FC<LevelSelectionScreenProps> = ({
           ))}
         </VStack>
 
-        <Spacer />
+        <Box flex={1} />
 
-        <Button
-          onPress={onContinue}
-          variant={selectedLevel ? 'primary' : 'disabled'}
-          isDisabled={!selectedLevel}
-        >
+        <Button onPress={onContinue} variant={selectedLevel ? 'primary' : 'disabled'}>
           {t('onboarding.levelSelection.continueButton')}
         </Button>
       </VStack>

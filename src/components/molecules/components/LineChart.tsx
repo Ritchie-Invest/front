@@ -3,14 +3,15 @@ import { View, Dimensions, Text } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import LineChart from 'react-native-simple-line-chart';
 import { LineChartConfig, LineChartProps } from '../models/LineChart';
+import { borderRadius, colors, paddings, typography } from '~/lib/theme/theme';
 
 const defaultConfig: LineChartConfig = {
   height: 240,
-  lineColor: '#3B82F6',
-  activePointColor: '#3B82F6',
-  backgroundColor: 'transparent',
+  lineColor: colors.primaryActionColor,
+  activePointColor: colors.primaryActionColor,
+  backgroundColor: colors.transparent,
   showVerticalLine: true,
-  verticalLineColor: '#E5E7EB',
+  verticalLineColor: colors.GreyL20,
   endPointRadius: 4,
   animated: true,
 };
@@ -61,8 +62,8 @@ export const LineChartComponent: React.FC<LineChartProps> = memo(
                     <View
                       style={{
                         backgroundColor: chartConfig.activePointColor,
-                        padding: 12,
-                        borderRadius: 8,
+                        padding: paddings.paddingSmall,
+                        borderRadius: borderRadius.borderRadiusSmall,
                         shadowColor: '#000',
                         shadowOffset: { width: 0, height: 2 },
                         shadowOpacity: 0.25,
@@ -70,10 +71,21 @@ export const LineChartComponent: React.FC<LineChartProps> = memo(
                         elevation: 5,
                       }}
                     >
-                      <Text style={{ color: 'white', fontSize: 12, fontWeight: 'bold' }}>
+                      <Text
+                        style={{
+                          color: colors.secondaryTextColor,
+                          fontSize: typography.captionSize,
+                          fontWeight: 'bold',
+                        }}
+                      >
                         {point?.extraData?.formattedValue}
                       </Text>
-                      <Text style={{ color: 'white', fontSize: 10 }}>
+                      <Text
+                        style={{
+                          color: colors.secondaryTextColor,
+                          fontSize: typography.overlineSize,
+                        }}
+                      >
                         {point?.extraData?.formattedTime}
                       </Text>
                     </View>

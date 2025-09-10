@@ -1,4 +1,4 @@
-import { Box } from 'native-base';
+import { Box } from '@gluestack-ui/themed';
 import { RegisterForm } from '../components/RegisterForm';
 
 export const RegisterScreen = ({

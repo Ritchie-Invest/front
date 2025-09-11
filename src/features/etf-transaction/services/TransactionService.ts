@@ -8,15 +8,13 @@ export const TransactionService = {
   executeTransaction: async (
     request: TransactionApiRequest,
   ): Promise<PostTransactionApiResponse> => {
-    console.debug('[TransactionService] executeTransaction called with request:', request);
     try {
       const response = await axiosInstance.post<PostTransactionApiResponse>(
         '/transaction/execute',
         request,
         { withCredentials: true },
       );
-      console.debug('[TransactionService] Response received:', response);
-
+      console.log('API response data:', response.data);
       return response.data;
     } catch (error) {
       console.error('[TransactionService] Error:', error);

@@ -58,7 +58,7 @@ export const UserPossessedETFValues: React.FC = memo(() => {
         fontWeight={typography.fontWeightRegular}
         color={colors.Grey}
       >
-        {shares} parts
+        {shares.toFixed(3)} parts
       </Text>
     </HStack>
   );

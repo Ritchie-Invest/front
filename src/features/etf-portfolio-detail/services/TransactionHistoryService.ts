@@ -7,7 +7,6 @@ export class TransactionHistoryService {
       const response = await axiosInstance.get<{ transactions: GetTransactionsApiResponse[] }>(
         `/transaction/user?limit=${limit || 10}`,
       );
-      console.debug('Fetched transactions:', response.data.transactions);
       return response.data.transactions;
     } catch (error) {
       console.error('Failed to fetch transactions:', error);

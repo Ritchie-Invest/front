@@ -6,8 +6,9 @@ import {
 } from '~/features/etf/models/Transaction';
 import { TransactionType } from '../types/TransactionType';
 import { useSelectedETF } from '~/features/etf/store/ETFStore';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
 import { MainStackParamList } from '~/navigation/AppNavigator';
+import { useTransactionStore } from '../store/TransactionStore';
 
 type ETFTransactionRouteProp = RouteProp<MainStackParamList, 'ETFTransaction'>;
 
@@ -59,20 +60,32 @@ export const useTransactionForm = () => {
 };
 
 export const useTransaction = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [response, setResponse] = useState<PostTransactionApiResponse | null>(null);
+  const [localError, setLocalError] = useState<string | null>(null);
   const selectedETF = useSelectedETF();
+  const navigation = useNavigation();
+  const {
+    isLoading,
+    setLoading,
+    error,
+    setError,
+    response,
+    setResponse,
+    resetResponse,
+    clearTransaction,
+  } = useTransactionStore();
 
   const executeTransaction = async (amount: number, transactionType: TransactionType) => {
     if (!selectedETF) {
-      setError('Aucun ETF sélectionné');
+      const err = 'Aucun ETF sélectionné';
+      setError(err);
+      setLocalError(err);
       return;
     }
 
     try {
       setLoading(true);
       setError(null);
+      setLocalError(null);
       setResponse(null);
 
       const request: TransactionApiRequest = {
@@ -83,25 +96,34 @@ export const useTransaction = () => {
 
       const adapter = new TransactionServiceAdapter();
       const result = await adapter.executeTransaction(request);
+      console.log('Transaction result:', result);
       setResponse(result);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Une erreur est survenue');
+      const errorMsg = err instanceof Error ? err.message : 'Une erreur est survenue';
+      setError(errorMsg);
+      setLocalError(errorMsg);
     } finally {
       setLoading(false);
     }
   };
 
   const reset = () => {
-    setError(null);
-    setResponse(null);
+    resetResponse();
+    setLocalError(null);
+  };
+
+  const goToInvestmentDashboard = () => {
+    clearTransaction();
+    navigation.navigate('Dashboard' as never);
   };
 
   return {
     executeTransaction,
-    loading,
-    error,
+    loading: isLoading,
+    error: error || localError,
     response,
     reset,
     selectedETF,
+    goToInvestmentDashboard,
   };
 };

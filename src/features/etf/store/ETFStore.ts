@@ -20,7 +20,8 @@ interface ETFStoreState {
 }
 
 export const useETFStore = create<ETFStoreState>()(
-  subscribeWithSelector((set) => ({
+  // @ts-ignore
+  subscribeWithSelector((set, get) => ({
     selectedETF: null,
     selectedRange: DateRangeType.SevenDays,
 

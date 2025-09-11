@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, VStack, HStack, Text, KeyboardAvoidingView } from '@gluestack-ui/themed';
+import { Box, VStack, HStack, Text } from '@gluestack-ui/themed';
 import { useTransactionForm } from '../hooks/useTransaction';
 import { InputField } from '~/components/atoms/InputField';
 import { Button } from '~/components/atoms/Button';

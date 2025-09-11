@@ -1,10 +1,10 @@
-import { UserPossessedETF } from '../models/UserPossessedETF';
+import { UserPossessedETFValues } from '../models/UserPossessedETF';
 import { axiosInstance } from '~/lib/api/axios';
 
 export const UserPossessedETFService = {
-  getUserPossessedETF: async (tickerId: string): Promise<UserPossessedETF> => {
+  getUserPossessedETF: async (tickerId: string): Promise<UserPossessedETFValues> => {
     try {
-      const response = await axiosInstance.get<UserPossessedETF>(
+      const response = await axiosInstance.get<UserPossessedETFValues>(
         `/tickers/${tickerId}/possessed-value`,
       );
 

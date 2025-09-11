@@ -23,7 +23,7 @@ export const UserPossessedETFValues: React.FC = memo(() => {
           Erreur lors du chargement de la valeur possédée de l'ETF.
           {error && (
             <Text color={colors.errorColor} fontSize={typography.bodySize}>
-              Détails: {error.message}
+              Détails: {error.message} valeur shares : {shares} valeur amount : {amount}
             </Text>
           )}
         </Text>

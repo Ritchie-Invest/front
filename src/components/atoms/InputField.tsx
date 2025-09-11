@@ -28,6 +28,17 @@ export const InputField = ({
   isReadOnly = false,
 }: Props) => {
   const isPassword = type === 'password';
+  const isNumeric = type === 'numeric';
+
+  const handleChangeText = (text: string) => {
+    if (isNumeric) {
+      // Allow only numeric characters, decimal point, and minus sign
+      const numericText = text.replace(/[^0-9.-]/g, '');
+      onChange(numericText);
+    } else {
+      onChange(text);
+    }
+  };
 
   return (
     <Input
@@ -43,8 +54,9 @@ export const InputField = ({
         placeholder={placeholder}
         fontSize={variant === 'underlined' ? typography.transactionInputSize : typography.bodySize}
         value={value !== undefined && value !== null ? String(value) : ''}
-        onChangeText={onChange}
+        onChangeText={handleChangeText}
         secureTextEntry={isPassword}
+        keyboardType={isNumeric ? 'numeric' : 'default'}
         accessibilityLabel={accessibilityLabel || placeholder}
       />
     </Input>

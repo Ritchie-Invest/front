@@ -1,10 +1,10 @@
 import { UserPossessedETFServiceContract } from '../contracts/UserPossessedETFServiceContract';
 import { UserPossessedETFService } from '../services/UserPossessedETFService';
-import { UserPossessedETF } from '../models/UserPossessedETF';
+import { UserPossessedETFValues } from '../models/UserPossessedETF';
 import { validateUserPossessedETF } from '../validation/UserPossessedETFValidation';
 
 export class UserPossessedETFServiceAdapter implements UserPossessedETFServiceContract {
-  async getUserPossessedETF(tickerId: string): Promise<UserPossessedETF[]> {
+  async getUserPossessedETF(tickerId: string): Promise<UserPossessedETFValues[]> {
     const userPossessedETF = await UserPossessedETFService.getUserPossessedETF(tickerId);
 
     if (!validateUserPossessedETF(userPossessedETF)) {

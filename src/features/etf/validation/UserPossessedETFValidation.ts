@@ -1,4 +1,4 @@
-import { UserPossessedETF } from '../models/UserPossessedETF';
+import { UserPossessedETFValues } from '../models/UserPossessedETF';
 
 export const USER_POSSESSED_ETF_VALIDATION_RULES = {
   SHARES: {
@@ -40,7 +40,12 @@ export const validateNumberField = (
   return true;
 };
 
-export const validateUserPossessedETF = (etf: UserPossessedETF): boolean => {
+export const validateUserPossessedETF = (etf: UserPossessedETFValues): boolean => {
+  if (!etf || typeof etf !== 'object') {
+    console.error('UserPossessedETF validation failed: not an object', etf);
+    return false;
+  }
+
   const validations = {
     shares: validateNumberField(etf.shares, USER_POSSESSED_ETF_VALIDATION_RULES.SHARES),
     amount: validateNumberField(etf.amount, USER_POSSESSED_ETF_VALIDATION_RULES.AMOUNT),

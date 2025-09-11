@@ -7,6 +7,7 @@ import { useTransactionStore } from '../store/TransactionStore';
 import { ETFDetails } from '~/features/etf/components/ETFDetails';
 import { colors, paddings, spacing } from '~/lib/theme/theme';
 import { TransactionForm } from '../components/TransactionForm';
+import { ScrollView } from 'react-native-gesture-handler';
 
 type ETFTransactionScreenRouteProp = RouteProp<MainStackParamList, 'ETFTransaction'>;
 
@@ -14,11 +15,15 @@ export const ETFTransactionScreen: React.FC = () => {
   const route = useRoute<ETFTransactionScreenRouteProp>();
 
   return (
-    <Box flex={1} bg={colors.mainBackgroundColor}>
-      <VStack space={spacing.spacingMediumFallback} p={paddings.paddingLarge}>
+    <Box height="100%" flex={1} bg={colors.mainBackgroundColor} p={paddings.paddingLarge}>
+      <ScrollView
+        keyboardShouldPersistTaps="always"
+        contentContainerStyle={{ flexGrow: 1 }}
+        showsVerticalScrollIndicator={false}
+      >
         <ETFDetails />
         <TransactionForm />
-      </VStack>
+      </ScrollView>
     </Box>
   );
 };

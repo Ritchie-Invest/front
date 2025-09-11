@@ -9,19 +9,11 @@ export const TransactionService = {
     request: TransactionApiRequest,
   ): Promise<PostTransactionApiResponse> => {
     try {
-      console.log('TransactionService.executeTransaction called');
-      console.log('Request object:', JSON.stringify(request, null, 2));
-      console.log('Request amount type:', typeof request.amount);
-      console.log('Request amount value:', request.amount);
-
       const response = await axiosInstance.post<PostTransactionApiResponse>(
         '/transaction/execute',
         request,
         { withCredentials: true },
       );
-
-      console.log('API Response status:', response.status);
-      console.log('API Response data:', response.data);
 
       return response.data;
     } catch (error) {

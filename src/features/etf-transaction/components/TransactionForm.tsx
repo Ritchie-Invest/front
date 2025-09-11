@@ -3,27 +3,15 @@ import { Box, VStack, HStack, Text, KeyboardAvoidingView } from '@gluestack-ui/t
 import { useTransactionForm } from '../hooks/useTransaction';
 import { InputField } from '~/components/atoms/InputField';
 import { Button } from '~/components/atoms/Button';
-import { ResponseMessage } from './ResponseMessage';
-import { colors, spacing } from '~/lib/theme/theme';
-import { Platform } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { colors, spacing, typography } from '~/lib/theme/theme';
 
 export const TransactionForm: React.FC = () => {
-  const {
-    amount,
-    setAmount,
-    handleSubmit,
-    buttonText,
-    finalVariant,
-    selectedETF,
-    loading,
-    error,
-    response,
-  } = useTransactionForm();
+  const { amount, setAmount, handleSubmit, buttonText, finalVariant, selectedETF, loading } =
+    useTransactionForm();
 
   if (!selectedETF) {
     return (
-      <Box mt="$6">
+      <Box mt="$6" bg={colors.errorBackgroundColor}>
         <Text color={colors.errorColor} textAlign="center">
           Aucun ETF sélectionné
         </Text>
@@ -31,49 +19,33 @@ export const TransactionForm: React.FC = () => {
     );
   } else {
     return (
-      <>
-        {response ? (
-          <ResponseMessage response={response} error={error} />
-        ) : (
-          <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-            style={{ flex: 1 }}
-            keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0}
-          >
-            <ScrollView
-              keyboardShouldPersistTaps="always"
-              contentContainerStyle={{ flexGrow: 1 }}
-              showsVerticalScrollIndicator={false}
-            >
-              <VStack space={spacing.spacingLargeFallback} mt="$6">
-                <HStack
-                  alignItems="center"
-                  justifyContent="center"
-                  space={spacing.spacingMediumFallback}
-                >
-                  <Box>
-                    <InputField
-                      placeholder="0"
-                      value={amount ?? ''}
-                      onChange={setAmount}
-                      variant="underlined"
-                      type="numeric"
-                      accessibilityLabel="Montant en euros"
-                    />
-                  </Box>
-                  <Text fontSize={40} fontWeight="bold" color="black">
-                    €
-                  </Text>
-                </HStack>
-                <Button onPress={handleSubmit} variant={finalVariant} isLoading={loading}>
-                  {buttonText}
-                </Button>
-                <ResponseMessage response={response} error={error} />
-              </VStack>
-            </ScrollView>
-          </KeyboardAvoidingView>
-        )}
-      </>
+      <VStack
+        space={spacing.spacingLargeFallback}
+        mt={200}
+        height={400}
+        justifyContent="space-between"
+      >
+        <Box flex={1} justifyContent="space-between">
+          <HStack alignItems="center" justifyContent="center" space={spacing.spacingMediumFallback}>
+            <Box width="15%">
+              <InputField
+                placeholder=""
+                value={amount ?? ''}
+                onChange={setAmount}
+                variant="underlined"
+                type="numeric"
+                accessibilityLabel="Montant en euros"
+              />
+            </Box>
+            <Text fontSize={typography.transactionInputSize} fontWeight="bold" color="black">
+              €
+            </Text>
+          </HStack>
+          <Button onPress={handleSubmit} variant={finalVariant} isLoading={loading}>
+            {buttonText}
+          </Button>
+        </Box>
+      </VStack>
     );
   }
 };

@@ -18,39 +18,21 @@ export const useTransactionForm = () => {
   const { transactionType } = route.params;
   const selectedETF = useSelectedETF();
 
-  console.log('useTransactionForm initialized');
-  console.log('Route params:', route.params);
-  console.log('Transaction type:', transactionType);
-  console.log('Selected ETF:', selectedETF);
-
   const [amount, setAmount] = useState<number | null>(null);
   const { executeTransaction, loading, error, response } = useTransaction();
 
   const handleAmountChange = (value: string) => {
-    console.log('handleAmountChange called with value:', value, 'type:', typeof value);
     const numericValue = parseFloat(value);
-    console.log('Parsed numeric value:', numericValue, 'isNaN:', isNaN(numericValue));
     setAmount(isNaN(numericValue) ? null : numericValue);
-    console.log('Amount set to:', isNaN(numericValue) ? null : numericValue);
   };
 
   const handleSubmit = () => {
-    console.log('handleSubmit called');
-    console.log('Current amount:', amount, 'type:', typeof amount);
-    console.log('Submitting transaction with amount:', amount);
     const numericAmount = amount;
-    console.log(
-      'numericAmount:',
-      numericAmount,
-      'is valid:',
-      numericAmount !== null && numericAmount > 0,
-    );
+
     if (numericAmount === null || numericAmount <= 0) {
-      console.log('Amount is invalid, returning early');
       return;
     }
 
-    console.log('Calling executeTransaction with:', numericAmount, transactionType);
     executeTransaction(numericAmount, transactionType);
   };
 
@@ -59,13 +41,6 @@ export const useTransactionForm = () => {
   const buttonVariant: ButtonVariant = isBuy ? 'primary' : 'secondary';
   const isAmountValid = amount !== null && amount > 0;
   const finalVariant: ButtonVariant = !isAmountValid ? 'disabled' : buttonVariant;
-
-  console.log('Computed values:');
-  console.log('isBuy:', isBuy);
-  console.log('buttonText:', buttonText);
-  console.log('buttonVariant:', buttonVariant);
-  console.log('isAmountValid:', isAmountValid);
-  console.log('finalVariant:', finalVariant);
 
   return {
     amount,
@@ -90,22 +65,12 @@ export const useTransaction = () => {
   const selectedETF = useSelectedETF();
 
   const executeTransaction = async (amount: number, transactionType: TransactionType) => {
-    console.log(
-      'executeTransaction called with amount:',
-      amount,
-      'type:',
-      typeof amount,
-      'transactionType:',
-      transactionType,
-    );
     if (!selectedETF) {
-      console.log('No ETF selected');
       setError('Aucun ETF sélectionné');
       return;
     }
 
     try {
-      console.log('Starting transaction execution');
       setLoading(true);
       setError(null);
       setResponse(null);
@@ -115,18 +80,13 @@ export const useTransaction = () => {
         amount,
         tickerId: selectedETF.id,
       };
-      console.log('Request object:', request);
 
       const adapter = new TransactionServiceAdapter();
-      console.log('Calling adapter.executeTransaction');
       const result = await adapter.executeTransaction(request);
-      console.log('Transaction result:', result);
       setResponse(result);
     } catch (err) {
-      console.log('Transaction error:', err);
       setError(err instanceof Error ? err.message : 'Une erreur est survenue');
     } finally {
-      console.log('Transaction execution finished');
       setLoading(false);
     }
   };

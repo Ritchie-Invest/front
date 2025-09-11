@@ -33,6 +33,8 @@ const typography = {
   bodyLargeSize: 18,
   bodyLargeLineHeight: 28,
 
+  transactionInputSize: 35,
+
   bodySize: 16,
   bodySizeFallback: 'md' as const,
   bodyLineHeight: 24,

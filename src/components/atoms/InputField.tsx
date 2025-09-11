@@ -1,6 +1,6 @@
 import React from 'react';
 import { Input, InputField as GInputField } from '@gluestack-ui/themed';
-import { colors, paddings } from '../../lib/theme/theme';
+import { colors, paddings, typography } from '../../lib/theme/theme';
 
 type Props = {
   placeholder: string;
@@ -37,9 +37,11 @@ export const InputField = ({
       isInvalid={isInvalid}
       isReadOnly={isReadOnly}
       height={48}
+      width="100%"
     >
       <GInputField
         placeholder={placeholder}
+        fontSize={variant === 'underlined' ? typography.transactionInputSize : typography.bodySize}
         value={value !== undefined && value !== null ? String(value) : ''}
         onChangeText={onChange}
         secureTextEntry={isPassword}

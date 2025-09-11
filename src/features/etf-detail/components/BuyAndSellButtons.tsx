@@ -1,12 +1,12 @@
 import React from 'react';
-import { HStack } from '@gluestack-ui/themed';
+import { Center, HStack } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { MainStackParamList } from '../../../navigation/AppNavigator';
 import { Button } from '../../../components/atoms/Button';
 import { TransactionType } from '../../etf-transaction/types/TransactionType';
 import { useETFStore } from '~/features/etf/store/ETFStore';
-import { spacing } from '~/lib/theme/theme';
+import { paddings, spacing } from '~/lib/theme/theme';
 
 type NavigationProp = NativeStackNavigationProp<MainStackParamList>;
 
@@ -31,13 +31,15 @@ export const BuyAndSellButtons: React.FC = () => {
   }
 
   return (
-    <HStack space={spacing.spacingLargeFallback} width="100%">
-      <Button onPress={handleBuyPress} variant="primary">
-        Acheter
-      </Button>
-      <Button onPress={handleSellPress} variant="outline">
-        Vendre
-      </Button>
+    <HStack space={spacing.spacingLargeFallback} width="100%" padding={paddings.paddingMedium}>
+      <Center width="50%">
+        <Button onPress={handleBuyPress}>Acheter</Button>
+      </Center>
+      <Center width="50%">
+        <Button onPress={handleSellPress} variant="secondary">
+          Vendre
+        </Button>
+      </Center>
     </HStack>
   );
 };

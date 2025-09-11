@@ -74,8 +74,6 @@ export const LineChartContainer = memo(
     return (
       <Box
         {...containerStyle}
-        bg={colors.mainBackgroundColor}
-        flex={1}
         justifyContent="center"
         alignItems="center"
         p={paddings.paddingMedium}

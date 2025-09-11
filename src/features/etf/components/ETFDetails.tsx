@@ -4,6 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { formatCurrency } from '~/utils/formatCurrency';
 import { colors, margins, paddings, spacing, typography } from '~/lib/theme/theme';
 import { useETFDetails } from '~/features/etf/hooks/useETFDetails';
+import { UserPossessedETFValues } from './UserPossessedETF';
 
 export const ETFDetails: React.FC = memo(() => {
   const {
@@ -35,50 +36,61 @@ export const ETFDetails: React.FC = memo(() => {
   }
 
   return (
-    <HStack justifyContent="space-between" alignItems="flex-start">
-      <VStack
-        space={spacing.spacingMediumFallback}
-        alignItems="flex-start"
-        justifyContent="space-between"
-      >
-        <Text fontSize={typography.heading1Size} fontWeight="bold" color={colors.primaryTextColor}>
-          {etf.ticker}
-        </Text>
-        <Text fontSize={typography.heading3Size} color={colors.primaryTextColor} numberOfLines={2}>
-          {etf.name}
-        </Text>
-      </VStack>
-      <VStack
-        space={spacing.spacingSmallFallback}
-        alignItems="flex-end"
-        justifyContent="space-between"
-      >
-        <Text
-          textAlign="right"
-          fontSize={typography.heading2Size}
-          fontWeight="bold"
-          color={colors.primaryTextColor}
+    <VStack space={spacing.spacingLargeFallback} width="100%">
+      <HStack justifyContent="space-between" alignItems="flex-start">
+        <VStack
+          space={spacing.spacingMediumFallback}
+          alignItems="flex-start"
+          justifyContent="space-between"
         >
-          {formatCurrency(etf.currentPrice)}
-        </Text>
-        {variationPercent !== undefined && variation !== undefined && (
-          <HStack alignItems="center" space={spacing.spacingOneFallback}>
-            <MaterialIcons
-              name={isPositive ? 'trending-up' : 'trending-down'}
-              size={typography.bodySize}
-              color={isPositive ? colors.successColor : colors.errorColor}
-            />
+          <Text
+            fontSize={typography.heading1Size}
+            fontWeight="bold"
+            color={colors.primaryTextColor}
+          >
+            {etf.ticker}
+          </Text>
+          <Text
+            fontSize={typography.heading3Size}
+            color={colors.primaryTextColor}
+            numberOfLines={2}
+          >
+            {etf.name}
+          </Text>
+        </VStack>
+        <VStack
+          space={spacing.spacingSmallFallback}
+          alignItems="flex-end"
+          justifyContent="space-between"
+        >
+          <Text
+            textAlign="right"
+            fontSize={typography.heading2Size}
+            fontWeight="bold"
+            color={colors.primaryTextColor}
+          >
+            {formatCurrency(etf.currentPrice)}
+          </Text>
+          {variationPercent !== undefined && variation !== undefined && (
+            <HStack alignItems="center" space={spacing.spacingOneFallback}>
+              <MaterialIcons
+                name={isPositive ? 'trending-up' : 'trending-down'}
+                size={typography.bodySize}
+                color={isPositive ? colors.successColor : colors.errorColor}
+              />
 
-            <Text
-              fontSize={typography.bodySize}
-              fontWeight={typography.fontWeightMedium}
-              color={isPositive ? colors.successColor : colors.errorColor}
-            >
-              {formatCurrency(Math.abs(variation))} ({Math.abs(variationPercent).toFixed(2)}%)
-            </Text>
-          </HStack>
-        )}
-      </VStack>
-    </HStack>
+              <Text
+                fontSize={typography.bodySize}
+                fontWeight={typography.fontWeightMedium}
+                color={isPositive ? colors.successColor : colors.errorColor}
+              >
+                {formatCurrency(Math.abs(variation))} ({Math.abs(variationPercent).toFixed(2)}%)
+              </Text>
+            </HStack>
+          )}
+        </VStack>
+      </HStack>
+      <UserPossessedETFValues />
+    </VStack>
   );
 });

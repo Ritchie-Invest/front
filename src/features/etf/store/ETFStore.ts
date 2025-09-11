@@ -7,6 +7,8 @@ export interface ETFSelectedData {
   ticker: string;
   name: string;
   currentPrice: number;
+  userShares?: number;
+  userAmount?: number;
 }
 
 interface ETFStoreState {

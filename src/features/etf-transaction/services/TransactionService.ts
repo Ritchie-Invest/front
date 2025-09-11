@@ -8,20 +8,22 @@ export const TransactionService = {
   executeTransaction: async (
     request: TransactionApiRequest,
   ): Promise<PostTransactionApiResponse> => {
+    console.debug('[TransactionService] executeTransaction called with request:', request);
     try {
       const response = await axiosInstance.post<PostTransactionApiResponse>(
         '/transaction/execute',
         request,
         { withCredentials: true },
       );
+      console.debug('[TransactionService] Response received:', response);
 
       return response.data;
     } catch (error) {
-      console.error('TransactionService error:', error);
+      console.error('[TransactionService] Error:', error);
       if (error && typeof error === 'object' && 'response' in error) {
         const axiosError = error as any;
-        console.error('Error response:', axiosError.response?.data);
-        console.error('Error status:', axiosError.response?.status);
+        console.error('[TransactionService] Error response:', axiosError.response?.data);
+        console.error('[TransactionService] Error status:', axiosError.response?.status);
       }
       throw new Error('Failed to execute transaction');
     }

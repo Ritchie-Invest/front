@@ -63,7 +63,6 @@ export const useUserPossessedETF = () => {
                 hasUpdatedStore.current = true;
               }
             }
-            console.log('Fetched possessed ETF data:', data); // Debug log
             setLoading(false);
           })
           .catch((err) => {

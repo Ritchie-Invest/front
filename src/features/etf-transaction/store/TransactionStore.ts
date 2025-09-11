@@ -18,7 +18,7 @@ type PersistedTransactionState = Pick<TransactionState, 'amount' | 'shares'>;
 
 const zustandStorage = createJSONStorage<PersistedTransactionState>(() => AsyncStorage);
 
-export const useTransactionStore = create<TransactionState>()(
+export const useTransactionHistorytore = create<TransactionState>()(
   persist(
     (set) => ({
       amount: '',

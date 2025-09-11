@@ -1,11 +1,13 @@
-import { TransactionApiResponse } from '~/features/etf/models/Transaction';
+import { GetTransactionsApiResponse } from '~/features/etf/models/Transaction';
 import { TransactionType } from '~/features/etf/types/TransactionType';
 
 export const validateTransactionType = (type: unknown): type is TransactionType => {
-  return typeof type === 'string' && (type === 'buy' || type === 'sell');
+  return typeof type === 'string' && (type === 'BUY' || type === 'SELL');
 };
 
-export const validateTransactionApiResponse = (data: unknown): data is TransactionApiResponse => {
+export const validateTransactionApiResponse = (
+  data: unknown,
+): data is GetTransactionsApiResponse => {
   if (!data || typeof data !== 'object') return false;
   const trans = data as any;
   return (
@@ -20,7 +22,7 @@ export const validateTransactionApiResponse = (data: unknown): data is Transacti
 
 export const validateTransactionApiResponses = (
   data: unknown,
-): data is TransactionApiResponse[] => {
+): data is GetTransactionsApiResponse[] => {
   if (!Array.isArray(data)) return false;
   return data.every(validateTransactionApiResponse);
 };

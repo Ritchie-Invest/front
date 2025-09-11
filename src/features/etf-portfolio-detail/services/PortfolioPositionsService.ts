@@ -7,9 +7,7 @@ export class PortfolioPositionsService {
     try {
       const dateRangeOption = DATE_RANGE_OPTIONS.find((option) => option.value === dateRange);
       const limit = dateRangeOption?.days ?? 30;
-
       const response = await axiosInstance.get<ApiResponse>(`/portfolio/positions?limit=${limit}`);
-
       return response.data;
     } catch (error) {
       console.error('Failed to fetch portfolio positions:', error);

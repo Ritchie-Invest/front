@@ -66,7 +66,7 @@ export const Button = ({ children, onPress, isLoading, variant = 'primary', ...r
     >
       {isLoading && <ButtonSpinner mr="$1" />}
       <ButtonText
-        color={variant === 'secondary' ? colors.primaryActionColor : colors.mainBackgroundColor}
+        color={variant === 'primary' ? colors.mainBackgroundColor : colors.primaryActionColor}
       >
         {children}
       </ButtonText>

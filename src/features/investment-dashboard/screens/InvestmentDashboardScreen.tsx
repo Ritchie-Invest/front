@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Text, VStack } from '@gluestack-ui/themed';
+import { ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { MainStackParamList } from '~/navigation/AppNavigator';
@@ -31,16 +32,18 @@ export const InvestmentDashboardScreen: React.FC = () => {
   }
 
   return (
-    <VStack flex={1} bg={colors.mainBackgroundColor} space={spacing.spacingMediumFallback}>
-      <Box>
-        <PortfolioPie onPress={handlePortfolioPress} />
-      </Box>
-      <Box>
-        <UserETFList />
-      </Box>
-      <Box flex={1} backgroundColor={colors.alternativeBackgroundColor}>
-        <ETFList />
-      </Box>
-    </VStack>
+    <ScrollView style={{ flex: 1, backgroundColor: colors.mainBackgroundColor }}>
+      <VStack bg={colors.mainBackgroundColor} space={spacing.spacingMediumFallback}>
+        <Box>
+          <PortfolioPie onPress={handlePortfolioPress} />
+        </Box>
+        <Box>
+          <UserETFList />
+        </Box>
+        <Box flex={1} backgroundColor={colors.alternativeBackgroundColor}>
+          <ETFList />
+        </Box>
+      </VStack>
+    </ScrollView>
   );
 };

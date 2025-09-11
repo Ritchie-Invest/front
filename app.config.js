@@ -39,6 +39,7 @@ export default {
     experiments: {
       webBundler: "metro",
     },
+    plugins: ["expo-localization"],
     extra: {
       API_URL: process.env.API_URL,
       SSO_LOGIN_ENABLED: process.env.SSO_LOGIN_ENABLED,

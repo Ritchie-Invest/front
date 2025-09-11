@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo } from 'react';
 import { ConversionServiceAdapter } from '../adapters/ConversionServiceAdapter';
 import { useETFStore } from '~/features/etf/store/ETFStore';
-import { useTransactionStore } from '../store/TransactionStore';
+import { useTransactionHistorytore } from '../store/TransactionStore';
 
 export interface UseConversionReturn {
   amount: string;
@@ -14,7 +14,7 @@ export interface UseConversionReturn {
 
 export const useConversion = (): UseConversionReturn => {
   const selectedETF = useETFStore((state) => state.selectedETF);
-  const { amount, shares, setAmount: setStoreAmount, setShares } = useTransactionStore();
+  const { amount, shares, setAmount: setStoreAmount, setShares } = useTransactionHistorytore();
   const conversionAdapter = new ConversionServiceAdapter();
 
   const setAmount = useCallback(

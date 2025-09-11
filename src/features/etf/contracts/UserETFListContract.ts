@@ -1,9 +1,9 @@
-import { UserPossessedETF } from '~/features/etf/models/UserPossessedETF';
+import { UserPossessedETFListItem } from '~/features/etf/models/UserPossessedETF';
 
 export interface UserETFListContract {
-  getAllUserETFs(): Promise<UserPossessedETF[]>;
+  getAllUserETFs(): Promise<UserPossessedETFListItem[]>;
 }
 
 export interface UserETFListProvider {
-  (): Promise<UserPossessedETF[]>;
+  (): Promise<UserPossessedETFListItem[]>;
 }

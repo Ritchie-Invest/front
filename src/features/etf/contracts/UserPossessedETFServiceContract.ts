@@ -1,9 +1,9 @@
-import { UserPossessedETF } from '../models/UserPossessedETF';
+import { UserPossessedETFValues } from '../models/UserPossessedETF';
 
 export interface UserPossessedETFServiceContract {
-  getUserPossessedETF(tickerId: string): Promise<UserPossessedETF[]>;
+  getUserPossessedETF(tickerId: string): Promise<UserPossessedETFValues[]>;
 }
 
 export interface UserPossessedETFProvider {
-  (tickerId: string): Promise<UserPossessedETF[]>;
+  (tickerId: string): Promise<UserPossessedETFValues[]>;
 }

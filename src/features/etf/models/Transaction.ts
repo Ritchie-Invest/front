@@ -3,6 +3,7 @@ import { TransactionType } from '../types/TransactionType';
 export interface Transaction {
   type: TransactionType;
   amount: number;
+  volume?: number;
 }
 
 export interface TransactionApiRequest extends Transaction {

@@ -6,8 +6,16 @@ import { Button } from '~/components/atoms/Button';
 import { colors, spacing, typography } from '~/lib/theme/theme';
 
 export const TransactionForm: React.FC = () => {
-  const { amount, setAmount, handleSubmit, buttonText, finalVariant, selectedETF, loading } =
-    useTransactionForm();
+  const {
+    amount,
+    setAmount,
+    handleSubmit,
+    buttonText,
+    finalVariant,
+    selectedETF,
+    loading,
+    shares,
+  } = useTransactionForm();
 
   if (!selectedETF) {
     return (
@@ -41,6 +49,11 @@ export const TransactionForm: React.FC = () => {
               €
             </Text>
           </HStack>
+          {amount && amount > 0 && (
+            <Text textAlign="center" color={colors.GreyL30} fontSize={typography.bodySize}>
+              {shares} parts
+            </Text>
+          )}
           <Button onPress={handleSubmit} variant={finalVariant} isLoading={loading}>
             {buttonText}
           </Button>

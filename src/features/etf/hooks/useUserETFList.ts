@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { UserPossessedETF } from '~/features/etf/models/UserPossessedETF';
+import { UserPossessedETFListItem } from '../models/UserPossessedETF';
 import { UserETFListContract } from '../contracts/UserETFListContract';
 import { UserETFListServiceAdapter } from '../adapters/UserETFListServiceAdapter';
 
 export const useUserETFList = (
   dataService: UserETFListContract = new UserETFListServiceAdapter(),
 ) => {
-  const [etfs, setETFs] = useState<UserPossessedETF[]>([]);
+  const [etfs, setETFs] = useState<UserPossessedETFListItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 

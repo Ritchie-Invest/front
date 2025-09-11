@@ -1,14 +1,12 @@
 import { useState } from 'react';
 import { TransactionServiceAdapter } from '../adapters/TransactionServiceAdapter';
-import {
-  TransactionApiRequest,
-  PostTransactionApiResponse,
-} from '~/features/etf/models/Transaction';
+import { TransactionApiRequest } from '~/features/etf/models/Transaction';
 import { TransactionType } from '../types/TransactionType';
 import { useSelectedETF } from '~/features/etf/store/ETFStore';
 import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
 import { MainStackParamList } from '~/navigation/AppNavigator';
 import { useTransactionStore } from '../store/TransactionStore';
+import { useConversion } from './useConversion';
 
 type ETFTransactionRouteProp = RouteProp<MainStackParamList, 'ETFTransaction'>;
 
@@ -21,6 +19,7 @@ export const useTransactionForm = () => {
 
   const [amount, setAmount] = useState<number | null>(null);
   const { executeTransaction, loading, error, response } = useTransaction();
+  const { shares, isValidAmount: conversionValid } = useConversion(amount || 0);
 
   const handleAmountChange = (value: string) => {
     const numericValue = parseFloat(value);
@@ -56,6 +55,7 @@ export const useTransactionForm = () => {
     loading,
     error,
     response,
+    shares,
   };
 };
 

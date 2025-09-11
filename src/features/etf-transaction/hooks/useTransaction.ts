@@ -114,7 +114,7 @@ export const useTransaction = () => {
 
   const goToInvestmentDashboard = () => {
     clearTransaction();
-    navigation.navigate('Dashboard' as never);
+    navigation.navigate('InvestmentDashboard' as never);
   };
 
   return {

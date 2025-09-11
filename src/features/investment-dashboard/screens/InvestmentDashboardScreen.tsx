@@ -7,6 +7,7 @@ import { PortfolioPie } from '~/features/etf-portfolio/components/PortfolioPie';
 import { usePortfolio } from '~/features/etf-portfolio/hooks/usePortfolio';
 import { ETFList } from '../components/ETFList';
 import { colors, margins, paddings, spacing } from '~/lib/theme/theme';
+import { UserETFList } from '../components/UserETFList';
 
 export const InvestmentDashboardScreen: React.FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<MainStackParamList>>();
@@ -33,6 +34,9 @@ export const InvestmentDashboardScreen: React.FC = () => {
     <VStack flex={1} bg={colors.mainBackgroundColor} space={spacing.spacingMediumFallback}>
       <Box>
         <PortfolioPie onPress={handlePortfolioPress} />
+      </Box>
+      <Box>
+        <UserETFList />
       </Box>
       <Box flex={1} backgroundColor={colors.alternativeBackgroundColor}>
         <ETFList />

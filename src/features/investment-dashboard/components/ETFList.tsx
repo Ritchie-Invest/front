@@ -5,16 +5,17 @@ import { formatCurrency } from '../../../utils/formatCurrency';
 import { List } from '../../../components/organisms/components/list';
 import { colors, margins, spacing, typography } from '~/lib/theme/theme';
 import { useETFList } from '../hooks/useETFList';
+import { ETF } from '~/features/etf/models/ETF';
 
 export const ETFList: React.FC = () => {
-  const { etfs, loading, error, formatPercentage, isGaining, handleETFPress } = useETFList();
+  const { etfs, loading, error, isGaining, handleETFPress } = useETFList();
 
   return (
     <List
       data={etfs}
       loading={loading}
       title="ETF Disponibles"
-      renderLeft={(etf) => (
+      renderLeft={(etf: ETF) => (
         <>
           <HStack
             alignItems="center"
@@ -34,7 +35,7 @@ export const ETFList: React.FC = () => {
           </Text>
         </>
       )}
-      renderRight={(etf) => (
+      renderRight={(etf: ETF) => (
         <>
           <Text fontSize={18} fontWeight="semibold" color="$black">
             {formatCurrency(etf.price)}
@@ -50,7 +51,7 @@ export const ETFList: React.FC = () => {
               fontWeight={typography.fontWeightMedium}
               color={isGaining(etf) ? colors.successColor : colors.errorColor}
             >
-              {formatPercentage(etf.variationPercent)}
+              {`${etf.variationPercent >= 0 ? '+' : ''}${etf.variationPercent.toFixed(2)}%`}
             </Text>
           </HStack>
         </>

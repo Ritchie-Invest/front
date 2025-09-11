@@ -3,6 +3,7 @@ import './i18n';
 import { GluestackUIProvider } from '@gluestack-ui/themed';
 import { customConfig } from './lib/theme/theme';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { AppNavigator } from './navigation/AppNavigator';
 import { useAuthStore } from './features/auth/store/authStore';
 
@@ -49,19 +50,21 @@ export default function App() {
   };
 
   return (
-    <GluestackUIProvider config={customConfig}>
-      <QueryClientProvider client={queryClient}>
-        <AppNavigator
-          isOnboardingCompleted={isOnboardingCompleted}
-          showLogin={showLogin}
-          showRegister={showRegister}
-          handleLoginSuccess={handleLoginSuccess}
-          handleOnboardingComplete={handleOnboardingComplete}
-          handleLogin={handleLogin}
-          handleLogout={handleLogout}
-          handleBackToLogin={handleBackToLogin}
-        />
-      </QueryClientProvider>
-    </GluestackUIProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <GluestackUIProvider config={customConfig}>
+        <QueryClientProvider client={queryClient}>
+          <AppNavigator
+            isOnboardingCompleted={isOnboardingCompleted}
+            showLogin={showLogin}
+            showRegister={showRegister}
+            handleLoginSuccess={handleLoginSuccess}
+            handleOnboardingComplete={handleOnboardingComplete}
+            handleLogin={handleLogin}
+            handleLogout={handleLogout}
+            handleBackToLogin={handleBackToLogin}
+          />
+        </QueryClientProvider>
+      </GluestackUIProvider>
+    </GestureHandlerRootView>
   );
 }

@@ -45,7 +45,7 @@ export const UserETFList: React.FC = () => {
             mb={margins.marginMinimum}
           >
             <Text
-              fontSize={18}
+              fontSize={typography.heading4Size}
               fontWeight={typography.fontWeightBold}
               color={colors.primaryTextColor}
             >
@@ -60,10 +60,10 @@ export const UserETFList: React.FC = () => {
       renderRight={(etf) => (
         <>
           <Text fontSize={18} fontWeight="semibold" color="$black">
-            {formatCurrency(etf.amount)} € possédés
+            {formatCurrency(etf.amount)}
           </Text>
           <Text fontSize={14} fontWeight={typography.fontWeightMedium}>
-            {etf.shares} parts
+            {etf.shares.toFixed(3)} parts
           </Text>
         </>
       )}

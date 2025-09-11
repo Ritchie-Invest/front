@@ -1,12 +1,12 @@
 import React from 'react';
 import { Input, InputField as GInputField } from '@gluestack-ui/themed';
-import { colors, paddings } from '../../lib/theme/theme';
+import { colors, paddings, typography } from '../../lib/theme/theme';
 
 type Props = {
   placeholder: string;
-  value: string;
-  onChangeText: (text: string) => void;
-  type?: 'text' | 'email' | 'password';
+  value: string | number;
+  onChange: (value: string) => void;
+  type?: 'text' | 'email' | 'password' | 'numeric';
   accessibilityLabel?: string;
   variant?: 'outline' | 'rounded' | 'underlined';
   size?: 'sm' | 'md' | 'lg' | 'xl';
@@ -18,7 +18,7 @@ type Props = {
 export const InputField = ({
   placeholder,
   value,
-  onChangeText,
+  onChange,
   type = 'text',
   accessibilityLabel,
   variant = 'rounded',
@@ -28,6 +28,17 @@ export const InputField = ({
   isReadOnly = false,
 }: Props) => {
   const isPassword = type === 'password';
+  const isNumeric = type === 'numeric';
+
+  const handleChangeText = (text: string) => {
+    if (isNumeric) {
+      // Allow only numeric characters, decimal point, and minus sign
+      const numericText = text.replace(/[^0-9.-]/g, '');
+      onChange(numericText);
+    } else {
+      onChange(text);
+    }
+  };
 
   return (
     <Input
@@ -37,12 +48,15 @@ export const InputField = ({
       isInvalid={isInvalid}
       isReadOnly={isReadOnly}
       height={48}
+      width="100%"
     >
       <GInputField
         placeholder={placeholder}
-        value={value}
-        onChangeText={onChangeText}
+        fontSize={variant === 'underlined' ? typography.transactionInputSize : typography.bodySize}
+        value={value !== undefined && value !== null ? String(value) : ''}
+        onChangeText={handleChangeText}
         secureTextEntry={isPassword}
+        keyboardType={isNumeric ? 'numeric' : 'default'}
         accessibilityLabel={accessibilityLabel || placeholder}
       />
     </Input>

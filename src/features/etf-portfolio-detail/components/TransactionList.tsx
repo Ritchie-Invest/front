@@ -1,7 +1,7 @@
 import { Box, Center, HStack, Text, VStack } from '@gluestack-ui/themed';
 import { colors, paddings, margins, borderRadius, typography } from '~/lib/theme/theme';
 import { List } from '~/components/organisms/components/list';
-import { useTransactions, getTypeColor, getTypeSymbol } from '../hooks/useTransaction';
+import { useTransactionHistory, getTypeColor, getTypeSymbol } from '../hooks/useTransactionHistory';
 import { Transaction } from '~/features/etf/models/Transaction';
 import { formatCurrency } from '~/utils/formatCurrency';
 import { formatDate } from '~/utils/formatDate';
@@ -12,7 +12,8 @@ interface TransactionListProps {
 }
 
 export const TransactionList: React.FC<TransactionListProps> = ({ onTransactionPress }) => {
-  const { transactions, loading, error, limit, increaseLimit, decreaseLimit } = useTransactions();
+  const { transactions, loading, error, limit, increaseLimit, decreaseLimit } =
+    useTransactionHistory();
 
   if (error) {
     return (
@@ -53,20 +54,24 @@ export const TransactionList: React.FC<TransactionListProps> = ({ onTransactionP
         loading={loading}
         title="Historique des transactions"
         renderLeft={(transaction: any) => (
-          <VStack space="xs">
+          <VStack space="xs" flex={1} justifyContent="space-between">
             <Text fontSize={typography.bodyLargeSize} fontWeight="semibold" color={colors.DarkGrey}>
-              {transaction.etf?.ticker ?? transaction.etfTicker ?? '-'}
+              {transaction.tickerSymbol ?? '-'}
             </Text>
-            <Text fontSize={typography.bodySmallSize} color={colors.GreyL30}>
-              {formatDate(transaction.date ?? transaction.createdAt)}
+            <Text fontSize={typography.bodySmallSize} color={colors.Grey}>
+              {formatDate(transaction.timestamp)}
             </Text>
           </VStack>
         )}
         renderRight={(transaction: any) => (
           <HStack alignItems="center" space="xs" justifyContent="flex-end">
             <VStack alignItems="flex-end" space="xs">
-              <Text fontSize={typography.bodySmallSize} color={colors.Grey}>
-                {transaction.type === TransactionType.Buy ? 'Achat' : 'Vente'}
+              <Text
+                fontWeight={typography.fontWeightMedium}
+                fontSize={typography.bodySmallSize}
+                color={colors.Grey}
+              >
+                {transaction.type === TransactionType.BUY ? 'Achat' : 'Vente'}
               </Text>
               <Text
                 fontSize={typography.heading3Size}
@@ -77,7 +82,7 @@ export const TransactionList: React.FC<TransactionListProps> = ({ onTransactionP
                 {formatCurrency(transaction.amount)}
               </Text>
               <Text fontSize={typography.bodySmallSize} color={colors.Grey}>
-                {transaction.shares} parts
+                {transaction.volume.toFixed(3)} parts
               </Text>
             </VStack>
           </HStack>
@@ -85,12 +90,20 @@ export const TransactionList: React.FC<TransactionListProps> = ({ onTransactionP
         onItemPress={onTransactionPress}
       />
       <HStack space="sm" justifyContent="center" mt={margins.marginMedium}>
-        <Button onPress={decreaseLimit} variant={limit <= 5 ? 'disabled' : 'secondary'}>
-          Voir moins
-        </Button>
-        <Button onPress={increaseLimit} variant="secondary">
-          Voir plus
-        </Button>
+        {limit > 10 ? (
+          <Center width="50%">
+            <Button onPress={decreaseLimit} variant={limit <= 5 ? 'disabled' : 'ghost'}>
+              Voir moins
+            </Button>
+          </Center>
+        ) : null}
+        {transactions.length > 1 ? (
+          <Center width="50%">
+            <Button onPress={increaseLimit} variant="ghost">
+              Voir plus
+            </Button>
+          </Center>
+        ) : null}
       </HStack>
     </VStack>
   );

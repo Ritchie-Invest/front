@@ -24,7 +24,7 @@ export const Button = ({ children, onPress, isLoading, variant = 'primary', ...r
       case 'secondary':
         return {
           variant: 'solid',
-          bg: colors.secondaryActionColor,
+          bg: colors.transparent,
           $focus: { bg: colors.secondaryActionFocusColor },
           $active: { bg: colors.secondaryActionActiveColor },
         };
@@ -58,13 +58,15 @@ export const Button = ({ children, onPress, isLoading, variant = 'primary', ...r
       isDisabled={isLoading || variant === 'disabled'}
       height="$12"
       width="100%"
+      borderWidth={variant === 'secondary' ? 1.5 : 0}
+      borderColor={colors.primaryActionColor}
       borderRadius={borderRadius.borderRadiusExtraLarge}
       {...getVariantProps()}
       {...rest}
     >
       {isLoading && <ButtonSpinner mr="$1" />}
       <ButtonText
-        color={variant === 'outline' ? colors.primaryTextColor : colors.mainBackgroundColor}
+        color={variant === 'primary' ? colors.mainBackgroundColor : colors.primaryActionColor}
       >
         {children}
       </ButtonText>

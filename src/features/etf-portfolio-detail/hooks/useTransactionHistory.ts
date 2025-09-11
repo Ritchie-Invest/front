@@ -1,12 +1,22 @@
 import { useState, useCallback, useEffect } from 'react';
-import { TransactionApiResponse } from '~/features/etf/models/Transaction';
+import { GetTransactionsApiResponse } from '~/features/etf/models/Transaction';
 import { TransactionHistoryServiceAdapter } from '../adapters/TransactionHistoryServiceAdapter';
 import { TransactionType } from '~/features/etf/types/TransactionType';
 import { colors } from '~/lib/theme/theme';
 
-export const useTransactions = (initialLimit?: number) => {
+type UseTransactionHistoryReturn = {
+  transactions: GetTransactionsApiResponse[];
+  loading: boolean;
+  error: string | null;
+  refetch: () => Promise<void>;
+  limit: number;
+  increaseLimit: () => void;
+  decreaseLimit: () => void;
+};
+
+export const useTransactionHistory = (initialLimit?: number): UseTransactionHistoryReturn => {
   const transactionService = new TransactionHistoryServiceAdapter();
-  const [transactions, setTransactions] = useState<TransactionApiResponse[]>([]);
+  const [transactions, setTransactions] = useState<GetTransactionsApiResponse[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [limit, setLimit] = useState(initialLimit || 10);
@@ -48,9 +58,9 @@ export const useTransactions = (initialLimit?: number) => {
 };
 
 export const getTypeColor = (type: TransactionType) => {
-  return type === TransactionType.Buy ? colors.warningBorderColor : colors.infoBorderColor;
+  return type === TransactionType.BUY ? colors.warningBorderColor : colors.infoBorderColor;
 };
 
 export const getTypeSymbol = (type: TransactionType) => {
-  return type === TransactionType.Buy ? '-' : '+';
+  return type === TransactionType.BUY ? '-' : '+';
 };

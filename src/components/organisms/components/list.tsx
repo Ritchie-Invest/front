@@ -76,6 +76,7 @@ export function List<T>({
           />
         )}
         showsVerticalScrollIndicator={false}
+        scrollEnabled={false}
       />
     </View>
   );

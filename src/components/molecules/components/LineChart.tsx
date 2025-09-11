@@ -38,8 +38,8 @@ export const LineChartComponent: React.FC<LineChartProps> = memo(
     }
 
     return (
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <GestureHandlerRootView>
+        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
           <LineChart
             lines={[
               {

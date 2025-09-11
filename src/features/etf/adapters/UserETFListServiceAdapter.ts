@@ -1,9 +1,10 @@
-import { UserETFListContract } from '../contracts/UserETFListContract';
-import { UserPossessedETF } from '~/features/etf/models/UserPossessedETF';
-import { UserETFListService } from '../services/UserETFListService';
+import { UserETFListContract } from '../../etf/contracts/UserETFListContract';
+import { UserPossessedETFListItem } from '../models/UserPossessedETF';
+import { UserETFListService } from '../../etf/services/UserETFListService';
 import { validateUserPossessedETF } from '~/features/etf/validation/UserPossessedETFValidation';
+
 export class UserETFListServiceAdapter implements UserETFListContract {
-  async getAllUserETFs(): Promise<UserPossessedETF[]> {
+  async getAllUserETFs(): Promise<UserPossessedETFListItem[]> {
     const etfs = await UserETFListService.getAllUserETFs();
 
     if (!etfs.every(validateUserPossessedETF)) {

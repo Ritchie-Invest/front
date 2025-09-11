@@ -6,10 +6,13 @@ import { OnboardingLayout } from '../features/onboarding/screens/OnboardingLayou
 import { LoginScreen } from '../features/auth/screens/LoginScreen';
 import { RegisterScreen } from '../features/auth/screens/RegisterScreen';
 import HomeScreen from '../features/landing/screens/home';
-import { InvestmentDashboardScreen } from '../features/investment-dashboard/screens/InvestmentDashboardScreen';
 import { ETFDetailScreen } from '../features/etf-detail/screens/ETFDetailScreen';
+import { ETFTransactionScreen } from '~/features/etf-transaction/screens/ETFTransactionScreen';
+import { TransactionType } from '~/features/etf-transaction/types/TransactionType';
+
 import { PortfolioDetailScreen } from '../features/etf-portfolio-detail/screens/PortfolioDetailScreen';
 import Navbar from '../features/navigation/components/organisms/navbar';
+import { InvestmentDashboardScreen } from '~/features/investment-dashboard/screens/InvestmentDashboardScreen';
 
 export type RootStackParamList = {
   Main: undefined;
@@ -22,6 +25,7 @@ export type MainStackParamList = {
   Landing: undefined;
   InvestmentDashboard: undefined;
   ETFDetails: { id: string };
+  ETFTransaction: { transactionType: TransactionType };
   PortfolioDetail: undefined;
   Progress: undefined;
   Profile: undefined;
@@ -98,6 +102,23 @@ export const AppNavigator = ({
                 {() => (
                   <Box flex={1}>
                     <ETFDetailScreen />
+                  </Box>
+                )}
+              </MainStack.Screen>
+              <MainStack.Screen
+                name="ETFTransaction"
+                options={({ route }) => ({
+                  headerTitle:
+                    route.params?.transactionType === TransactionType.BUY
+                      ? 'Achat ETF'
+                      : route.params?.transactionType === TransactionType.SELL
+                        ? 'Vente ETF'
+                        : 'Transaction',
+                })}
+              >
+                {() => (
+                  <Box flex={1}>
+                    <ETFTransactionScreen />
                   </Box>
                 )}
               </MainStack.Screen>

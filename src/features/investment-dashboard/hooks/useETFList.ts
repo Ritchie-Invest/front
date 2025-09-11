@@ -35,9 +35,6 @@ export const useETFList = (dataService: ETFListContract = new ETFListServiceAdap
   const navigation = useNavigation<NavigationProp>();
   const setSelectedETF = useSetSelectedETF();
 
-  const formatPercentage = (percentage: number) =>
-    `${percentage >= 0 ? '+' : ''}${percentage.toFixed(2)}%`;
-
   const isGaining = (etf: ETF) => etf.variationDirection === 'UP';
 
   const handleETFPress = (etf: ETF) => {
@@ -56,7 +53,6 @@ export const useETFList = (dataService: ETFListContract = new ETFListServiceAdap
     loading,
     error,
     refetch: fetchETFs,
-    formatPercentage,
     isGaining,
     handleETFPress,
   };

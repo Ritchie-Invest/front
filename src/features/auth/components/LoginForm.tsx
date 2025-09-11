@@ -77,14 +77,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, signupEnabled }
           <InputField
             placeholder={t('form.email')}
             value={email}
-            onChangeText={setEmail}
+            onChange={setEmail}
             type="email"
           />
 
           <InputField
             placeholder={t('form.password')}
             value={password}
-            onChangeText={setPassword}
+            onChange={setPassword}
             type="password"
           />
 

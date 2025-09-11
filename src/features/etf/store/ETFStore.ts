@@ -7,6 +7,8 @@ export interface ETFSelectedData {
   ticker: string;
   name: string;
   currentPrice: number;
+  userShares?: number;
+  userAmount?: number;
 }
 
 interface ETFStoreState {
@@ -18,7 +20,8 @@ interface ETFStoreState {
 }
 
 export const useETFStore = create<ETFStoreState>()(
-  subscribeWithSelector((set) => ({
+  // @ts-ignore
+  subscribeWithSelector((set, get) => ({
     selectedETF: null,
     selectedRange: DateRangeType.SevenDays,
 

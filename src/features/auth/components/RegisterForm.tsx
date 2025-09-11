@@ -70,14 +70,14 @@ export const RegisterForm = ({ onBackToLogin, onSuccess }: RegisterFormProps) =>
           <InputField
             placeholder={t('form.email')}
             value={email}
-            onChangeText={setEmail}
+            onChange={setEmail}
             type="email"
           />
 
           <InputField
             placeholder={t('form.password')}
             value={password}
-            onChangeText={setPassword}
+            onChange={setPassword}
             type="password"
           />
 

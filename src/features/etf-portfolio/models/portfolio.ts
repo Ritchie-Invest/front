@@ -9,6 +9,7 @@ export interface Portfolio {
 
 export interface PortfolioPosition {
   id: string;
+  etfId: string;
   ticker: string;
   name: string;
   quantity: number;

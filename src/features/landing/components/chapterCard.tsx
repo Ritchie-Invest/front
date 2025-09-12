@@ -5,8 +5,7 @@ import { useTranslation } from 'react-i18next';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Card } from '~/components/molecules/card';
 import { Chapter } from '../models/responses/chapter';
-import { ProgressStatus } from '../types/ProgressStatus';
-import { computeProgressStatus } from '../utils/computeProgressStatus';
+import { ChapterStatus } from '../types/ChapterStatus';
 
 interface ChapterCardProps {
   chapter: Chapter;
@@ -16,14 +15,12 @@ export const ChapterCard = React.forwardRef<any, ChapterCardProps>((props, ref) 
   const { chapter, ...rest } = props;
   const { t } = useTranslation();
 
-  const { title, description, completedLessons, totalLessons, isUnlocked } = chapter;
+  const { title, description, completedLessons, totalLessons, status } = chapter;
   const progressValue = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
-
-  const status = computeProgressStatus(isUnlocked, completedLessons, totalLessons);
 
   const getStatusProps = () => {
     switch (status) {
-      case ProgressStatus.COMPLETED:
+      case ChapterStatus.COMPLETED:
         return {
           cardVariant: 'chapter' as const,
           iconName: 'checkmark-circle' as const,
@@ -33,7 +30,8 @@ export const ChapterCard = React.forwardRef<any, ChapterCardProps>((props, ref) 
           progressBg: 'white:alpha.30',
           opacity: 1,
         };
-      case ProgressStatus.CURRENT:
+      case ChapterStatus.IN_PROGRESS:
+      case ChapterStatus.UNLOCKED:
         return {
           cardVariant: 'chapter' as const,
           iconName: 'book' as const,
@@ -43,7 +41,7 @@ export const ChapterCard = React.forwardRef<any, ChapterCardProps>((props, ref) 
           progressBg: 'white:alpha.30',
           opacity: 1,
         };
-      case ProgressStatus.LOCKED:
+      case ChapterStatus.LOCKED:
         return {
           cardVariant: 'default' as const,
           iconName: 'lock-closed' as const,
@@ -74,14 +72,14 @@ export const ChapterCard = React.forwardRef<any, ChapterCardProps>((props, ref) 
         variant={statusProps.cardVariant}
         mb={4}
         opacity={statusProps.opacity}
-        borderWidth={status === ProgressStatus.LOCKED ? 1 : 0}
-        borderColor={status === ProgressStatus.LOCKED ? 'gray.300' : 'transparent'}
+        borderWidth={status === ChapterStatus.LOCKED ? 1 : 0}
+        borderColor={status === ChapterStatus.LOCKED ? 'gray.300' : 'transparent'}
         bg={
-          status === ProgressStatus.LOCKED
+          status === ChapterStatus.LOCKED
             ? 'gray.50'
-            : status === ProgressStatus.COMPLETED
+            : status === ChapterStatus.COMPLETED
               ? 'emerald.500'
-              : status === ProgressStatus.CURRENT
+              : status === ChapterStatus.IN_PROGRESS || status === ChapterStatus.UNLOCKED
                 ? 'blue.600'
                 : undefined
         }
@@ -92,7 +90,7 @@ export const ChapterCard = React.forwardRef<any, ChapterCardProps>((props, ref) 
             <Text fontSize="lg" bold color={statusProps.textColor}>
               {title}
             </Text>
-            {status === ProgressStatus.CURRENT && (
+            {(status === ChapterStatus.IN_PROGRESS || status === ChapterStatus.UNLOCKED) && (
               <Text
                 fontSize="xs"
                 bg="white:alpha.30"
@@ -106,13 +104,13 @@ export const ChapterCard = React.forwardRef<any, ChapterCardProps>((props, ref) 
               </Text>
             )}
           </HStack>
-          <Text color={statusProps.textColor} opacity={status === ProgressStatus.LOCKED ? 0.7 : 1}>
+          <Text color={statusProps.textColor} opacity={status === ChapterStatus.LOCKED ? 0.7 : 1}>
             {description}
           </Text>
           <Text
             color={statusProps.textColor}
             fontSize="xs"
-            opacity={status === ProgressStatus.LOCKED ? 0.7 : 1}
+            opacity={status === ChapterStatus.LOCKED ? 0.7 : 1}
           >
             {completedLessons}/{totalLessons} {t('home.chapter.completedLevels')}
           </Text>
@@ -120,9 +118,9 @@ export const ChapterCard = React.forwardRef<any, ChapterCardProps>((props, ref) 
             value={progressValue}
             colorScheme={statusProps.progressColorScheme}
             bg={statusProps.progressBg}
-            opacity={status === ProgressStatus.LOCKED ? 0.5 : 1}
+            opacity={status === ChapterStatus.LOCKED ? 0.5 : 1}
           />
-          {status === ProgressStatus.LOCKED && (
+          {status === ChapterStatus.LOCKED && (
             <Text fontSize="xs" color="gray.500" fontStyle="italic">
               {t('home.chapter.unlockMessage')}
             </Text>

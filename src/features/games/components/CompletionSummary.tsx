@@ -6,13 +6,19 @@ import { useTranslation } from 'react-i18next';
 
 interface CompletionSummaryProps {
   xp: number;
-  score: number;
-  chrono: string;
+  completedModules: number;
+  totalModules: number;
+  isSuccess?: boolean;
 }
 
-const CompletionSummary: React.FC<CompletionSummaryProps> = ({ xp, score, chrono }) => {
+const CompletionSummary: React.FC<CompletionSummaryProps> = ({
+  xp,
+  completedModules,
+  totalModules,
+  isSuccess,
+}) => {
   const { t } = useTranslation();
-  const isSuccess = score === 100;
+
   return (
     <VStack space={6} alignItems="center" w="100%">
       <Box bg="green.400" borderRadius={50} p={4} mb={2}>
@@ -26,8 +32,12 @@ const CompletionSummary: React.FC<CompletionSummaryProps> = ({ xp, score, chrono
       </Text>
       <VStack space={3} w="100%">
         <StatCard icon="bolt" color="yellow.500" label="XP" value={xp} />
-        <StatCard icon="center-focus-strong" color="green.500" label="Score" value={`${score}%`} />
-        <StatCard icon="timer" color="blue.500" label="Chrono" value={chrono} />
+        <StatCard
+          icon="center-focus-strong"
+          color="green.500"
+          label="Score"
+          value={`${completedModules}/${totalModules}`}
+        />
       </VStack>
     </VStack>
   );

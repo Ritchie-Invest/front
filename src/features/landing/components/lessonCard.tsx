@@ -6,42 +6,39 @@ import { Card } from '~/components/molecules/card';
 import { Button } from 'native-base';
 import { StatusBadge } from '~/components/atoms/statusBadge';
 import { Lesson } from '../models/responses/lesson';
-import { ProgressStatus } from '../types/ProgressStatus';
-import { computeProgressStatus } from '../utils/computeProgressStatus';
+import { LessonStatus } from '../types/LessonStatus';
 
 interface LessonCardProps {
   lesson: Lesson;
-  onAction: (lessonId: string, action: 'start' | 'review') => void;
+  onAction: (lessonId: string, action: 'start' | 'restart' | 'continue') => void;
 }
 
 export const LessonCard: React.FC<LessonCardProps> = ({ lesson, onAction }) => {
   const { t } = useTranslation();
 
-  const { id, title, description, isUnlocked, completedModules, totalModules } = lesson;
+  const { id, title, description, status } = lesson;
 
-  const status = computeProgressStatus(isUnlocked, completedModules, totalModules);
-  const isCompleted = status === ProgressStatus.COMPLETED;
-  const isLocked = status === ProgressStatus.LOCKED;
+  const isLocked = status === LessonStatus.LOCKED;
 
   const handleButtonPress = () => {
-    if (!isLocked) {
-      onAction(id, isCompleted ? 'review' : 'start');
+    if (status === LessonStatus.UNLOCKED) {
+      onAction(id, 'start');
     }
   };
 
   const getIconProps = () => {
     switch (status) {
-      case ProgressStatus.COMPLETED:
+      case LessonStatus.COMPLETED:
         return {
           name: 'checkmark-circle' as const,
           color: 'green.500',
         };
-      case ProgressStatus.CURRENT:
+      case LessonStatus.UNLOCKED:
         return {
           name: 'play-circle-outline' as const,
           color: 'blue.500',
         };
-      case ProgressStatus.LOCKED:
+      case LessonStatus.LOCKED:
         return {
           name: 'lock-closed' as const,
           color: 'gray.400',
@@ -97,8 +94,13 @@ export const LessonCard: React.FC<LessonCardProps> = ({ lesson, onAction }) => {
         <HStack justifyContent="space-between" alignItems="center">
           <StatusBadge status={status} />
           {!isLocked && (
-            <Button variant={isCompleted ? 'secondary' : 'primary'} onPress={handleButtonPress}>
-              {isCompleted ? t('lesson.review') : t('lesson.start')}
+            <Button
+              variant={status === LessonStatus.COMPLETED ? 'secondary' : 'primary'}
+              onPress={handleButtonPress}
+              isDisabled={status === LessonStatus.COMPLETED}
+              opacity={status === LessonStatus.COMPLETED ? 0.5 : 1}
+            >
+              {status === LessonStatus.COMPLETED ? t('lesson.completed') : t('lesson.start')}
             </Button>
           )}
         </HStack>

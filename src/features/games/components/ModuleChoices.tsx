@@ -7,7 +7,6 @@ interface ModuleChoicesProps {
   choices: any[];
   selected: string | null;
   showFeedback: 'none' | 'success' | 'error';
-  isReviewMode: boolean;
   completionResult: CompleteModuleResponse | null;
   onSelect: (id: string) => void;
 }
@@ -16,7 +15,6 @@ const ModuleChoices: React.FC<ModuleChoicesProps> = ({
   choices,
   selected,
   showFeedback,
-  isReviewMode,
   completionResult,
   onSelect,
 }) => (
@@ -29,9 +27,8 @@ const ModuleChoices: React.FC<ModuleChoicesProps> = ({
         correct={!!(completionResult?.isCorrect && selected === choice.id)}
         showFeedback={showFeedback}
         onPress={() => onSelect(choice.id)}
-        disabled={showFeedback !== 'none' || isReviewMode}
+        disabled={showFeedback !== 'none'}
         isCorrectAnswer={choice.isCorrect}
-        isReviewMode={isReviewMode}
       />
     ))}
   </VStack>

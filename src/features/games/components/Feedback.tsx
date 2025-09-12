@@ -4,13 +4,13 @@ import { Icon } from '~/components/atoms/Icon';
 import { Button } from '~/components/atoms/Button';
 import { useTranslation } from 'react-i18next';
 
-interface QuizFeedbackProps {
+interface FeedbackProps {
   type: 'success' | 'error';
   correctText?: string;
   onContinue: () => void;
 }
 
-const QuizFeedback: React.FC<QuizFeedbackProps> = ({ type, correctText, onContinue }) => {
+const Feedback: React.FC<FeedbackProps> = ({ type, correctText, onContinue }) => {
   const { t } = useTranslation();
   const isSuccess = type === 'success';
   return (
@@ -32,13 +32,13 @@ const QuizFeedback: React.FC<QuizFeedbackProps> = ({ type, correctText, onContin
           size="lg"
         />
         <Heading size="md" color={isSuccess ? 'green.700' : 'orange.700'}>
-          {isSuccess ? t('qcm.success') : t('qcm.error')}
+          {isSuccess ? t('game.success') : t('game.error')}
         </Heading>
       </HStack>
       {!isSuccess && (
         <>
           <Text fontWeight="bold" color="orange.700" fontSize="md">
-            {t('qcm.correctAnswer')}
+            {t('game.correctAnswer')}
           </Text>
           <Text color="orange.700" fontSize="lg" mb={4}>
             {correctText}
@@ -46,10 +46,10 @@ const QuizFeedback: React.FC<QuizFeedbackProps> = ({ type, correctText, onContin
         </>
       )}
       <Button variant={isSuccess ? 'success' : 'error'} onPress={onContinue}>
-        {isSuccess ? t('qcm.continue') : t('qcm.understood')}
+        {isSuccess ? t('game.continue') : t('game.understood')}
       </Button>
     </Box>
   );
 };
 
-export default QuizFeedback;
+export default Feedback;

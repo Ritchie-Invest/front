@@ -7,7 +7,7 @@ import { Chapter } from '../models/responses/chapter';
 interface ChaptersTimelineProps {
   chapters: Chapter[];
   onChapterLayout: (chapterId: string, event: any) => void;
-  onLessonAction: (lessonId: string, action: 'start' | 'review') => void;
+  onLessonAction: (lessonId: string, action: 'start' | 'restart' | 'continue') => void;
 }
 
 export const ChaptersTimeline: React.FC<ChaptersTimelineProps> = ({

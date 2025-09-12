@@ -8,7 +8,7 @@ const ModuleQuestion = ({ question }: { question?: string }) => {
   return (
     <VStack px={6} mt={6} space={2}>
       <Text fontSize="lg" color="coolGray.500" fontWeight="bold">
-        {t('qcm.completeSentence')}
+        {t('game.completeSentence')}
       </Text>
       <Text fontSize="2xl" fontWeight="bold" mt={2}>
         {question}
@@ -24,7 +24,7 @@ ModuleQuestion.Error = ({ error }: { error: any }) => {
       <VStack space={2} alignItems="center">
         <Icon name="error-outline" size="xl" color="red.600" />
         <Heading size="md" color="red.700">
-          {t('qcm.error')}
+          {t('game.error')}
         </Heading>
         <Text color="red.700">{(error as Error).message}</Text>
       </VStack>
@@ -37,7 +37,7 @@ ModuleQuestion.Loading = () => {
   return (
     <Box flex={1} justifyContent="center" alignItems="center">
       <Spinner size="lg" color="blue.500" />
-      <Text mt={4}>{t('qcm.loading')}</Text>
+      <Text mt={4}>{t('game.loading')}</Text>
     </Box>
   );
 };

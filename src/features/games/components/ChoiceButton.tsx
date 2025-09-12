@@ -9,7 +9,6 @@ interface ChoiceButtonProps {
   onPress: () => void;
   disabled?: boolean;
   isCorrectAnswer?: boolean;
-  isReviewMode?: boolean;
 }
 
 const ChoiceButton: React.FC<ChoiceButtonProps> = (props) => {
@@ -18,12 +17,7 @@ const ChoiceButton: React.FC<ChoiceButtonProps> = (props) => {
   let color = 'coolGray.700';
   let fontWeight: 'normal' | 'bold' = 'normal';
 
-  if (props.isReviewMode && props.isCorrectAnswer) {
-    borderColor = 'green.500';
-    bg = 'green.100';
-    color = 'green.700';
-    fontWeight = 'bold';
-  } else if (props.selected) {
+  if (props.selected) {
     if (props.showFeedback === 'success' && props.correct) {
       borderColor = 'green.500';
       bg = 'green.50';
@@ -40,12 +34,6 @@ const ChoiceButton: React.FC<ChoiceButtonProps> = (props) => {
       color = 'blue.700';
       fontWeight = 'bold';
     }
-  }
-  if (props.showFeedback === 'success' && props.correct) {
-    borderColor = 'green.500';
-    bg = 'green.50';
-    color = 'green.600';
-    fontWeight = 'bold';
   }
 
   return (

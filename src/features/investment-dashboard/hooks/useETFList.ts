@@ -8,7 +8,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { MainStackParamList } from '~/navigation/AppNavigator';
 import { Screens } from '~/features/navigation/Type/Screens';
 
-type NavigationProp = NativeStackNavigationProp<MainStackParamList, 'InvestmentDashboard'>;
+type NavigationProp = NativeStackNavigationProp<MainStackParamList, Screens.DASHBOARD>;
 
 export const useETFList = (dataService: ETFListContract = new ETFListServiceAdapter()) => {
   const [etfs, setETFs] = useState<ETF[]>([]);

@@ -9,7 +9,7 @@ import { useTransactionStore } from '../store/TransactionStore';
 import { useConversion } from './useConversion';
 import { Screens } from '~/features/navigation/Type/Screens';
 
-type ETFTransactionRouteProp = RouteProp<MainStackParamList, 'ETFTransaction'>;
+type ETFTransactionRouteProp = RouteProp<MainStackParamList, Screens.TRANSACTION>;
 
 type ButtonVariant = 'primary' | 'secondary' | 'disabled';
 

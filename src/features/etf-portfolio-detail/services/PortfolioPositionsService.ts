@@ -1,12 +1,14 @@
 import { DateRangeType, DATE_RANGE_OPTIONS } from '~/components/molecules/types/dateRange';
-import { ApiResponse } from '../models/PortfolioPosition';
+import { PortfolioHistoryResponse } from '../models/PortfolioPosition';
 import { axiosInstance } from '~/lib/api/axios';
 
 export class PortfolioPositionsService {
-  static async getPortfolioPositions(dateRange: DateRangeType): Promise<ApiResponse> {
+  static async getPortfolioPositions(dateRange: DateRangeType): Promise<PortfolioHistoryResponse> {
     try {
       const limit = this.getLimitForDateRange(dateRange);
-      const response = await axiosInstance.get<ApiResponse>(`/portfolio/positions?limit=${limit}`);
+      const response = await axiosInstance.get<PortfolioHistoryResponse>(
+        `/portfolio/positions?limit=${limit}`,
+      );
       return response.data;
     } catch (error) {
       console.error('Failed to fetch portfolio positions:', error);

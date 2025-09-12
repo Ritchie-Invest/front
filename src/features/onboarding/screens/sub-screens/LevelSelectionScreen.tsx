@@ -2,7 +2,7 @@ import React from 'react';
 import { VStack, Text, Spacer } from 'native-base';
 import { useTranslation } from 'react-i18next';
 import { OnboardingLayout } from '../../components/organisms/OnboardingLayout';
-import { SelectableItem } from '~/components/molecules/selectableItem';
+import { SelectableItem } from '~/components/molecules/components/selectableItem';
 import { Button } from '../../../../components/atoms/Button';
 import { OnboardingLevel } from '../../models/onboarding.types';
 

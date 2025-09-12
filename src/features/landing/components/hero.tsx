@@ -2,7 +2,7 @@ import React from 'react';
 import { VStack, HStack, Text, Progress } from 'native-base';
 import { useTranslation } from 'react-i18next';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import { Card } from '~/components/molecules/card';
+import { Card } from '~/components/molecules/components/card';
 
 interface HeroProps {
   progressValue: number;

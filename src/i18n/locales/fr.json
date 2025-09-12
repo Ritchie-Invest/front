@@ -85,19 +85,19 @@
   },
   "lesson": {
     "start": "Commencer",
-    "review": "Revoir",
+    "completed": "Terminé",
+    "restart": "Recommencer",
+    "continue": "Continuer",
     "unlockMessage": "Terminez la leçon précédente pour débloquer"
   },
-  "qcm": {
+  "game": {
     "completeSentence": "Complète la phrase",
     "success": "Bravo !",
     "error": "Oups !",
-    "loading": "Chargement du qcm...",
+    "loading": "Chargement du jeu...",
     "correctAnswer": "Bonne réponse :",
     "continue": "Continuer",
-    "understood": "Compris",
-    "review": "Mode révision",
-    "highlightedCorrectAnswer": "La bonne réponse est mise en évidence."
+    "understood": "Compris"
   },
   "completion": {
     "congrats": "Haut la main!",

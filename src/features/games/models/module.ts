@@ -2,6 +2,7 @@ export interface Choice {
   id: string;
   text: string;
   isCorrect: boolean;
+  correctionMessage?: string;
 }
 
 export interface ModuleDetails {
@@ -11,5 +12,8 @@ export interface ModuleDetails {
 
 export interface GameModule {
   id: string;
+  lessonId?: string;
   details: ModuleDetails;
+  updatedAt?: string;
+  createdAt?: string;
 }

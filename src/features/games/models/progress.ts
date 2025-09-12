@@ -4,5 +4,13 @@ export interface CompleteModuleResponse {
   nextGameModuleId: string | null;
   currentGameModuleIndex: number;
   totalGameModules: number;
-  correctChoiceId: string | null;
+  correctChoiceId: string;
+}
+
+export interface CompleteLessonResponse {
+  completedGameModules: number;
+  totalGameModules: number;
+  score: number;
+  isCompleted: boolean;
+  xpWon?: number;
 }

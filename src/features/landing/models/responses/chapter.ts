@@ -1,11 +1,12 @@
 import { Lesson } from './lesson';
+import { ChapterStatus } from '../../types/ChapterStatus';
 
 export interface Chapter {
   id: string;
   title: string;
   description: string;
   order: number;
-  isUnlocked: boolean;
+  status: ChapterStatus;
   completedLessons: number;
   totalLessons: number;
   lessons: Lesson[];

@@ -2,108 +2,127 @@ import { useState, useEffect } from 'react';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useQueryClient } from '@tanstack/react-query';
-import { useModule } from '../hooks/useModule';
-import { progressService } from '~/services/progressService';
+import { moduleService } from '../services/moduleService';
+import { gameProgressService } from '../services/progressService';
 import { CompleteModuleResponse } from '../models/progress';
+import { GameModule } from '../models/module';
 import { MainStackParamList } from '~/navigation/AppNavigator';
 
 type ModuleScreenRouteProp = RouteProp<MainStackParamList, 'ModuleScreen'>;
 
 export const useModuleScreen = () => {
   const route = useRoute<ModuleScreenRouteProp>();
-  const { lessonId, moduleId, currentGameModuleIndex, totalGameModules, reviewMode } = route.params;
-  const { data: module, error } = useModule(lessonId, moduleId);
+  const {
+    lessonId,
+    moduleId,
+    currentGameModuleIndex = 0,
+    totalGameModules = 1,
+    correctAnswers = 0,
+  } = route.params;
+  const [module, setModule] = useState<GameModule | null>(null);
+  const [error, setError] = useState<any>(null);
   const [selected, setSelected] = useState<string | null>(null);
   const [showFeedback, setShowFeedback] = useState<'none' | 'success' | 'error'>('none');
   const [completionResult, setCompletionResult] = useState<CompleteModuleResponse | null>(null);
   const navigation = useNavigation<NativeStackNavigationProp<MainStackParamList>>();
   const queryClient = useQueryClient();
 
-  const isReviewMode = reviewMode === true;
-  const question = module?.details?.question;
-  const choices = module?.details?.choices || [];
-
   useEffect(() => {
-    if (isReviewMode && choices.length > 0) {
-      const correctChoice = choices.find((choice) => choice.isCorrect);
-      if (correctChoice) setSelected(correctChoice.id);
-    }
-  }, [isReviewMode, choices]);
-
-  const handleSelect = async (id: string) => {
-    if (isReviewMode || !module) return;
-    setSelected(id);
-    try {
-      const result = await progressService.completeModule(module.id, id);
-      console.log('Résultat de correction:', result);
-      setCompletionResult(result);
-      if (result.isCorrect) {
-        setShowFeedback('success');
-        queryClient.invalidateQueries({ queryKey: ['chapters', 'progress'] });
-        queryClient.invalidateQueries({ queryKey: ['lesson', lessonId] });
-      } else {
-        setShowFeedback('error');
+    const loadModule = async () => {
+      try {
+        const moduleData = await moduleService.getModule(moduleId);
+        setModule(moduleData);
+      } catch (err) {
+        setError(err);
       }
-    } catch {
+    };
+    loadModule();
+  }, [moduleId]);
+
+  const handleSelect = async (choiceId: string) => {
+    setSelected(choiceId);
+
+    try {
+      // Envoi de la réponse et récupération du résultat
+      const result = await gameProgressService.completeModule(moduleId, choiceId);
+      setCompletionResult(result);
+      setShowFeedback(result.isCorrect ? 'success' : 'error');
+
+      // Invalidation des caches pour forcer le rafraîchissement des données
+      queryClient.invalidateQueries({ queryKey: ['chapters', 'progress'] });
+      queryClient.invalidateQueries({ queryKey: ['lesson', lessonId] });
+    } catch (error: any) {
+      // Gestion du cas où le module est déjà complété (erreur 409)
+      if (error?.response?.status === 409) {
+        navigation.replace('CompleteScreen', {
+          lessonId,
+          completedModules: 0,
+          totalModules: totalGameModules,
+          xpWon: 0,
+          isLessonCompleted: false,
+        });
+        return;
+      }
       setShowFeedback('error');
     }
   };
 
-  const handleContinue = () => {
-    setShowFeedback('none');
+  const handleContinue = async () => {
+    if (!completionResult) return;
+
     setSelected(null);
-    setCompletionResult(null);
-    if (completionResult?.nextGameModuleId) {
+    const newCorrectAnswers = correctAnswers + (completionResult.isCorrect ? 1 : 0);
+
+    // Navigation vers le module suivant ou vers l'écran de completion
+    if (completionResult.nextGameModuleId) {
+      // Il y a encore des modules dans cette leçon
       navigation.replace('ModuleScreen', {
         lessonId,
         moduleId: completionResult.nextGameModuleId,
         currentGameModuleIndex: completionResult.currentGameModuleIndex + 1,
         totalGameModules: completionResult.totalGameModules,
+        correctAnswers: newCorrectAnswers,
       });
     } else {
-      navigation.replace('CompleteScreen', { lessonId });
-    }
-  };
+      // Fin de la leçon
+      let xpWon = 0;
+      let isLessonCompleted = false;
 
-  const handleReviewContinue = async () => {
-    if (!module) return;
-    const correctChoice = choices.find((choice) => choice.isCorrect);
-    if (!correctChoice) return navigation.goBack();
-    const result = await progressService.completeModule(module.id, correctChoice.id);
-    if (result.nextGameModuleId) {
-      navigation.replace('ModuleScreen', {
+      try {
+        const lessonResult = await gameProgressService.completeLesson(lessonId);
+        xpWon = lessonResult.xpWon || 0;
+        isLessonCompleted = lessonResult.isCompleted || false;
+      } catch (error) {
+        console.error('Error completing lesson:', error);
+      }
+
+      navigation.replace('CompleteScreen', {
         lessonId,
-        moduleId: result.nextGameModuleId,
-        currentGameModuleIndex: (currentGameModuleIndex ?? 1) + 1,
-        totalGameModules: result.totalGameModules,
-        reviewMode: true,
+        completedModules: newCorrectAnswers,
+        totalModules: completionResult.totalGameModules,
+        xpWon,
+        isLessonCompleted,
       });
-    } else {
-      navigation.goBack();
     }
   };
 
-  let progress = 0;
-  const totalModules = completionResult?.totalGameModules ?? totalGameModules;
-  const currentModuleIndex = currentGameModuleIndex ?? 1;
-  if (totalModules) {
-    progress = currentModuleIndex / totalModules;
-    if (!isReviewMode && showFeedback === 'success') {
-      progress += 1 / totalModules;
-    }
-  }
+  // Calcul de la progression
+  const apiTotalModules = completionResult?.totalGameModules || totalGameModules;
+  const apiCurrentIndex = completionResult?.currentGameModuleIndex ?? currentGameModuleIndex;
+
+  const progress = apiTotalModules > 0 ? apiCurrentIndex / apiTotalModules : 0;
+  // Ajustement visuel de la barre de progression lors de l'affichage du feedback
+  const adjustedProgress = showFeedback !== 'none' ? progress + 1 / apiTotalModules : progress;
 
   return {
-    progress,
-    question,
-    choices,
+    progress: Math.min(adjustedProgress, 1),
+    question: module?.details?.question,
+    choices: module?.details?.choices || [],
     selected,
     showFeedback,
-    isReviewMode,
     completionResult,
     handleSelect,
     handleContinue,
-    handleReviewContinue,
     error,
     loading: !module && !error,
   };

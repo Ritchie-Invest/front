@@ -18,7 +18,13 @@ export type RootStackParamList = {
   Register: undefined;
   Onboarding: undefined;
   ModuleScreen: { lessonId: string; moduleId: string };
-  CompleteScreen: { lessonId: string };
+  CompleteScreen: {
+    lessonId: string;
+    completedModules?: number;
+    totalModules?: number;
+    xpWon?: number;
+    isLessonCompleted?: boolean;
+  };
 };
 
 export type MainStackParamList = {
@@ -34,9 +40,15 @@ export type MainStackParamList = {
     moduleId: string;
     currentGameModuleIndex?: number;
     totalGameModules?: number;
-    reviewMode?: boolean;
+    correctAnswers?: number;
   };
-  CompleteScreen: { lessonId: string };
+  CompleteScreen: {
+    lessonId: string;
+    completedModules?: number;
+    totalModules?: number;
+    xpWon?: number;
+    isLessonCompleted?: boolean;
+  };
 };
 
 const Stack = createNativeStackNavigator();
@@ -115,7 +127,15 @@ export const AppNavigator = ({
                 {() => <ModuleScreen />}
               </MainStack.Screen>
               <MainStack.Screen name="CompleteScreen" options={{ headerTitle: '' }}>
-                {({ route }) => <CompleteScreen lessonId={route.params.lessonId} />}
+                {({ route }) => (
+                  <CompleteScreen
+                    lessonId={route.params.lessonId}
+                    completedModules={route.params.completedModules}
+                    totalModules={route.params.totalModules}
+                    xpWon={route.params.xpWon}
+                    isLessonCompleted={route.params.isLessonCompleted}
+                  />
+                )}
               </MainStack.Screen>
             </MainStack.Navigator>
           )}

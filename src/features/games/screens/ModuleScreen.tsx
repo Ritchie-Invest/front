@@ -1,11 +1,10 @@
 import React from 'react';
 import { Box } from 'native-base';
 import { useModuleScreen } from '../hooks/useModuleScreen';
-import QuizHeader from '../components/QuizHeader';
+import GamesHeader from '../components/GamesHeader';
 import ModuleQuestion from '../components/ModuleQuestion';
 import ModuleChoices from '../components/ModuleChoices';
-import QuizFeedback from '../components/QuizFeedback';
-import ReviewModeFeedback from '../components/ReviewModeFeedback';
+import Feedback from '../components/Feedback';
 
 const ModuleScreen: React.FC = () => {
   const {
@@ -14,11 +13,9 @@ const ModuleScreen: React.FC = () => {
     choices,
     selected,
     showFeedback,
-    isReviewMode,
     completionResult,
     handleSelect,
     handleContinue,
-    handleReviewContinue,
     error,
     loading,
   } = useModuleScreen();
@@ -28,24 +25,22 @@ const ModuleScreen: React.FC = () => {
 
   return (
     <Box flex={1} bg="#fff">
-      <QuizHeader progress={progress} onClose={handleContinue} />
+      <GamesHeader progress={progress} onClose={handleContinue} />
       <ModuleQuestion question={question} />
       <ModuleChoices
         choices={choices}
         selected={selected}
         showFeedback={showFeedback}
-        isReviewMode={isReviewMode}
         completionResult={completionResult}
         onSelect={handleSelect}
       />
-      {showFeedback !== 'none' && !isReviewMode && (
-        <QuizFeedback
+      {showFeedback !== 'none' && (
+        <Feedback
           type={showFeedback as 'success' | 'error'}
           correctText={choices.find((c) => c.isCorrect)?.text}
           onContinue={handleContinue}
         />
       )}
-      {isReviewMode && <ReviewModeFeedback onContinue={handleReviewContinue} />}
     </Box>
   );
 };

@@ -47,7 +47,6 @@ export const validateStringField = (
 
 export const validateUserPossessedETFListItem = (etf: UserPossessedETFListItem): boolean => {
   if (!etf || typeof etf !== 'object') {
-    console.error('UserPossessedETFListItem validation failed: not an object', etf);
     return false;
   }
 

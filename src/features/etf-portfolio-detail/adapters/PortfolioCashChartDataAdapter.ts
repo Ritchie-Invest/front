@@ -1,25 +1,26 @@
 import { ChartDataAdapter, GenericChartPoint } from '~/components/molecules/models/LineChart';
-import { ETFPriceData } from '../models/ETFPriceData';
+import { PortfolioPosition } from '../models/PortfolioPosition';
 import { formatDate } from '~/utils/formatDate';
 import { formatCurrency } from '~/utils/formatCurrency';
 
-export class ETFChartDataAdapter implements ChartDataAdapter<ETFPriceData> {
-  adaptData(priceHistory: ETFPriceData[]): GenericChartPoint[] {
-    return priceHistory
+export class PortfolioCashChartDataAdapter implements ChartDataAdapter<PortfolioPosition> {
+  adaptData(portfolioPositions: PortfolioPosition[]): GenericChartPoint[] {
+    return portfolioPositions
       .filter((item) => {
-        const value = item.close;
-        const date = new Date(item.timestamp);
+        const value = item.cash;
+        const date = new Date(item.date);
         return !isNaN(value) && !isNaN(date.getTime()) && value !== null && value !== undefined;
       })
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
       .map((item) => {
-        const value = item.close;
-        const date = new Date(item.timestamp);
+        const value = item.cash;
+        const date = new Date(item.date);
         return {
           y: Number(value),
           x: date.getTime(),
           extraData: {
             formattedValue: formatCurrency(Number(value)),
-            formattedTime: formatDate(date, 'short'),
+            formattedTime: formatDate(date, 'overlay'),
             originalData: item,
           },
         };

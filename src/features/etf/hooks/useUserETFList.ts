@@ -18,7 +18,6 @@ export const useUserETFList = (
       setETFs(data);
     } catch (err) {
       setError('Failed to fetch ETFs');
-      console.error('Error fetching ETFs:', err);
     } finally {
       setLoading(false);
     }

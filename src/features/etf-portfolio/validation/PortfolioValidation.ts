@@ -134,6 +134,25 @@ export const validatePortfolioPositionsArray = (data: unknown): boolean => {
   return data.every(validatePortfolioPositionData);
 };
 
+export const validatePortfolioHistoryResponse = (
+  data: unknown,
+): data is {
+  positions: unknown;
+  variation: number;
+  variationPercent: number;
+  variationDirection: string;
+} => {
+  if (!data || typeof data !== 'object') return false;
+  const obj = data as any;
+  return (
+    Array.isArray(obj.positions) &&
+    obj.positions.every(validatePortfolioPositionData) &&
+    typeof obj.variation === 'number' &&
+    typeof obj.variationPercent === 'number' &&
+    typeof obj.variationDirection === 'string'
+  );
+};
+
 export const validateTotalValue = (value: unknown): value is number => {
   return typeof value === 'number' && value >= 0;
 };

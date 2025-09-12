@@ -30,6 +30,12 @@ export default function App() {
     setShowLogin(false);
   };
 
+  const handleShowOnboarding = () => {
+    setIsOnboardingCompleted(false);
+    setShowRegister(false);
+    setShowLogin(false);
+  };
+
   const handleLogin = () => {
     setShowLogin(true);
   };
@@ -57,6 +63,7 @@ export default function App() {
             isOnboardingCompleted={isOnboardingCompleted}
             showLogin={showLogin}
             showRegister={showRegister}
+            onShowOnboarding={handleShowOnboarding}
             handleLoginSuccess={handleLoginSuccess}
             handleOnboardingComplete={handleOnboardingComplete}
             handleLogin={handleLogin}

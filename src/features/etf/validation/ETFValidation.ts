@@ -57,7 +57,6 @@ export const validateETFId = (id: unknown): id is string => {
 
 export const validateETF = (etf: ETF): boolean => {
   if (!etf || typeof etf !== 'object') {
-    console.error('ETF validation failed: not an object', etf);
     return false;
   }
 
@@ -85,7 +84,6 @@ export const validateETF = (etf: ETF): boolean => {
 
   const isValid = Object.values(validations).every(Boolean);
   if (!isValid) {
-    console.error('ETF validation failed for:', etfData);
   }
 
   return isValid;

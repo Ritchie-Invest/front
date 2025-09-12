@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useSetSelectedETF } from '~/features/etf/store/ETFStore';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { MainStackParamList } from '~/navigation/AppNavigator';
+import { Screens } from '~/features/navigation/Type/Screens';
 
 type NavigationProp = NativeStackNavigationProp<MainStackParamList, 'InvestmentDashboard'>;
 
@@ -45,7 +46,7 @@ export const useETFList = (dataService: ETFListContract = new ETFListServiceAdap
       currentPrice: etf.price,
     });
 
-    navigation.navigate('ETFDetails', { id: etf.id });
+    navigation.navigate(Screens.ETF_DETAILS, { id: etf.id });
   };
 
   return {

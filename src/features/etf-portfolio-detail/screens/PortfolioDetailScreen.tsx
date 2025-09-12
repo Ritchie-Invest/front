@@ -1,31 +1,26 @@
 import React from 'react';
-import { FlatList } from 'react-native';
-import { Box, VStack } from '@gluestack-ui/themed';
-import { colors, paddings } from '~/lib/theme/theme';
+import { ScrollView } from 'react-native';
+import { Box, Center, Image, VStack, Text } from '@gluestack-ui/themed';
+import { colors, paddings, typography } from '~/lib/theme/theme';
 import { TransactionList } from '../components/TransactionList';
 import { PortfolioPie } from '~/features/etf-portfolio/components/PortfolioPie';
-import { PortfolioChart } from '../components/PortfolioChart';
+import { PortfolioLineChart } from '~/features/etf-portfolio-detail/components/PortfolioLineChart';
 import { UserETFList } from '~/features/etf/components/UserETFList';
+import PageCover from '~/components/organisms/components/PageCover';
+import { Screens } from '~/features/navigation/Type/Screens';
 
 export const PortfolioDetailScreen: React.FC = () => {
-  const renderContent = () => (
-    <VStack space="md" p={paddings.paddingMedium} pb={paddings.paddingExtraLarge}>
-      <PortfolioPie />
-      <PortfolioChart />
-      <UserETFList />
-      <TransactionList />
-    </VStack>
-  );
-
   return (
     <Box flex={1} bg={colors.mainBackgroundColor}>
-      <FlatList
-        data={[1]}
-        renderItem={renderContent}
-        keyExtractor={() => 'portfolio-content'}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ flexGrow: 1 }}
-      />
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
+        <VStack space="md">
+          <PageCover title="Votre portefeuille" Screen={Screens.PORTFOLIO} size={250} />
+          <PortfolioPie />
+          <PortfolioLineChart />
+          <UserETFList />
+          <TransactionList />
+        </VStack>
+      </ScrollView>
     </Box>
   );
 };

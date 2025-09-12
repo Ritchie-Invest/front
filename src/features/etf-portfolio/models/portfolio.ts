@@ -1,21 +1,10 @@
 import { CurrencyType } from '~/features/etf/types/CurrencyType';
 
-export interface Portfolio {
-  currency: CurrencyType;
+export interface basePortfolioInfos {
   cash: number;
   investments: number;
-  totalValue: number;
 }
-
-export interface PortfolioPosition {
-  id: string;
-  etfId: string;
-  ticker: string;
-  name: string;
-  quantity: number;
-  currentPrice: number;
+export interface Portfolio extends basePortfolioInfos {
+  currency: CurrencyType;
   totalValue: number;
-  priceChange: number;
-  priceChangePercentage: number;
-  isGaining: boolean;
 }

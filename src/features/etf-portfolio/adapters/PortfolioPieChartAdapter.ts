@@ -25,14 +25,15 @@ export class PortfolioPieChartAdapter implements PieChartDataAdapter<PortfolioDa
     const result: GenericPieChartData[] = [];
 
     if (data.cash > 0) {
+      const formattedCash = data.cash.toLocaleString('fr-FR', {
+        style: 'currency',
+        currency: 'EUR',
+      });
       result.push({
         value: data.cash,
-        label: 'Liquidités',
+        label: `Liquidités: ${formattedCash}`,
         color: this.cashColor,
-        formattedValue: `${data.cash.toLocaleString('fr-FR', {
-          style: 'currency',
-          currency: 'EUR',
-        })}`,
+        formattedValue: formattedCash,
         extraData: {
           type: 'cash',
           originalData: data,
@@ -41,14 +42,15 @@ export class PortfolioPieChartAdapter implements PieChartDataAdapter<PortfolioDa
     }
 
     if (data.investments > 0) {
+      const formattedInvestments = data.investments.toLocaleString('fr-FR', {
+        style: 'currency',
+        currency: 'EUR',
+      });
       result.push({
         value: data.investments,
-        label: 'Investissements',
+        label: `Investissements: ${formattedInvestments}`,
         color: this.investmentColor,
-        formattedValue: `${data.investments.toLocaleString('fr-FR', {
-          style: 'currency',
-          currency: 'EUR',
-        })}`,
+        formattedValue: formattedInvestments,
         extraData: {
           type: 'investments',
           originalData: data,

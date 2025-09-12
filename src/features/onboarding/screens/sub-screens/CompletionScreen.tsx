@@ -37,7 +37,13 @@ export const CompletionScreen: React.FC<CompletionScreenProps> = ({
 
         <Box flex={1} />
 
-        <Button onPress={onContinue}>{t('onboarding.completion.startButton')}</Button>
+        <Button
+          onPress={() => {
+            onContinue();
+          }}
+        >
+          {t('onboarding.completion.startButton')}
+        </Button>
       </VStack>
     </OnboardingLayout>
   );

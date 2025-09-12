@@ -83,18 +83,20 @@ export const OnboardingLayout: React.FC<OnboardingLayoutProps> = ({ onComplete, 
           />
         );
       case 6:
-        if (state.selectedLevel === 'beginner') {
-          return (
-            <CompletionScreen
-              title="Parfait"
-              description="On part de zéro alors. Prêt pour ta première leçon ?"
-              onContinue={handleComplete}
-              onBack={previousStep}
-              progress={getProgress()}
-            />
-          );
-        }
-        return null;
+        const completionTitle = state.selectedLevel === 'beginner' ? 'Parfait' : 'Parfait';
+        const completionDescription =
+          state.selectedLevel === 'beginner'
+            ? 'On part de zéro alors. Prêt pour ta première leçon ?'
+            : 'Prêt pour ta première leçon ?';
+        return (
+          <CompletionScreen
+            title={completionTitle}
+            description={completionDescription}
+            onContinue={handleComplete}
+            onBack={previousStep}
+            progress={getProgress()}
+          />
+        );
       default:
         return <WelcomeScreen onStart={handleStart} onLogin={onLogin} />;
     }

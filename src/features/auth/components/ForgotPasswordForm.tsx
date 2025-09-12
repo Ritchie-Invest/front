@@ -8,6 +8,7 @@ import { InputField } from '../../../components/atoms/InputField';
 import { useFormValidation } from '../../../hooks/useFormValidation';
 import { forgotPasswordSchema } from '../validation/forgotPasswordSchema';
 import { useTranslation } from 'react-i18next';
+import { colors } from '~/lib/theme/theme';
 
 type ForgotPasswordFormProps = {
   onBackToLogin?: () => void;
@@ -62,14 +63,18 @@ export const ForgotPasswordForm = ({ onBackToLogin }: ForgotPasswordFormProps) =
             type="email"
           />
 
-          {error && <Text color="$red500">{error}</Text>}
+          {error && <Text color={colors.errorColor}>{error}</Text>}
 
           <Button onPress={handleSubmit} isLoading={forgotPassword.isPending}>
             {t('forgot.button')}
           </Button>
 
-          {forgotPassword.isSuccess && <Text color="$green500">{t('forgot.success')}</Text>}
-          {forgotPassword.isError && <Text color="$red500">{t('forgot.error.generic')}</Text>}
+          {forgotPassword.isSuccess && (
+            <Text color={colors.successColor}>{t('forgot.success')}</Text>
+          )}
+          {forgotPassword.isError && (
+            <Text color={colors.errorColor}>{t('forgot.error.generic')}</Text>
+          )}
 
           <TextLink onPress={() => onBackToLogin?.()}>{t('forgot.backToLogin')}</TextLink>
         </VStack>

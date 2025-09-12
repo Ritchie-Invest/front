@@ -7,6 +7,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useActiveTab } from '~/features/navigation/hooks/useActiveTab';
 import { TabName, TabNameType } from '~/features/navigation/Type/TabNames';
 import { borderRadius, colors, paddings } from '~/lib/theme/theme';
+import { Screens } from '../../Type/Screens';
 
 type NavigationProp = NativeStackNavigationProp<MainStackParamList>;
 
@@ -38,11 +39,11 @@ const Navbar: React.FC = () => {
   const activeTab = useActiveTab();
 
   const handleLessonsPress = () => {
-    navigation.navigate('Landing');
+    navigation.navigate(Screens.HOME);
   };
 
   const handleInvestmentPress = () => {
-    navigation.navigate('InvestmentDashboard');
+    navigation.navigate(Screens.DASHBOARD);
   };
 
   return (

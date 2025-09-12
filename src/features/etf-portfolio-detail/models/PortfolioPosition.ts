@@ -1,11 +1,13 @@
-export interface PortfolioPosition {
+import { basePortfolioInfos } from '~/features/etf-portfolio/models/portfolio';
+
+export interface PortfolioPosition extends basePortfolioInfos {
   id: string;
-  cash: number;
-  investments: number;
   date: string;
 }
 
-export interface ApiResponse {
+export interface PortfolioHistoryResponse {
   positions: PortfolioPosition[];
-  total: number;
+  variation: number;
+  variationPercent: number;
+  variationDirection: string;
 }

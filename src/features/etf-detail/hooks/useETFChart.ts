@@ -6,7 +6,6 @@ import {
   useSelectedRange,
   useSetSelectedRange,
 } from '~/features/etf/store/ETFStore';
-import { MainStackParamList } from '~/navigation/AppNavigator';
 import { ETFPriceHistoryServiceAdapter } from '../adapters/ETFPriceHistoryServiceAdapter';
 import { ETFWithPriceHistory } from '../models/ETFPriceHistory';
 import { DateRangeType } from '~/components/molecules/types/dateRange';
@@ -14,8 +13,6 @@ import type { LineChartConfig } from '~/components/molecules/models/LineChart';
 import { TimeRangeSelectorConfig } from '~/components/molecules/models/TimeRange';
 import { ETFChartDataAdapter } from '../adapters/ETFChartDataAdapter';
 import { colors, margins } from '~/lib/theme/theme';
-
-type ETFDetailScreenRouteProp = RouteProp<MainStackParamList, 'ETFDetails'>;
 
 const etfChartAdapter = new ETFChartDataAdapter();
 
@@ -39,6 +36,7 @@ const defaultTimeRangeConfig: TimeRangeSelectorConfig = {
 export const useETFChart = (dataService?: ETFPriceHistoryServiceAdapter) => {
   const selectedRange = useSelectedRange();
   const setSelectedRange = useSetSelectedRange();
+  const setSelectedETF = useSetSelectedETF();
   const [priceHistory, setPriceHistory] = useState<ETFWithPriceHistory | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -57,6 +55,12 @@ export const useETFChart = (dataService?: ETFPriceHistoryServiceAdapter) => {
       setError(null);
       const data = await service.getETFWithPriceHistory(selectedETF.id, selectedRange);
       setPriceHistory(data);
+      setSelectedETF({
+        ...selectedETF,
+        variation: data.variation,
+        variationPercent: data.variationPercent,
+        variationDirection: data.variationDirection,
+      });
     } catch (error) {
       setError(error instanceof Error ? error.message : 'Une erreur est survenue');
     } finally {

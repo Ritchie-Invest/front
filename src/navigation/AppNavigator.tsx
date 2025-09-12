@@ -1,18 +1,17 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Box } from '@gluestack-ui/themed';
 import { OnboardingLayout } from '../features/onboarding/screens/OnboardingLayout';
-import { LoginScreen } from '../features/auth/screens/LoginScreen';
-import { RegisterScreen } from '../features/auth/screens/RegisterScreen';
+import { LoginScreen } from '~/features/auth/screens/LoginScreen';
+import { RegisterScreen } from '~/features/auth/screens/RegisterScreen';
 import HomeScreen from '../features/landing/screens/home';
 import { ETFDetailScreen } from '../features/etf-detail/screens/ETFDetailScreen';
 import { ETFTransactionScreen } from '~/features/etf-transaction/screens/ETFTransactionScreen';
 import { TransactionType } from '~/features/etf-transaction/types/TransactionType';
-
+import { Screens } from '~/features/navigation/Type/Screens';
 import { PortfolioDetailScreen } from '../features/etf-portfolio-detail/screens/PortfolioDetailScreen';
-import Navbar from '../features/navigation/components/organisms/navbar';
 import { InvestmentDashboardScreen } from '~/features/investment-dashboard/screens/InvestmentDashboardScreen';
+import BaseLayout from '~/components/organisms/components/BaseLayout';
 
 export type RootStackParamList = {
   Main: undefined;
@@ -22,15 +21,15 @@ export type RootStackParamList = {
 };
 
 export type MainStackParamList = {
-  Landing: undefined;
-  InvestmentDashboard: undefined;
-  ETFDetails: { id: string };
-  ETFTransaction: { transactionType: TransactionType };
-  PortfolioDetail: undefined;
-  Progress: undefined;
-  Profile: undefined;
-  Register: undefined;
-  Onboarding: undefined;
+  [Screens.HOME]: undefined;
+  [Screens.AUTH_LOGIN]: undefined;
+  [Screens.AUTH_REGISTER]: undefined;
+  [Screens.DASHBOARD]: undefined;
+  [Screens.ETF_DETAILS]: { id: string };
+  [Screens.TRANSACTION]: { transactionType: TransactionType };
+  [Screens.PORTFOLIO]: undefined;
+  [Screens.PROFILE]: undefined;
+  [Screens.ONBOARDING]: undefined;
 };
 
 const Stack = createNativeStackNavigator();
@@ -45,6 +44,7 @@ export const AppNavigator = ({
   handleLogin,
   handleLogout,
   handleBackToLogin,
+  onShowOnboarding,
 }: {
   isOnboardingCompleted: boolean;
   showLogin: boolean;
@@ -54,22 +54,42 @@ export const AppNavigator = ({
   handleLogin: () => void;
   handleLogout: () => void;
   handleBackToLogin: () => void;
+  onShowOnboarding?: () => void;
 }) => (
   <NavigationContainer>
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {!isOnboardingCompleted ? (
         showRegister ? (
-          <Stack.Screen name="Register">
+          <Stack.Screen name={Screens.AUTH_REGISTER}>
             {() => (
-              <RegisterScreen onBackToLogin={handleBackToLogin} onSuccess={handleLoginSuccess} />
+              <BaseLayout
+                children={
+                  <RegisterScreen
+                    onBackToLogin={handleBackToLogin}
+                    onSuccess={handleLoginSuccess}
+                  />
+                }
+                showNavbar={false}
+              />
             )}
           </Stack.Screen>
         ) : showLogin ? (
-          <Stack.Screen name="Login">
-            {() => <LoginScreen onLoginSuccess={handleLoginSuccess} signupEnabled={false} />}
+          <Stack.Screen name={Screens.AUTH_LOGIN}>
+            {() => (
+              <BaseLayout
+                children={
+                  <LoginScreen
+                    onLoginSuccess={handleLoginSuccess}
+                    signupEnabled={false}
+                    onShowOnboarding={onShowOnboarding}
+                  />
+                }
+                showNavbar={false}
+              />
+            )}
           </Stack.Screen>
         ) : (
-          <Stack.Screen name="Onboarding">
+          <Stack.Screen name={Screens.ONBOARDING}>
             {() => <OnboardingLayout onComplete={handleOnboardingComplete} onLogin={handleLogin} />}
           </Stack.Screen>
         )
@@ -82,31 +102,17 @@ export const AppNavigator = ({
                 headerTitle: ' ',
               }}
             >
-              <MainStack.Screen name="Landing">
-                {() => (
-                  <Box flex={1}>
-                    <HomeScreen onLogout={handleLogout} />
-                    <Navbar />
-                  </Box>
-                )}
+              <MainStack.Screen name={Screens.HOME}>
+                {() => <BaseLayout children={<HomeScreen onLogout={handleLogout} />} />}
               </MainStack.Screen>
-              <MainStack.Screen name="InvestmentDashboard" options={{ headerTitle: 'Portfolio' }}>
-                {() => (
-                  <Box flex={1}>
-                    <InvestmentDashboardScreen />
-                    <Navbar />
-                  </Box>
-                )}
+              <MainStack.Screen name={Screens.DASHBOARD} options={{ headerTitle: 'Portfolio' }}>
+                {() => <BaseLayout children={<InvestmentDashboardScreen />} />}
               </MainStack.Screen>
-              <MainStack.Screen name="ETFDetails" options={{ headerTitle: 'Détails ETF' }}>
-                {() => (
-                  <Box flex={1}>
-                    <ETFDetailScreen />
-                  </Box>
-                )}
+              <MainStack.Screen name={Screens.ETF_DETAILS} options={{ headerTitle: 'Détails ETF' }}>
+                {() => <BaseLayout children={<ETFDetailScreen />} />}
               </MainStack.Screen>
               <MainStack.Screen
-                name="ETFTransaction"
+                name={Screens.TRANSACTION}
                 options={({ route }) => ({
                   headerTitle:
                     route.params?.transactionType === TransactionType.BUY
@@ -116,21 +122,13 @@ export const AppNavigator = ({
                         : 'Transaction',
                 })}
               >
-                {() => (
-                  <Box flex={1}>
-                    <ETFTransactionScreen />
-                  </Box>
-                )}
+                {() => <BaseLayout children={<ETFTransactionScreen />} />}
               </MainStack.Screen>
               <MainStack.Screen
-                name="PortfolioDetail"
+                name={Screens.PORTFOLIO}
                 options={{ headerTitle: 'Détails Portfolio' }}
               >
-                {() => (
-                  <Box flex={1}>
-                    <PortfolioDetailScreen />
-                  </Box>
-                )}
+                {() => <BaseLayout children={<PortfolioDetailScreen />} />}
               </MainStack.Screen>
             </MainStack.Navigator>
           )}

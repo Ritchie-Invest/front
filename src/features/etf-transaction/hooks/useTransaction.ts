@@ -7,8 +7,9 @@ import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
 import { MainStackParamList } from '~/navigation/AppNavigator';
 import { useTransactionStore } from '../store/TransactionStore';
 import { useConversion } from './useConversion';
+import { Screens } from '~/features/navigation/Type/Screens';
 
-type ETFTransactionRouteProp = RouteProp<MainStackParamList, 'ETFTransaction'>;
+type ETFTransactionRouteProp = RouteProp<MainStackParamList, Screens.TRANSACTION>;
 
 type ButtonVariant = 'primary' | 'secondary' | 'disabled';
 
@@ -96,7 +97,6 @@ export const useTransaction = () => {
 
       const adapter = new TransactionServiceAdapter();
       const result = await adapter.executeTransaction(request);
-      console.log('Transaction result:', result);
       setResponse(result);
     } catch (err) {
       const errorMsg = err instanceof Error ? err.message : 'Une erreur est survenue';
@@ -114,7 +114,7 @@ export const useTransaction = () => {
 
   const goToInvestmentDashboard = () => {
     clearTransaction();
-    navigation.navigate('InvestmentDashboard' as never);
+    navigation.navigate(Screens.DASHBOARD as never);
   };
 
   return {

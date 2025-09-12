@@ -6,9 +6,14 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { ResponseMessage } from '../components/ResponseMessage';
 import { useTransactionStore } from '../store/TransactionStore';
 import { TransactionForm } from '../components/TransactionForm';
+import { useEffect } from 'react';
 
 export const ETFTransactionScreen: React.FC = () => {
-  const { error, response } = useTransactionStore();
+  const { error, response, clearTransaction } = useTransactionStore();
+
+  useEffect(() => {
+    clearTransaction();
+  }, [clearTransaction]);
 
   if (response || error) {
     return (
@@ -18,7 +23,7 @@ export const ETFTransactionScreen: React.FC = () => {
     );
   } else {
     return (
-      <Box height="100%" flex={1} bg={colors.mainBackgroundColor} p={paddings.paddingLarge}>
+      <Box height="100%" flex={1} bg={colors.mainBackgroundColor}>
         <ScrollView
           keyboardShouldPersistTaps="always"
           contentContainerStyle={{ flexGrow: 1 }}

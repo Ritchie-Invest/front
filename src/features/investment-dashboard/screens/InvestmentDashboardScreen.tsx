@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Text, VStack } from '@gluestack-ui/themed';
+import { Box, Text, VStack, Image } from '@gluestack-ui/themed';
 import { ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -7,14 +7,16 @@ import { MainStackParamList } from '~/navigation/AppNavigator';
 import { PortfolioPie } from '~/features/etf-portfolio/components/PortfolioPie';
 import { usePortfolio } from '~/features/etf-portfolio/hooks/usePortfolio';
 import { ETFList } from '../components/ETFList';
-import { colors, margins, paddings, spacing } from '~/lib/theme/theme';
+import { colors, margins, paddings, spacing, typography } from '~/lib/theme/theme';
+import PageCover from '~/components/organisms/components/PageCover';
+import { Screens } from '~/features/navigation/Type/Screens';
 
 export const InvestmentDashboardScreen: React.FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<MainStackParamList>>();
   const { loading: portfolioLoading, error: portfolioError } = usePortfolio();
 
   const handlePortfolioPress = () => {
-    navigation.navigate('PortfolioDetail');
+    navigation.navigate(Screens.PORTFOLIO);
   };
 
   if (portfolioError) {
@@ -33,6 +35,7 @@ export const InvestmentDashboardScreen: React.FC = () => {
   return (
     <ScrollView style={{ flex: 1, backgroundColor: colors.mainBackgroundColor }}>
       <VStack bg={colors.mainBackgroundColor} space={spacing.spacingMediumFallback}>
+        <PageCover title="Tableau de bord" Screen={Screens.DASHBOARD} size={250} />
         <Box>
           <PortfolioPie onPress={handlePortfolioPress} />
         </Box>

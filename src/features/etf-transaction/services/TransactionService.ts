@@ -14,7 +14,6 @@ export const TransactionService = {
         request,
         { withCredentials: true },
       );
-      console.log('API response data:', response.data);
       return response.data;
     } catch (error) {
       console.error('[TransactionService] Error:', error);

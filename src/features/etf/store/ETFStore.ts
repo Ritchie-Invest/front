@@ -9,6 +9,9 @@ export interface ETFSelectedData {
   currentPrice: number;
   userShares?: number;
   userAmount?: number;
+  variation?: number;
+  variationPercent?: number;
+  variationDirection?: string;
 }
 
 interface ETFStoreState {

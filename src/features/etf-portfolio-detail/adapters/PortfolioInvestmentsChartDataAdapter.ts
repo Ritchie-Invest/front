@@ -3,17 +3,17 @@ import { PortfolioPosition } from '../models/PortfolioPosition';
 import { formatDate } from '~/utils/formatDate';
 import { formatCurrency } from '~/utils/formatCurrency';
 
-export class PortfolioChartDataAdapter implements ChartDataAdapter<PortfolioPosition> {
+export class PortfolioInvestmentsChartDataAdapter implements ChartDataAdapter<PortfolioPosition> {
   adaptData(portfolioPositions: PortfolioPosition[]): GenericChartPoint[] {
     return portfolioPositions
       .filter((item) => {
-        const value = item.cash + item.investments;
+        const value = item.investments;
         const date = new Date(item.date);
         return !isNaN(value) && !isNaN(date.getTime()) && value !== null && value !== undefined;
       })
       .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
       .map((item) => {
-        const value = item.cash + item.investments;
+        const value = item.investments;
         const date = new Date(item.date);
         return {
           y: Number(value),

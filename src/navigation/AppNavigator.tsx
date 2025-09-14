@@ -12,6 +12,8 @@ import { Screens } from '~/features/navigation/Type/Screens';
 import { PortfolioDetailScreen } from '../features/etf-portfolio-detail/screens/PortfolioDetailScreen';
 import { InvestmentDashboardScreen } from '~/features/investment-dashboard/screens/InvestmentDashboardScreen';
 import BaseLayout from '~/components/organisms/components/BaseLayout';
+import UserHeader from '~/features/user/components/userHeader';
+import UserProfile from '~/features/user/screens/UserProfile';
 
 export type RootStackParamList = {
   Main: undefined;
@@ -99,36 +101,26 @@ export const AppNavigator = ({
             <MainStack.Navigator
               screenOptions={{
                 headerShown: true,
-                headerTitle: ' ',
+                headerTitle: () => <UserHeader />,
               }}
             >
               <MainStack.Screen name={Screens.HOME}>
-                {() => <BaseLayout children={<HomeScreen onLogout={handleLogout} />} />}
+                {() => <BaseLayout children={<HomeScreen />} />}
               </MainStack.Screen>
-              <MainStack.Screen name={Screens.DASHBOARD} options={{ headerTitle: 'Portfolio' }}>
+              <MainStack.Screen name={Screens.DASHBOARD}>
                 {() => <BaseLayout children={<InvestmentDashboardScreen />} />}
               </MainStack.Screen>
-              <MainStack.Screen name={Screens.ETF_DETAILS} options={{ headerTitle: 'Détails ETF' }}>
+              <MainStack.Screen name={Screens.ETF_DETAILS}>
                 {() => <BaseLayout children={<ETFDetailScreen />} />}
               </MainStack.Screen>
-              <MainStack.Screen
-                name={Screens.TRANSACTION}
-                options={({ route }) => ({
-                  headerTitle:
-                    route.params?.transactionType === TransactionType.BUY
-                      ? 'Achat ETF'
-                      : route.params?.transactionType === TransactionType.SELL
-                        ? 'Vente ETF'
-                        : 'Transaction',
-                })}
-              >
+              <MainStack.Screen name={Screens.TRANSACTION}>
                 {() => <BaseLayout children={<ETFTransactionScreen />} />}
               </MainStack.Screen>
-              <MainStack.Screen
-                name={Screens.PORTFOLIO}
-                options={{ headerTitle: 'Détails Portfolio' }}
-              >
+              <MainStack.Screen name={Screens.PORTFOLIO}>
                 {() => <BaseLayout children={<PortfolioDetailScreen />} />}
+              </MainStack.Screen>
+              <MainStack.Screen name={Screens.PROFILE}>
+                {() => <BaseLayout children={<UserProfile handleLogout={handleLogout} />} />}
               </MainStack.Screen>
             </MainStack.Navigator>
           )}

@@ -1,17 +1,12 @@
 import React, { useLayoutEffect } from 'react';
-import { Button, ButtonText, ScrollView } from '@gluestack-ui/themed';
+import { ScrollView } from '@gluestack-ui/themed';
 import { Hero } from '../components/hero';
 import { ChaptersTimeline } from '../components/timeline';
 import { useProgress } from '../hooks/useProgress';
-import { useNavigation } from '@react-navigation/native';
-import { useAuthStore } from '../../auth/store/authStore';
 import PageCover from '~/components/organisms/components/PageCover';
 import { Screens } from '~/features/navigation/Type/Screens';
 
-const HomeScreen = ({ onLogout }: { onLogout: () => void }) => {
-  const navigation = useNavigation();
-  const logout = useAuthStore((s) => s.logout);
-
+const HomeScreen = () => {
   const {
     chapters,
     currentLesson,
@@ -23,22 +18,6 @@ const HomeScreen = ({ onLogout }: { onLogout: () => void }) => {
 
   const showProgress = true;
   const autoScroll = true;
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <Button
-          onPress={() => {
-            logout();
-            onLogout();
-          }}
-          variant="link"
-        >
-          <ButtonText>Déconnexion</ButtonText>
-        </Button>
-      ),
-    });
-  }, [navigation, logout, onLogout]);
 
   return (
     <>

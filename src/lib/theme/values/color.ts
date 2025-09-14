@@ -16,7 +16,7 @@ const colors = {
   accentTextColor: '#0ea5e9',
   mutedTextColor: '#94a3b8',
 
-  primaryActionColor: '#087FE7',
+  primaryActionColor: '#087fe7ff',
   primaryActionFocusColor: '#0284c7',
   primaryActionBackgroundColor: 'rgba(8, 127, 231, 0.1)',
   primaryActionActiveColor: '#0369a1',
@@ -38,7 +38,8 @@ const colors = {
   warningBorderColor: '#fde68a',
 
   infoColor: '#2499ffff',
-  infoBackgroundColor: '#2499ff9f',
+  infoInactiveColor: 'rgba(14, 164, 233, 0.67)ff',
+  infoBackgroundColor: 'rgba(96, 178, 249, 0.54)',
   infoBorderColor: '#2499ffff',
 
   overlayColor: 'rgba(0, 0, 0, 0.5)',

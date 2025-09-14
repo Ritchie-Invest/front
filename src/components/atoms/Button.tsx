@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { Button as GButton, ButtonText, ButtonSpinner } from '@gluestack-ui/themed';
-import { borderRadius, colors } from '../../lib/theme/theme';
+import { borderRadius, colors, typography } from '../../lib/theme/theme';
 
 type Variant = 'primary' | 'secondary' | 'outline' | 'disabled' | 'accent' | 'ghost';
 
@@ -66,6 +66,10 @@ export const Button = ({ children, onPress, isLoading, variant = 'primary', ...r
     >
       {isLoading && <ButtonSpinner mr="$1" />}
       <ButtonText
+        width="100%"
+        textAlign="center"
+        fontWeight={typography.fontWeightMedium}
+        fontSize={typography.bodyLargeSize}
         color={variant === 'primary' ? colors.mainBackgroundColor : colors.primaryActionColor}
       >
         {children}

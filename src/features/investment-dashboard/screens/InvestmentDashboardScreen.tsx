@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Text, VStack, Image } from '@gluestack-ui/themed';
+import { Box, Text, VStack } from '@gluestack-ui/themed';
 import { ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -10,11 +10,17 @@ import { ETFList } from '../components/ETFList';
 import { colors, margins, paddings, spacing, typography } from '~/lib/theme/theme';
 import PageCover from '~/components/organisms/components/PageCover';
 import { Screens } from '~/features/navigation/Type/Screens';
+import { useCurrentUserInfos } from '~/features/user/store/UserInfosStore';
+import LockedOverlay from '../components/LockedOverlay';
 
 export const InvestmentDashboardScreen: React.FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<MainStackParamList>>();
   const { loading: portfolioLoading, error: portfolioError } = usePortfolio();
+  const currentUserInfos = useCurrentUserInfos();
 
+  if (currentUserInfos && !currentUserInfos.isInvestmentUnlocked) {
+    return <LockedOverlay level={currentUserInfos.levelRequiredToUnlockInvestment} />;
+  }
   const handlePortfolioPress = () => {
     navigation.navigate(Screens.PORTFOLIO);
   };

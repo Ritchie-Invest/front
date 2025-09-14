@@ -6,6 +6,7 @@ const typography = {
   fontWeightBoldFallback: 'bold' as const,
 
   heading1Size: 24,
+  heading1SizeFallback: '3xl' as const,
   heading1LineHeight: 40,
   heading1LetterSpacing: -0.5,
 
@@ -14,6 +15,7 @@ const typography = {
   heading2LetterSpacing: -0.3,
 
   heading3Size: 20,
+  heading3SizeFallback: 'xl' as const,
   heading3LineHeight: 32,
   heading3LetterSpacing: -0.2,
 

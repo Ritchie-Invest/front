@@ -8,4 +8,6 @@ export const config = {
   FORGOT_PASSWORD_ENABLED: Constants.expoConfig?.extra?.FORGOT_PASSWORD_ENABLED || false,
 
   SIGNUP_ENABLED: Constants.expoConfig?.extra?.SIGNUP_ENABLED || false,
+
+  LOCK_DASHBOARD: Constants.expoConfig?.extra?.LOCK_DASHBOARD || false,
 } as const;

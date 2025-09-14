@@ -20,8 +20,8 @@ export const InvestmentDashboardScreen: React.FC = () => {
   const { loading: portfolioLoading, error: portfolioError } = usePortfolio();
   const currentUserInfos = useCurrentUserInfos();
 
-  if (lockDashboard && currentUserInfos && !currentUserInfos.isInvestmentUnlocked) {
-    return <LockedOverlay level={currentUserInfos.levelRequiredToUnlockInvestment} />;
+  if (lockDashboard || (currentUserInfos && !currentUserInfos.isInvestmentUnlocked)) {
+    return <LockedOverlay />;
   }
   const handlePortfolioPress = () => {
     navigation.navigate(Screens.PORTFOLIO);

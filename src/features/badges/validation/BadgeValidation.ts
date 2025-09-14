@@ -1,4 +1,4 @@
-import { UserBadge } from '../models/userBadge';
+import { Badge } from '../models/Badge';
 import { BadgeType } from '../types/BadgeType';
 
 export const USER_BADGE_VALIDATION_RULES = {
@@ -19,19 +19,17 @@ export const USER_BADGE_VALIDATION_RULES = {
     minLength: 5,
     maxLength: 500,
   },
-  ICON: {
-    required: true,
-    type: 'string',
-    minLength: 5,
-    maxLength: 100,
-  },
   AWARDED_AT: {
     required: false,
     type: 'date',
   },
+  HAS_SEEN: {
+    required: true,
+    type: 'boolean',
+  },
 } as const;
 
-export const validateUserBadge = (badge: UserBadge): boolean => {
+export const validateBadge = (badge: Badge): boolean => {
   if (!badge || typeof badge !== 'object') {
     return false;
   }
@@ -51,11 +49,8 @@ export const validateUserBadge = (badge: UserBadge): boolean => {
       typeof badgeData.description === 'string' &&
       badgeData.description.length >= USER_BADGE_VALIDATION_RULES.DESCRIPTION.minLength &&
       badgeData.description.length <= USER_BADGE_VALIDATION_RULES.DESCRIPTION.maxLength,
-    icon:
-      typeof badgeData.icon === 'string' &&
-      badgeData.icon.length >= USER_BADGE_VALIDATION_RULES.ICON.minLength &&
-      badgeData.icon.length <= USER_BADGE_VALIDATION_RULES.ICON.maxLength,
     awardedAt: badgeData.awardedAt instanceof Date || badgeData.awardedAt === null,
+    hasSeen: typeof badgeData.hasSeen === 'boolean',
   };
 
   return Object.values(validations).every(Boolean);

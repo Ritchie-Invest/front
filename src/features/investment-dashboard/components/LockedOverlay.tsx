@@ -3,7 +3,7 @@ import { Image, Dimensions } from 'react-native';
 import { borderRadius, colors, paddings, spacing, typography } from '~/lib/theme/theme';
 
 type LockedOverlayProps = {
-  level: number;
+  level?: number;
 };
 
 const LockedOverlay: React.FC<LockedOverlayProps> = ({ level }) => {
@@ -42,7 +42,7 @@ const LockedOverlay: React.FC<LockedOverlayProps> = ({ level }) => {
         color={colors.infoColor}
         size={typography.heading3SizeFallback}
       >
-        Veuillez atteindre le niveau {level} pour le débloquer
+        Veuillez atteindre le niveau {level ? level : 5} pour le débloquer
       </Text>
     </Center>
   );

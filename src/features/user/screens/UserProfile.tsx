@@ -1,11 +1,10 @@
 import React from 'react';
 import { Box, Text, VStack, HStack, Divider, Center } from '@gluestack-ui/themed';
-import {
-  useCurrentUserInfos,
-  useClearCurrentUserInfos,
-} from '~/features/user/store/UserInfosStore';
+import { useCurrentUserInfos } from '~/features/user/store/UserInfosStore';
 import { LogoutButton } from '~/features/user/components/logoutButton';
 import { borderRadius, colors, margins, paddings, spacing, typography } from '~/lib/theme/theme';
+import { ScrollView } from 'react-native-gesture-handler';
+import BadgesList from '~/features/badges/components/BadgesList';
 
 export type UserProfileProps = {
   handleLogout?: () => void;
@@ -15,7 +14,7 @@ export default function UserProfile({ handleLogout }: UserProfileProps) {
   const user = useCurrentUserInfos();
 
   return (
-    <Box flex={1}>
+    <ScrollView>
       <VStack space="md" flex={1} justifyContent="space-between">
         <Box gap={spacing.spacingLarge}>
           <Text
@@ -82,11 +81,33 @@ export default function UserProfile({ handleLogout }: UserProfileProps) {
             </Text>
           </VStack>
         </Box>
-
-        <Center>
-          <LogoutButton handleLogout={handleLogout} />
-        </Center>
+        <Box
+          gap={spacing.spacingLarge}
+          backgroundColor={colors.componentBackgroundColor}
+          padding={paddings.paddingExtraLarge}
+          borderRadius={borderRadius.borderRadiusMedium}
+          shadowColor={colors.primaryTextColor}
+          shadowOffset={{ width: 0, height: 2 }}
+          shadowOpacity={0.15}
+          shadowRadius={4}
+          elevation={3}
+          my={margins.marginMedium}
+        >
+          <Text
+            size={typography.heading2SizeFallback}
+            color={colors.primaryTextColor}
+            fontWeight={typography.fontWeightBold}
+          >
+            Mes badges
+          </Text>
+          <BadgesList />
+        </Box>
+        <Box flex={1} justifyContent="center" alignItems="center" flexDirection="row" width="100%">
+          <Center>
+            <LogoutButton handleLogout={handleLogout} />
+          </Center>
+        </Box>
       </VStack>
-    </Box>
+    </ScrollView>
   );
 }

@@ -68,6 +68,12 @@ importers:
       i18next:
         specifier: ^25.3.2
         version: 25.3.2(typescript@5.9.2)
+      lottie-ios:
+        specifier: ^4.5.1
+        version: 4.5.1
+      lottie-react-native:
+        specifier: ^7.3.4
+        version: 7.3.4(react-native@0.81.4(@babel/core@7.28.0)(@types/react@19.1.12)(react@19.1.0))(react@19.1.0)
       normalize-css-color:
         specifier: ^1.0.2
         version: 1.0.2
@@ -4944,6 +4950,22 @@ packages:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
     hasBin: true
 
+  lottie-ios@4.5.1:
+    resolution: {integrity: sha512-LmFJG5ip7ZTuoMttmV6NyAY6dR8sEyVYEJOqJytS+fRAjpvqsF0tM/1VFt3lV7Ck7XB043QHwVelLag7fOx/TA==}
+
+  lottie-react-native@7.3.4:
+    resolution: {integrity: sha512-XUh7eGFb7ID8JRdU6U4N4cYQeYmjtdQRvd8ZXJ6xrdSsn5gZD0c79ITOREPcwJg4YupBFHgyV1GXdAHQP+KYUQ==}
+    peerDependencies:
+      '@lottiefiles/dotlottie-react': ^0.13.5
+      react: '*'
+      react-native: '>=0.46'
+      react-native-windows: '>=0.63.x'
+    peerDependenciesMeta:
+      '@lottiefiles/dotlottie-react':
+        optional: true
+      react-native-windows:
+        optional: true
+
   lower-case@2.0.2:
     resolution: {integrity: sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg==}
 
@@ -6995,8 +7017,8 @@ snapshots:
     dependencies:
       '@babel/parser': 7.28.4
       '@babel/types': 7.28.4
-      '@jridgewell/gen-mapping': 0.3.12
-      '@jridgewell/trace-mapping': 0.3.29
+      '@jridgewell/gen-mapping': 0.3.13
+      '@jridgewell/trace-mapping': 0.3.31
       jsesc: 3.1.0
 
   '@babel/helper-annotate-as-pure@7.27.3':
@@ -8930,7 +8952,7 @@ snapshots:
 
   '@jest/source-map@29.6.3':
     dependencies:
-      '@jridgewell/trace-mapping': 0.3.29
+      '@jridgewell/trace-mapping': 0.3.31
       callsites: 3.1.0
       graceful-fs: 4.2.11
 
@@ -9021,8 +9043,8 @@ snapshots:
 
   '@jridgewell/source-map@0.3.10':
     dependencies:
-      '@jridgewell/gen-mapping': 0.3.12
-      '@jridgewell/trace-mapping': 0.3.29
+      '@jridgewell/gen-mapping': 0.3.13
+      '@jridgewell/trace-mapping': 0.3.31
 
   '@jridgewell/source-map@0.3.11':
     dependencies:
@@ -9046,7 +9068,7 @@ snapshots:
   '@jridgewell/trace-mapping@0.3.9':
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
-      '@jridgewell/sourcemap-codec': 1.5.4
+      '@jridgewell/sourcemap-codec': 1.5.5
 
   '@legendapp/motion@2.4.0(nativewind@4.1.23(react-native-reanimated@4.1.0(@babel/core@7.28.0)(react-native-worklets@0.5.1(@babel/core@7.28.0)(react-native@0.81.4(@babel/core@7.28.0)(@types/react@19.1.12)(react@19.1.0))(react@19.1.0))(react-native@0.81.4(@babel/core@7.28.0)(@types/react@19.1.12)(react@19.1.0))(react@19.1.0))(react-native-safe-area-context@5.6.1(react-native@0.81.4(@babel/core@7.28.0)(@types/react@19.1.12)(react@19.1.0))(react@19.1.0))(react-native-svg@15.12.1(react-native@0.81.4(@babel/core@7.28.0)(@types/react@19.1.12)(react@19.1.0))(react@19.1.0))(react-native@0.81.4(@babel/core@7.28.0)(@types/react@19.1.12)(react@19.1.0))(react@19.1.0)(tailwindcss@3.4.17(ts-node@10.9.2(@types/node@24.0.12)(typescript@5.9.2))))(react-native@0.81.4(@babel/core@7.28.0)(@types/react@19.1.12)(react@19.1.0))(react@19.1.0)':
     dependencies:
@@ -13522,6 +13544,13 @@ snapshots:
     dependencies:
       js-tokens: 4.0.0
 
+  lottie-ios@4.5.1: {}
+
+  lottie-react-native@7.3.4(react-native@0.81.4(@babel/core@7.28.0)(@types/react@19.1.12)(react@19.1.0))(react@19.1.0):
+    dependencies:
+      react: 19.1.0
+      react-native: 0.81.4(@babel/core@7.28.0)(@types/react@19.1.12)(react@19.1.0)
+
   lower-case@2.0.2:
     dependencies:
       tslib: 2.8.1
@@ -15449,7 +15478,7 @@ snapshots:
 
   v8-to-istanbul@9.3.0:
     dependencies:
-      '@jridgewell/trace-mapping': 0.3.29
+      '@jridgewell/trace-mapping': 0.3.31
       '@types/istanbul-lib-coverage': 2.0.6
       convert-source-map: 2.0.0
 

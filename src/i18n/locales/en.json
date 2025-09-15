@@ -91,13 +91,20 @@
     "unlockMessage": "Complete the previous lesson to unlock"
   },
   "game": {
-    "completeSentence": "Complete the sentence",
     "success": "Well done!",
     "error": "Oops!",
     "loading": "Loading the game...",
     "correctAnswer": "Correct answer:",
     "continue": "Continue",
-    "understood": "Understood"
+    "understood": "Understood",
+    "qcm": {
+      "moduleSentence": "Complete the sentence"
+    },
+    "trueOrFalse": {
+      "moduleSentence": "True or False",
+      "true": "True",
+      "false": "False"
+    }
   },
   "completion": {
     "congrats": "High five!",

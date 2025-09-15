@@ -1,12 +1,12 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { Box } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { useQueryClient } from '@tanstack/react-query';
 import { Button } from '~/components/atoms/Button';
-import { RootStackParamList } from '../../../navigation/AppNavigator';
+import { RootStackParamList } from '../../../../navigation/AppNavigator';
 import CompletionSummary from '../components/CompletionSummary';
 
 interface CompleteScreenProps {

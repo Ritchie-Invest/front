@@ -5,12 +5,13 @@ import { useQueryClient } from '@tanstack/react-query';
 import { moduleService } from '../services/moduleService';
 import { gameProgressService } from '../services/progressService';
 import { CompleteModuleResponse } from '../models/progress';
-import { GameModule } from '../models/module';
 import { MainStackParamList } from '~/navigation/AppNavigator';
+import { isTrueFalseModule } from '../utils/moduleTypeGuards';
 
 type ModuleScreenRouteProp = RouteProp<MainStackParamList, 'ModuleScreen'>;
 
-export const useModuleScreen = () => {
+// Hook unifié qui détecte le type ET charge les données
+export const useGameModule = () => {
   const route = useRoute<ModuleScreenRouteProp>();
   const {
     lessonId,
@@ -19,16 +20,17 @@ export const useModuleScreen = () => {
     totalGameModules = 1,
     correctAnswers = 0,
   } = route.params;
-  const [module, setModule] = useState<GameModule | null>(null);
+
+  const [module, setModule] = useState<any>(null);
   const [error, setError] = useState<any>(null);
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selected, setSelected] = useState<any>(null);
   const [showFeedback, setShowFeedback] = useState<'none' | 'success' | 'error'>('none');
   const [completionResult, setCompletionResult] = useState<CompleteModuleResponse | null>(null);
   const navigation = useNavigation<NativeStackNavigationProp<MainStackParamList>>();
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    const loadModule = async () => {
+    const loadModuleAndDetectType = async () => {
       try {
         const moduleData = await moduleService.getModule(moduleId);
         setModule(moduleData);
@@ -36,15 +38,23 @@ export const useModuleScreen = () => {
         setError(err);
       }
     };
-    loadModule();
+
+    loadModuleAndDetectType();
   }, [moduleId]);
 
-  const handleSelect = async (choiceId: string) => {
-    setSelected(choiceId);
+  const handleSelect = async (selection: any) => {
+    setSelected(selection);
 
     try {
-      // Envoi de la réponse et récupération du résultat
-      const result = await gameProgressService.completeModule(moduleId, choiceId);
+      let result;
+
+      // Compléter le module avec le bon type
+      result = await gameProgressService.completeModule(
+        moduleId,
+        selection,
+        isTrueFalseModule(module) ? 'TRUE_OR_FALSE' : 'MCQ',
+      );
+
       setCompletionResult(result);
       setShowFeedback(result.isCorrect ? 'success' : 'error');
 
@@ -73,7 +83,6 @@ export const useModuleScreen = () => {
     setSelected(null);
     const newCorrectAnswers = correctAnswers + (completionResult.isCorrect ? 1 : 0);
 
-    // Navigation vers le module suivant ou vers l'écran de completion
     if (completionResult.nextGameModuleId) {
       // Il y a encore des modules dans cette leçon
       navigation.replace('ModuleScreen', {
@@ -85,24 +94,25 @@ export const useModuleScreen = () => {
       });
     } else {
       // Fin de la leçon
-      let xpWon = 0;
-      let isLessonCompleted = false;
-
       try {
         const lessonResult = await gameProgressService.completeLesson(lessonId);
-        xpWon = lessonResult.xpWon || 0;
-        isLessonCompleted = lessonResult.isCompleted || false;
+        navigation.replace('CompleteScreen', {
+          lessonId,
+          completedModules: lessonResult.completedGameModules,
+          totalModules: lessonResult.totalGameModules,
+          xpWon: lessonResult.xpWon || 0,
+          isLessonCompleted: lessonResult.isCompleted,
+        });
       } catch (error) {
-        console.error('Error completing lesson:', error);
+        // En cas d'erreur, afficher tout de même l'écran de completion
+        navigation.replace('CompleteScreen', {
+          lessonId,
+          completedModules: newCorrectAnswers,
+          totalModules: completionResult.totalGameModules,
+          xpWon: 0,
+          isLessonCompleted: false,
+        });
       }
-
-      navigation.replace('CompleteScreen', {
-        lessonId,
-        completedModules: newCorrectAnswers,
-        totalModules: completionResult.totalGameModules,
-        xpWon,
-        isLessonCompleted,
-      });
     }
   };
 
@@ -114,10 +124,19 @@ export const useModuleScreen = () => {
   // Ajustement visuel de la barre de progression lors de l'affichage du feedback
   const adjustedProgress = showFeedback !== 'none' ? progress + 1 / apiTotalModules : progress;
 
+  // Extraire les données spécifiques selon le type
+  const gameData = isTrueFalseModule(module)
+    ? {
+        question: module?.details?.question,
+        correctAnswer: module?.details?.isTrue ?? true,
+      }
+    : {
+        question: module?.details?.question,
+        choices: module?.details?.choices || [],
+      };
+
   return {
     progress: Math.min(adjustedProgress, 1),
-    question: module?.details?.question,
-    choices: module?.details?.choices || [],
     selected,
     showFeedback,
     completionResult,
@@ -125,5 +144,7 @@ export const useModuleScreen = () => {
     handleContinue,
     error,
     loading: !module && !error,
+    module,
+    ...gameData,
   };
 };

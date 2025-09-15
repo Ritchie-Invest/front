@@ -5,15 +5,15 @@ export interface Choice {
   correctionMessage?: string;
 }
 
-export interface ModuleDetails {
+export interface QCMDetails {
   question: string;
   choices: Choice[];
 }
 
-export interface GameModule {
+export interface QCMModule {
   id: string;
   lessonId?: string;
-  details: ModuleDetails;
+  details: QCMDetails;
   updatedAt?: string;
   createdAt?: string;
 }

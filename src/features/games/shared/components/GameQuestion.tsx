@@ -3,21 +3,26 @@ import { Box, VStack, Heading, Text, Spinner } from 'native-base';
 import { Icon } from '~/components/atoms/Icon';
 import { useTranslation } from 'react-i18next';
 
-const ModuleQuestion = ({ question }: { question?: string }) => {
+interface GameQuestionProps {
+  text?: string;
+  titleKey: string;
+}
+
+const GameQuestion = ({ text, titleKey }: GameQuestionProps) => {
   const { t } = useTranslation();
   return (
     <VStack px={6} mt={6} space={2}>
       <Text fontSize="lg" color="coolGray.500" fontWeight="bold">
-        {t('game.completeSentence')}
+        {t(titleKey)}
       </Text>
       <Text fontSize="2xl" fontWeight="bold" mt={2}>
-        {question}
+        {text}
       </Text>
     </VStack>
   );
 };
 
-ModuleQuestion.Error = ({ error }: { error: any }) => {
+GameQuestion.Error = ({ error }: { error: any }) => {
   const { t } = useTranslation();
   return (
     <Box flex={1} justifyContent="center" alignItems="center" bg="red.50">
@@ -32,7 +37,7 @@ ModuleQuestion.Error = ({ error }: { error: any }) => {
   );
 };
 
-ModuleQuestion.Loading = () => {
+GameQuestion.Loading = () => {
   const { t } = useTranslation();
   return (
     <Box flex={1} justifyContent="center" alignItems="center">
@@ -42,4 +47,4 @@ ModuleQuestion.Loading = () => {
   );
 };
 
-export default ModuleQuestion;
+export default GameQuestion;

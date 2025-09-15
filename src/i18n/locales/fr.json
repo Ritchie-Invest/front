@@ -91,13 +91,20 @@
     "unlockMessage": "Terminez la leçon précédente pour débloquer"
   },
   "game": {
-    "completeSentence": "Complète la phrase",
     "success": "Bravo !",
     "error": "Oups !",
     "loading": "Chargement du jeu...",
     "correctAnswer": "Bonne réponse :",
     "continue": "Continuer",
-    "understood": "Compris"
+    "understood": "Compris",
+    "qcm": {
+      "moduleSentence": "Complète la phrase"
+    },
+    "trueOrFalse": {
+      "moduleSentence": "Vrai ou Faux",
+      "true": "Vrai",
+      "false": "Faux"
+    }
   },
   "completion": {
     "congrats": "Haut la main!",

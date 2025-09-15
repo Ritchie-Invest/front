@@ -9,8 +9,8 @@ import HomeScreen from '../features/landing/screens/home';
 import { InvestmentDashboardScreen } from '../features/investment-dashboard/screens/InvestmentDashboardScreen';
 import { ETFDetailScreen } from '../features/etf-detail/screens/ETFDetailScreen';
 import Navbar from '../features/navigation/components/organisms/navbar';
-import ModuleScreen from '../features/games/screens/ModuleScreen';
-import CompleteScreen from '../features/games/screens/CompleteScreen';
+import ModuleScreen from '../features/games/shared/screens/ModuleScreen';
+import CompleteScreen from '../features/games/shared/screens/CompleteScreen';
 
 export type RootStackParamList = {
   Main: undefined;
@@ -123,9 +123,11 @@ export const AppNavigator = ({
                   </Box>
                 )}
               </MainStack.Screen>
-              <MainStack.Screen name="ModuleScreen" options={{ headerTitle: '' }}>
-                {() => <ModuleScreen />}
-              </MainStack.Screen>
+              <MainStack.Screen
+                name="ModuleScreen"
+                component={ModuleScreen}
+                options={{ headerTitle: '' }}
+              />
               <MainStack.Screen name="CompleteScreen" options={{ headerTitle: '' }}>
                 {({ route }) => (
                   <CompleteScreen

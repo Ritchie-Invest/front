@@ -1,17 +1,23 @@
-import { axiosInstance } from '../../../lib/api/axios';
+import { axiosInstance } from '../../../../lib/api/axios';
 import { CompleteModuleResponse, CompleteLessonResponse } from '../models/progress';
 
 export const gameProgressService = {
-  // Completion d'un module avec envoi de la réponse choisie
+  // Completion d'un module avec réponse adaptée selon le type
   async completeModule(
     moduleId: string,
-    choiceId: string,
-    gameType: string = 'MCQ',
+    answer: string | boolean,
+    moduleType: 'MCQ' | 'TRUE_OR_FALSE',
   ): Promise<CompleteModuleResponse> {
-    const payload = {
-      gameType,
-      mcq: { choiceId },
-    };
+    const payload =
+      moduleType === 'MCQ'
+        ? {
+            gameType: 'MCQ',
+            mcq: { choiceId: answer as string },
+          }
+        : {
+            gameType: 'TRUE_OR_FALSE',
+            trueOrFalse: { answer: answer as boolean },
+          };
 
     const response = await axiosInstance.post<CompleteModuleResponse>(
       `/modules/${moduleId}/complete`,

@@ -58,7 +58,7 @@ export const ChaptersTimeline: React.FC<ChaptersTimelineProps> = ({
                   fontWeight={typography.fontWeightRegular}
                   textAlign="center"
                 >
-                  Chapitre {chapter.order} : {chapter.title}
+                  {chapter.title}
                 </Text>
               </Box>
             )}

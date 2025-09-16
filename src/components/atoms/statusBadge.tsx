@@ -1,11 +1,12 @@
 import React from 'react';
 import { Box, Text } from '@gluestack-ui/themed';
 import { useTranslation } from 'react-i18next';
-import { ProgressStatus } from '~/features/landing/types/ProgressStatus';
-import { colors } from '~/lib/theme/theme';
+import { LessonStatus } from '~/features/landing/types/LessonStatus';
+import { ChapterStatus } from '~/features/landing/types/ChapterStatus';
+import { colors, spacing, borderRadius } from '~/lib/theme/theme';
 
 interface StatusBadgeProps {
-  status: ProgressStatus;
+  status: LessonStatus | ChapterStatus;
 }
 
 export const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
@@ -13,17 +14,21 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
 
   const getStatusProps = () => {
     switch (status) {
-      case ProgressStatus.COMPLETED:
+      case LessonStatus.COMPLETED:
+      case ChapterStatus.COMPLETED:
         return {
           backgroundColor: colors.successColor,
           text: t('status.progress.completed'),
         };
-      case ProgressStatus.CURRENT:
+      case LessonStatus.UNLOCKED:
+      case ChapterStatus.UNLOCKED:
+      case ChapterStatus.IN_PROGRESS:
         return {
           backgroundColor: colors.primaryActionColor,
           text: t('status.progress.current'),
         };
-      case ProgressStatus.LOCKED:
+      case LessonStatus.LOCKED:
+      case ChapterStatus.LOCKED:
         return {
           backgroundColor: colors.GreyL30,
           text: t('status.progress.locked'),
@@ -39,7 +44,12 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
   const statusProps = getStatusProps();
 
   return (
-    <Box bg={statusProps.backgroundColor} borderRadius={6} px={8} py={4}>
+    <Box
+      bg={statusProps.backgroundColor}
+      borderRadius={borderRadius.borderRadiusSmall}
+      px={spacing.spacingSmall}
+      py={spacing.spacingVerySmall}
+    >
       <Text fontSize={12} color={colors.secondaryTextColor}>
         {statusProps.text}
       </Text>

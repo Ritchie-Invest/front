@@ -2,7 +2,16 @@ import React, { ReactNode } from 'react';
 import { Button as GButton, ButtonText, ButtonSpinner } from '@gluestack-ui/themed';
 import { borderRadius, colors, typography } from '../../lib/theme/theme';
 
-type Variant = 'primary' | 'secondary' | 'outline' | 'disabled' | 'accent' | 'ghost';
+type Variant =
+  | 'primary'
+  | 'secondary'
+  | 'outline'
+  | 'disabled'
+  | 'success'
+  | 'error'
+  | 'info'
+  | 'accent'
+  | 'ghost';
 
 type Props = {
   children: ReactNode;
@@ -39,6 +48,34 @@ export const Button = ({ children, onPress, isLoading, variant = 'primary', ...r
           bg: colors.transparent,
           $focus: { bg: colors.GreyL30 },
           $active: { bg: colors.GreyL30 },
+        };
+      case 'success':
+        return {
+          variant: 'solid',
+          bg: colors.successColor,
+          $focus: { bg: colors.successColor },
+          $active: { bg: colors.successColor },
+        };
+      case 'error':
+        return {
+          variant: 'solid',
+          bg: colors.errorColor,
+          $focus: { bg: colors.errorColor },
+          $active: { bg: colors.errorColor },
+        };
+      case 'info':
+        return {
+          variant: 'solid',
+          bg: colors.primaryActionColor,
+          $focus: { bg: colors.primaryActionFocusColor },
+          $active: { bg: colors.primaryActionActiveColor },
+        };
+      case 'accent':
+        return {
+          variant: 'solid',
+          bg: colors.accentTextColor,
+          $focus: { bg: colors.accentTextColor },
+          $active: { bg: colors.accentTextColor },
         };
 
       case 'primary':

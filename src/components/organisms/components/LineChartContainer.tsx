@@ -132,14 +132,17 @@ export const LineChartContainer = memo(
                       key={`legend-${idx}`}
                       flexDirection="row"
                       alignItems="center"
-                      style={{ marginHorizontal: 8, marginVertical: 4 }}
+                      style={{
+                        marginHorizontal: spacing.spacingSmall,
+                        marginVertical: spacing.spacingVerySmall,
+                      }}
                     >
                       <Box
                         width={12}
                         height={12}
                         bg={colorKey}
-                        style={{ marginRight: 8 }}
-                        rounded={2}
+                        style={{ marginRight: spacing.spacingSmall }}
+                        rounded={borderRadius.borderRadiusVerySmall}
                       />
                       <Text fontSize={typography.bodySmallSize} color={colors.primaryTextColor}>
                         {label}

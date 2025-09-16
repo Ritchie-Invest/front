@@ -29,7 +29,7 @@ export interface UseLessonCircleReturn {
 
 export const useLessonCircle = (
   lesson: Lesson,
-  onAction: (lessonId: string, action: 'start' | 'review') => void,
+  onAction: (lessonId: string, action: 'start') => void,
   isCurrent: boolean = false,
 ): UseLessonCircleReturn => {
   const state = useMemo(
@@ -99,15 +99,14 @@ export const useLessonCircle = (
 
   const handlePress = useMemo(
     () => () => {
-      if (!state.isLocked) {
-        const action = state.isCompleted ? 'review' : 'start';
-        onAction(lesson.id, action);
+      if (!state.isLocked && !state.isCompleted) {
+        onAction(lesson.id, 'start');
       }
     },
     [state.isLocked, state.isCompleted, onAction, lesson.id],
   );
 
-  const isDisabled = state.isLocked;
+  const isDisabled = state.isLocked || state.isCompleted;
 
   return {
     state,

@@ -8,8 +8,11 @@ const spacing = {
 
   spacingMedium: 16,
   spacingMediumFallback: 'md' as const,
+  spacingMedium2: 20,
+  spacingMedium2Fallback: 'xl' as const,
   spacingLarge: 24,
   spacingLargeFallback: 'lg' as const,
   spacingExtraLarge: 32,
+  spacingExtraLargeFallback: '4xl' as const,
 };
 export { spacing };

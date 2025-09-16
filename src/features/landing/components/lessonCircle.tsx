@@ -30,7 +30,7 @@ export const LessonCircle: React.FC<LessonCircleProps> = ({
         disabled={isDisabled}
         style={{
           aspectRatio: 1,
-          width: '40%',
+          width: '20%',
           borderRadius: borderRadius.borderRadiusCircle,
           backgroundColor: circleStyle.backgroundColor,
           justifyContent: 'center',

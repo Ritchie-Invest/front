@@ -21,7 +21,7 @@ const HomeScreen = () => {
 
   return (
     <>
-      <PageCover title="" Screen={Screens.HOME} size={200} />
+      <PageCover title="" Screen={Screens.HOME} size={100} />
       {showProgress && (
         <Hero
           chapterTitle={currentChapter?.title || 'Aucun chapitre disponible'}

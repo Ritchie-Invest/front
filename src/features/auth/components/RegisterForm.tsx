@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { VStack, Text } from '@gluestack-ui/themed';
-import { typography, spacing } from '~/lib/theme/theme';
+import { typography, paddings } from '~/lib/theme/theme';
 import { KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
 import { useRegister } from '../hooks/useRegister';
 import { Button } from '../../../components/atoms/Button';
@@ -65,7 +65,7 @@ export const RegisterForm = ({ onBackToLogin, onSuccess }: RegisterFormProps) =>
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
       >
-        <VStack space="lg" px={spacing.spacingVerySmall} flex={1} justifyContent="center">
+        <VStack space="lg" px={paddings.paddingVerySmall} flex={1} justifyContent="center">
           <PageCover title={t('register.title')} Screen={Screens.AUTH_REGISTER} size={250} />
 
           <InputField

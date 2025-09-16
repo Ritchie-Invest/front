@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pressable, Box, Text } from '@gluestack-ui/themed';
-import { spacing, borderRadius } from '~/lib/theme/theme';
+import { spacing, borderRadius, paddings } from '~/lib/theme/theme';
 
 interface ChoiceButtonAtomProps {
   text: string;
@@ -26,7 +26,7 @@ const ChoiceButtonAtom: React.FC<ChoiceButtonAtomProps> = ({
       borderWidth={1}
       borderColor={borderColor}
       bg={bg}
-      p={spacing.spacingMedium}
+      p={paddings.paddingMedium}
       borderRadius={borderRadius.borderRadiusMedium}
       mb={spacing.spacingMinimum}
     >

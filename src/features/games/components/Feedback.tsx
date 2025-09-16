@@ -3,7 +3,7 @@ import { Box, HStack, Heading, Text, Icon } from '@gluestack-ui/themed';
 import { Ionicons } from '@expo/vector-icons';
 import { Button } from '~/components/atoms/Button';
 import { useTranslation } from 'react-i18next';
-import { colors, spacing, borderRadius, typography } from '~/lib/theme/theme';
+import { colors, spacing, borderRadius, typography, paddings } from '~/lib/theme/theme';
 
 interface FeedbackProps {
   type: 'success' | 'error';
@@ -21,8 +21,8 @@ const Feedback: React.FC<FeedbackProps> = ({ type, correctText, onContinue }) =>
       left={0}
       right={0}
       bg={isSuccess ? colors.successBackgroundColor : colors.warningBackgroundColor}
-      px={spacing.spacingMedium}
-      py={spacing.spacingLarge}
+      px={paddings.paddingMedium}
+      py={paddings.paddingLarge}
       borderTopLeftRadius={borderRadius.borderRadius3xl}
       borderTopRightRadius={borderRadius.borderRadius3xl}
       shadowColor={colors.overlayColor}

@@ -3,7 +3,7 @@ import { Box, Text } from '@gluestack-ui/themed';
 import { useTranslation } from 'react-i18next';
 import { LessonStatus } from '~/features/landing/types/LessonStatus';
 import { ChapterStatus } from '~/features/landing/types/ChapterStatus';
-import { colors, spacing, borderRadius } from '~/lib/theme/theme';
+import { colors, borderRadius, paddings } from '~/lib/theme/theme';
 
 interface StatusBadgeProps {
   status: LessonStatus | ChapterStatus;
@@ -47,8 +47,8 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
     <Box
       bg={statusProps.backgroundColor}
       borderRadius={borderRadius.borderRadiusSmall}
-      px={spacing.spacingSmall}
-      py={spacing.spacingVerySmall}
+      px={paddings.paddingSmall}
+      py={paddings.paddingVerySmall}
     >
       <Text fontSize={12} color={colors.secondaryTextColor}>
         {statusProps.text}

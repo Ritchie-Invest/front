@@ -1,6 +1,6 @@
 import { Box } from '@gluestack-ui/themed';
 import { LoginForm } from '../components/LoginForm';
-import { spacing } from '~/lib/theme/theme';
+import { spacing, paddings } from '~/lib/theme/theme';
 
 export const LoginScreen = ({
   onLoginSuccess,
@@ -11,7 +11,7 @@ export const LoginScreen = ({
   signupEnabled?: boolean;
   onShowOnboarding?: () => void;
 }) => (
-  <Box flex={1} justifyContent="center" px={spacing.spacingVerySmall}>
+  <Box flex={1} justifyContent="center" px={paddings.paddingVerySmall}>
     <LoginForm
       onSuccess={onLoginSuccess}
       signupEnabled={signupEnabled}

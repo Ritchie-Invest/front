@@ -2,13 +2,13 @@ import React from 'react';
 import { Box, VStack, Heading, Text, Spinner, Icon } from '@gluestack-ui/themed';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useTranslation } from 'react-i18next';
-import { spacing, colors, typography } from '~/lib/theme/theme';
+import { spacing, colors, typography, paddings } from '~/lib/theme/theme';
 
 const ModuleQuestion = ({ question }: { question?: string }) => {
   const { t } = useTranslation();
   return (
     <VStack
-      px={spacing.spacingMedium}
+      px={paddings.paddingMedium}
       mt={spacing.spacingMedium}
       space={spacing.spacingSmallFallback}
     >

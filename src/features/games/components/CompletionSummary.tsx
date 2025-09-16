@@ -3,7 +3,7 @@ import { Box, VStack, Text, Icon } from '@gluestack-ui/themed';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import StatCard from './StatCard';
 import { useTranslation } from 'react-i18next';
-import { colors, typography, spacing, borderRadius } from '~/lib/theme/theme';
+import { colors, typography, spacing, borderRadius, paddings } from '~/lib/theme/theme';
 
 interface CompletionSummaryProps {
   xp: number;
@@ -25,7 +25,7 @@ const CompletionSummary: React.FC<CompletionSummaryProps> = ({
       <Box
         bg={colors.successColor}
         borderRadius={borderRadius.borderRadiusFull}
-        p={spacing.spacingMedium}
+        p={paddings.paddingMedium}
         mb={spacing.spacingMinimum}
       >
         <Icon

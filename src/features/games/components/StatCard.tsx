@@ -2,7 +2,7 @@ import React from 'react';
 import { HStack, Text, Icon } from '@gluestack-ui/themed';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { MaterialIcons } from '@expo/vector-icons';
-import { colors, spacing, borderRadius, typography } from '~/lib/theme/theme';
+import { colors, borderRadius, typography, paddings } from '~/lib/theme/theme';
 
 interface StatCardProps {
   icon: keyof typeof MaterialIcons.glyphMap;
@@ -20,8 +20,8 @@ const StatCard: React.FC<StatCardProps> = ({ icon, color, label, value }) => (
     shadowOpacity={0.1}
     shadowRadius={2}
     elevation={1}
-    px={spacing.spacingMedium}
-    py={spacing.spacingSmall}
+    px={paddings.paddingMedium}
+    py={paddings.paddingSmall}
     alignItems="center"
     justifyContent="space-between"
   >

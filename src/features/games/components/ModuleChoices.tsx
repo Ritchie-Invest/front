@@ -2,7 +2,7 @@ import React from 'react';
 import { VStack } from '@gluestack-ui/themed';
 import ChoiceButton from './ChoiceButton';
 import { CompleteModuleResponse } from '../models/progress';
-import { spacing } from '~/lib/theme/theme';
+import { spacing, paddings } from '~/lib/theme/theme';
 
 interface ModuleChoicesProps {
   choices: any[];
@@ -22,7 +22,7 @@ const ModuleChoices: React.FC<ModuleChoicesProps> = ({
   <VStack
     space={spacing.spacingOneFallback}
     mt={spacing.spacingSmall}
-    px={spacing.spacingVerySmall}
+    px={paddings.paddingVerySmall}
   >
     {choices.map((choice) => (
       <ChoiceButton

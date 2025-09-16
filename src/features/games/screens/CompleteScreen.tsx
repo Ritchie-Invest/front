@@ -6,7 +6,7 @@ import { Box } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { useQueryClient } from '@tanstack/react-query';
 import { Button } from '~/components/atoms/Button';
-import { spacing, colors } from '~/lib/theme/theme';
+import { spacing, colors, paddings } from '~/lib/theme/theme';
 import { RootStackParamList } from '../../../navigation/AppNavigator';
 import CompletionSummary from '../components/CompletionSummary';
 
@@ -39,7 +39,7 @@ const CompleteScreen: React.FC<CompleteScreenProps> = ({
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.mainBackgroundColor }}>
-      <Box flex={1} alignItems="center" justifyContent="center" px={spacing.spacingSmall}>
+      <Box flex={1} alignItems="center" justifyContent="center" px={paddings.paddingSmall}>
         <CompletionSummary
           xp={xpWon}
           completedModules={completedModules}

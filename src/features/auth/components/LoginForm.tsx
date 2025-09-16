@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
 import { VStack, Text, HStack } from '@gluestack-ui/themed';
-import { typography, spacing } from '~/lib/theme/theme';
+import { typography, spacing, paddings } from '~/lib/theme/theme';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 import { config } from '../../../lib/config';
@@ -81,7 +81,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
       >
-        <VStack space="lg" px={spacing.spacingVerySmall} flex={1} justifyContent="center">
+        <VStack space="lg" px={paddings.paddingVerySmall} flex={1} justifyContent="center">
           <HStack justifyContent="flex-start">
             <TextLink onPress={() => goToOnboarding()}>
               <Text style={{ fontSize: typography.heading3Size }}>←</Text>

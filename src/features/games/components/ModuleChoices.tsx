@@ -1,7 +1,8 @@
 import React from 'react';
-import { VStack } from 'native-base';
+import { VStack } from '@gluestack-ui/themed';
 import ChoiceButton from './ChoiceButton';
 import { CompleteModuleResponse } from '../models/progress';
+import { spacing } from '~/lib/theme/theme';
 
 interface ModuleChoicesProps {
   choices: any[];
@@ -18,7 +19,11 @@ const ModuleChoices: React.FC<ModuleChoicesProps> = ({
   completionResult,
   onSelect,
 }) => (
-  <VStack space={3} mt={8} px={4}>
+  <VStack
+    space={spacing.spacingOneFallback}
+    mt={spacing.spacingSmall}
+    px={spacing.spacingVerySmall}
+  >
     {choices.map((choice) => (
       <ChoiceButton
         key={choice.id}

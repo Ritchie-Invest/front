@@ -1,8 +1,9 @@
 import React from 'react';
-import { VStack, Text, Spacer, Box } from 'native-base';
+import { VStack, Text, Box } from '@gluestack-ui/themed';
 import { useTranslation } from 'react-i18next';
 import { OnboardingLayout } from '../../components/organisms/OnboardingLayout';
 import { Button } from '../../../../components/atoms/Button';
+import { typography, spacing } from '~/lib/theme/theme';
 
 interface LearningGoal {
   title: string;
@@ -26,27 +27,29 @@ export const LearningGoalsScreen: React.FC<LearningGoalsScreenProps> = ({
 
   return (
     <OnboardingLayout progress={progress} onBackPress={onBack}>
-      <VStack flex={1} space={6}>
-        <Text fontSize="lg" color="gray.600" textAlign="center">
+      <VStack flex={1} space="lg">
+        <Text fontSize={18} color="$text600" textAlign="center">
           {t('onboarding.learningGoals.subtitle')}
         </Text>
 
-        <VStack space={12} flex={6} justifyContent="center" alignItems="center">
+        <VStack space="lg" flex={6} justifyContent="center" alignItems="center">
           {goals.map((goal, index) => (
             <Box key={index}>
-              <Text fontSize="lg" fontWeight="bold" color="gray.800" mb={2}>
+              <Text fontSize={18} fontWeight="bold" color="$text900" mb={spacing.spacingMinimum}>
                 {goal.title}
               </Text>
-              <Text fontSize="md" color="gray.600">
+              <Text fontSize={typography.bodySize} color="$text600">
                 {goal.description}
               </Text>
             </Box>
           ))}
         </VStack>
 
-        <Spacer />
+        <Box flex={1} />
 
-        <Button onPress={onContinue}>{t('onboarding.learningGoals.continueButton')}</Button>
+        <Button onPress={onContinue} variant="primary">
+          {t('onboarding.learningGoals.continueButton')}
+        </Button>
       </VStack>
     </OnboardingLayout>
   );

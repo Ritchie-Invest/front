@@ -10,6 +10,7 @@ import { LevelSelectionScreen } from './sub-screens/LevelSelectionScreen';
 import { ONBOARDING_GOALS } from '../data/onboardingGoals.data';
 import { ONBOARDING_LEVELS } from '../data/onboardingLevels.data';
 import { LEARNING_GOALS } from '../data/onboardingLearningGoals.data';
+import { colors } from '~/lib/theme/theme';
 
 interface OnboardingLayoutProps {
   onComplete: () => void;
@@ -82,18 +83,20 @@ export const OnboardingLayout: React.FC<OnboardingLayoutProps> = ({ onComplete, 
           />
         );
       case 6:
-        if (state.selectedLevel === 'beginner') {
-          return (
-            <CompletionScreen
-              title="Parfait"
-              description="On part de zéro alors. Prêt pour ta première leçon ?"
-              onContinue={handleComplete}
-              onBack={previousStep}
-              progress={getProgress()}
-            />
-          );
-        }
-        return null;
+        const completionTitle = state.selectedLevel === 'beginner' ? 'Parfait' : 'Parfait';
+        const completionDescription =
+          state.selectedLevel === 'beginner'
+            ? 'On part de zéro alors. Prêt pour ta première leçon ?'
+            : 'Prêt pour ta première leçon ?';
+        return (
+          <CompletionScreen
+            title={completionTitle}
+            description={completionDescription}
+            onContinue={handleComplete}
+            onBack={previousStep}
+            progress={getProgress()}
+          />
+        );
       default:
         return <WelcomeScreen onStart={handleStart} onLogin={onLogin} />;
     }
@@ -109,7 +112,7 @@ export const OnboardingLayout: React.FC<OnboardingLayoutProps> = ({ onComplete, 
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.mainBackgroundColor,
   },
   container: {
     flex: 1,

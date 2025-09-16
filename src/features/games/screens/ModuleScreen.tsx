@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box } from 'native-base';
+import { Box } from '@gluestack-ui/themed';
+import { colors } from '~/lib/theme/theme';
 import { useModuleScreen } from '../hooks/useModuleScreen';
 import GamesHeader from '../components/GamesHeader';
 import ModuleQuestion from '../components/ModuleQuestion';
@@ -24,7 +25,7 @@ const ModuleScreen: React.FC = () => {
   if (loading) return <ModuleQuestion.Loading />;
 
   return (
-    <Box flex={1} bg="#fff">
+    <Box flex={1} bg={colors.mainBackgroundColor}>
       <GamesHeader progress={progress} onClose={handleContinue} />
       <ModuleQuestion question={question} />
       <ModuleChoices

@@ -19,7 +19,7 @@ export class ETFChartDataAdapter implements ChartDataAdapter<ETFPriceData> {
           x: date.getTime(),
           extraData: {
             formattedValue: formatCurrency(Number(value)),
-            formattedTime: formatDate(date, 'overlay'),
+            formattedTime: formatDate(date, 'short'),
             originalData: item,
           },
         };

@@ -1,6 +1,8 @@
 import React, { memo, useMemo } from 'react';
-import { HStack, Pressable, Text } from 'native-base';
+import { HStack, Pressable, Text } from '@gluestack-ui/themed';
 import { TimeRangeOption, TimeRangeSelectorConfig } from '../models/TimeRange';
+import { borderRadius, colors, margins, paddings, typography } from '~/lib/theme/theme';
+import { spacing } from '~/lib/theme/values/spacing';
 
 interface TimeRangeSelectorProps<T = string> {
   options: TimeRangeOption<T>[];
@@ -10,13 +12,13 @@ interface TimeRangeSelectorProps<T = string> {
 }
 
 const defaultConfig: TimeRangeSelectorConfig = {
-  activeColor: 'blue.500',
-  inactiveColor: 'gray.100',
-  activeTextColor: 'white',
-  inactiveTextColor: 'gray.700',
-  spacing: 2,
+  activeColor: colors.primaryActionColor,
+  inactiveColor: colors.GreyL20,
+  activeTextColor: colors.primaryActionColor,
+  inactiveTextColor: colors.GreyL30,
+  spacing: spacing.spacingMinimum,
   justifyContent: 'center',
-  marginBottom: 4,
+  marginBottom: margins.marginSmall,
 };
 
 const TimeRangeSelectorImpl = <T extends string | number>({
@@ -29,9 +31,10 @@ const TimeRangeSelectorImpl = <T extends string | number>({
 
   return (
     <HStack
-      space={selectorConfig.spacing}
+      space={spacing.spacingSmallFallback}
       justifyContent={selectorConfig.justifyContent}
       mb={selectorConfig.marginBottom}
+      width="$full"
     >
       {options.map((option) => (
         <Pressable
@@ -42,10 +45,9 @@ const TimeRangeSelectorImpl = <T extends string | number>({
               ? selectorConfig.activeColor
               : selectorConfig.inactiveColor
           }
-          px={4}
-          py={2}
-          rounded="md"
-          _pressed={{
+          p={paddings.paddingSmall}
+          rounded={borderRadius.borderRadiusVerySmall}
+          $pressed={{
             opacity: 0.7,
           }}
         >
@@ -55,8 +57,8 @@ const TimeRangeSelectorImpl = <T extends string | number>({
                 ? selectorConfig.activeTextColor
                 : selectorConfig.inactiveTextColor
             }
-            fontSize="sm"
-            fontWeight="medium"
+            fontSize={typography.bodySize}
+            fontWeight={typography.fontWeightMedium}
           >
             {option.label}
           </Text>

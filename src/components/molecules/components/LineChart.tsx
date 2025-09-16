@@ -1,22 +1,35 @@
 import React, { memo, useMemo } from 'react';
 import { View, Dimensions, Text } from 'react-native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import LineChart from 'react-native-simple-line-chart';
+import { LineChart } from 'react-native-gifted-charts';
 import { LineChartConfig, LineChartProps } from '../models/LineChart';
+import { borderRadius, colors, paddings, typography } from '~/lib/theme/theme';
 
 const defaultConfig: LineChartConfig = {
   height: 240,
-  lineColor: '#3B82F6',
-  activePointColor: '#3B82F6',
-  backgroundColor: 'transparent',
+  lineColor: colors.primaryActionColor,
+  lineColor2: colors.warningColor,
+  activePointColor: colors.primaryActionColor,
+  activePointColor2: colors.warningColor,
+  backgroundColor: colors.transparent,
   showVerticalLine: true,
-  verticalLineColor: '#E5E7EB',
+  verticalLineColor: colors.GreyL20,
   endPointRadius: 4,
+  endPointRadius2: 4,
+  showDataPoints: true,
+  showDataPoints2: true,
   animated: true,
+  startFillColor: colors.primaryActionColor,
+  endFillColor: colors.transparent,
+  startFillColor2: colors.warningColor,
+  endFillColor2: colors.transparent,
+  startOpacity: 0.8,
+  endOpacity: 0.1,
+  startOpacity2: 0.8,
+  endOpacity2: 0.1,
 };
 
 export const LineChartComponent: React.FC<LineChartProps> = memo(
-  ({ data, config = {}, emptyStateText = 'Aucune donnée disponible' }) => {
+  ({ data, data2, config = {}, emptyStateText = 'Aucune donnée disponible' }) => {
     const chartConfig = useMemo(() => ({ ...defaultConfig, ...config }), [config]);
     const screenWidth = Dimensions.get('screen').width;
     const chartWidth = screenWidth * 0.8;
@@ -36,57 +49,59 @@ export const LineChartComponent: React.FC<LineChartProps> = memo(
       );
     }
 
-    return (
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <LineChart
-            lines={[
-              {
-                data,
-                activePointConfig: {
-                  color: chartConfig.activePointColor,
-                  showVerticalLine: chartConfig.showVerticalLine,
-                  verticalLineColor: chartConfig.verticalLineColor,
-                },
-                lineColor: chartConfig.lineColor,
-                curve: 'linear',
+    const chartData = useMemo(() => {
+      return data.map((point) => ({
+        value: point.y,
+        dataPointText: point.extraData?.formattedValue || point.y.toString(),
+        label: point.extraData?.formattedTime,
+        dataPointColor: chartConfig.activePointColor,
+        dataPointRadius: chartConfig.endPointRadius,
+        hideDataPoint: !chartConfig.showDataPoints,
+      }));
+    }, [data, chartConfig.activePointColor, chartConfig.endPointRadius]);
 
-                endPointConfig: {
-                  color: chartConfig.activePointColor,
-                  radius: chartConfig.endPointRadius,
-                  animated: chartConfig.animated,
-                },
-                activePointComponent: (point: any) => {
-                  return (
-                    <View
-                      style={{
-                        backgroundColor: chartConfig.activePointColor,
-                        padding: 12,
-                        borderRadius: 8,
-                        shadowColor: '#000',
-                        shadowOffset: { width: 0, height: 2 },
-                        shadowOpacity: 0.25,
-                        shadowRadius: 4,
-                        elevation: 5,
-                      }}
-                    >
-                      <Text style={{ color: 'white', fontSize: 12, fontWeight: 'bold' }}>
-                        {point?.extraData?.formattedValue}
-                      </Text>
-                      <Text style={{ color: 'white', fontSize: 10 }}>
-                        {point?.extraData?.formattedTime}
-                      </Text>
-                    </View>
-                  );
-                },
-              },
-            ]}
-            backgroundColor={chartConfig.backgroundColor}
-            height={chartHeight}
-            width={chartWidth}
-          />
-        </View>
-      </GestureHandlerRootView>
+    const chartData2 = useMemo(() => {
+      if (!data2 || data2.length === 0) return null;
+      return data2.map((point) => ({
+        value: point.y,
+        dataPointText: point.extraData?.formattedValue || point.y.toString(),
+        label: point.extraData?.formattedTime,
+        dataPointColor: chartConfig.activePointColor2,
+        dataPointRadius: chartConfig.endPointRadius2,
+        hideDataPoint: !chartConfig.showDataPoints2,
+      }));
+    }, [data2, chartConfig.activePointColor2, chartConfig.endPointRadius2]);
+
+    return (
+      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+        <LineChart
+          textColor1={chartConfig.lineColor}
+          textShiftY={-4}
+          textColor2={chartConfig.lineColor2}
+          areaChart
+          data={chartData}
+          data2={chartData2 || undefined}
+          width={chartWidth}
+          height={chartHeight}
+          color={chartConfig.lineColor}
+          color2={chartConfig.lineColor2}
+          startFillColor={chartConfig.startFillColor}
+          endFillColor={chartConfig.endFillColor}
+          startFillColor2={chartConfig.startFillColor2}
+          endFillColor2={chartConfig.endFillColor2}
+          startOpacity={chartConfig.startOpacity}
+          endOpacity={chartConfig.endOpacity}
+          startOpacity2={chartConfig.startOpacity2}
+          endOpacity2={chartConfig.endOpacity2}
+          dataPointsColor={chartConfig.activePointColor}
+          dataPointsColor2={chartConfig.activePointColor2}
+          dataPointsRadius={chartConfig.endPointRadius}
+          dataPointsRadius2={chartConfig.endPointRadius2}
+          backgroundColor={chartConfig.backgroundColor}
+          yAxisTextStyle={{ color: colors.Grey }}
+          xAxisLabelTextStyle={{ color: colors.Grey }}
+        />
+      </View>
     );
   },
 );

@@ -1,64 +1,64 @@
-import { TextInput, StyleSheet } from 'react-native';
-import { Box, useTheme } from 'native-base';
+import React from 'react';
+import { Input, InputField as GInputField } from '@gluestack-ui/themed';
+import { colors, paddings, typography } from '../../lib/theme/theme';
 
 type Props = {
   placeholder: string;
-  value: string;
-  onChangeText: (text: string) => void;
-  type?: 'text' | 'email' | 'password';
+  value: string | number;
+  onChange: (value: string) => void;
+  type?: 'text' | 'email' | 'password' | 'numeric';
   accessibilityLabel?: string;
+  variant?: 'outline' | 'rounded' | 'underlined';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  isDisabled?: boolean;
+  isInvalid?: boolean;
+  isReadOnly?: boolean;
 };
 
 export const InputField = ({
   placeholder,
   value,
-  onChangeText,
+  onChange,
   type = 'text',
   accessibilityLabel,
+  variant = 'rounded',
+  size = 'md',
+  isDisabled = false,
+  isInvalid = false,
+  isReadOnly = false,
 }: Props) => {
-  const theme = useTheme();
   const isPassword = type === 'password';
-  const keyboardType = type === 'email' ? 'email-address' : 'default';
+  const isNumeric = type === 'numeric';
 
-  const getAutoComplete = () => {
-    switch (type) {
-      case 'email':
-        return 'email';
-      case 'password':
-        return 'password';
-      default:
-        return undefined;
-    }
-  };
-
-  const getTextContentType = () => {
-    switch (type) {
-      case 'email':
-        return 'emailAddress';
-      case 'password':
-        return 'password';
-      default:
-        return undefined;
+  const handleChangeText = (text: string) => {
+    if (isNumeric) {
+      // Allow only numeric characters, decimal point, and minus sign
+      const numericText = text.replace(/[^0-9.-]/g, '');
+      onChange(numericText);
+    } else {
+      onChange(text);
     }
   };
 
   return (
-    <Box borderWidth="1" borderColor="coolGray.300" borderRadius="md" bg="white">
-      <TextInput
-        style={{
-          height: 40,
-          paddingHorizontal: 16,
-        }}
+    <Input
+      variant={variant}
+      size={size}
+      isDisabled={isDisabled}
+      isInvalid={isInvalid}
+      isReadOnly={isReadOnly}
+      height={48}
+      width="100%"
+    >
+      <GInputField
         placeholder={placeholder}
-        value={value}
-        onChangeText={onChangeText}
+        fontSize={variant === 'underlined' ? typography.transactionInputSize : typography.bodySize}
+        value={value !== undefined && value !== null ? String(value) : ''}
+        onChangeText={handleChangeText}
         secureTextEntry={isPassword}
-        keyboardType={keyboardType}
-        autoCapitalize={type === 'email' || isPassword ? 'none' : 'sentences'}
+        keyboardType={isNumeric ? 'numeric' : 'default'}
         accessibilityLabel={accessibilityLabel || placeholder}
-        textContentType={getTextContentType()}
-        autoComplete={getAutoComplete()}
       />
-    </Box>
+    </Input>
   );
 };

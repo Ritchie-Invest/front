@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
-import { VStack, Text, HStack } from 'native-base';
+import { VStack, Text, HStack } from '@gluestack-ui/themed';
+import { typography, spacing } from '~/lib/theme/theme';
 import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
 import { config } from '../../../lib/config';
 import { Button } from '../../../components/atoms/Button';
 import { InputField } from '../../../components/atoms/InputField';
@@ -12,13 +14,19 @@ import { ForgotPasswordForm } from './ForgotPasswordForm';
 import { loginSchema } from '../validation/loginSchema';
 import { useFormValidation } from '../../../hooks/useFormValidation';
 import { AuthScreen } from '../models/authScreen';
-
+import PageCover from '~/components/organisms/components/PageCover';
+import { Screens } from '~/features/navigation/Type/Screens';
 interface LoginFormProps {
   onSuccess: () => void;
   signupEnabled?: boolean;
+  onShowOnboarding?: () => void;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, signupEnabled }) => {
+export const LoginForm: React.FC<LoginFormProps> = ({
+  onSuccess,
+  signupEnabled,
+  onShowOnboarding,
+}) => {
   const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -28,6 +36,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, signupEnabled }
   const login = useLogin();
   const showForgotPassword = config.FORGOT_PASSWORD_ENABLED;
   const showSignUp = typeof signupEnabled === 'boolean' ? signupEnabled : config.SIGNUP_ENABLED;
+  const navigation = useNavigation<any>();
+  // use the prop if provided to go to onboarding instead of trying to navigate parent
+  const goToOnboarding =
+    onShowOnboarding ?? (() => navigation.getParent?.()?.navigate(Screens.ONBOARDING));
 
   const handleSubmit = () => {
     const { isValid, errors } = useFormValidation(loginSchema, { email, password });
@@ -69,27 +81,30 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, signupEnabled }
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
       >
-        <VStack space={4} px={4} flex={1} justifyContent="center">
-          <Text fontSize="lg" textAlign="center">
-            {t('login.title')}
-          </Text>
+        <VStack space="lg" px={spacing.spacingVerySmall} flex={1} justifyContent="center">
+          <HStack justifyContent="flex-start">
+            <TextLink onPress={() => goToOnboarding()}>
+              <Text style={{ fontSize: typography.heading3Size }}>←</Text>
+            </TextLink>
+          </HStack>
+          <PageCover title={t('login.title')} Screen={Screens.AUTH_LOGIN} size={250} />
 
           <InputField
             placeholder={t('form.email')}
             value={email}
-            onChangeText={setEmail}
+            onChange={setEmail}
             type="email"
           />
 
           <InputField
             placeholder={t('form.password')}
             value={password}
-            onChangeText={setPassword}
+            onChange={setPassword}
             type="password"
           />
 
           {error && (
-            <Text color="red.500" fontSize="sm">
+            <Text color="$red500" fontSize={typography.bodySmallSize}>
               {error}
             </Text>
           )}
@@ -107,6 +122,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, signupEnabled }
                 {t('login.forgotPassword')}
               </TextLink>
             )}
+          </HStack>
+
+          <HStack justifyContent="center" mt={spacing.spacingMinimum}>
+            <TextLink onPress={() => navigation.navigate([Screens.ONBOARDING])}>
+              Vous n\'avez pas encore de compte ? Inscrivez-vous
+            </TextLink>
           </HStack>
         </VStack>
       </ScrollView>

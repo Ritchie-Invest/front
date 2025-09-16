@@ -1,36 +1,56 @@
 import React from 'react';
-import { Box, Text, VStack } from 'native-base';
-import { PortfolioBalance } from '~/features/etf-portfolio/components/PortfolioBalance';
+import { Box, Text, VStack } from '@gluestack-ui/themed';
+import { ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { MainStackParamList } from '~/navigation/AppNavigator';
+import { PortfolioPie } from '~/features/etf-portfolio/components/PortfolioPie';
 import { usePortfolio } from '~/features/etf-portfolio/hooks/usePortfolio';
-import { useETFs } from '../hooks/useETFList';
 import { ETFList } from '../components/ETFList';
+import { colors, margins, paddings, spacing, typography } from '~/lib/theme/theme';
+import PageCover from '~/components/organisms/components/PageCover';
+import { Screens } from '~/features/navigation/Type/Screens';
+import { useCurrentUserInfos } from '~/features/user/store/UserInfosStore';
+import LockedOverlay from '../components/LockedOverlay';
+import { config } from '~/lib/config';
 
 export const InvestmentDashboardScreen: React.FC = () => {
+  const lockDashboard = config.LOCK_DASHBOARD;
+  const navigation = useNavigation<NativeStackNavigationProp<MainStackParamList>>();
   const { loading: portfolioLoading, error: portfolioError } = usePortfolio();
-  const { etfs, loading: etfsLoading, error: etfsError } = useETFs();
+  const currentUserInfos = useCurrentUserInfos();
 
-  const loading = portfolioLoading || etfsLoading;
-  const error = portfolioError || etfsError;
+  if (lockDashboard && currentUserInfos && !currentUserInfos.isInvestmentUnlocked) {
+    return <LockedOverlay level={currentUserInfos.levelRequiredToUnlockInvestment} />;
+  }
+  const handlePortfolioPress = () => {
+    navigation.navigate(Screens.PORTFOLIO);
+  };
 
-  if (error) {
+  if (portfolioError) {
     return (
-      <Box flex={1} justifyContent="center" alignItems="center" px={4}>
-        <Text fontSize="lg" color="red.500" textAlign="center" mb={4}>
-          Erreur lors du chargement de la page
+      <Box flex={1} justifyContent="center" alignItems="center" px={paddings.paddingSmall}>
+        <Text fontSize={18} color={colors.errorColor} textAlign="center" mb={margins.marginSmall}>
+          Erreur lors du chargement du portfolio
         </Text>
-        <Text fontSize="sm" color="gray.500" textAlign="center">
-          {error}
+        <Text fontSize={14} color={colors.primaryTextColor} textAlign="center">
+          {portfolioError}
         </Text>
       </Box>
     );
   }
 
   return (
-    <Box flex={1} bg="white">
-      <VStack space={6} px={4} py={6}>
-        <PortfolioBalance />
+    <ScrollView style={{ flex: 1, backgroundColor: colors.mainBackgroundColor }}>
+      <VStack bg={colors.mainBackgroundColor} space={spacing.spacingMediumFallback}>
+        <PageCover title="Tableau de bord" Screen={Screens.DASHBOARD} size={250} />
+        <Box>
+          <PortfolioPie onPress={handlePortfolioPress} />
+        </Box>
+        <Box flex={1} backgroundColor={colors.alternativeBackgroundColor}>
+          <ETFList />
+        </Box>
       </VStack>
-      <ETFList positions={etfs} loading={loading} />
-    </Box>
+    </ScrollView>
   );
 };

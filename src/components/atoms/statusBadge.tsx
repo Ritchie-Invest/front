@@ -1,8 +1,9 @@
 import React from 'react';
-import { Badge, Text } from 'native-base';
+import { Box, Text } from '@gluestack-ui/themed';
 import { useTranslation } from 'react-i18next';
 import { LessonStatus } from '~/features/landing/types/LessonStatus';
 import { ChapterStatus } from '~/features/landing/types/ChapterStatus';
+import { colors, spacing, borderRadius } from '~/lib/theme/theme';
 
 interface StatusBadgeProps {
   status: LessonStatus | ChapterStatus;
@@ -16,30 +17,26 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
       case LessonStatus.COMPLETED:
       case ChapterStatus.COMPLETED:
         return {
-          bg: 'green.500',
+          backgroundColor: colors.successColor,
           text: t('status.progress.completed'),
-          textColor: 'white',
         };
       case LessonStatus.UNLOCKED:
       case ChapterStatus.UNLOCKED:
       case ChapterStatus.IN_PROGRESS:
         return {
-          bg: 'blue.500',
+          backgroundColor: colors.primaryActionColor,
           text: t('status.progress.current'),
-          textColor: 'white',
         };
       case LessonStatus.LOCKED:
       case ChapterStatus.LOCKED:
         return {
-          bg: 'gray.400',
+          backgroundColor: colors.GreyL30,
           text: t('status.progress.locked'),
-          textColor: 'white',
         };
       default:
         return {
-          bg: 'blue.500',
+          backgroundColor: colors.primaryActionColor,
           text: t('status.progress.current'),
-          textColor: 'white',
         };
     }
   };
@@ -47,10 +44,15 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
   const statusProps = getStatusProps();
 
   return (
-    <Badge variant="solid" bg={statusProps.bg} rounded="md">
-      <Text fontSize="xs" color={statusProps.textColor}>
+    <Box
+      bg={statusProps.backgroundColor}
+      borderRadius={borderRadius.borderRadiusSmall}
+      px={spacing.spacingSmall}
+      py={spacing.spacingVerySmall}
+    >
+      <Text fontSize={12} color={colors.secondaryTextColor}>
         {statusProps.text}
       </Text>
-    </Badge>
+    </Box>
   );
 };

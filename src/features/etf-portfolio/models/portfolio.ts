@@ -1,18 +1,10 @@
-export interface Portfolio {
-  portfolioId: number;
-  balance: number;
-  currentValue: number;
-  timestamp: Date;
-}
+import { CurrencyType } from '~/features/etf/types/CurrencyType';
 
-export interface PortfolioPosition {
-  id: string;
-  ticker: string;
-  name: string;
-  quantity: number;
-  currentPrice: number;
+export interface basePortfolioInfos {
+  cash: number;
+  investments: number;
+}
+export interface Portfolio extends basePortfolioInfos {
+  currency: CurrencyType;
   totalValue: number;
-  priceChange: number;
-  priceChangePercentage: number;
-  isGaining: boolean;
 }

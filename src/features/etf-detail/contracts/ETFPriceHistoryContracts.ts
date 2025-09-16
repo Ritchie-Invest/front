@@ -1,6 +1,6 @@
 import { ETFWithPriceHistory } from '../models/ETFPriceHistory';
 
-export interface ETFListContract {
+export interface ETFPriceHistoryContract {
   getETFWithPriceHistory(id: string, dateRange: string): Promise<ETFWithPriceHistory>;
 }
 

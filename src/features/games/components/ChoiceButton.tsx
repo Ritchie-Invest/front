@@ -1,5 +1,6 @@
 import React from 'react';
 import ChoiceButtonAtom from '~/components/atoms/ChoiceButton';
+import { colors } from '~/lib/theme/theme';
 
 interface ChoiceButtonProps {
   text: string;
@@ -12,26 +13,26 @@ interface ChoiceButtonProps {
 }
 
 const ChoiceButton: React.FC<ChoiceButtonProps> = (props) => {
-  let borderColor = 'coolGray.200';
-  let bg = '#fff';
-  let color = 'coolGray.700';
+  let borderColor = colors.GreyL30;
+  let bg = colors.mainBackgroundColor;
+  let color = colors.primaryTextColor;
   let fontWeight: 'normal' | 'bold' = 'normal';
 
   if (props.selected) {
     if (props.showFeedback === 'success' && props.correct) {
-      borderColor = 'green.500';
-      bg = 'green.50';
-      color = 'green.600';
+      borderColor = colors.successColor;
+      bg = colors.successBackgroundColor;
+      color = colors.successColor;
       fontWeight = 'bold';
     } else if (props.showFeedback === 'error') {
-      borderColor = 'orange.500';
-      bg = 'orange.50';
-      color = 'orange.700';
+      borderColor = colors.warningColor;
+      bg = colors.warningBackgroundColor;
+      color = colors.warningColor;
       fontWeight = 'bold';
     } else if (props.showFeedback === 'none') {
-      borderColor = 'blue.400';
-      bg = 'blue.50';
-      color = 'blue.700';
+      borderColor = colors.primaryActionColor;
+      bg = colors.primaryActionBackgroundColor;
+      color = colors.primaryActionColor;
       fontWeight = 'bold';
     }
   }

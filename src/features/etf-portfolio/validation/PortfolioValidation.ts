@@ -6,12 +6,23 @@ export const PORTFOLIO_VALIDATION_RULES = {
     type: 'number',
     min: 1,
   },
-  BALANCE: {
+  CURRENCY: {
+    required: true,
+    type: 'string',
+    minLength: 3,
+    maxLength: 3,
+  },
+  CASH: {
     required: true,
     type: 'number',
     min: 0,
   },
-  CURRENT_VALUE: {
+  INVESTMENTS: {
+    required: true,
+    type: 'number',
+    min: 0,
+  },
+  PORTFOLIO_TOTAL_VALUE: {
     required: true,
     type: 'number',
     min: 0,
@@ -82,13 +93,14 @@ export const validatePortfolioData = (data: unknown): boolean => {
 
   const portfolio = data as any;
   return (
-    typeof portfolio.portfolioId === 'number' &&
-    portfolio.portfolioId > 0 &&
-    typeof portfolio.balance === 'number' &&
-    portfolio.balance >= 0 &&
-    typeof portfolio.currentValue === 'number' &&
-    portfolio.currentValue >= 0 &&
-    portfolio.timestamp instanceof Date
+    typeof portfolio.currency === 'string' &&
+    portfolio.currency.length === 3 &&
+    typeof portfolio.cash === 'number' &&
+    portfolio.cash >= 0 &&
+    typeof portfolio.investments === 'number' &&
+    portfolio.investments >= 0 &&
+    typeof portfolio.totalValue === 'number' &&
+    portfolio.totalValue >= 0
   );
 };
 
@@ -120,6 +132,25 @@ export const validatePortfolioPositionData = (data: unknown): boolean => {
 export const validatePortfolioPositionsArray = (data: unknown): boolean => {
   if (!Array.isArray(data)) return false;
   return data.every(validatePortfolioPositionData);
+};
+
+export const validatePortfolioHistoryResponse = (
+  data: unknown,
+): data is {
+  positions: unknown;
+  variation: number;
+  variationPercent: number;
+  variationDirection: string;
+} => {
+  if (!data || typeof data !== 'object') return false;
+  const obj = data as any;
+  return (
+    Array.isArray(obj.positions) &&
+    obj.positions.every(validatePortfolioPositionData) &&
+    typeof obj.variation === 'number' &&
+    typeof obj.variationPercent === 'number' &&
+    typeof obj.variationDirection === 'string'
+  );
 };
 
 export const validateTotalValue = (value: unknown): value is number => {

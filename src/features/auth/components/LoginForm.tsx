@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
 import { VStack, Text, HStack } from '@gluestack-ui/themed';
+import { typography, spacing } from '~/lib/theme/theme';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 import { config } from '../../../lib/config';
@@ -15,8 +16,6 @@ import { useFormValidation } from '../../../hooks/useFormValidation';
 import { AuthScreen } from '../models/authScreen';
 import PageCover from '~/components/organisms/components/PageCover';
 import { Screens } from '~/features/navigation/Type/Screens';
-import { typography } from '~/lib/theme/theme';
-
 interface LoginFormProps {
   onSuccess: () => void;
   signupEnabled?: boolean;
@@ -82,7 +81,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
       >
-        <VStack space="lg" px={4} flex={1} justifyContent="center">
+        <VStack space="lg" px={spacing.spacingVerySmall} flex={1} justifyContent="center">
           <HStack justifyContent="flex-start">
             <TextLink onPress={() => goToOnboarding()}>
               <Text style={{ fontSize: typography.heading3Size }}>←</Text>
@@ -105,7 +104,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           />
 
           {error && (
-            <Text color="$red500" fontSize={14}>
+            <Text color="$red500" fontSize={typography.bodySmallSize}>
               {error}
             </Text>
           )}
@@ -125,7 +124,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             )}
           </HStack>
 
-          <HStack justifyContent="center" mt={2}>
+          <HStack justifyContent="center" mt={spacing.spacingMinimum}>
             <TextLink onPress={() => navigation.navigate([Screens.ONBOARDING])}>
               Vous n\'avez pas encore de compte ? Inscrivez-vous
             </TextLink>

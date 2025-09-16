@@ -11,7 +11,7 @@ interface ChaptersTimelineProps {
   currentLesson: Lesson | null;
   currentChapter: Chapter | null;
   onChapterLayout: (chapterId: string, event: any) => void;
-  onLessonAction: (lessonId: string, action: 'start' | 'review') => void;
+  onLessonAction: (lessonId: string, action: 'start') => void;
   scrollViewRef: any;
 }
 

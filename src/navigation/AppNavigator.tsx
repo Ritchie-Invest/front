@@ -14,24 +14,45 @@ import { InvestmentDashboardScreen } from '~/features/investment-dashboard/scree
 import BaseLayout from '~/components/organisms/components/BaseLayout';
 import UserHeader from '~/features/user/components/userHeader';
 import UserProfile from '~/features/user/screens/UserProfile';
+import ModuleScreen from '../features/games/screens/ModuleScreen';
+import CompleteScreen from '../features/games/screens/CompleteScreen';
 
 export type RootStackParamList = {
   Main: undefined;
   Login: undefined;
   Register: undefined;
   Onboarding: undefined;
+  ModuleScreen: { lessonId: string; moduleId: string };
+  CompleteScreen: {
+    lessonId: string;
+    completedModules?: number;
+    totalModules?: number;
+    xpWon?: number;
+    isLessonCompleted?: boolean;
+  };
 };
 
 export type MainStackParamList = {
   [Screens.HOME]: undefined;
-  [Screens.AUTH_LOGIN]: undefined;
-  [Screens.AUTH_REGISTER]: undefined;
   [Screens.DASHBOARD]: undefined;
   [Screens.ETF_DETAILS]: { id: string };
   [Screens.TRANSACTION]: { transactionType: TransactionType };
   [Screens.PORTFOLIO]: undefined;
   [Screens.PROFILE]: undefined;
-  [Screens.ONBOARDING]: undefined;
+  [Screens.MODULE_SCREEN]: {
+    lessonId: string;
+    moduleId: string;
+    currentGameModuleIndex?: number;
+    totalGameModules?: number;
+    correctAnswers?: number;
+  };
+  [Screens.COMPLETE_SCREEN]: {
+    lessonId: string;
+    completedModules?: number;
+    totalModules?: number;
+    xpWon?: number;
+    isLessonCompleted?: boolean;
+  };
 };
 
 const Stack = createNativeStackNavigator();
@@ -121,6 +142,23 @@ export const AppNavigator = ({
               </MainStack.Screen>
               <MainStack.Screen name={Screens.PROFILE}>
                 {() => <BaseLayout children={<UserProfile handleLogout={handleLogout} />} />}
+              </MainStack.Screen>
+              <MainStack.Screen name={Screens.MODULE_SCREEN} options={{ headerTitle: '' }}>
+                {() => <ModuleScreen />}
+              </MainStack.Screen>
+              <MainStack.Screen name={Screens.COMPLETE_SCREEN} options={{ headerTitle: '' }}>
+                {({ route }) => {
+                  const params = route.params as MainStackParamList[typeof Screens.COMPLETE_SCREEN];
+                  return (
+                    <CompleteScreen
+                      lessonId={params.lessonId}
+                      completedModules={params.completedModules}
+                      totalModules={params.totalModules}
+                      xpWon={params.xpWon}
+                      isLessonCompleted={params.isLessonCompleted}
+                    />
+                  );
+                }}
               </MainStack.Screen>
             </MainStack.Navigator>
           )}

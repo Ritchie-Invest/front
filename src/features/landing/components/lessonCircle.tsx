@@ -8,7 +8,7 @@ import { borderRadius, paddings, spacing } from '~/lib/theme/theme';
 
 interface LessonCircleProps {
   lesson: Lesson;
-  onAction: (lessonId: string, action: 'start' | 'review') => void;
+  onAction: (lessonId: string, action: 'start') => void;
   isCurrent?: boolean;
 }
 
@@ -30,7 +30,7 @@ export const LessonCircle: React.FC<LessonCircleProps> = ({
         disabled={isDisabled}
         style={{
           aspectRatio: 1,
-          width: '20%',
+          width: '40%',
           borderRadius: borderRadius.borderRadiusCircle,
           backgroundColor: circleStyle.backgroundColor,
           justifyContent: 'center',

@@ -3,7 +3,7 @@ import { VStack, Text, Box } from '@gluestack-ui/themed';
 import { useTranslation } from 'react-i18next';
 import { OnboardingLayout } from '../../components/organisms/OnboardingLayout';
 import { Button } from '../../../../components/atoms/Button';
-import { typography } from '~/lib/theme/theme';
+import { typography, spacing } from '~/lib/theme/theme';
 
 interface LearningGoal {
   title: string;
@@ -35,7 +35,7 @@ export const LearningGoalsScreen: React.FC<LearningGoalsScreenProps> = ({
         <VStack space="lg" flex={6} justifyContent="center" alignItems="center">
           {goals.map((goal, index) => (
             <Box key={index}>
-              <Text fontSize={18} fontWeight="bold" color="$text900" mb={2}>
+              <Text fontSize={18} fontWeight="bold" color="$text900" mb={spacing.spacingMinimum}>
                 {goal.title}
               </Text>
               <Text fontSize={typography.bodySize} color="$text600">

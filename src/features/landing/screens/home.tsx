@@ -28,7 +28,7 @@ const HomeScreen = () => {
   return (
     <>
       {Badges.length > 0 || (showBadgeOverlay && <BadgeOverlay visible={true} />)}
-      <PageCover title="" Screen={Screens.HOME} size={200} />
+      <PageCover title="" Screen={Screens.HOME} size={100} />
       {showProgress && (
         <Hero
           chapterTitle={currentChapter?.title || 'Aucun chapitre disponible'}

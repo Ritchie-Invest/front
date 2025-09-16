@@ -85,7 +85,24 @@
   },
   "lesson": {
     "start": "Start",
-    "review": "Review",
+    "completed": "Completed",
+    "restart": "Restart",
+    "continue": "Continue",
     "unlockMessage": "Complete the previous lesson to unlock"
+  },
+  "game": {
+    "completeSentence": "Complete the sentence",
+    "success": "Well done!",
+    "error": "Oops!",
+    "loading": "Loading the game...",
+    "correctAnswer": "Correct answer:",
+    "continue": "Continue",
+    "understood": "Understood"
+  },
+  "completion": {
+    "congrats": "High five!",
+    "failed": "Almost there!",
+    "lessonSuccess": "Lesson completed successfully.",
+    "lessonFail": "You didn't pass the lesson. Try again!"
   }
 }

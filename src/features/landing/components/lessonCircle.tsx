@@ -8,7 +8,7 @@ import { borderRadius, paddings, spacing } from '~/lib/theme/theme';
 
 interface LessonCircleProps {
   lesson: Lesson;
-  onAction: (lessonId: string, action: 'start' | 'review') => void;
+  onAction: (lessonId: string, action: 'start') => void;
   isCurrent?: boolean;
 }
 

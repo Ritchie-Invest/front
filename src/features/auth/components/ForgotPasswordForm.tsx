@@ -8,7 +8,7 @@ import { InputField } from '../../../components/atoms/InputField';
 import { useFormValidation } from '../../../hooks/useFormValidation';
 import { forgotPasswordSchema } from '../validation/forgotPasswordSchema';
 import { useTranslation } from 'react-i18next';
-import { colors } from '~/lib/theme/theme';
+import { colors, spacing } from '~/lib/theme/theme';
 
 type ForgotPasswordFormProps = {
   onBackToLogin?: () => void;
@@ -51,7 +51,7 @@ export const ForgotPasswordForm = ({ onBackToLogin }: ForgotPasswordFormProps) =
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
       >
-        <VStack space="lg" px={4} flex={1} justifyContent="center">
+        <VStack space="lg" px={spacing.spacingVerySmall} flex={1} justifyContent="center">
           <Text fontSize={18} textAlign="center">
             {t('forgot.title')}
           </Text>

@@ -14,7 +14,6 @@ import { InvestmentDashboardScreen } from '~/features/investment-dashboard/scree
 import BaseLayout from '~/components/organisms/components/BaseLayout';
 import UserHeader from '~/features/user/components/userHeader';
 import UserProfile from '~/features/user/screens/UserProfile';
-import Navbar from '../features/navigation/components/organisms/navbar';
 import ModuleScreen from '../features/games/shared/screens/ModuleScreen';
 import CompleteScreen from '../features/games/shared/screens/CompleteScreen';
 
@@ -35,11 +34,14 @@ export type RootStackParamList = {
 
 export type MainStackParamList = {
   [Screens.HOME]: undefined;
+  [Screens.AUTH_LOGIN]: undefined;
+  [Screens.AUTH_REGISTER]: undefined;
   [Screens.DASHBOARD]: undefined;
   [Screens.ETF_DETAILS]: { id: string };
   [Screens.TRANSACTION]: { transactionType: TransactionType };
   [Screens.PORTFOLIO]: undefined;
   [Screens.PROFILE]: undefined;
+  [Screens.ONBOARDING]: undefined;
   [Screens.MODULE_SCREEN]: {
     lessonId: string;
     moduleId: string;

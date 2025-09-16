@@ -1,7 +1,11 @@
 import React from 'react';
-import { VStack, Text, Spacer } from 'native-base';
+import { View } from 'react-native';
+import { VStack, Text } from '@gluestack-ui/themed';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../components/atoms/Button';
+import { colors, margins, paddings, spacing, typography } from '~/lib/theme/theme';
+import PageCover from '~/components/organisms/components/PageCover';
+import { Screens } from '~/features/navigation/Type/Screens';
 
 interface WelcomeScreenProps {
   onStart: () => void;
@@ -12,15 +16,19 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart, onLogin }
   const { t } = useTranslation();
 
   return (
-    <VStack flex={1} bg="white" px="4" justifyContent="center">
-      <VStack space={6} alignItems="center">
-        <Text fontSize="2xl" fontWeight="bold" textAlign="center" color="gray.800">
-          {t('onboarding.welcome.title')}
-        </Text>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: colors.mainBackgroundColor,
+        paddingHorizontal: paddings.paddingMedium,
+        justifyContent: 'center',
+      }}
+    >
+      <VStack space={spacing.spacingMediumFallback} alignItems="center">
+        <PageCover title={t('onboarding.welcome.title')} Screen={Screens.ONBOARDING} size={250} />
+        <View style={{ flex: 1, marginTop: margins.marginMedium }} />
 
-        <Spacer />
-
-        <VStack space={4} width="100%">
+        <VStack space={spacing.spacingMediumFallback} style={{ width: '80%' }}>
           <Button onPress={onStart}>{t('onboarding.welcome.startButton')}</Button>
 
           <Button variant="secondary" onPress={onLogin}>
@@ -28,6 +36,6 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart, onLogin }
           </Button>
         </VStack>
       </VStack>
-    </VStack>
+    </View>
   );
 };

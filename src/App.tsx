@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './i18n';
-import { NativeBaseProvider } from 'native-base';
+import { GluestackUIProvider } from '@gluestack-ui/themed';
+import { customConfig } from './lib/theme/theme';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { AppNavigator } from './navigation/AppNavigator';
 import { useAuthStore } from './features/auth/store/authStore';
 
@@ -28,6 +30,12 @@ export default function App() {
     setShowLogin(false);
   };
 
+  const handleShowOnboarding = () => {
+    setIsOnboardingCompleted(false);
+    setShowRegister(false);
+    setShowLogin(false);
+  };
+
   const handleLogin = () => {
     setShowLogin(true);
   };
@@ -48,19 +56,22 @@ export default function App() {
   };
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <NativeBaseProvider>
-        <AppNavigator
-          isOnboardingCompleted={isOnboardingCompleted}
-          showLogin={showLogin}
-          showRegister={showRegister}
-          handleLoginSuccess={handleLoginSuccess}
-          handleOnboardingComplete={handleOnboardingComplete}
-          handleLogin={handleLogin}
-          handleLogout={handleLogout}
-          handleBackToLogin={handleBackToLogin}
-        />
-      </NativeBaseProvider>
-    </QueryClientProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <GluestackUIProvider config={customConfig}>
+        <QueryClientProvider client={queryClient}>
+          <AppNavigator
+            isOnboardingCompleted={isOnboardingCompleted}
+            showLogin={showLogin}
+            showRegister={showRegister}
+            onShowOnboarding={handleShowOnboarding}
+            handleLoginSuccess={handleLoginSuccess}
+            handleOnboardingComplete={handleOnboardingComplete}
+            handleLogin={handleLogin}
+            handleLogout={handleLogout}
+            handleBackToLogin={handleBackToLogin}
+          />
+        </QueryClientProvider>
+      </GluestackUIProvider>
+    </GestureHandlerRootView>
   );
 }

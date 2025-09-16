@@ -1,8 +1,8 @@
-import { validateETFWithCurrentPrice } from '~/features/etf/validation/ETFWithCurrentPriceValidation';
-import { ETFWithCurrentPrice } from '~/features/etf/models/ETFWithCurrentPrice';
+import { validateETF } from '~/features/etf/validation/ETFValidation';
+import { ETF } from '~/features/etf/models/ETF';
 
-export const validateETFList = (etfs: ETFWithCurrentPrice[]): boolean => {
+export const validateETFList = (etfs: ETF[]): boolean => {
   if (!Array.isArray(etfs)) return false;
 
-  return etfs.every(validateETFWithCurrentPrice);
+  return etfs.every(validateETF);
 };

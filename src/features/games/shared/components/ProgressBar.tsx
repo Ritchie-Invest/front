@@ -1,22 +1,26 @@
 import React from 'react';
-import { Box, Progress } from 'native-base';
+import { Box, Progress, ProgressFilledTrack } from '@gluestack-ui/themed';
+import { colors, spacing, borderRadius } from '~/lib/theme/theme';
 
 interface ProgressBarProps {
   progress: number;
 }
 
 const ProgressBar: React.FC<ProgressBarProps> = ({ progress }) => (
-  <Box bg="gray.200" borderRadius={10} overflow="hidden" h={5} w="100%">
+  <Box
+    bg={colors.GreyL30}
+    borderRadius={borderRadius.borderRadius2xl}
+    overflow="hidden"
+    h={spacing.spacingMedium2}
+    w="100%"
+  >
     <Progress
       value={progress * 100}
-      size="md"
-      colorScheme="yellow"
-      _filledTrack={{
-        bg: 'yellow.400',
-      }}
-      h={5}
-      borderRadius={10}
-    />
+      h={spacing.spacingMedium2}
+      borderRadius={borderRadius.borderRadius2xl}
+    >
+      <ProgressFilledTrack bg={colors.accentTextColor} />
+    </Progress>
   </Box>
 );
 

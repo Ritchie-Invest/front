@@ -1,10 +1,10 @@
 import { ETFListContract } from '../contracts/ETFListContract';
 import { ETFListService } from '../services/ETFListService';
-import { ETFWithCurrentPrice } from '~/features/etf/models/ETFWithCurrentPrice';
+import { ETF } from '~/features/etf/models/ETF';
 import { validateETFList } from '../validation/ETFListValidation';
 
 export class ETFListServiceAdapter implements ETFListContract {
-  async getAllETFs(): Promise<ETFWithCurrentPrice[]> {
+  async getAllETFs(): Promise<ETF[]> {
     const etfs = await ETFListService.getAllETFs();
 
     if (!validateETFList(etfs)) {

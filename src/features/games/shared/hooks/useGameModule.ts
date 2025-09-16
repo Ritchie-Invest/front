@@ -7,8 +7,9 @@ import { gameProgressService } from '../services/progressService';
 import { CompleteModuleResponse } from '../models/progress';
 import { MainStackParamList } from '~/navigation/AppNavigator';
 import { isTrueFalseModule } from '../utils/moduleTypeGuards';
+import { Screens } from '~/features/navigation/Type/Screens';
 
-type ModuleScreenRouteProp = RouteProp<MainStackParamList, 'ModuleScreen'>;
+type ModuleScreenRouteProp = RouteProp<MainStackParamList, typeof Screens.MODULE_SCREEN>;
 
 // Hook unifié qui détecte le type ET charge les données
 export const useGameModule = () => {
@@ -64,7 +65,7 @@ export const useGameModule = () => {
     } catch (error: any) {
       // Gestion du cas où le module est déjà complété (erreur 409)
       if (error?.response?.status === 409) {
-        navigation.replace('CompleteScreen', {
+        navigation.replace(Screens.COMPLETE_SCREEN, {
           lessonId,
           completedModules: 0,
           totalModules: totalGameModules,
@@ -85,7 +86,7 @@ export const useGameModule = () => {
 
     if (completionResult.nextGameModuleId) {
       // Il y a encore des modules dans cette leçon
-      navigation.replace('ModuleScreen', {
+      navigation.replace(Screens.MODULE_SCREEN, {
         lessonId,
         moduleId: completionResult.nextGameModuleId,
         currentGameModuleIndex: completionResult.currentGameModuleIndex + 1,
@@ -96,7 +97,7 @@ export const useGameModule = () => {
       // Fin de la leçon
       try {
         const lessonResult = await gameProgressService.completeLesson(lessonId);
-        navigation.replace('CompleteScreen', {
+        navigation.replace(Screens.COMPLETE_SCREEN, {
           lessonId,
           completedModules: lessonResult.completedGameModules,
           totalModules: lessonResult.totalGameModules,
@@ -105,7 +106,7 @@ export const useGameModule = () => {
         });
       } catch (error) {
         // En cas d'erreur, afficher tout de même l'écran de completion
-        navigation.replace('CompleteScreen', {
+        navigation.replace(Screens.COMPLETE_SCREEN, {
           lessonId,
           completedModules: newCorrectAnswers,
           totalModules: completionResult.totalGameModules,

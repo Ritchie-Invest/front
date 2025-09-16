@@ -1,7 +1,7 @@
 import React from 'react';
-import { Pressable, Box } from 'native-base';
-import { Icon } from './Icon';
+import { Pressable, Box, Icon } from '@gluestack-ui/themed';
 import { MaterialIcons } from '@expo/vector-icons';
+import { spacing, borderRadius } from '~/lib/theme/theme';
 
 interface IconChoiceButtonProps {
   iconName: keyof typeof MaterialIcons.glyphMap;
@@ -20,18 +20,18 @@ const IconChoiceButton: React.FC<IconChoiceButtonProps> = ({
   onPress,
   disabled,
 }) => (
-  <Pressable onPress={onPress} isDisabled={disabled} flex={1} mx={2}>
+  <Pressable onPress={onPress} disabled={disabled} flex={1} mx={spacing.spacingMinimum}>
     <Box
       borderWidth={2}
       borderColor={borderColor}
       bg={bg}
-      borderRadius="lg"
-      height={100}
+      borderRadius={borderRadius.borderRadiusLarge}
+      height="$24"
       width="100%"
       justifyContent="center"
       alignItems="center"
     >
-      <Icon name={iconName} size="2xl" color={iconColor} />
+      <Icon as={() => <MaterialIcons name={iconName} size={32} color={iconColor} />} />
     </Box>
   </Pressable>
 );

@@ -1,4 +1,7 @@
-import { Text, Pressable } from 'native-base';
+import React from 'react';
+import { Text } from '@gluestack-ui/themed';
+import { Pressable } from 'react-native';
+import { spacing } from '~/lib/theme/theme';
 
 type TextLinkProps = {
   onPress: () => void;
@@ -7,12 +10,13 @@ type TextLinkProps = {
 
 export const TextLink = ({ onPress, children }: TextLinkProps) => {
   return (
-    <Pressable onPress={onPress} px={2} py={2}>
-      {({ isPressed }) => (
-        <Text color="primary.500" underline fontSize="sm" opacity={isPressed ? 0.6 : 1}>
-          {children}
-        </Text>
-      )}
+    <Pressable
+      onPress={onPress}
+      style={{ paddingHorizontal: spacing.spacingSmall, paddingVertical: spacing.spacingSmall }}
+    >
+      <Text color="$blue500" textDecorationLine="underline" fontSize={14}>
+        {children}
+      </Text>
     </Pressable>
   );
 };

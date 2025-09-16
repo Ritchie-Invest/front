@@ -1,8 +1,9 @@
 import React from 'react';
-import { VStack, Text, Spacer } from 'native-base';
+import { VStack, Text, Box } from '@gluestack-ui/themed';
 import { useTranslation } from 'react-i18next';
 import { OnboardingLayout } from '../../components/organisms/OnboardingLayout';
 import { Button } from '../../../../components/atoms/Button';
+import { typography } from '~/lib/theme/theme';
 
 interface CompletionScreenProps {
   title: string;
@@ -23,20 +24,24 @@ export const CompletionScreen: React.FC<CompletionScreenProps> = ({
 
   return (
     <OnboardingLayout progress={progress} onBackPress={onBack}>
-      <VStack flex={1} justifyContent="center" alignItems="center" space={6}>
-        <VStack space={4} alignItems="center" justifyContent="center" flex={6}>
-          <Text fontSize="2xl" fontWeight="bold" textAlign="center" color="gray.800">
+      <VStack flex={1} justifyContent="center" alignItems="center" space="lg">
+        <VStack space="lg" alignItems="center" justifyContent="center" flex={6}>
+          <Text fontSize={24} fontWeight="bold" textAlign="center" color="$text900">
             {title}
           </Text>
 
-          <Text fontSize="md" textAlign="center" color="gray.600">
+          <Text fontSize={typography.bodySize} textAlign="center" color="$text600">
             {description}
           </Text>
         </VStack>
 
-        <Spacer />
+        <Box flex={1} />
 
-        <Button onPress={onContinue} width="100%">
+        <Button
+          onPress={() => {
+            onContinue();
+          }}
+        >
           {t('onboarding.completion.startButton')}
         </Button>
       </VStack>

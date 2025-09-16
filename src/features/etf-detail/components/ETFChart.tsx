@@ -1,12 +1,13 @@
 import React, { memo } from 'react';
-import { Box, Spinner, Center, Text } from 'native-base';
+import { Box, Spinner, Center, Text } from '@gluestack-ui/themed';
 import { LineChartContainer } from '~/components/organisms/components/LineChartContainer';
 import { useETFChart } from '../hooks/useETFChart';
 import { ETFChartProps } from '../models/ETFChartComponent';
+import { borderRadius, colors, margins, paddings, typography } from '~/lib/theme/theme';
 
 export const ETFChart: React.FC<ETFChartProps> = memo(({ config, timeRangeConfig }) => {
   const {
-    etfData,
+    priceHistory,
     loading,
     error,
     selectedRange,
@@ -21,41 +22,62 @@ export const ETFChart: React.FC<ETFChartProps> = memo(({ config, timeRangeConfig
 
   if (loading) {
     return (
-      <Box bg="white" p={4} rounded="lg" shadow={1} mb={4} height={chartConfig.height}>
+      <Box
+        bg={colors.mainBackgroundColor}
+        p={paddings.paddingVerySmall}
+        rounded={borderRadius.borderRadiusLarge}
+        shadowOffset={{ width: 0, height: 1 }}
+        shadowOpacity={0.1}
+        shadowRadius={2}
+        elevation={1}
+        mb={margins.marginVerySmall}
+        height={chartConfig.height}
+      >
         <Center flex={1}>
-          <Spinner size="lg" color="blue.500" />
+          <Spinner size={typography.heading3Size} color={colors.primaryActionColor} />
         </Center>
       </Box>
     );
   }
 
-  if (error || !etfData) {
+  if (error || !priceHistory || priceHistory.length === 0) {
     return (
-      <Box bg="white" p={4} rounded="lg" shadow={1} mb={4} height={chartConfig.height}>
+      <Box
+        bg={colors.mainBackgroundColor}
+        p={paddings.paddingVerySmall}
+        rounded={borderRadius.borderRadiusLarge}
+        shadowOffset={{ width: 0, height: 1 }}
+        shadowOpacity={0.1}
+        shadowRadius={2}
+        elevation={1}
+        mb={margins.marginVerySmall}
+        height={chartConfig.height}
+      >
         <Center flex={1}>
-          <Text color="red.500">Erreur lors du chargement du graphique</Text>
+          <Text color={colors.errorColor}>Erreur lors du chargement du graphique</Text>
         </Center>
       </Box>
     );
   }
 
   return (
-    <LineChartContainer
-      data={etfData.priceHistory}
-      adapter={adapter as any}
-      selectedTimeRange={selectedRange}
-      onTimeRangeChange={handleRangeChange}
-      title="Évolution du prix"
-      config={chartConfig}
-      timeRangeConfig={rangeConfig}
-      emptyStateText="Aucune donnée de prix disponible"
-      containerStyle={{
-        bg: 'white',
-        p: 4,
-        rounded: 'lg',
-        shadow: 1,
-        mb: 4,
-      }}
-    />
+    <Box mb={margins.marginVerySmall}>
+      <LineChartContainer
+        data={priceHistory}
+        adapter={adapter as any}
+        selectedTimeRange={selectedRange}
+        onTimeRangeChange={handleRangeChange}
+        title="Prix de l'ETF"
+        config={chartConfig}
+        timeRangeConfig={rangeConfig}
+        emptyStateText="Aucune donnée de prix disponible"
+        containerStyle={{
+          bg: colors.mainBackgroundColor,
+          p: paddings.paddingVerySmall,
+          rounded: borderRadius.borderRadiusLargeFallback,
+          shadow: 1,
+        }}
+      />
+    </Box>
   );
 });

@@ -39,11 +39,13 @@ export default {
     experiments: {
       webBundler: "metro",
     },
+    plugins: ["expo-localization"],
     extra: {
       API_URL: process.env.API_URL,
       SSO_LOGIN_ENABLED: process.env.SSO_LOGIN_ENABLED,
       FORGOT_PASSWORD_ENABLED: process.env.FORGOT_PASSWORD_ENABLED,
       SIGNUP_ENABLED: process.env.SIGNUP_ENABLED,
+      LOCK_DASHBOARD: process.env.LOCK_DASHBOARD,
       eas: {
         projectId: "5c2df484-8c85-4390-8911-15c37c322260",
       },

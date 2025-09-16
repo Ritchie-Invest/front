@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { VStack, Text } from 'native-base';
+import { VStack, Text } from '@gluestack-ui/themed';
+import { typography, spacing } from '~/lib/theme/theme';
 import { KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
 import { useRegister } from '../hooks/useRegister';
 import { Button } from '../../../components/atoms/Button';
@@ -8,6 +9,8 @@ import { InputField } from '../../../components/atoms/InputField';
 import { registerSchema } from '../validation/registerSchema';
 import { useFormValidation } from '../../../hooks/useFormValidation';
 import { useTranslation } from 'react-i18next';
+import PageCover from '~/components/organisms/components/PageCover';
+import { Screens } from '~/features/navigation/Type/Screens';
 
 type RegisterFormProps = {
   onBackToLogin?: () => void;
@@ -62,38 +65,36 @@ export const RegisterForm = ({ onBackToLogin, onSuccess }: RegisterFormProps) =>
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
       >
-        <VStack space={4} px={4} flex={1} justifyContent="center">
-          <Text fontSize="lg" textAlign="center">
-            {t('register.title')}
-          </Text>
+        <VStack space="lg" px={spacing.spacingVerySmall} flex={1} justifyContent="center">
+          <PageCover title={t('register.title')} Screen={Screens.AUTH_REGISTER} size={250} />
 
           <InputField
             placeholder={t('form.email')}
             value={email}
-            onChangeText={setEmail}
+            onChange={setEmail}
             type="email"
           />
 
           <InputField
             placeholder={t('form.password')}
             value={password}
-            onChangeText={setPassword}
+            onChange={setPassword}
             type="password"
           />
 
           {error && (
-            <Text color="red.500" fontSize="sm">
+            <Text color="$red500" fontSize={typography.bodySmallSize}>
               {error}
             </Text>
           )}
 
           {successMessage && (
-            <Text color="green.500" fontSize="sm">
+            <Text color="$green500" fontSize={typography.bodySmallSize}>
               {successMessage}
             </Text>
           )}
 
-          <Button onPress={handleSubmit} isLoading={register.isPending} disabled={!!successMessage}>
+          <Button onPress={handleSubmit} isLoading={register.isPending}>
             {t('register.button')}
           </Button>
 

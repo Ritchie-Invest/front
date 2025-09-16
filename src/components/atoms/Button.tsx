@@ -1,83 +1,116 @@
 import React, { ReactNode } from 'react';
-import { Button as NBButton, IButtonProps } from 'native-base';
+import { Button as GButton, ButtonText, ButtonSpinner } from '@gluestack-ui/themed';
+import { borderRadius, colors, typography } from '../../lib/theme/theme';
 
-type Variant = 'primary' | 'secondary' | 'outline' | 'disabled' | 'success' | 'error' | 'info';
+type Variant =
+  | 'primary'
+  | 'secondary'
+  | 'outline'
+  | 'disabled'
+  | 'success'
+  | 'error'
+  | 'info'
+  | 'accent'
+  | 'ghost';
 
 type Props = {
   children: ReactNode;
   onPress: () => void;
   isLoading?: boolean;
   variant?: Variant;
-} & Omit<IButtonProps, 'variant'>;
+};
 
 export const Button = ({ children, onPress, isLoading, variant = 'primary', ...rest }: Props) => {
-  const getVariantProps = () => {
+  const getVariantProps = (): {
+    variant: 'solid' | 'outline' | 'link';
+    isDisabled?: boolean;
+    bg?: string;
+    borderColor?: string;
+    $focus?: { bg?: string };
+    $active?: { bg?: string };
+  } => {
     switch (variant) {
       case 'secondary':
         return {
-          bg: 'white',
-          _text: { color: 'black' },
-          borderWidth: 1,
-          borderColor: 'gray.300',
-          _pressed: { bg: 'gray.100' },
-          borderRadius: 16,
+          variant: 'solid',
+          bg: colors.transparent,
+          $focus: { bg: colors.secondaryActionFocusColor },
+          $active: { bg: colors.secondaryActionActiveColor },
         };
       case 'disabled':
         return {
-          bg: 'gray.300',
-          _text: { color: 'gray.500' },
-          _pressed: { bg: 'gray.300' },
+          variant: 'solid',
           isDisabled: true,
-          borderRadius: 16,
         };
-      case 'outline':
+      case 'ghost':
         return {
-          variant: 'outline',
-          borderColor: 'blue.500',
-          borderRadius: 16,
+          variant: 'link',
+          bg: colors.transparent,
+          $focus: { bg: colors.GreyL30 },
+          $active: { bg: colors.GreyL30 },
         };
       case 'success':
         return {
-          bg: 'green.600',
-          _text: { color: 'white' },
-          _pressed: { bg: 'green.700' },
-          borderRadius: 16,
+          variant: 'solid',
+          bg: colors.successColor,
+          $focus: { bg: colors.successColor },
+          $active: { bg: colors.successColor },
         };
       case 'error':
         return {
-          bg: 'orange.700',
-          _text: { color: 'white' },
-          _pressed: { bg: 'orange.800' },
-          borderRadius: 16,
+          variant: 'solid',
+          bg: colors.errorColor,
+          $focus: { bg: colors.errorColor },
+          $active: { bg: colors.errorColor },
         };
       case 'info':
         return {
-          bg: 'blue.600',
-          _text: { color: 'white' },
-          _pressed: { bg: 'blue.700' },
-          borderRadius: 16,
+          variant: 'solid',
+          bg: colors.primaryActionColor,
+          $focus: { bg: colors.primaryActionFocusColor },
+          $active: { bg: colors.primaryActionActiveColor },
         };
+      case 'accent':
+        return {
+          variant: 'solid',
+          bg: colors.accentTextColor,
+          $focus: { bg: colors.accentTextColor },
+          $active: { bg: colors.accentTextColor },
+        };
+
       case 'primary':
       default:
         return {
-          bg: 'blue.500',
-          _text: { color: 'white' },
-          _pressed: { bg: 'blue.600' },
-          borderRadius: 16,
+          variant: 'solid',
+          bg: colors.primaryActionColor,
+          $focus: { bg: colors.primaryActionFocusColor },
+          $active: { bg: colors.primaryActionActiveColor },
         };
     }
   };
 
   return (
-    <NBButton
+    <GButton
       onPress={onPress}
-      isLoading={isLoading}
-      rounded="md"
-      height="50"
+      isDisabled={isLoading || variant === 'disabled'}
+      height="$12"
+      width="100%"
+      borderWidth={variant === 'secondary' ? 1.5 : 0}
+      borderColor={colors.primaryActionColor}
+      borderRadius={borderRadius.borderRadiusExtraLarge}
       {...getVariantProps()}
       {...rest}
     >
-      {children}
-    </NBButton>
+      {isLoading && <ButtonSpinner mr="$1" />}
+      <ButtonText
+        width="100%"
+        textAlign="center"
+        fontWeight={typography.fontWeightMedium}
+        fontSize={typography.bodyLargeSize}
+        color={variant === 'primary' ? colors.mainBackgroundColor : colors.primaryActionColor}
+      >
+        {children}
+      </ButtonText>
+    </GButton>
   );
 };

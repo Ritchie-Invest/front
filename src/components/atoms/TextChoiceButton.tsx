@@ -1,5 +1,6 @@
 import React from 'react';
-import { Pressable, Box, Text } from 'native-base';
+import { Pressable, Box, Text } from '@gluestack-ui/themed';
+import { spacing, borderRadius } from '~/lib/theme/theme';
 
 interface TextChoiceButtonProps {
   text: string;
@@ -20,9 +21,16 @@ const TextChoiceButton: React.FC<TextChoiceButtonProps> = ({
   onPress,
   disabled,
 }) => (
-  <Pressable onPress={onPress} isDisabled={disabled}>
-    <Box borderWidth={2} borderColor={borderColor} bg={bg} p={4} borderRadius={16} mb={1}>
-      <Text fontWeight={fontWeight} color={color} fontSize="lg">
+  <Pressable onPress={onPress} disabled={disabled}>
+    <Box
+      borderWidth={1}
+      borderColor={borderColor}
+      bg={bg}
+      p={spacing.spacingMedium}
+      borderRadius={borderRadius.borderRadiusMedium}
+      mb={spacing.spacingMinimum}
+    >
+      <Text fontWeight={fontWeight} color={color} fontSize="$lg">
         {text}
       </Text>
     </Box>

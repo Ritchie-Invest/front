@@ -1,7 +1,8 @@
 import React from 'react';
-import { VStack } from 'native-base';
+import { VStack } from '@gluestack-ui/themed';
 import ChoiceButton from '../../shared/components/ChoiceButton';
 import { CompleteModuleResponse } from '../../shared/models/progress';
+import { colors, spacing, typography } from '~/lib/theme/theme';
 
 interface QCMChoicesProps {
   choices: any[];
@@ -19,26 +20,26 @@ const QCMChoices: React.FC<QCMChoicesProps> = ({
   onSelect,
 }) => {
   const getButtonStyle = (isSelected: boolean, isCorrect: boolean) => {
-    let borderColor = 'coolGray.200';
-    let bg = '#fff';
-    let color = 'coolGray.700';
+    let borderColor = colors.GreyL30;
+    let bg = colors.mainBackgroundColor;
+    let color = colors.primaryTextColor;
     let fontWeight: 'normal' | 'bold' = 'normal';
 
     if (isSelected) {
       if (showFeedback === 'success' && isCorrect) {
-        borderColor = 'green.500';
-        bg = 'green.50';
-        color = 'green.600';
+        borderColor = colors.successColor;
+        bg = colors.successBackgroundColor;
+        color = colors.successColor;
         fontWeight = 'bold';
       } else if (showFeedback === 'error') {
-        borderColor = 'orange.500';
-        bg = 'orange.50';
-        color = 'orange.700';
+        borderColor = colors.warningColor;
+        bg = colors.warningBackgroundColor;
+        color = colors.warningColor;
         fontWeight = 'bold';
       } else if (showFeedback === 'none') {
-        borderColor = 'blue.400';
-        bg = 'blue.50';
-        color = 'blue.700';
+        borderColor = colors.primaryActionColor;
+        bg = colors.primaryActionBackgroundColor;
+        color = colors.primaryActionColor;
         fontWeight = 'bold';
       }
     }
@@ -47,7 +48,7 @@ const QCMChoices: React.FC<QCMChoicesProps> = ({
   };
 
   return (
-    <VStack space={3} mt={8} px={4}>
+    <VStack space="xs" mt={spacing.spacingSmall} px={spacing.spacingVerySmall}>
       {choices.map((choice) => {
         const isSelected = selected === choice.id;
         const isCorrect = !!(completionResult?.isCorrect && isSelected);

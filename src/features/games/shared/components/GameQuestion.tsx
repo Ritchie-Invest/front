@@ -1,7 +1,8 @@
 import React from 'react';
-import { Box, VStack, Heading, Text, Spinner } from 'native-base';
-import { Icon } from '~/components/atoms/Icon';
+import { Box, VStack, Heading, Text, Spinner, Icon } from '@gluestack-ui/themed';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { useTranslation } from 'react-i18next';
+import { spacing, colors, typography } from '~/lib/theme/theme';
 
 interface GameQuestionProps {
   text?: string;
@@ -11,11 +12,23 @@ interface GameQuestionProps {
 const GameQuestion = ({ text, titleKey }: GameQuestionProps) => {
   const { t } = useTranslation();
   return (
-    <VStack px={6} mt={6} space={2}>
-      <Text fontSize="lg" color="coolGray.500" fontWeight="bold">
+    <VStack
+      px={spacing.spacingMedium}
+      mt={spacing.spacingMedium}
+      space={spacing.spacingSmallFallback}
+    >
+      <Text
+        fontSize={typography.bodyLargeSize}
+        color={colors.secondaryTextColor}
+        fontWeight={typography.fontWeightBold}
+      >
         {t(titleKey)}
       </Text>
-      <Text fontSize="2xl" fontWeight="bold" mt={2}>
+      <Text
+        fontSize={typography.heading1Size}
+        fontWeight={typography.fontWeightBold}
+        mt={spacing.spacingMinimum}
+      >
         {text}
       </Text>
     </VStack>
@@ -25,13 +38,15 @@ const GameQuestion = ({ text, titleKey }: GameQuestionProps) => {
 GameQuestion.Error = ({ error }: { error: any }) => {
   const { t } = useTranslation();
   return (
-    <Box flex={1} justifyContent="center" alignItems="center" bg="red.50">
-      <VStack space={2} alignItems="center">
-        <Icon name="error-outline" size="xl" color="red.600" />
-        <Heading size="md" color="red.700">
+    <Box flex={1} justifyContent="center" alignItems="center" bg={colors.errorBackgroundColor}>
+      <VStack space="sm" alignItems="center">
+        <Icon
+          as={() => <Ionicons name="close-circle-outline" size={24} color={colors.errorColor} />}
+        />
+        <Heading size="md" color={colors.errorColor}>
           {t('game.error')}
         </Heading>
-        <Text color="red.700">{(error as Error).message}</Text>
+        <Text color={colors.errorColor}>{(error as Error).message}</Text>
       </VStack>
     </Box>
   );
@@ -41,8 +56,8 @@ GameQuestion.Loading = () => {
   const { t } = useTranslation();
   return (
     <Box flex={1} justifyContent="center" alignItems="center">
-      <Spinner size="lg" color="blue.500" />
-      <Text mt={4}>{t('game.loading')}</Text>
+      <Spinner size="large" color={colors.primaryActionColor} />
+      <Text mt={spacing.spacingMedium}>{t('game.loading')}</Text>
     </Box>
   );
 };

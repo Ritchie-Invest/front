@@ -1,13 +1,19 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Box } from 'native-base';
 import { OnboardingLayout } from '../features/onboarding/screens/OnboardingLayout';
-import { LoginScreen } from '../features/auth/screens/LoginScreen';
-import { RegisterScreen } from '../features/auth/screens/RegisterScreen';
+import { LoginScreen } from '~/features/auth/screens/LoginScreen';
+import { RegisterScreen } from '~/features/auth/screens/RegisterScreen';
 import HomeScreen from '../features/landing/screens/home';
-import { InvestmentDashboardScreen } from '../features/investment-dashboard/screens/InvestmentDashboardScreen';
 import { ETFDetailScreen } from '../features/etf-detail/screens/ETFDetailScreen';
+import { ETFTransactionScreen } from '~/features/etf-transaction/screens/ETFTransactionScreen';
+import { TransactionType } from '~/features/etf-transaction/types/TransactionType';
+import { Screens } from '~/features/navigation/Type/Screens';
+import { PortfolioDetailScreen } from '../features/etf-portfolio-detail/screens/PortfolioDetailScreen';
+import { InvestmentDashboardScreen } from '~/features/investment-dashboard/screens/InvestmentDashboardScreen';
+import BaseLayout from '~/components/organisms/components/BaseLayout';
+import UserHeader from '~/features/user/components/userHeader';
+import UserProfile from '~/features/user/screens/UserProfile';
 import Navbar from '../features/navigation/components/organisms/navbar';
 import ModuleScreen from '../features/games/shared/screens/ModuleScreen';
 import CompleteScreen from '../features/games/shared/screens/CompleteScreen';
@@ -28,21 +34,20 @@ export type RootStackParamList = {
 };
 
 export type MainStackParamList = {
-  Landing: undefined;
-  InvestmentDashboard: undefined;
-  ETFDetails: { id: string };
-  Progress: undefined;
-  Profile: undefined;
-  Register: undefined;
-  Onboarding: undefined;
-  ModuleScreen: {
+  [Screens.HOME]: undefined;
+  [Screens.DASHBOARD]: undefined;
+  [Screens.ETF_DETAILS]: { id: string };
+  [Screens.TRANSACTION]: { transactionType: TransactionType };
+  [Screens.PORTFOLIO]: undefined;
+  [Screens.PROFILE]: undefined;
+  [Screens.MODULE_SCREEN]: {
     lessonId: string;
     moduleId: string;
     currentGameModuleIndex?: number;
     totalGameModules?: number;
     correctAnswers?: number;
   };
-  CompleteScreen: {
+  [Screens.COMPLETE_SCREEN]: {
     lessonId: string;
     completedModules?: number;
     totalModules?: number;
@@ -63,6 +68,7 @@ export const AppNavigator = ({
   handleLogin,
   handleLogout,
   handleBackToLogin,
+  onShowOnboarding,
 }: {
   isOnboardingCompleted: boolean;
   showLogin: boolean;
@@ -72,22 +78,42 @@ export const AppNavigator = ({
   handleLogin: () => void;
   handleLogout: () => void;
   handleBackToLogin: () => void;
+  onShowOnboarding?: () => void;
 }) => (
   <NavigationContainer>
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {!isOnboardingCompleted ? (
         showRegister ? (
-          <Stack.Screen name="Register">
+          <Stack.Screen name={Screens.AUTH_REGISTER}>
             {() => (
-              <RegisterScreen onBackToLogin={handleBackToLogin} onSuccess={handleLoginSuccess} />
+              <BaseLayout
+                children={
+                  <RegisterScreen
+                    onBackToLogin={handleBackToLogin}
+                    onSuccess={handleLoginSuccess}
+                  />
+                }
+                showNavbar={false}
+              />
             )}
           </Stack.Screen>
         ) : showLogin ? (
-          <Stack.Screen name="Login">
-            {() => <LoginScreen onLoginSuccess={handleLoginSuccess} signupEnabled={false} />}
+          <Stack.Screen name={Screens.AUTH_LOGIN}>
+            {() => (
+              <BaseLayout
+                children={
+                  <LoginScreen
+                    onLoginSuccess={handleLoginSuccess}
+                    signupEnabled={false}
+                    onShowOnboarding={onShowOnboarding}
+                  />
+                }
+                showNavbar={false}
+              />
+            )}
           </Stack.Screen>
         ) : (
-          <Stack.Screen name="Onboarding">
+          <Stack.Screen name={Screens.ONBOARDING}>
             {() => <OnboardingLayout onComplete={handleOnboardingComplete} onLogin={handleLogin} />}
           </Stack.Screen>
         )
@@ -97,47 +123,43 @@ export const AppNavigator = ({
             <MainStack.Navigator
               screenOptions={{
                 headerShown: true,
-                headerTitle: '',
+                headerTitle: () => <UserHeader />,
               }}
             >
-              <MainStack.Screen name="Landing">
-                {() => (
-                  <Box flex={1}>
-                    <HomeScreen onLogout={handleLogout} />
-                    <Navbar />
-                  </Box>
-                )}
+              <MainStack.Screen name={Screens.HOME}>
+                {() => <BaseLayout children={<HomeScreen />} />}
               </MainStack.Screen>
-              <MainStack.Screen name="InvestmentDashboard" options={{ headerTitle: 'Portfolio' }}>
-                {() => (
-                  <Box flex={1}>
-                    <InvestmentDashboardScreen />
-                    <Navbar />
-                  </Box>
-                )}
+              <MainStack.Screen name={Screens.DASHBOARD}>
+                {() => <BaseLayout children={<InvestmentDashboardScreen />} />}
               </MainStack.Screen>
-              <MainStack.Screen name="ETFDetails" options={{ headerTitle: 'Détails ETF' }}>
-                {() => (
-                  <Box flex={1}>
-                    <ETFDetailScreen />
-                  </Box>
-                )}
+              <MainStack.Screen name={Screens.ETF_DETAILS}>
+                {() => <BaseLayout children={<ETFDetailScreen />} />}
               </MainStack.Screen>
-              <MainStack.Screen
-                name="ModuleScreen"
-                component={ModuleScreen}
-                options={{ headerTitle: '' }}
-              />
-              <MainStack.Screen name="CompleteScreen" options={{ headerTitle: '' }}>
-                {({ route }) => (
-                  <CompleteScreen
-                    lessonId={route.params.lessonId}
-                    completedModules={route.params.completedModules}
-                    totalModules={route.params.totalModules}
-                    xpWon={route.params.xpWon}
-                    isLessonCompleted={route.params.isLessonCompleted}
-                  />
-                )}
+              <MainStack.Screen name={Screens.TRANSACTION}>
+                {() => <BaseLayout children={<ETFTransactionScreen />} />}
+              </MainStack.Screen>
+              <MainStack.Screen name={Screens.PORTFOLIO}>
+                {() => <BaseLayout children={<PortfolioDetailScreen />} />}
+              </MainStack.Screen>
+              <MainStack.Screen name={Screens.PROFILE}>
+                {() => <BaseLayout children={<UserProfile handleLogout={handleLogout} />} />}
+              </MainStack.Screen>
+              <MainStack.Screen name={Screens.MODULE_SCREEN} options={{ headerTitle: '' }}>
+                {() => <ModuleScreen />}
+              </MainStack.Screen>
+              <MainStack.Screen name={Screens.COMPLETE_SCREEN} options={{ headerTitle: '' }}>
+                {({ route }) => {
+                  const params = route.params as MainStackParamList[typeof Screens.COMPLETE_SCREEN];
+                  return (
+                    <CompleteScreen
+                      lessonId={params.lessonId}
+                      completedModules={params.completedModules}
+                      totalModules={params.totalModules}
+                      xpWon={params.xpWon}
+                      isLessonCompleted={params.isLessonCompleted}
+                    />
+                  );
+                }}
               </MainStack.Screen>
             </MainStack.Navigator>
           )}

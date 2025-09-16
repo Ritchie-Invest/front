@@ -1,7 +1,8 @@
 import React from 'react';
-import { FlatList } from 'react-native';
-import { VStack, Text, Box } from 'native-base';
+import { FlatList, View, StyleSheet } from 'react-native';
+import { Text } from '@gluestack-ui/themed';
 import { ListItem } from '../../molecules/components/ListItem';
+import { colors, typography } from '~/lib/theme/theme';
 
 interface ListProps<T> {
   data: T[];
@@ -28,33 +29,38 @@ export function List<T>({
 }: ListProps<T>) {
   if (loading) {
     return (
-      <Box flex={1} justifyContent="center" alignItems="center" py={8}>
-        <Text fontSize="lg" color="gray.400">
+      <View style={styles.centerContainer}>
+        <Text fontSize={typography.bodySize} color={colors.GreyL30}>
           Chargement...
         </Text>
-      </Box>
+      </View>
     );
   }
 
   if (data.length === 0) {
     return (
-      <Box flex={1} justifyContent="center" alignItems="center" py={8}>
-        <Text fontSize="lg" color="gray.500" textAlign="center">
+      <View style={styles.centerContainer}>
+        <Text fontSize={typography.bodySize} color={colors.Grey}>
           {emptyTitle}
         </Text>
         {emptySubtitle && (
-          <Text fontSize="sm" color="gray.400" textAlign="center" mt={2}>
+          <Text fontSize={14} color={colors.GreyL30} style={styles.subtitle}>
             {emptySubtitle}
           </Text>
         )}
-      </Box>
+      </View>
     );
   }
 
   return (
-    <VStack space={0} flex={1} p={4}>
+    <View style={styles.container}>
       {title && (
-        <Text fontSize="xl" fontWeight="bold" color="gray.800" mb={4}>
+        <Text
+          fontSize={typography.heading4Size}
+          fontWeight={typography.fontWeightBold}
+          color={colors.DarkGreyFallback}
+          style={styles.title}
+        >
           {title}
         </Text>
       )}
@@ -70,7 +76,28 @@ export function List<T>({
           />
         )}
         showsVerticalScrollIndicator={false}
+        scrollEnabled={false}
       />
-    </VStack>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  centerContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 32,
+  },
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+  title: {
+    marginBottom: 16,
+  },
+  subtitle: {
+    textAlign: 'center',
+    marginTop: 8,
+  },
+});

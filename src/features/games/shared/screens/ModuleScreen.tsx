@@ -1,6 +1,7 @@
 import React from 'react';
-import { Box } from 'native-base';
+import { Box } from '@gluestack-ui/themed';
 import { useTranslation } from 'react-i18next';
+import { colors } from '~/lib/theme/theme';
 import { useGameModule } from '../hooks/useGameModule';
 import GamesHeader from '../components/GamesHeader';
 import GameQuestion from '../components/GameQuestion';
@@ -32,7 +33,7 @@ const ModuleScreen: React.FC = () => {
   const isTrueFalse = isTrueFalseModule(module);
 
   return (
-    <Box flex={1} bg="#fff">
+    <Box flex={1} bg={colors.mainBackgroundColor}>
       <GamesHeader progress={progress} onClose={handleContinue} />
       <GameQuestion
         text={question}

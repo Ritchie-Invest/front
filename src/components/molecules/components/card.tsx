@@ -1,41 +1,28 @@
 import React from 'react';
-import { Box, IBoxProps } from 'native-base';
+import { Box } from '@gluestack-ui/themed';
+import { borderRadius, colors, paddings } from '~/lib/theme/theme';
+import { ViewProps } from 'react-native';
 
-interface CardProps extends IBoxProps {
+interface CardProps extends React.ComponentProps<typeof Box> {
   variant?: 'default' | 'chapter' | 'lesson';
   children: React.ReactNode;
 }
 
-export const Card: React.FC<CardProps> = ({ variant = 'default', children, ...props }) => {
-  const getVariantProps = () => {
+export const Card: React.FC<CardProps> = ({ variant = 'default', children, style, ...props }) => {
+  const getVariantStyles = () => {
     switch (variant) {
-      case 'chapter':
-        return {
-          bg: 'green.400',
-          p: 4,
-          rounded: 'xl',
-          shadow: 1,
-        };
-      case 'lesson':
-        return {
-          bg: 'green.50',
-          p: 4,
-          rounded: 'lg',
-          borderWidth: 1,
-          borderColor: 'green.200',
-        };
       case 'default':
       default:
         return {
-          bg: 'gray.50',
-          p: 4,
-          rounded: 'lg',
+          backgroundColor: colors.GreyL15,
+          padding: paddings.paddingMedium,
+          borderRadius: borderRadius.borderRadiusSmall,
         };
     }
   };
 
   return (
-    <Box {...getVariantProps()} {...props}>
+    <Box style={[getVariantStyles(), style]} {...props}>
       {children}
     </Box>
   );

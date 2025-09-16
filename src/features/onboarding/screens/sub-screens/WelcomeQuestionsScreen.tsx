@@ -1,8 +1,10 @@
 import React from 'react';
-import { VStack, Text, Spacer } from 'native-base';
+import { View } from 'react-native';
+import { VStack, Text } from '@gluestack-ui/themed';
 import { useTranslation } from 'react-i18next';
 import { OnboardingLayout } from '../../components/organisms/OnboardingLayout';
 import { Button } from '../../../../components/atoms/Button';
+import { colors, spacing, typography } from '~/lib/theme/theme';
 
 interface WelcomeQuestionsScreenProps {
   onContinue: () => void;
@@ -19,23 +21,32 @@ export const WelcomeQuestionsScreen: React.FC<WelcomeQuestionsScreenProps> = ({
 
   return (
     <OnboardingLayout progress={progress} onBackPress={onBack}>
-      <VStack flex={1} justifyContent="center" alignItems="center" space={6}>
-        <VStack space={4} alignItems="center" justifyContent="center" flex={6}>
-          <Text fontSize="2xl" fontWeight="bold" textAlign="center" color="gray.800">
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <VStack
+          space={spacing.spacingMediumFallback}
+          alignItems="center"
+          style={{ flex: 6, justifyContent: 'center' }}
+        >
+          <Text
+            fontSize={24}
+            fontWeight={typography.fontWeightBold}
+            textAlign="center"
+            color={colors.primaryTextColor}
+          >
             {t('onboarding.questions.title')}
           </Text>
 
-          <Text fontSize="md" textAlign="center" color="gray.600">
+          <Text fontSize={typography.bodySize} textAlign="center" color={colors.primaryTextColor}>
             {t('onboarding.questions.description')}
           </Text>
         </VStack>
 
-        <Spacer />
+        <View style={{ flex: 1 }} />
 
-        <Button onPress={onContinue} width="100%">
-          {t('onboarding.questions.continueButton')}
-        </Button>
-      </VStack>
+        <View style={{ width: '100%' }}>
+          <Button onPress={onContinue}>{t('onboarding.questions.continueButton')}</Button>
+        </View>
+      </View>
     </OnboardingLayout>
   );
 };

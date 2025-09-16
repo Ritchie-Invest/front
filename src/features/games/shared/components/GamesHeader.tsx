@@ -1,6 +1,7 @@
 import React from 'react';
-import { HStack } from 'native-base';
+import { HStack } from '@gluestack-ui/themed';
 import ProgressBar from './ProgressBar';
+import { spacing } from '~/lib/theme/theme';
 
 interface QuizHeaderProps {
   progress: number;
@@ -8,7 +9,12 @@ interface QuizHeaderProps {
 }
 
 const GamesHeader: React.FC<QuizHeaderProps> = ({ progress, onClose }) => (
-  <HStack alignItems="center" px={4} pt={6} pb={2}>
+  <HStack
+    alignItems="center"
+    px={spacing.spacingVerySmall}
+    pt={spacing.spacingSmall}
+    pb={spacing.spacingMinimum}
+  >
     <ProgressBar progress={progress} />
   </HStack>
 );

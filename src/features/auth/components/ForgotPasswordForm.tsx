@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { VStack, Text } from 'native-base';
+import { VStack, Text } from '@gluestack-ui/themed';
 import { KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
 import { useForgotPassword } from '../hooks/useForgotPassword';
 import { Button } from '../../../components/atoms/Button';
@@ -8,6 +8,7 @@ import { InputField } from '../../../components/atoms/InputField';
 import { useFormValidation } from '../../../hooks/useFormValidation';
 import { forgotPasswordSchema } from '../validation/forgotPasswordSchema';
 import { useTranslation } from 'react-i18next';
+import { colors, spacing } from '~/lib/theme/theme';
 
 type ForgotPasswordFormProps = {
   onBackToLogin?: () => void;
@@ -50,26 +51,30 @@ export const ForgotPasswordForm = ({ onBackToLogin }: ForgotPasswordFormProps) =
         contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
       >
-        <VStack space={4} px={4} flex={1} justifyContent="center">
-          <Text fontSize="lg" textAlign="center">
+        <VStack space="lg" px={spacing.spacingVerySmall} flex={1} justifyContent="center">
+          <Text fontSize={18} textAlign="center">
             {t('forgot.title')}
           </Text>
 
           <InputField
             placeholder={t('form.email')}
             value={email}
-            onChangeText={setEmail}
+            onChange={setEmail}
             type="email"
           />
 
-          {error && <Text color="red.500">{error}</Text>}
+          {error && <Text color={colors.errorColor}>{error}</Text>}
 
           <Button onPress={handleSubmit} isLoading={forgotPassword.isPending}>
             {t('forgot.button')}
           </Button>
 
-          {forgotPassword.isSuccess && <Text color="green.500">{t('forgot.success')}</Text>}
-          {forgotPassword.isError && <Text color="red.500">{t('forgot.error.generic')}</Text>}
+          {forgotPassword.isSuccess && (
+            <Text color={colors.successColor}>{t('forgot.success')}</Text>
+          )}
+          {forgotPassword.isError && (
+            <Text color={colors.errorColor}>{t('forgot.error.generic')}</Text>
+          )}
 
           <TextLink onPress={() => onBackToLogin?.()}>{t('forgot.backToLogin')}</TextLink>
         </VStack>

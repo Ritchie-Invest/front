@@ -1,41 +1,19 @@
-import { ETFWithCurrentPrice } from '~/features/etf/models/ETFWithCurrentPrice';
+import { ETF } from '~/features/etf/models/ETF';
+import { axiosInstance } from '~/lib/api/axios';
 
-const mockETFs: ETFWithCurrentPrice[] = [
-  {
-    id: '1',
-    ticker: 'SPY',
-    name: 'SPDR S&P 500 ETF Trust',
-    currentPrice: 400,
-    priceChangePercentage: 1.2,
-    isGaining: true,
-  },
-  {
-    id: '2',
-    ticker: 'QQQ',
-    name: 'Invesco QQQ Trust',
-    currentPrice: 300,
-    priceChangePercentage: 0.8,
-    isGaining: true,
-  },
-  {
-    id: '3',
-    ticker: 'VTI',
-    name: 'Vanguard Total Stock Market ETF',
-    currentPrice: 200,
-    priceChangePercentage: 0.5,
-    isGaining: true,
-  },
-];
+interface ApiResponse {
+  tickers: ETF[];
+}
 
 export const ETFListService = {
-  getAllETFs: async (): Promise<ETFWithCurrentPrice[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
+  getAllETFs: async (): Promise<ETF[]> => {
+    try {
+      const response = await axiosInstance.get<ApiResponse>('/tickers');
 
-    return mockETFs.map((etf) => ({
-      ...etf,
-      currentPrice: etf.currentPrice,
-      priceChangePercentage: etf.priceChangePercentage,
-      isGaining: etf.isGaining,
-    }));
+      return response.data.tickers.filter((ticker) => ticker.type === 'ETF');
+    } catch (error) {
+      console.error('Failed to fetch ETFs from API:', error);
+      throw new Error('Failed to fetch ETFs');
+    }
   },
 };

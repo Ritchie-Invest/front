@@ -23,8 +23,8 @@ const Feedback: React.FC<FeedbackProps> = ({ type, correctText, onContinue }) =>
       bg={isSuccess ? colors.successBackgroundColor : colors.warningBackgroundColor}
       px={spacing.spacingMedium}
       py={spacing.spacingLarge}
-      borderTopLeftRadius={borderRadius.borderRadius3xl}
-      borderTopRightRadius={borderRadius.borderRadius3xl}
+      borderTopLeftRadius={borderRadius.borderRadiusExtraLarge}
+      borderTopRightRadius={borderRadius.borderRadiusExtraLarge}
       shadowColor={colors.overlayColor}
       shadowOffset={{ width: 0, height: 2 }}
       shadowOpacity={0.1}

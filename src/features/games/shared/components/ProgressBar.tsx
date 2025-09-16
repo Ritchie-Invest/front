@@ -9,7 +9,7 @@ interface ProgressBarProps {
 const ProgressBar: React.FC<ProgressBarProps> = ({ progress }) => (
   <Box
     bg={colors.GreyL30}
-    borderRadius={borderRadius.borderRadius2xl}
+    borderRadius={borderRadius.borderRadiusExtraLarge}
     overflow="hidden"
     h={spacing.spacingMedium2}
     w="100%"
@@ -17,7 +17,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ progress }) => (
     <Progress
       value={progress * 100}
       h={spacing.spacingMedium2}
-      borderRadius={borderRadius.borderRadius2xl}
+      borderRadius={borderRadius.borderRadiusExtraLarge}
     >
       <ProgressFilledTrack bg={colors.accentTextColor} />
     </Progress>

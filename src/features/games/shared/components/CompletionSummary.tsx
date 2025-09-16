@@ -24,7 +24,7 @@ const CompletionSummary: React.FC<CompletionSummaryProps> = ({
     <VStack space={spacing.spacingExtraLargeFallback} alignItems="center" w="100%">
       <Box
         bg={colors.successColor}
-        borderRadius={borderRadius.borderRadiusFull}
+        borderRadius={borderRadius.borderRadiusCircle}
         p={spacing.spacingMedium}
         mb={spacing.spacingMinimum}
       >

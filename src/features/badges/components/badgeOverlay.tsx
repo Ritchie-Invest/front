@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Pressable, ImageSourcePropType, Animated } from 'react-native';
 import { Box, Center, Image, Text } from '@gluestack-ui/themed';
 import LottieView from 'lottie-react-native';
@@ -9,12 +9,49 @@ import { colors, margins, paddings, spacing, typography } from '~/lib/theme/them
 import { Button } from '~/components/atoms/Button';
 import { useBadgeOverlay } from '../hooks/useBadgeOverlay';
 import { BadgeType, badgeTypeImageMap } from '../types/BadgeType';
-interface BadgeOverlayProps {
-  visible: boolean;
-}
 
-const BadgeOverlay: React.FC<BadgeOverlayProps> = ({ visible }) => {
-  const { badge, queueLength, handleConfirmNext, handleClose, loading } = useBadgeOverlay();
+const BadgeOverlay = () => {
+  const handleCloseRef = useRef<(() => Promise<boolean> | boolean | undefined) | null>(null);
+
+  const { BuildComponent, handleBadgeButtonClick, initialLoading } = useBadgeOverlay();
+
+  const [badge, setBadge] = React.useState<any | null>(null);
+  const [anotherDisplay, setAnotherDisplay] = React.useState<boolean>(false);
+
+  // Fonction pour charger les badges
+  const loadBadges = React.useCallback(async () => {
+    try {
+      const res = await BuildComponent();
+      setBadge(res?.badge ?? null);
+      setAnotherDisplay(res?.anotherDisplay ?? false);
+      console.log('Badge loaded:', res?.badge, 'Another display:', res?.anotherDisplay);
+    } catch (e) {
+      console.error('Error loading badge overlay', e);
+    }
+  }, [BuildComponent]);
+
+  // Effet initial pour charger les badges
+  useEffect(() => {
+    let mounted = true;
+    const load = async () => {
+      if (!mounted) return;
+      await loadBadges();
+    };
+    load();
+    return () => {
+      mounted = false;
+    };
+  }, [loadBadges]);
+
+  // Effet pour recharger quand initialLoading change (quand les données arrivent)
+  useEffect(() => {
+    if (!initialLoading) {
+      console.log('Initial loading finished, reloading badges...');
+      loadBadges();
+    }
+  }, [initialLoading, loadBadges]);
+
+  const visible = !!badge;
 
   const {
     animationRef,
@@ -24,157 +61,187 @@ const BadgeOverlay: React.FC<BadgeOverlayProps> = ({ visible }) => {
     handleLottiePress,
     handleAnimationFinish,
     handleOverlayPress,
-    resetAnimations,
     webpAnimatedStyle,
     chestAnimatedStyle,
-  } = useOverlayAnimations({ visible, onClose: handleClose });
+  } = useOverlayAnimations({
+    visible,
+    onClose: async () => {
+      if (handleCloseRef.current) {
+        try {
+          const res = handleCloseRef.current();
+          if (res && typeof (res as any).then === 'function') {
+            return await (res as Promise<boolean>);
+          }
+          return res as boolean | undefined;
+        } catch (e) {
+          console.error('Error in overlay onClose ref handler', e);
+          return undefined;
+        }
+      }
+      return undefined;
+    },
+  });
 
-  if (!visible) {
-    return null;
-  }
+  console.log(
+    'Rendering BadgeOverlay with badge:',
+    badge,
+    'anotherDisplay:',
+    anotherDisplay,
+    'initialLoading:',
+    initialLoading,
+  );
 
-  const webpSource =
-    badge && badge.type
-      ? (badgeTypeImageMap[badge.type] ?? badgeTypeImageMap[BadgeType.LEARN_PERFECT_QUIZ])
-      : require('../../../assets/images/badges/learn_perfect_quiz.webp');
-  const badgeName = badge?.name || '5 leçons complétées';
+  // Condition de rendu simplifiée : on affiche dès qu'il y a un badge
+  if (badge != null) {
+    return (
+      <Box
+        position="absolute"
+        top={0}
+        left={0}
+        right={0}
+        bottom={0}
+        backgroundColor="rgba(0, 0, 0, 0.85)"
+        zIndex={9999}
+      >
+        <Pressable style={{ flex: 1 }} onPress={handleOverlayPress}>
+          <Center flex={1}>
+            <Pressable onPress={(e) => e.stopPropagation()}>
+              <Box
+                justifyContent="center"
+                alignItems="center"
+                padding={paddings.paddingLarge}
+                gap={spacing.spacingMedium}
+              >
+                {showWebp && (
+                  <>
+                    <Box
+                      width={200}
+                      height={200}
+                      justifyContent="center"
+                      alignItems="center"
+                      position="relative"
+                    >
+                      <LottieView
+                        key={badge.type ?? 'starblast'}
+                        ref={starBlastRef}
+                        source={StarBlast}
+                        style={{
+                          position: 'absolute',
+                          width: 700,
+                          height: 700,
+                          zIndex: 0,
+                        }}
+                        loop={false}
+                        autoPlay={true}
+                        speed={0.5}
+                        resizeMode="cover"
+                      />
 
-  return (
-    <Box
-      position="absolute"
-      top={0}
-      left={0}
-      right={0}
-      bottom={0}
-      backgroundColor="rgba(0, 0, 0, 0.85)"
-      zIndex={9999}
-    >
-      <Pressable style={{ flex: 1 }} onPress={handleOverlayPress}>
-        <Center flex={1}>
-          <Pressable onPress={(e) => e.stopPropagation()}>
-            <Box
-              justifyContent="center"
-              alignItems="center"
-              padding={paddings.paddingLarge}
-              gap={spacing.spacingMedium}
-            >
-              {showWebp && (
-                <>
-                  <Box
-                    width={200}
-                    height={200}
-                    justifyContent="center"
-                    alignItems="center"
-                    position="relative"
+                      <Animated.View
+                        style={[webpAnimatedStyle, { zIndex: 1, gap: spacing.spacingMedium }]}
+                      >
+                        <Image
+                          key={badge?.type ?? 'badge-img'}
+                          source={
+                            badgeTypeImageMap[badge?.type as BadgeType] as ImageSourcePropType
+                          }
+                          alt="Animation terminée"
+                          style={{
+                            width: 300,
+                            height: 300,
+                            shadowColor: colors.warningColor,
+                            shadowOffset: { width: 0, height: 0 },
+                            shadowOpacity: 0.9,
+                            shadowRadius: 20,
+                          }}
+                          resizeMode="contain"
+                        />
+                      </Animated.View>
+                    </Box>
+                    <Text
+                      color={colors.secondaryTextColor}
+                      fontSize={typography.heading1Size}
+                      fontWeight={typography.fontWeightBold}
+                      textAlign="center"
+                      style={{
+                        textShadowColor: '#000',
+                        textShadowOffset: { width: 0, height: 4 },
+                        textShadowRadius: 12,
+                        elevation: 10,
+                      }}
+                    >
+                      {badge.name}
+                    </Text>
+                    <Text
+                      color={colors.secondaryTextColor}
+                      fontSize={typography.heading2Size}
+                      textAlign="center"
+                    >
+                      Félicitations ! Vous avez gagné un badge !
+                    </Text>
+                  </>
+                )}
+
+                <Animated.View style={chestAnimatedStyle}>
+                  <Pressable
+                    onPress={handleLottiePress}
+                    disabled={chestClicked}
+                    style={{
+                      opacity: chestClicked ? 0.7 : 1,
+                    }}
                   >
                     <LottieView
-                      ref={starBlastRef}
-                      source={StarBlast}
+                      key={badge?.type ?? 'chest'}
+                      ref={animationRef}
+                      source={Chest}
                       style={{
-                        position: 'absolute',
-                        width: 700,
-                        height: 700,
-                        zIndex: 0,
+                        width: 200,
+                        height: 200,
                       }}
                       loop={false}
-                      autoPlay={true}
-                      speed={0.5}
-                      resizeMode="cover"
+                      autoPlay={false}
+                      onAnimationFinish={handleAnimationFinish}
                     />
-
-                    <Animated.View
-                      style={[webpAnimatedStyle, { zIndex: 1, gap: spacing.spacingMedium }]}
-                    >
-                      <Image
-                        source={webpSource}
-                        alt="Animation terminée"
-                        style={{
-                          width: 300,
-                          height: 300,
-                          shadowColor: colors.warningColor,
-                          shadowOffset: { width: 0, height: 0 },
-                          shadowOpacity: 0.9,
-                          shadowRadius: 20,
-                        }}
-                        resizeMode="contain"
-                      />
-                    </Animated.View>
-                  </Box>
+                  </Pressable>
+                </Animated.View>
+                {!showWebp && (
                   <Text
-                    color={colors.secondaryTextColor}
-                    fontSize={typography.heading1Size}
-                    fontWeight={typography.fontWeightBold}
                     textAlign="center"
-                    style={{
-                      textShadowColor: '#000',
-                      textShadowOffset: { width: 0, height: 4 },
-                      textShadowRadius: 12,
-                      elevation: 10,
-                    }}
-                  >
-                    {badgeName}
-                  </Text>
-                  <Text
                     color={colors.secondaryTextColor}
-                    fontSize={typography.heading2Size}
-                    textAlign="center"
+                    fontWeight={typography.fontWeightMedium}
+                    fontSize={typography.bodySize}
+                    mt={margins.marginMedium}
                   >
-                    Félicitations ! Vous avez gagné un badge !
+                    Cliquez sur le coffre pour obtenir une récompense...
                   </Text>
-                </>
-              )}
-
-              <Animated.View style={chestAnimatedStyle}>
-                <Pressable
-                  onPress={handleLottiePress}
-                  disabled={chestClicked}
-                  style={{
-                    opacity: chestClicked ? 0.7 : 1,
-                  }}
-                >
-                  <LottieView
-                    ref={animationRef}
-                    source={Chest}
-                    style={{
-                      width: 200,
-                      height: 200,
-                    }}
-                    loop={false}
-                    autoPlay={false}
-                    onAnimationFinish={handleAnimationFinish}
-                  />
-                </Pressable>
-              </Animated.View>
-              {!showWebp && (
-                <Text
-                  textAlign="center"
-                  color={colors.secondaryTextColor}
-                  fontWeight={typography.fontWeightMedium}
-                  fontSize={typography.bodySize}
-                  mt={margins.marginMedium}
-                >
-                  Cliquez sur le coffre pour obtenir une récompense...
-                </Text>
-              )}
-            </Box>
-          </Pressable>
-          {showWebp && (
-            <Center width="80%" padding={paddings.paddingMedium}>
-              {queueLength > 1 ? (
+                )}
+              </Box>
+            </Pressable>
+            {showWebp && (
+              <Center width="80%" padding={paddings.paddingMedium}>
                 <Button
-                  onPress={handleConfirmNext}
-                  children={loading ? 'Chargement...' : 'Prochain badge'}
+                  onPress={async () => {
+                    try {
+                      const { newBadge, displayState } = await handleBadgeButtonClick(badge.type);
+                      setBadge(newBadge);
+                      setAnotherDisplay(displayState);
+                    } catch (e) {
+                      console.error('Error handling badge button press', e);
+                    }
+                  }}
+                  children={anotherDisplay ? 'Voir le prochain badge' : 'Fermer'}
                   variant="primary"
                 />
-              ) : (
-                <Button onPress={handleOverlayPress} children="Terminer" variant="primary" />
-              )}
-            </Center>
-          )}
-        </Center>
-      </Pressable>
-    </Box>
-  );
+              </Center>
+            )}
+          </Center>
+        </Pressable>
+      </Box>
+    );
+  }
+
+  // Retourner null si pas de badge à afficher
+  return null;
 };
 
 export default BadgeOverlay;

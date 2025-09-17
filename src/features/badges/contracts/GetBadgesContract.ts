@@ -1,5 +1,5 @@
 import { Badge } from '../models/Badge';
 
-export interface BadgesContract {
+export interface GetBadgesContract {
   getBadges(): Promise<Badge[]>;
 }

@@ -82,16 +82,14 @@ export default function UserProfile({ handleLogout }: UserProfileProps) {
           </VStack>
         </Box>
         <Box
-          gap={spacing.spacingLarge}
-          backgroundColor={colors.componentBackgroundColor}
-          padding={paddings.paddingExtraLarge}
+          gap={spacing.spacingMedium}
+          flex={1}
+          backgroundColor={colors.warningBackgroundColor}
           borderRadius={borderRadius.borderRadiusMedium}
-          shadowColor={colors.primaryTextColor}
-          shadowOffset={{ width: 0, height: 2 }}
-          shadowOpacity={0.15}
-          shadowRadius={4}
-          elevation={3}
           my={margins.marginMedium}
+          padding={paddings.paddingMedium}
+          justifyContent="flex-start"
+          alignItems="flex-start"
         >
           <Text
             size={typography.heading2SizeFallback}

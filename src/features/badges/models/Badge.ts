@@ -4,6 +4,6 @@ export interface Badge {
   type: BadgeType;
   name: string;
   description: string;
-  awardedAt: null | Date;
+  awardedAt?: null | Date;
   hasSeen: boolean;
 }

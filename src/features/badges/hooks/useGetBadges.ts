@@ -6,9 +6,11 @@ import { BadgeStore } from '../store/BadgeStore';
 const BadgesAdapter = new GetBadgesServiceAdapter();
 
 export const useGetBadges = () => {
-  const [Badges, setCurrentBadges] = useState<Badge[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [seen, setSeen] = useState<Badge[]>([]);
+  const [unseen, setUnseen] = useState<Badge[]>([]);
+  const [locked, setLocked] = useState<Badge[]>([]);
 
   const service = useMemo(() => BadgesAdapter, []);
 
@@ -17,47 +19,52 @@ export const useGetBadges = () => {
       setLoading(true);
       setError(null);
       const data = await service.getBadges();
+      console.debug('[useGetBadges] Data received in hook:', data);
       if (data) {
-        setCurrentBadges(data);
         try {
-          const seenAwarded = data
-            .filter((b) => b.awardedAt !== null && b.hasSeen === true)
+          const Awarded = data
+            .filter((b) => b.awardedAt !== null)
             .map((b) => ({ ...b, awardedAtDate: new Date(b.awardedAt as any) }))
             .sort((a, b) => b.awardedAtDate.getTime() - a.awardedAtDate.getTime());
 
-          if (seenAwarded.length > 0) {
+          if (Awarded.length > 0) {
             const setBadges = BadgeStore.getState().setBadges;
-            setBadges(seenAwarded);
+            setBadges(Awarded);
           }
 
           try {
-            const unseenAwarded = data
-              .filter((b) => b.awardedAt !== null && b.hasSeen === false)
-              .map((b) => ({ ...b, awardedAtDate: new Date(b.awardedAt as any) }))
-              .sort((a, b) => b.awardedAtDate.getTime() - a.awardedAtDate.getTime());
-
-            if (unseenAwarded.length > 0) {
-              const setNewBadges = BadgeStore.getState().setNewBadges;
-              setNewBadges(unseenAwarded);
+            const lockedBadges = data.filter((b) => b.awardedAt === null).map((b) => ({ ...b }));
+            if (lockedBadges.length > 0) {
+              const setLocked = BadgeStore.getState().setLockedBadges;
+              setLocked(lockedBadges);
             }
-          } catch (e) {}
-        } catch (e) {}
+            setLocked(lockedBadges);
+          } catch (e) {
+            console.error('[useGetBadges] Error processing locked badges:', e);
+          }
+        } catch (e) {
+          console.error('[useGetBadges] Error processing Awarded:', e);
+        }
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Une erreur est survenue');
+      console.error('[useGetBadges] Error fetching badges:', err);
     } finally {
       setLoading(false);
+      console.debug('[useGetBadges] Loading set to false');
     }
-  }, [service, setCurrentBadges]);
+  }, [service]);
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
   return {
-    Badges,
     loading,
     error,
     refetch: fetchData,
+    seen,
+    unseen,
+    locked,
   };
 };

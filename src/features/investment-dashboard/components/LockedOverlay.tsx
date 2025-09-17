@@ -42,7 +42,7 @@ const LockedOverlay: React.FC<LockedOverlayProps> = ({ level }) => {
         color={colors.infoColor}
         size={typography.heading3SizeFallback}
       >
-        Veuillez atteindre le niveau {level ? level : 5} pour le débloquer
+        Veuillez atteindre le niveau {level} pour le débloquer
       </Text>
     </Center>
   );

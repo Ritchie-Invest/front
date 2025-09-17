@@ -28,6 +28,7 @@ export const ETFTransactionScreen: React.FC = () => {
           keyboardShouldPersistTaps="always"
           contentContainerStyle={{ flexGrow: 1 }}
           showsVerticalScrollIndicator={false}
+          keyboardDismissMode="interactive"
         >
           <ETFDetails />
           <TransactionForm />

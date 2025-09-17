@@ -1,27 +1,22 @@
-import { BadgeConfirmationContract } from '../contracts/BadgesConfirmationContract';
-import { PostBadgeConfirmationService } from '../services/PostBadgeConfirmationService';
-import { validateRequest, validateResponse } from '../validation/BadgeConfirmationValidation';
+import { MarkBadgeAsSeenContract } from '../contracts/MarkBadgeAsSeenContract';
+import { MarkBadgeAsSeenService } from '../services/MarkBadgeAsSeenService';
+import { validateRequest, validateResponse } from '../validation/MarkBadgeAsSeenValidation';
 import { BadgeConfirmationRequest, BadgeConfirmationResponse } from '../models/BadgeConfirmation';
 
-export class PostBadgeConfirmationServiceAdapter implements BadgeConfirmationContract {
-  async postBadgeConfirmation(
-    request: BadgeConfirmationRequest,
-  ): Promise<BadgeConfirmationResponse> {
+export class MarkBadgeAsSeenServiceAdapter implements MarkBadgeAsSeenContract {
+  async markBadgeAsSeen(request: BadgeConfirmationRequest): Promise<BadgeConfirmationResponse> {
     try {
       if (!validateRequest(request)) {
         throw new Error('Invalid request structure');
       }
 
-      const response = await PostBadgeConfirmationService.postBadgeConfirmation(request);
+      const response = await MarkBadgeAsSeenService.markBadgeAsSeen(request);
       if (!validateResponse(response)) {
-        throw new Error('Invalid response structure from PostBadgeConfirmationService');
+        throw new Error('Invalid response structure from MarkBadgeAsSeenService');
       }
       return response;
     } catch (error) {
-      console.error(
-        'PostBadgeConfirmationServiceAdapter: Error posting badge confirmation:',
-        error,
-      );
+      console.error('MarkBadgeAsSeenServiceAdapter: Error posting badge confirmation:', error);
 
       if (error instanceof Error) {
         if (error.message.includes('Network Error') || error.message.includes('fetch')) {

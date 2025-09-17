@@ -42,6 +42,7 @@ export const ETFDetails: React.FC = memo(() => {
           space={spacing.spacingMediumFallback}
           alignItems="flex-start"
           justifyContent="space-between"
+          width="50%"
         >
           <Text
             fontSize={typography.heading1Size}
@@ -62,6 +63,7 @@ export const ETFDetails: React.FC = memo(() => {
           space={spacing.spacingSmallFallback}
           alignItems="flex-end"
           justifyContent="space-between"
+          width="50%"
         >
           <Text
             textAlign="right"

@@ -28,7 +28,7 @@ const HomeScreen: React.FC = () => {
         contentContainerStyle={{ alignItems: 'center' }}
         ref={autoScroll ? (scrollViewRef as any) : undefined}
       >
-        <PageCover title="" Screen={Screen.HOME} size={250} />
+        <PageCover title="" Screen={Screen.HOME} size={200} />
         {showProgress && (
           <Hero
             chapterTitle={currentChapter?.title || 'Aucun chapitre disponible'}

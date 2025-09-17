@@ -26,37 +26,22 @@ export const useBadgeOverlay = () => {
 
     if (initialLoading) {
       setInitialLoading(false);
-      console.debug('[useBadgeOverlay] | Hook UseEffect : Initial loading finished');
     }
   }, [unseen, initialLoading]);
 
   const BuildComponent = useCallback(async () => {
     let q = unseenQueueRef.current || [];
-    console.debug(
-      '[useBadgeOverlay] | Hook Build : BuildComponent called. Queue:',
-      q,
-      'DataVersion:',
-      dataVersion,
-    );
 
     if (unseen && unseen.length > 0 && (!q || q.length === 0)) {
       q = [...unseen];
       unseenQueueRef.current = q;
-      console.debug('[useBadgeOverlay] | Hook Build : Queue was empty, refilled from unseen:', q);
     }
 
     if (q.length === 0) {
-      console.debug('[useBadgeOverlay] | Hook Build : No badges to display');
       return { badge: undefined, anotherDisplay: false };
     }
 
     const first = q[0];
-    console.debug(
-      '[useBadgeOverlay] | Hook Build : Displaying badge:',
-      first,
-      'Another display:',
-      q.length > 1,
-    );
     return { badge: first, anotherDisplay: q.length > 1 };
   }, [unseen, dataVersion]);
 

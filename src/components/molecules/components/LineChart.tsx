@@ -1,41 +1,16 @@
-import React, { memo, useMemo } from 'react';
-import { View, Dimensions, Text } from 'react-native';
+import React, { memo } from 'react';
+import { View, Text } from 'react-native';
 import { LineChart } from 'react-native-gifted-charts';
-import { LineChartConfig, LineChartProps } from '../models/LineChart';
-import { borderRadius, colors, paddings, typography } from '~/lib/theme/theme';
-
-const defaultConfig: LineChartConfig = {
-  height: 240,
-  lineColor: colors.primaryActionColor,
-  lineColor2: colors.warningColor,
-  activePointColor: colors.primaryActionColor,
-  activePointColor2: colors.warningColor,
-  backgroundColor: colors.transparent,
-  showVerticalLine: true,
-  verticalLineColor: colors.GreyL20,
-  endPointRadius: 4,
-  endPointRadius2: 4,
-  showDataPoints: true,
-  showDataPoints2: true,
-  animated: true,
-  startFillColor: colors.primaryActionColor,
-  endFillColor: colors.transparent,
-  startFillColor2: colors.warningColor,
-  endFillColor2: colors.transparent,
-  startOpacity: 0.8,
-  endOpacity: 0.1,
-  startOpacity2: 0.8,
-  endOpacity2: 0.1,
-};
+import { LineChartProps } from '../models/LineChart';
+import { useLineChart } from '../hooks/useLineChart';
+import { colors } from '~/lib/theme/theme';
 
 export const LineChartComponent: React.FC<LineChartProps> = memo(
   ({ data, data2, config = {}, emptyStateText = 'Aucune donnée disponible' }) => {
-    const chartConfig = useMemo(() => ({ ...defaultConfig, ...config }), [config]);
-    const screenWidth = Dimensions.get('screen').width;
-    const chartWidth = screenWidth * 0.8;
-    const chartHeight = chartWidth * 0.8;
+    const { chartConfig, chartWidth, chartHeight, yAxisOffset, chartData, chartData2 } =
+      useLineChart(data, data2, config);
 
-    if (data.length === 0) {
+    if (!data || data.length === 0) {
       return (
         <View
           style={{
@@ -49,32 +24,11 @@ export const LineChartComponent: React.FC<LineChartProps> = memo(
       );
     }
 
-    const chartData = useMemo(() => {
-      return data.map((point) => ({
-        value: point.y,
-        dataPointText: point.extraData?.formattedValue || point.y.toString(),
-        label: point.extraData?.formattedTime,
-        dataPointColor: chartConfig.activePointColor,
-        dataPointRadius: chartConfig.endPointRadius,
-        hideDataPoint: !chartConfig.showDataPoints,
-      }));
-    }, [data, chartConfig.activePointColor, chartConfig.endPointRadius]);
-
-    const chartData2 = useMemo(() => {
-      if (!data2 || data2.length === 0) return null;
-      return data2.map((point) => ({
-        value: point.y,
-        dataPointText: point.extraData?.formattedValue || point.y.toString(),
-        label: point.extraData?.formattedTime,
-        dataPointColor: chartConfig.activePointColor2,
-        dataPointRadius: chartConfig.endPointRadius2,
-        hideDataPoint: !chartConfig.showDataPoints2,
-      }));
-    }, [data2, chartConfig.activePointColor2, chartConfig.endPointRadius2]);
-
     return (
       <View style={{ justifyContent: 'center', alignItems: 'center' }}>
         <LineChart
+          isAnimated
+          animateOnDataChange
           textColor1={chartConfig.lineColor}
           textShiftY={-4}
           textColor2={chartConfig.lineColor2}
@@ -100,6 +54,8 @@ export const LineChartComponent: React.FC<LineChartProps> = memo(
           backgroundColor={chartConfig.backgroundColor}
           yAxisTextStyle={{ color: colors.Grey }}
           xAxisLabelTextStyle={{ color: colors.Grey }}
+          yAxisOffset={yAxisOffset}
+          curved
         />
       </View>
     );

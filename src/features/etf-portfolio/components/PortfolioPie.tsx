@@ -34,6 +34,7 @@ export const PortfolioPie: React.FC<PortfolioGraphProps> = ({
         }}
         emptyStateText="Aucune donnée de portfolio disponible"
         onPress={onPress}
+        legendLabels={['Liquidités', 'Investissements']}
       />
     </VStack>
   );

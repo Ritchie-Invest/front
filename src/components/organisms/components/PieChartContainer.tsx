@@ -3,6 +3,7 @@ import { Box, VStack, Text } from '@gluestack-ui/themed';
 import { PieChartComponent } from '~/components/molecules/components/PieChart';
 import type { PieChartConfig, PieChartDataAdapter } from '../../molecules/models/PieChart';
 import { borderRadius, colors, margins, paddings, spacing, typography } from '~/lib/theme/theme';
+import ChartLabel from '~/components/molecules/components/ChartLabels';
 
 interface PieChartContainerProps<T = any> {
   data: T[];
@@ -21,6 +22,7 @@ interface PieChartContainerProps<T = any> {
   totalValue?: string;
   centerComponent?: React.ReactNode;
   onPress?: () => void;
+  legendLabels?: string[];
 }
 
 export const PieChartContainer = <T,>(props: PieChartContainerProps<T>) => {
@@ -33,24 +35,12 @@ export const PieChartContainer = <T,>(props: PieChartContainerProps<T>) => {
     totalValue,
     centerComponent,
     onPress,
+    legendLabels,
   } = props;
   const chartData = useMemo(() => adapter.adaptData(data), [adapter, data]);
 
   const centerLabelComponent = useMemo(() => {
     if (centerComponent) return centerComponent;
-
-    if (totalValue) {
-      return (
-        <VStack space={spacing.spacingSmallFallback} alignItems="center">
-          <Text fontSize={typography.heading5Size} fontWeight={typography.fontWeightBold}>
-            {totalValue}
-          </Text>
-          <Text fontSize={typography.captionSize} color={colors.primaryTextColor}>
-            Total
-          </Text>
-        </VStack>
-      );
-    }
 
     return null;
   }, [centerComponent, totalValue]);
@@ -100,28 +90,27 @@ export const PieChartContainer = <T,>(props: PieChartContainerProps<T>) => {
       m={margins.marginSmall}
     >
       <VStack space={spacing.spacingMediumFallback} width="$full" alignItems="center">
-        {totalValue && (
-          <VStack space="xs" alignItems="center">
-            <Text
-              fontSize={typography.heading1Size}
-              fontWeight={typography.fontWeightBold}
-              textAlign="center"
-              color={colors.primaryActionColor}
-            >
-              {totalValue}
-            </Text>
-            <Text fontSize={typography.bodySize} textAlign="center" color={colors.primaryTextColor}>
-              Total
-            </Text>
-          </VStack>
-        )}
-
         <PieChartComponent
           data={chartData}
           config={finalConfig}
           emptyStateText={emptyStateText}
           onPress={onPress}
         />
+        {legendLabels && legendLabels.length > 0 && (
+          <VStack space={spacing.spacingSmallFallback} alignItems="center" mt={margins.marginSmall}>
+            <Box flexDirection="row" alignItems="center" justifyContent="center" flexWrap="wrap">
+              {legendLabels.map((label: string, idx: number) => {
+                const fromDataColor =
+                  chartData && chartData[idx] && (chartData[idx].color as string | undefined);
+                const fromDefaultColors = config?.defaultColors && config.defaultColors[idx];
+                const colorKey = fromDataColor ?? fromDefaultColors ?? colors.primaryActionColor;
+                return (
+                  <ChartLabel color={colorKey} label={label} idx={idx} key={`legend-${idx}`} />
+                );
+              })}
+            </Box>
+          </VStack>
+        )}
       </VStack>
     </Box>
   );

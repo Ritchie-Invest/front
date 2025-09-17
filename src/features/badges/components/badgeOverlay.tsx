@@ -18,19 +18,17 @@ const BadgeOverlay = () => {
   const [badge, setBadge] = React.useState<any | null>(null);
   const [anotherDisplay, setAnotherDisplay] = React.useState<boolean>(false);
 
-  // Fonction pour charger les badges
   const loadBadges = React.useCallback(async () => {
     try {
       const res = await BuildComponent();
       setBadge(res?.badge ?? null);
       setAnotherDisplay(res?.anotherDisplay ?? false);
-      console.log('Badge loaded:', res?.badge, 'Another display:', res?.anotherDisplay);
+      console.log('Component | Badge loaded:', res?.badge, 'Another display:', res?.anotherDisplay);
     } catch (e) {
       console.error('Error loading badge overlay', e);
     }
   }, [BuildComponent]);
 
-  // Effet initial pour charger les badges
   useEffect(() => {
     let mounted = true;
     const load = async () => {
@@ -43,10 +41,9 @@ const BadgeOverlay = () => {
     };
   }, [loadBadges]);
 
-  // Effet pour recharger quand initialLoading change (quand les données arrivent)
   useEffect(() => {
     if (!initialLoading) {
-      console.log('Initial loading finished, reloading badges...');
+      console.log('Component | Initial loading finished, reloading badges...');
       loadBadges();
     }
   }, [initialLoading, loadBadges]);
@@ -83,7 +80,7 @@ const BadgeOverlay = () => {
   });
 
   console.log(
-    'Rendering BadgeOverlay with badge:',
+    'Component | Rendering BadgeOverlay with badge:',
     badge,
     'anotherDisplay:',
     anotherDisplay,
@@ -91,8 +88,7 @@ const BadgeOverlay = () => {
     initialLoading,
   );
 
-  // Condition de rendu simplifiée : on affiche dès qu'il y a un badge
-  if (badge != null) {
+  if (visible) {
     return (
       <Box
         position="absolute"
@@ -240,7 +236,6 @@ const BadgeOverlay = () => {
     );
   }
 
-  // Retourner null si pas de badge à afficher
   return null;
 };
 

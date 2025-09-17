@@ -19,7 +19,7 @@ export const useGetBadges = () => {
       setLoading(true);
       setError(null);
       const data = await service.getBadges();
-      console.debug('[useGetBadges] Data received in hook:', data);
+      console.debug('[useGetBadges] | Data hook : Data received :', data);
       if (data) {
         try {
           const Awarded = data
@@ -40,18 +40,18 @@ export const useGetBadges = () => {
             }
             setLocked(lockedBadges);
           } catch (e) {
-            console.error('[useGetBadges] Error processing locked badges:', e);
+            console.error('[useGetBadges] | Data hook : Error processing locked badges:', e);
           }
         } catch (e) {
-          console.error('[useGetBadges] Error processing Awarded:', e);
+          console.error('[useGetBadges] | Data hook : Error processing Awarded:', e);
         }
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Une erreur est survenue');
-      console.error('[useGetBadges] Error fetching badges:', err);
+      console.error('[useGetBadges] | Data hook : Error fetching badges:', err);
     } finally {
       setLoading(false);
-      console.debug('[useGetBadges] Loading set to false');
+      console.debug('[useGetBadges] | Data hook : Loading set to false');
     }
   }, [service]);
 

@@ -15,13 +15,12 @@ import LockedOverlay from '../components/LockedOverlay';
 import { config } from '~/lib/config';
 
 export const InvestmentDashboardScreen: React.FC = () => {
-  const lockDashboard = config.LOCK_DASHBOARD;
   const navigation = useNavigation<NativeStackNavigationProp<MainStackParamList>>();
   const { loading: portfolioLoading, error: portfolioError } = usePortfolio();
   const currentUserInfos = useCurrentUserInfos();
 
-  if (lockDashboard && currentUserInfos && !currentUserInfos.isInvestmentUnlocked) {
-    return <LockedOverlay level={currentUserInfos.levelRequiredToUnlockInvestment} />;
+  if ((currentUserInfos?.levelRequiredToUnlockInvestment ?? 0) > (currentUserInfos?.level ?? 0)) {
+    return <LockedOverlay level={currentUserInfos?.levelRequiredToUnlockInvestment ?? 0} />;
   }
   const handlePortfolioPress = () => {
     navigation.navigate(Screen.PORTFOLIO as any);

@@ -7,9 +7,9 @@ import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
 import { MainStackParamList } from '~/navigation/AppNavigator';
 import { useTransactionStore } from '../store/TransactionStore';
 import { useConversion } from './useConversion';
-import { Screens } from '~/features/navigation/Type/Screens';
+import { Screen } from '~/features/navigation/Type/Screen';
 
-type ETFTransactionRouteProp = RouteProp<MainStackParamList, Screens.TRANSACTION>;
+type ETFTransactionRouteProp = RouteProp<MainStackParamList, Screen.TRANSACTION>;
 
 type ButtonVariant = 'primary' | 'secondary' | 'disabled';
 
@@ -114,7 +114,7 @@ export const useTransaction = () => {
 
   const goToInvestmentDashboard = () => {
     clearTransaction();
-    navigation.navigate(Screens.DASHBOARD as never);
+    navigation.navigate(Screen.DASHBOARD as never);
   };
 
   return {

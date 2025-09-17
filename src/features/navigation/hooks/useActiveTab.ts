@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useRoute } from '@react-navigation/native';
-import { Tab, TabNameType } from '../Type/TabNames';
+import { Screen } from '../Type/Screen';
 
 export const useActiveTab = () => {
   const route = useRoute();
-  const [activeTab, setActiveTab] = useState<TabNameType>('Landing');
+  const [activeTab, setActiveTab] = useState<Screen>(Screen.HOME);
 
   useEffect(() => {
-    setActiveTab(route.name as TabNameType);
+    setActiveTab(route.name as Screen);
   }, [route.name]);
 
   return activeTab;

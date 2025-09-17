@@ -19,7 +19,7 @@ export const useGetBadges = () => {
       setLoading(true);
       setError(null);
       const data = await service.getBadges();
-      console.debug('[useGetBadges] | Data hook : Data received :', data);
+
       if (data) {
         try {
           const Awarded = data
@@ -32,8 +32,14 @@ export const useGetBadges = () => {
             setBadges(Awarded);
           }
 
+          const seenBadges = Awarded.filter((b) => b.hasSeen);
+          const unseenBadges = Awarded.filter((b) => !b.hasSeen);
+          setSeen(seenBadges);
+          setUnseen(unseenBadges);
+
           try {
             const lockedBadges = data.filter((b) => b.awardedAt === null).map((b) => ({ ...b }));
+
             if (lockedBadges.length > 0) {
               const setLocked = BadgeStore.getState().setLockedBadges;
               setLocked(lockedBadges);
@@ -51,7 +57,6 @@ export const useGetBadges = () => {
       console.error('[useGetBadges] | Data hook : Error fetching badges:', err);
     } finally {
       setLoading(false);
-      console.debug('[useGetBadges] | Data hook : Loading set to false');
     }
   }, [service]);
 

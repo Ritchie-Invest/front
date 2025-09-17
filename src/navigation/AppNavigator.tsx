@@ -8,7 +8,7 @@ import HomeScreen from '../features/landing/screens/home';
 import { ETFDetailScreen } from '../features/etf-detail/screens/ETFDetailScreen';
 import { ETFTransactionScreen } from '~/features/etf-transaction/screens/ETFTransactionScreen';
 import { TransactionType } from '~/features/etf-transaction/types/TransactionType';
-import { Screens } from '~/features/navigation/Type/Screens';
+import { Screen } from '~/features/navigation/Type/Screen';
 import { PortfolioDetailScreen } from '../features/etf-portfolio-detail/screens/PortfolioDetailScreen';
 import { InvestmentDashboardScreen } from '~/features/investment-dashboard/screens/InvestmentDashboardScreen';
 import BaseLayout from '~/components/organisms/components/BaseLayout';
@@ -33,20 +33,20 @@ export type RootStackParamList = {
 };
 
 export type MainStackParamList = {
-  [Screens.HOME]: undefined;
-  [Screens.DASHBOARD]: undefined;
-  [Screens.ETF_DETAILS]: { id: string };
-  [Screens.TRANSACTION]: { transactionType: TransactionType };
-  [Screens.PORTFOLIO]: undefined;
-  [Screens.PROFILE]: undefined;
-  [Screens.MODULE_SCREEN]: {
+  [Screen.HOME]: undefined;
+  [Screen.DASHBOARD]: undefined;
+  [Screen.ETF_DETAILS]: { id: string };
+  [Screen.TRANSACTION]: { transactionType: TransactionType };
+  [Screen.PORTFOLIO]: undefined;
+  [Screen.PROFILE]: undefined;
+  [Screen.MODULE_SCREEN]: {
     lessonId: string;
     moduleId: string;
     currentGameModuleIndex?: number;
     totalGameModules?: number;
     correctAnswers?: number;
   };
-  [Screens.COMPLETE_SCREEN]: {
+  [Screen.COMPLETE_SCREEN]: {
     lessonId: string;
     completedModules?: number;
     totalModules?: number;
@@ -83,7 +83,7 @@ export const AppNavigator = ({
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {!isOnboardingCompleted ? (
         showRegister ? (
-          <Stack.Screen name={Screens.AUTH_REGISTER}>
+          <Stack.Screen name={Screen.AUTH_REGISTER}>
             {() => (
               <BaseLayout
                 children={
@@ -97,7 +97,7 @@ export const AppNavigator = ({
             )}
           </Stack.Screen>
         ) : showLogin ? (
-          <Stack.Screen name={Screens.AUTH_LOGIN}>
+          <Stack.Screen name={Screen.AUTH_LOGIN}>
             {() => (
               <BaseLayout
                 children={
@@ -112,7 +112,7 @@ export const AppNavigator = ({
             )}
           </Stack.Screen>
         ) : (
-          <Stack.Screen name={Screens.ONBOARDING}>
+          <Stack.Screen name={Screen.ONBOARDING}>
             {() => <OnboardingLayout onComplete={handleOnboardingComplete} onLogin={handleLogin} />}
           </Stack.Screen>
         )
@@ -125,37 +125,41 @@ export const AppNavigator = ({
                 headerTitle: () => <UserHeader />,
               }}
             >
-              <MainStack.Screen name={Screens.HOME}>
+              <MainStack.Screen name={Screen.HOME}>
                 {() => <BaseLayout children={<HomeScreen />} />}
               </MainStack.Screen>
-              <MainStack.Screen name={Screens.DASHBOARD}>
+              <MainStack.Screen name={Screen.DASHBOARD}>
                 {() => <BaseLayout children={<InvestmentDashboardScreen />} />}
               </MainStack.Screen>
-              <MainStack.Screen name={Screens.ETF_DETAILS}>
+              <MainStack.Screen name={Screen.ETF_DETAILS}>
                 {() => <BaseLayout children={<ETFDetailScreen />} />}
               </MainStack.Screen>
-              <MainStack.Screen name={Screens.TRANSACTION}>
+              <MainStack.Screen name={Screen.TRANSACTION}>
                 {() => <BaseLayout children={<ETFTransactionScreen />} />}
               </MainStack.Screen>
-              <MainStack.Screen name={Screens.PORTFOLIO}>
+              <MainStack.Screen name={Screen.PORTFOLIO}>
                 {() => <BaseLayout children={<PortfolioDetailScreen />} />}
               </MainStack.Screen>
-              <MainStack.Screen name={Screens.PROFILE}>
+              <MainStack.Screen name={Screen.PROFILE}>
                 {() => <BaseLayout children={<UserProfile handleLogout={handleLogout} />} />}
               </MainStack.Screen>
-              <MainStack.Screen name={Screens.MODULE_SCREEN} options={{ headerTitle: '' }}>
-                {() => <ModuleScreen />}
+              <MainStack.Screen name={Screen.MODULE_SCREEN} options={{ headerTitle: '' }}>
+                {() => <BaseLayout children={<ModuleScreen />} />}
               </MainStack.Screen>
-              <MainStack.Screen name={Screens.COMPLETE_SCREEN} options={{ headerTitle: '' }}>
+              <MainStack.Screen name={Screen.COMPLETE_SCREEN} options={{ headerTitle: '' }}>
                 {({ route }) => {
-                  const params = route.params as MainStackParamList[typeof Screens.COMPLETE_SCREEN];
+                  const params = route.params as MainStackParamList[typeof Screen.COMPLETE_SCREEN];
                   return (
-                    <CompleteScreen
-                      lessonId={params.lessonId}
-                      completedModules={params.completedModules}
-                      totalModules={params.totalModules}
-                      xpWon={params.xpWon}
-                      isLessonCompleted={params.isLessonCompleted}
+                    <BaseLayout
+                      children={
+                        <CompleteScreen
+                          lessonId={params.lessonId}
+                          completedModules={params.completedModules}
+                          totalModules={params.totalModules}
+                          xpWon={params.xpWon}
+                          isLessonCompleted={params.isLessonCompleted}
+                        />
+                      }
                     />
                   );
                 }}

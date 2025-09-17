@@ -15,7 +15,7 @@ import { loginSchema } from '../validation/loginSchema';
 import { useFormValidation } from '../../../hooks/useFormValidation';
 import { AuthScreen } from '../models/authScreen';
 import PageCover from '~/components/organisms/components/PageCover';
-import { Screens } from '~/features/navigation/Type/Screens';
+import { Screen } from '~/features/navigation/Type/Screen';
 interface LoginFormProps {
   onSuccess: () => void;
   signupEnabled?: boolean;
@@ -38,7 +38,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   const showSignUp = typeof signupEnabled === 'boolean' ? signupEnabled : config.SIGNUP_ENABLED;
   const navigation = useNavigation<any>();
   const goToOnboarding =
-    onShowOnboarding ?? (() => navigation.getParent?.()?.navigate(Screens.ONBOARDING));
+    onShowOnboarding ?? (() => navigation.getParent?.()?.navigate(Screen.ONBOARDING));
 
   const handleSubmit = () => {
     const { isValid, errors } = useFormValidation(loginSchema, { email, password });
@@ -81,7 +81,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         showsVerticalScrollIndicator={false}
       >
         <VStack space="lg" px={spacing.spacingVerySmall} flex={1} justifyContent="center">
-          <PageCover title={t('login.title')} Screen={Screens.AUTH_LOGIN} size={250} />
+          <HStack justifyContent="flex-start">
+            <TextLink onPress={() => goToOnboarding()}>
+              <Text style={{ fontSize: typography.heading3Size }}>←</Text>
+            </TextLink>
+          </HStack>
+          <PageCover title={t('login.title')} Screen={Screen.AUTH_LOGIN} size={200} />
 
           <InputField
             placeholder={t('form.email')}

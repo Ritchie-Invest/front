@@ -1,4 +1,4 @@
-export enum Screens {
+export enum Screen {
   HOME = 'HOME',
   DASHBOARD = 'DASHBOARD',
   PORTFOLIO = 'PORTFOLIO',

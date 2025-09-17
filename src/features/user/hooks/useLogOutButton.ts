@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useClearCurrentUserInfos } from '../store/UserInfosStore';
 import { useAuthStore } from '~/features/auth/store/authStore';
 import { useLogout } from '~/features/auth/hooks/useLogout';
-import { Screens } from '~/features/navigation/Type/Screens';
+import { Screen } from '~/features/navigation/Type/Screen';
 import { NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from '~/navigation/AppNavigator';
 import type { LogoutButtonProps } from '../components/logoutButton';
@@ -50,7 +50,7 @@ export const useLogOutButton = ({ handleLogout }: LogoutButtonProps) => {
 
         clear();
         logout();
-        (navigation as any).navigate(Screens.ONBOARDING);
+        (navigation as any).navigate(Screen.ONBOARDING);
       },
       onError: () => {
         try {
@@ -62,7 +62,7 @@ export const useLogOutButton = ({ handleLogout }: LogoutButtonProps) => {
 
         clear();
         logout();
-        (navigation as any).navigate(Screens.ONBOARDING);
+        (navigation as any).navigate(Screen.ONBOARDING);
       },
     });
   };

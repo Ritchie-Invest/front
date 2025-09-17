@@ -7,7 +7,7 @@ import { Button } from '../../../components/atoms/Button';
 import { TransactionType } from '../../etf-transaction/types/TransactionType';
 import { useETFStore } from '~/features/etf/store/ETFStore';
 import { paddings, spacing } from '~/lib/theme/theme';
-import { Screens } from '~/features/navigation/Type/Screens';
+import { Screen } from '~/features/navigation/Type/Screen';
 type NavigationProp = NativeStackNavigationProp<MainStackParamList>;
 
 export const BuyAndSellButtons: React.FC = () => {
@@ -15,13 +15,13 @@ export const BuyAndSellButtons: React.FC = () => {
   const { selectedETF } = useETFStore();
 
   const handleBuyPress = () => {
-    navigation.navigate(Screens.TRANSACTION, {
+    navigation.navigate(Screen.TRANSACTION, {
       transactionType: TransactionType.BUY,
     });
   };
 
   const handleSellPress = () => {
-    navigation.navigate(Screens.TRANSACTION, {
+    navigation.navigate(Screen.TRANSACTION, {
       transactionType: TransactionType.SELL,
     });
   };

@@ -7,22 +7,18 @@ import { spacing, colors, typography } from '~/lib/theme/theme';
 const ModuleQuestion = ({ question }: { question?: string }) => {
   const { t } = useTranslation();
   return (
-    <VStack
-      px={spacing.spacingMedium}
-      mt={spacing.spacingMedium}
-      space={spacing.spacingSmallFallback}
-    >
+    <VStack gap={spacing.spacingSmall}>
       <Text
         fontSize={typography.bodyLargeSize}
-        color={colors.secondaryTextColor}
-        fontWeight={typography.fontWeightBold}
+        color={colors.Grey}
+        fontWeight={typography.fontWeightMedium}
       >
         {t('game.completeSentence')}
       </Text>
       <Text
         fontSize={typography.heading1Size}
+        color={colors.primaryTextColor}
         fontWeight={typography.fontWeightBold}
-        mt={spacing.spacingMinimum}
       >
         {question}
       </Text>

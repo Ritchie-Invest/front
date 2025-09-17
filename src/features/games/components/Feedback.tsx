@@ -16,16 +16,11 @@ const Feedback: React.FC<FeedbackProps> = ({ type, correctText, onContinue }) =>
   const isSuccess = type === 'success';
   return (
     <Box
-      position="absolute"
-      bottom={0}
-      left={0}
-      right={0}
       bg={isSuccess ? colors.successBackgroundColor : colors.warningBackgroundColor}
-      px={spacing.spacingMedium}
-      py={spacing.spacingLarge}
-      borderTopLeftRadius={borderRadius.borderRadius3xl}
-      borderTopRightRadius={borderRadius.borderRadius3xl}
-      shadowColor={colors.overlayColor}
+      p={spacing.spacingLarge}
+      gap={spacing.spacingMedium}
+      borderRadius={borderRadius.borderRadius3xl}
+      shadowColor={isSuccess ? colors.successBackgroundColor : colors.warningBackgroundColor}
       shadowOffset={{ width: 0, height: 2 }}
       shadowOpacity={0.1}
       shadowRadius={4}
@@ -37,11 +32,11 @@ const Feedback: React.FC<FeedbackProps> = ({ type, correctText, onContinue }) =>
             <Ionicons
               name={isSuccess ? 'checkmark-circle' : 'close'}
               size={24}
-              color={isSuccess ? colors.successColor : colors.warningColor}
+              color={isSuccess ? colors.successColor : colors.errorColor}
             />
           )}
         />
-        <Heading size="md" color={isSuccess ? colors.successColor : colors.warningColor}>
+        <Heading size="md" color={isSuccess ? colors.successColor : colors.errorColor}>
           {isSuccess ? t('game.success') : t('game.error')}
         </Heading>
       </HStack>
@@ -49,13 +44,13 @@ const Feedback: React.FC<FeedbackProps> = ({ type, correctText, onContinue }) =>
         <>
           <Text
             fontWeight={typography.fontWeightBold}
-            color={colors.warningColor}
+            color={colors.errorColor}
             fontSize={typography.bodySize}
           >
             {t('game.correctAnswer')}
           </Text>
           <Text
-            color={colors.warningColor}
+            color={colors.errorColor}
             fontSize={typography.bodyLargeSize}
             mb={spacing.spacingMedium}
           >

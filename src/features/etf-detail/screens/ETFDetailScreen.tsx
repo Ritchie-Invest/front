@@ -6,7 +6,7 @@ import { ETFChart } from '../components/ETFChart';
 import { colors, paddings } from '~/lib/theme/theme';
 import { BuyAndSellButtons } from '../components/BuyAndSellButtons';
 import PageCover from '~/components/organisms/components/PageCover';
-import { Screens } from '~/features/navigation/Type/Screens';
+import { Screen } from '~/features/navigation/Type/Screen';
 
 export const ETFDetailScreen: React.FC = () => {
   return (
@@ -15,7 +15,7 @@ export const ETFDetailScreen: React.FC = () => {
         <VStack flex={1} justifyContent="space-between" alignItems="center">
           <ETFDetails />
           <ETFChart />
-          <PageCover title="" Screen={Screens.ETF_DETAILS} size={100} />
+          <PageCover title="" Screen={Screen.ETF_DETAILS} size={100} />
           <Box>
             <BuyAndSellButtons />
           </Box>

@@ -91,6 +91,8 @@
     "unlockMessage": "Complete the previous lesson to unlock"
   },
   "game": {
+    "button": "Confirm",
+
     "completeSentence": "Complete the sentence",
     "success": "Well done!",
     "error": "Oops!",

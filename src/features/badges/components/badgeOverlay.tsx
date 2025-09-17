@@ -23,28 +23,19 @@ const BadgeOverlay = () => {
       const res = await BuildComponent();
       setBadge(res?.badge ?? null);
       setAnotherDisplay(res?.anotherDisplay ?? false);
-      console.log('Component | Badge loaded:', res?.badge, 'Another display:', res?.anotherDisplay);
-    } catch (e) {
-      console.error('Error loading badge overlay', e);
-    }
+    } catch (e) {}
   }, [BuildComponent]);
 
   useEffect(() => {
-    let mounted = true;
-    const load = async () => {
-      if (!mounted) return;
-      await loadBadges();
-    };
-    load();
-    return () => {
-      mounted = false;
-    };
+    loadBadges();
   }, [loadBadges]);
 
   useEffect(() => {
     if (!initialLoading) {
-      console.log('Component | Initial loading finished, reloading badges...');
-      loadBadges();
+      const timeoutId = setTimeout(() => {
+        loadBadges();
+      }, 100);
+      return () => clearTimeout(timeoutId);
     }
   }, [initialLoading, loadBadges]);
 
@@ -71,22 +62,12 @@ const BadgeOverlay = () => {
           }
           return res as boolean | undefined;
         } catch (e) {
-          console.error('Error in overlay onClose ref handler', e);
           return undefined;
         }
       }
       return undefined;
     },
   });
-
-  console.log(
-    'Component | Rendering BadgeOverlay with badge:',
-    badge,
-    'anotherDisplay:',
-    anotherDisplay,
-    'initialLoading:',
-    initialLoading,
-  );
 
   if (visible) {
     return (
@@ -221,9 +202,7 @@ const BadgeOverlay = () => {
                       const { newBadge, displayState } = await handleBadgeButtonClick(badge.type);
                       setBadge(newBadge);
                       setAnotherDisplay(displayState);
-                    } catch (e) {
-                      console.error('Error handling badge button press', e);
-                    }
+                    } catch (e) {}
                   }}
                   children={anotherDisplay ? 'Voir le prochain badge' : 'Fermer'}
                   variant="primary"

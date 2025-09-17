@@ -1,5 +1,6 @@
 import { Button } from '~/components/atoms/Button';
 import { Center } from '@gluestack-ui/themed';
+
 import { paddings } from '~/lib/theme/theme';
 import { useLogOutButton } from '../hooks/useLogOutButton';
 

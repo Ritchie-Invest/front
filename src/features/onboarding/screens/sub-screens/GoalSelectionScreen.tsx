@@ -2,10 +2,10 @@ import React from 'react';
 import { VStack, Text, Box } from '@gluestack-ui/themed';
 import { useTranslation } from 'react-i18next';
 import { OnboardingLayout } from '../../components/organisms/OnboardingLayout';
-import { AnswerButton } from '~/components/molecules/components/AnswerButton';
 import { Button } from '../../../../components/atoms/Button';
 import { OnboardingGoal } from '../../models/onboarding.types';
 import { colors, spacing, typography } from '~/lib/theme/theme';
+import { SelectableItem } from '~/components/molecules/components/selectableItem';
 
 interface GoalSelectionScreenProps {
   goals: OnboardingGoal[];
@@ -39,7 +39,7 @@ export const GoalSelectionScreen: React.FC<GoalSelectionScreenProps> = ({
 
         <VStack space={spacing.spacingMediumFallback}>
           {goals.map((goal) => (
-            <AnswerButton
+            <SelectableItem
               key={goal.id}
               title={goal.title}
               isSelected={selectedGoal === goal.id}

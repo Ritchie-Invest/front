@@ -144,18 +144,22 @@ export const AppNavigator = ({
                 {() => <BaseLayout children={<UserProfile handleLogout={handleLogout} />} />}
               </MainStack.Screen>
               <MainStack.Screen name={Screens.MODULE_SCREEN} options={{ headerTitle: '' }}>
-                {() => <ModuleScreen />}
+                {() => <BaseLayout children={<ModuleScreen />} />}
               </MainStack.Screen>
               <MainStack.Screen name={Screens.COMPLETE_SCREEN} options={{ headerTitle: '' }}>
                 {({ route }) => {
                   const params = route.params as MainStackParamList[typeof Screens.COMPLETE_SCREEN];
                   return (
-                    <CompleteScreen
-                      lessonId={params.lessonId}
-                      completedModules={params.completedModules}
-                      totalModules={params.totalModules}
-                      xpWon={params.xpWon}
-                      isLessonCompleted={params.isLessonCompleted}
+                    <BaseLayout
+                      children={
+                        <CompleteScreen
+                          lessonId={params.lessonId}
+                          completedModules={params.completedModules}
+                          totalModules={params.totalModules}
+                          xpWon={params.xpWon}
+                          isLessonCompleted={params.isLessonCompleted}
+                        />
+                      }
                     />
                   );
                 }}

@@ -1,8 +1,8 @@
 import React from 'react';
 import { VStack } from '@gluestack-ui/themed';
-import ChoiceButton from './ChoiceButton';
 import { CompleteModuleResponse } from '../models/progress';
 import { spacing } from '~/lib/theme/theme';
+import { SelectableItem } from '~/components/molecules/components/selectableItem';
 
 interface ModuleChoicesProps {
   choices: any[];
@@ -16,26 +16,25 @@ const ModuleChoices: React.FC<ModuleChoicesProps> = ({
   choices,
   selected,
   showFeedback,
-  completionResult,
   onSelect,
 }) => (
-  <VStack
-    space={spacing.spacingOneFallback}
-    mt={spacing.spacingSmall}
-    px={spacing.spacingVerySmall}
-  >
-    {choices.map((choice) => (
-      <ChoiceButton
-        key={choice.id}
-        text={choice.text}
-        selected={selected === choice.id}
-        correct={!!(completionResult?.isCorrect && selected === choice.id)}
-        showFeedback={showFeedback}
-        onPress={() => onSelect(choice.id)}
-        disabled={showFeedback !== 'none'}
-        isCorrectAnswer={choice.isCorrect}
-      />
-    ))}
+  <VStack gap={spacing.spacingMedium}>
+    {choices.map((choice) => {
+      const toggleColor: 'none' | 'success' | 'error' =
+        showFeedback !== 'none' && selected === choice.id ? showFeedback : 'none';
+
+      return (
+        <SelectableItem
+          key={choice.id}
+          title={choice.text}
+          isSelected={selected === choice.id}
+          toggleColor={toggleColor}
+          onPress={() => {
+            onSelect(choice.id);
+          }}
+        />
+      );
+    })}
   </VStack>
 );
 

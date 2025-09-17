@@ -40,12 +40,13 @@ export const useModuleScreen = () => {
     loadModule();
   }, [moduleId]);
 
-  const handleSelect = async (choiceId: string) => {
-    setSelected(choiceId);
-
+  const handleAnswer = async () => {
+    if (selected === null) {
+      return;
+    }
     try {
       // Envoi de la réponse et récupération du résultat
-      const result = await gameProgressService.completeModule(moduleId, choiceId);
+      const result = await gameProgressService.completeModule(moduleId, selected);
       setCompletionResult(result);
       setShowFeedback(result.isCorrect ? 'success' : 'error');
 
@@ -66,6 +67,9 @@ export const useModuleScreen = () => {
       }
       setShowFeedback('error');
     }
+  };
+  const handleSelect = async (choiceId: string) => {
+    setSelected(choiceId);
   };
 
   const handleContinue = async () => {
@@ -124,6 +128,7 @@ export const useModuleScreen = () => {
     completionResult,
     handleSelect,
     handleContinue,
+    handleAnswer,
     error,
     loading: !module && !error,
   };

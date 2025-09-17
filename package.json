@@ -1,6 +1,11 @@
 {
   "name": "ritchie-invest",
+  "engines": {
+    "node": ">=22.16.0"
+  },
+  "packageManager": "pnpm@10.11.1",
   "version": "1.0.0",
+  "private": true,
   "main": "index.ts",
   "scripts": {
     "start": "expo start",
@@ -8,7 +13,7 @@
     "test": "jest",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "postinstall": "husky install"
+    "prepare": "husky"
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [
@@ -78,7 +83,5 @@
     "prettier": "^3.6.2",
     "react-native-svg-transformer": "^1.5.1",
     "typescript": "~5.9.2"
-  },
-  "private": true,
-  "packageManager": "pnpm@9.12.3"
+  }
 }

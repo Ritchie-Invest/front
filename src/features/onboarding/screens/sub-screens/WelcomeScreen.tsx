@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '../../../../components/atoms/Button';
 import { colors, margins, paddings, spacing, typography } from '~/lib/theme/theme';
 import PageCover from '~/components/organisms/components/PageCover';
-import { Screens } from '~/features/navigation/Type/Screens';
+import { Screen } from '~/features/navigation/Type/Screen';
 
 interface WelcomeScreenProps {
   onStart: () => void;
@@ -25,7 +25,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart, onLogin }
       }}
     >
       <VStack space={spacing.spacingMediumFallback} alignItems="center">
-        <PageCover title={t('onboarding.welcome.title')} Screen={Screens.ONBOARDING} size={250} />
+        <PageCover title={t('onboarding.welcome.title')} Screen={Screen.ONBOARDING} size={200} />
         <View style={{ flex: 1, marginTop: margins.marginMedium }} />
 
         <VStack space={spacing.spacingMediumFallback} style={{ width: '80%' }}>

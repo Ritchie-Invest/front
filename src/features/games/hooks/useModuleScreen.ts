@@ -7,9 +7,9 @@ import { gameProgressService } from '../services/progressService';
 import { CompleteModuleResponse } from '../models/progress';
 import { GameModule } from '../models/module';
 import { MainStackParamList } from '~/navigation/AppNavigator';
-import { Screens } from '~/features/navigation/Type/Screens';
+import { Screen } from '~/features/navigation/Type/Screen';
 
-type ModuleScreenRouteProp = RouteProp<MainStackParamList, typeof Screens.MODULE_SCREEN>;
+type ModuleScreenRouteProp = RouteProp<MainStackParamList, typeof Screen.MODULE_SCREEN>;
 
 export const useModuleScreen = () => {
   const route = useRoute<ModuleScreenRouteProp>();
@@ -56,7 +56,7 @@ export const useModuleScreen = () => {
     } catch (error: any) {
       // Gestion du cas où le module est déjà complété (erreur 409)
       if (error?.response?.status === 409) {
-        navigation.replace(Screens.COMPLETE_SCREEN, {
+        navigation.replace(Screen.COMPLETE_SCREEN, {
           lessonId,
           completedModules: 0,
           totalModules: totalGameModules,
@@ -81,7 +81,7 @@ export const useModuleScreen = () => {
     // Navigation vers le module suivant ou vers l'écran de completion
     if (completionResult.nextGameModuleId) {
       // Il y a encore des modules dans cette leçon
-      navigation.replace(Screens.MODULE_SCREEN, {
+      navigation.replace(Screen.MODULE_SCREEN, {
         lessonId,
         moduleId: completionResult.nextGameModuleId,
         currentGameModuleIndex: completionResult.currentGameModuleIndex + 1,
@@ -101,7 +101,7 @@ export const useModuleScreen = () => {
         console.error('Error completing lesson:', error);
       }
 
-      navigation.replace(Screens.COMPLETE_SCREEN, {
+      navigation.replace(Screen.COMPLETE_SCREEN, {
         lessonId,
         completedModules: newCorrectAnswers,
         totalModules: completionResult.totalGameModules,

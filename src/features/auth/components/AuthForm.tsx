@@ -14,7 +14,7 @@ import { registerSchema } from '../validation/registerSchema';
 import { useFormValidation } from '../../../hooks/useFormValidation';
 import { AuthScreen } from '../types/AuthScreen';
 import PageCover from '~/components/organisms/components/PageCover';
-import { Screens } from '~/features/navigation/Type/Screens';
+import { Screen } from '~/features/navigation/Type/Screen';
 import { paddings, spacing, typography, colors, margins } from '~/lib/theme/theme';
 
 interface AuthFormProps {
@@ -107,7 +107,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({
         >
           <PageCover
             title={isLogin ? 'Contents de vous revoir !' : 'Bienvenue'}
-            Screen={isLogin ? Screens.AUTH_LOGIN : Screens.AUTH_REGISTER}
+            Screen={isLogin ? Screen.AUTH_LOGIN : Screen.AUTH_REGISTER}
             size={150}
           />
           <Text fontSize={typography.heading1Size} textAlign="center" my={margins.marginMedium}>

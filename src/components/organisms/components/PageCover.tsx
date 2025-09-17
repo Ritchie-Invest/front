@@ -2,17 +2,17 @@ import React from 'react';
 import { Center, Text } from '@gluestack-ui/themed';
 import { Image } from 'react-native';
 import { typography, colors } from '~/lib/theme/theme';
-import { Screens } from '~/features/navigation/Type/Screens';
+import { Screen } from '~/features/navigation/Type/Screen';
 
 const imageSources = {
-  [Screens.HOME]: require('~/assets/images/HOME.webp'),
-  [Screens.DASHBOARD]: require('~/assets/images/DASHBOARD.webp'),
-  [Screens.PORTFOLIO]: require('~/assets/images/PORTFOLIO.webp'),
-  [Screens.ETF_DETAILS]: require('~/assets/images/ETF_DETAILS.webp'),
-  [Screens.AUTH_REGISTER]: require('~/assets/images/AUTH_REGISTER.webp'),
-  [Screens.AUTH_LOGIN]: require('~/assets/images/AUTH_LOGIN.webp'),
-  [Screens.ONBOARDING]: require('~/assets/images/ONBOARDING.webp'),
-  [Screens.PROFILE]: require('~/assets/images/PROFILE.webp'),
+  [Screen.HOME]: require('~/assets/images/HOME.webp'),
+  [Screen.DASHBOARD]: require('~/assets/images/DASHBOARD.webp'),
+  [Screen.PORTFOLIO]: require('~/assets/images/PORTFOLIO.webp'),
+  [Screen.ETF_DETAILS]: require('~/assets/images/ETF_DETAILS.webp'),
+  [Screen.AUTH_REGISTER]: require('~/assets/images/AUTH_REGISTER.webp'),
+  [Screen.AUTH_LOGIN]: require('~/assets/images/AUTH_LOGIN.webp'),
+  [Screen.ONBOARDING]: require('~/assets/images/ONBOARDING.webp'),
+  [Screen.PROFILE]: require('~/assets/images/PROFILE.webp'),
 } as const;
 
 type PageCoverScreen = keyof typeof imageSources;

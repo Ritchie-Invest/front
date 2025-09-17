@@ -14,7 +14,7 @@ const colors = {
   primaryTextColor: '#32302C',
   secondaryTextColor: '#EEEDEC',
   accentTextColor: '#0ea5e9',
-  mutedTextColor: '#94a3b8',
+  mutedTextColor: '#57606dff',
 
   primaryActionColor: '#087fe7ff',
   primaryActionFocusColor: '#0284c7',

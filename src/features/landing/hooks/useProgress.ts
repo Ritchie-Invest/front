@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { MainStackParamList } from '../../../navigation/AppNavigator';
-import { Screens } from '../../navigation/Type/Screens';
+import { Screen } from '../../navigation/Type/Screen';
 import { useAuthStore } from '../../auth/store/authStore';
 import { ProgressServiceAdapter } from '../adapters/ProgressServiceAdapter';
 import { Chapter } from '../models/responses/chapter';
@@ -99,7 +99,7 @@ export const useProgress = () => {
   const handleLessonAction = (lessonId: string) => {
     const lesson = lessons.find((l) => l.id === lessonId);
     if (lesson?.gameModuleId) {
-      navigation.navigate(Screens.MODULE_SCREEN, {
+      navigation.navigate(Screen.MODULE_SCREEN, {
         lessonId,
         moduleId: lesson.gameModuleId,
         currentGameModuleIndex: 0,

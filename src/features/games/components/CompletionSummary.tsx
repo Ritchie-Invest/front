@@ -40,7 +40,7 @@ const CompletionSummary: React.FC<CompletionSummaryProps> = ({
       >
         {isSuccess ? t('completion.congrats') : t('completion.failed')}
       </Text>
-      <Text fontSize={typography.bodySize} color={colors.secondaryTextColor} textAlign="center">
+      <Text fontSize={typography.bodySize} color={colors.mutedTextColor} textAlign="center">
         {isSuccess ? t('completion.lessonSuccess') : t('completion.lessonFailed')}
       </Text>
       <VStack space={spacing.spacingLargeFallback} w="100%">

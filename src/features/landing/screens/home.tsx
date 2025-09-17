@@ -1,10 +1,10 @@
 import React, { useLayoutEffect } from 'react';
-import { ScrollView } from '@gluestack-ui/themed';
+import { ScrollView, VStack } from '@gluestack-ui/themed';
 import { Hero } from '../components/hero';
 import { ChaptersTimeline } from '../components/timeline';
 import { useProgress } from '../hooks/useProgress';
 import PageCover from '~/components/organisms/components/PageCover';
-import { Screens } from '~/features/navigation/Type/Screens';
+import { Screen } from '~/features/navigation/Type/Screen';
 
 const HomeScreen = () => {
   const {
@@ -20,19 +20,19 @@ const HomeScreen = () => {
   const autoScroll = true;
 
   return (
-    <>
-      <PageCover title="" Screen={Screens.HOME} size={100} />
+    <ScrollView
+      style={{ flex: 1 }}
+      contentContainerStyle={{ alignItems: 'center' }}
+      ref={autoScroll ? (scrollViewRef as any) : undefined}
+    >
+      <PageCover title="" Screen={Screen.HOME} size={250} />
       {showProgress && (
         <Hero
           chapterTitle={currentChapter?.title || 'Aucun chapitre disponible'}
           currentLesson={currentLesson}
         />
       )}
-      <ScrollView
-        style={{ flex: 1 }}
-        contentContainerStyle={{ alignItems: 'center' }}
-        ref={autoScroll ? (scrollViewRef as any) : undefined}
-      >
+      <VStack>
         <ChaptersTimeline
           chapters={chapters}
           currentLesson={currentLesson}
@@ -41,8 +41,8 @@ const HomeScreen = () => {
           onLessonAction={handleLessonAction}
           scrollViewRef={scrollViewRef}
         />
-      </ScrollView>
-    </>
+      </VStack>
+    </ScrollView>
   );
 };
 

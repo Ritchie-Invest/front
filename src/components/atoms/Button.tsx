@@ -25,57 +25,72 @@ export const Button = ({ children, onPress, isLoading, variant = 'primary', ...r
     variant: 'solid' | 'outline' | 'link';
     isDisabled?: boolean;
     bg?: string;
+    textColor?: string;
     borderColor?: string;
-    $focus?: { bg?: string };
-    $active?: { bg?: string };
+    borderWidth?: number;
+    $focus?: { bg?: string; textColor?: string };
+    $active?: { bg?: string; textColor?: string };
   } => {
     switch (variant) {
       case 'secondary':
         return {
-          variant: 'solid',
+          variant: 'outline',
           bg: colors.transparent,
-          $focus: { bg: colors.secondaryActionFocusColor },
-          $active: { bg: colors.secondaryActionActiveColor },
+          borderWidth: 1.5,
+          borderColor: colors.primaryActionColor,
+          textColor: colors.primaryActionColor,
+          $focus: { bg: colors.primaryActionColor, textColor: colors.secondaryTextColor },
+          $active: { bg: colors.primaryActionColor, textColor: colors.secondaryTextColor },
         };
       case 'disabled':
         return {
           variant: 'solid',
           isDisabled: true,
+          bg: colors.GreyL15,
+          textColor: colors.Grey,
         };
       case 'ghost':
         return {
           variant: 'link',
           bg: colors.transparent,
-          $focus: { bg: colors.GreyL30 },
-          $active: { bg: colors.GreyL30 },
+          textColor: colors.primaryActionColor,
+          $focus: { bg: colors.transparent, textColor: colors.infoColor },
+          $active: { bg: colors.transparent, textColor: colors.infoColor },
         };
       case 'success':
         return {
           variant: 'solid',
           bg: colors.successColor,
-          $focus: { bg: colors.successColor },
-          $active: { bg: colors.successColor },
+          textColor: colors.secondaryTextColor,
+          $focus: { bg: colors.successColor, textColor: colors.secondaryTextColor },
+          $active: { bg: colors.successColor, textColor: colors.secondaryTextColor },
         };
       case 'error':
         return {
           variant: 'solid',
           bg: colors.errorColor,
-          $focus: { bg: colors.errorColor },
-          $active: { bg: colors.errorColor },
+          textColor: colors.secondaryTextColor,
+          $focus: { bg: colors.errorColor, textColor: colors.secondaryTextColor },
+          $active: { bg: colors.errorColor, textColor: colors.secondaryTextColor },
         };
       case 'info':
         return {
           variant: 'solid',
-          bg: colors.primaryActionColor,
-          $focus: { bg: colors.primaryActionFocusColor },
-          $active: { bg: colors.primaryActionActiveColor },
+          bg: colors.infoColor,
+          textColor: colors.secondaryTextColor,
+          $focus: { bg: colors.primaryActionFocusColor, textColor: colors.secondaryTextColor },
+          $active: { bg: colors.primaryActionActiveColor, textColor: colors.secondaryTextColor },
         };
       case 'accent':
         return {
           variant: 'solid',
-          bg: colors.accentTextColor,
-          $focus: { bg: colors.accentTextColor },
-          $active: { bg: colors.accentTextColor },
+          bg: colors.primaryActionBackgroundColor,
+          textColor: colors.secondaryTextColor,
+          $focus: { bg: colors.primaryActionBackgroundColor, textColor: colors.secondaryTextColor },
+          $active: {
+            bg: colors.primaryActionBackgroundColor,
+            textColor: colors.secondaryTextColor,
+          },
         };
 
       case 'primary':
@@ -83,8 +98,9 @@ export const Button = ({ children, onPress, isLoading, variant = 'primary', ...r
         return {
           variant: 'solid',
           bg: colors.primaryActionColor,
-          $focus: { bg: colors.primaryActionFocusColor },
-          $active: { bg: colors.primaryActionActiveColor },
+          textColor: colors.secondaryTextColor,
+          $focus: { bg: colors.primaryActionFocusColor, textColor: colors.secondaryTextColor },
+          $active: { bg: colors.primaryActionActiveColor, textColor: colors.secondaryTextColor },
         };
     }
   };
@@ -95,8 +111,6 @@ export const Button = ({ children, onPress, isLoading, variant = 'primary', ...r
       isDisabled={isLoading || variant === 'disabled'}
       height="$12"
       width="100%"
-      borderWidth={variant === 'secondary' ? 1.5 : 0}
-      borderColor={colors.primaryActionColor}
       borderRadius={borderRadius.borderRadiusExtraLarge}
       {...getVariantProps()}
       {...rest}
@@ -107,7 +121,6 @@ export const Button = ({ children, onPress, isLoading, variant = 'primary', ...r
         textAlign="center"
         fontWeight={typography.fontWeightMedium}
         fontSize={typography.bodyLargeSize}
-        color={variant === 'primary' ? colors.mainBackgroundColor : colors.primaryActionColor}
       >
         {children}
       </ButtonText>

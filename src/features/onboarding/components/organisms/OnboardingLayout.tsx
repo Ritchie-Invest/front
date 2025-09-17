@@ -10,6 +10,7 @@ import {
 import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { borderRadius, colors } from '~/lib/theme/theme';
+import ProgressBar from '~/components/molecules/components/ProgressBar';
 
 interface OnboardingLayoutProps {
   children: React.ReactNode;
@@ -33,16 +34,7 @@ export const OnboardingLayout: React.FC<OnboardingLayoutProps> = ({
               <Ionicons name="arrow-back" size={24} color="black" />
             </Pressable>
           )}
-          <Box flex={1}>
-            <Progress
-              value={progress}
-              bg={colors.GreyL30}
-              height="$2"
-              borderRadius={borderRadius.borderRadiusMedium}
-            >
-              <ProgressFilledTrack backgroundColor={colors.primaryActionColor} />
-            </Progress>
-          </Box>
+          <ProgressBar value={progress} />
         </HStack>
 
         <VStack flex={1} px="$8" height="100%">

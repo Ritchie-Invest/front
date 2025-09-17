@@ -7,6 +7,7 @@ interface SelectableItemProps {
   isSelected?: boolean;
   onPress: () => void;
   variant?: 'default' | 'recommended';
+  toggleColor?: 'none' | 'success' | 'error';
 }
 
 export const SelectableItem: React.FC<SelectableItemProps> = ({
@@ -14,8 +15,23 @@ export const SelectableItem: React.FC<SelectableItemProps> = ({
   isSelected = false,
   onPress,
   variant = 'default',
+  toggleColor = 'none',
 }) => {
   const getCardStyle = () => {
+    if (toggleColor === 'success') {
+      return {
+        bg: colors.successBackgroundColor,
+        borderColor: colors.successColor,
+        borderWidth: 2,
+      };
+    }
+    if (toggleColor === 'error') {
+      return {
+        bg: colors.errorBackgroundColor,
+        borderColor: colors.errorColor,
+        borderWidth: 2,
+      };
+    }
     if (isSelected) {
       return {
         bg: colors.primaryActionBackgroundColor,
@@ -31,7 +47,7 @@ export const SelectableItem: React.FC<SelectableItemProps> = ({
   };
 
   return (
-    <Pressable onPress={onPress}>
+    <Pressable onPress={!isSelected ? onPress : undefined}>
       <Box
         {...getCardStyle()}
         borderRadius={borderRadius.borderRadiusSmall}

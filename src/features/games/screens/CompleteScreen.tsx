@@ -39,7 +39,13 @@ const CompleteScreen: React.FC<CompleteScreenProps> = ({
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.mainBackgroundColor }}>
-      <Box flex={1} alignItems="center" justifyContent="center" px={spacing.spacingSmall}>
+      <Box
+        flex={1}
+        alignItems="center"
+        gap={spacing.spacingMedium}
+        justifyContent="center"
+        px={spacing.spacingSmall}
+      >
         <CompletionSummary
           xp={xpWon}
           completedModules={completedModules}

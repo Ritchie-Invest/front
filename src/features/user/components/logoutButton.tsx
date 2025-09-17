@@ -1,7 +1,7 @@
 import { Button } from '~/components/atoms/Button';
 import { Center } from '@gluestack-ui/themed';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { Screens } from '~/features/navigation/Type/Screens';
+import { Screen } from '~/features/navigation/Type/Screen';
 import { RootStackParamList } from '~/navigation/AppNavigator';
 import { useAuthStore } from '~/features/auth/store/authStore';
 import { useClearCurrentUserInfos } from '../store/UserInfosStore';
@@ -23,7 +23,7 @@ export const LogoutButton: React.FC<LogoutButtonProps> = ({ handleLogout }) => {
       return;
     }
 
-    (navigation as any).navigate(Screens.ONBOARDING);
+    (navigation as any).navigate(Screen.ONBOARDING);
   };
 
   return (

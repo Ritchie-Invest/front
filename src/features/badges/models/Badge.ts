@@ -1,9 +1,9 @@
 import { BadgeType } from '../types/BadgeType';
 
-export interface UserBadge {
+export interface Badge {
   type: BadgeType;
   name: string;
   description: string;
-  icon: string;
-  awardedAt: null | Date;
+  awardedAt?: null | Date;
+  hasSeen: boolean;
 }

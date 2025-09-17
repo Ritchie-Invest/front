@@ -1,30 +1,15 @@
 import { Button } from '~/components/atoms/Button';
 import { Center } from '@gluestack-ui/themed';
-import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { Screen } from '~/features/navigation/Type/Screen';
-import { RootStackParamList } from '~/navigation/AppNavigator';
-import { useAuthStore } from '~/features/auth/store/authStore';
-import { useClearCurrentUserInfos } from '../store/UserInfosStore';
+
 import { paddings } from '~/lib/theme/theme';
-type LogoutButtonProps = {
+import { useLogOutButton } from '../hooks/useLogOutButton';
+
+export type LogoutButtonProps = {
   handleLogout?: () => void;
 };
 
 export const LogoutButton: React.FC<LogoutButtonProps> = ({ handleLogout }) => {
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const clear = useClearCurrentUserInfos();
-  const logout = useAuthStore((s) => s.logout);
-
-  const handlePress = () => {
-    if (handleLogout) {
-      clear();
-      logout();
-      handleLogout();
-      return;
-    }
-
-    (navigation as any).navigate(Screen.ONBOARDING);
-  };
+  const handlePress = useLogOutButton({ handleLogout });
 
   return (
     <Center flex={1} padding={paddings.paddingMedium}>

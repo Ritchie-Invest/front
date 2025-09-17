@@ -11,6 +11,7 @@ const typography = {
   heading1LetterSpacing: -0.5,
 
   heading2Size: 22,
+  heading2SizeFallback: '2xl' as const,
   heading2LineHeight: 36,
   heading2LetterSpacing: -0.3,
 

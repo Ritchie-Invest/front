@@ -12,7 +12,6 @@ import PageCover from '~/components/organisms/components/PageCover';
 import { Screen } from '~/features/navigation/Type/Screen';
 import { useCurrentUserInfos } from '~/features/user/store/UserInfosStore';
 import LockedOverlay from '../components/LockedOverlay';
-import { config } from '~/lib/config';
 
 export const InvestmentDashboardScreen: React.FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<MainStackParamList>>();

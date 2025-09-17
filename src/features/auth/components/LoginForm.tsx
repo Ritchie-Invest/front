@@ -37,7 +37,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   const showForgotPassword = config.FORGOT_PASSWORD_ENABLED;
   const showSignUp = typeof signupEnabled === 'boolean' ? signupEnabled : config.SIGNUP_ENABLED;
   const navigation = useNavigation<any>();
-  // use the prop if provided to go to onboarding instead of trying to navigate parent
   const goToOnboarding =
     onShowOnboarding ?? (() => navigation.getParent?.()?.navigate(Screen.ONBOARDING));
 
@@ -125,7 +124,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           </HStack>
 
           <HStack justifyContent="center" mt={spacing.spacingMinimum}>
-            <TextLink onPress={() => navigation.navigate([Screen.ONBOARDING])}>
+            <TextLink onPress={() => goToOnboarding()}>
               Vous n\'avez pas encore de compte ? Inscrivez-vous
             </TextLink>
           </HStack>

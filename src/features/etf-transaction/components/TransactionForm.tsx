@@ -1,9 +1,10 @@
 import React from 'react';
-import { Box, VStack, HStack, Text } from '@gluestack-ui/themed';
+import { Box, VStack, HStack, Text, Center } from '@gluestack-ui/themed';
 import { useTransactionForm } from '../hooks/useTransaction';
 import { InputField } from '~/components/atoms/InputField';
 import { Button } from '~/components/atoms/Button';
 import { colors, spacing, typography } from '~/lib/theme/theme';
+import { usePortfolio } from '~/features/etf-portfolio/hooks/usePortfolio';
 
 export const TransactionForm: React.FC = () => {
   const {
@@ -17,6 +18,9 @@ export const TransactionForm: React.FC = () => {
     shares,
   } = useTransactionForm();
 
+  const { portfolio } = usePortfolio();
+  const cash = portfolio?.cash;
+
   if (!selectedETF) {
     return (
       <Box mt="$6" bg={colors.errorBackgroundColor}>
@@ -27,15 +31,10 @@ export const TransactionForm: React.FC = () => {
     );
   } else {
     return (
-      <VStack
-        space={spacing.spacingLargeFallback}
-        mt={200}
-        height={400}
-        justifyContent="space-between"
-      >
-        <Box flex={1} justifyContent="space-between">
+      <VStack space={spacing.spacingLargeFallback} justifyContent="space-between" flex={1}>
+        <Center flex={1} gap={spacing.spacingMedium}>
           <HStack alignItems="center" justifyContent="center" space={spacing.spacingMediumFallback}>
-            <Box width="15%">
+            <Box minWidth="25%" width="auto" flexShrink={1}>
               <InputField
                 placeholder=""
                 value={amount ?? ''}
@@ -50,14 +49,20 @@ export const TransactionForm: React.FC = () => {
             </Text>
           </HStack>
           {amount && amount > 0 && (
-            <Text textAlign="center" color={colors.GreyL30} fontSize={typography.bodySize}>
-              {shares} parts
+            <Text textAlign="center" color={colors.mutedTextColor} fontSize={typography.bodySize}>
+              {shares.toFixed(2)} parts
             </Text>
           )}
-          <Button onPress={handleSubmit} variant={finalVariant} isLoading={loading}>
-            {buttonText}
-          </Button>
-        </Box>
+          {cash !== undefined && (
+            <Text textAlign="center" color={colors.mutedTextColor} fontSize={typography.bodySize}>
+              Solde du portefeuille : <Text color={colors.successColor}>{cash.toFixed(2)} €</Text>
+            </Text>
+          )}
+        </Center>
+
+        <Button onPress={handleSubmit} variant={finalVariant} isLoading={loading}>
+          {buttonText}
+        </Button>
       </VStack>
     );
   }

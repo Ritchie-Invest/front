@@ -19,7 +19,6 @@ export class GetBadgesServiceAdapter implements GetBadgesContract {
       }
 
       if (!Array.isArray(badges)) {
-        console.warn('GetBadgesServiceAdapter: expected array but got:', badges);
         return [];
       }
 
@@ -35,17 +34,11 @@ export class GetBadgesServiceAdapter implements GetBadgesContract {
 
       const valid = normalized.filter((b: any) => {
         const ok = validateBadge(b);
-        if (!ok) {
-          console.debug('GetBadgesServiceAdapter: badge failed validation and will be skipped:', b);
-        }
         return ok;
       });
 
-      console.debug('GetBadgesServiceAdapter: returning valid badges (awarded or not):', valid);
       return valid as Badge[];
     } catch (error) {
-      console.error('GetBadgesServiceAdapter: Error fetching  badges:', error);
-
       if (error instanceof Error) {
         if (error.message.includes('Network Error') || error.message.includes('fetch')) {
           throw new Error('Unable to fetch user infos. Please check your internet connection.');
@@ -56,7 +49,7 @@ export class GetBadgesServiceAdapter implements GetBadgesContract {
         }
       }
 
-      throw new Error('An unexpected error occurred while fetching user infos');
+      throw new Error('An unexpected error occurred while fetching user badges');
     }
   }
 }

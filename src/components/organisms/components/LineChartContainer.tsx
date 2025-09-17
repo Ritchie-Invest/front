@@ -8,6 +8,8 @@ import type { TimeRangeOption } from '~/components/molecules/models/TimeRange';
 import { DateRangeType } from '~/components/molecules/types/dateRange';
 import type { TimeRangeSelectorConfig } from '~/components/molecules/models/TimeRange';
 import { borderRadius, colors, margins, paddings, spacing, typography } from '~/lib/theme/theme';
+import { ScrollView } from 'react-native-gesture-handler';
+import ChartLabel from '~/components/molecules/components/ChartLabels';
 
 interface LineChartContainerProps<T = any> {
   data: T[];
@@ -112,8 +114,9 @@ export const LineChartContainer = memo(
               {title}
             </Text>
           )}
-
-          <LineChartComponent data={chartData} data2={chartData2} config={config} />
+          <ScrollView horizontal>
+            <LineChartComponent data={chartData} data2={chartData2} config={config} />
+          </ScrollView>
 
           {legendLabels && legendLabels.length > 0 && (
             <VStack
@@ -128,26 +131,7 @@ export const LineChartContainer = memo(
                       ? ((config?.lineColor as string | undefined) ?? colors.primaryActionColor)
                       : ((config?.lineColor2 as string | undefined) ?? colors.warningColor);
                   return (
-                    <Box
-                      key={`legend-${idx}`}
-                      flexDirection="row"
-                      alignItems="center"
-                      style={{
-                        marginHorizontal: spacing.spacingSmall,
-                        marginVertical: spacing.spacingVerySmall,
-                      }}
-                    >
-                      <Box
-                        width={12}
-                        height={12}
-                        bg={colorKey}
-                        style={{ marginRight: spacing.spacingSmall }}
-                        rounded={borderRadius.borderRadiusVerySmall}
-                      />
-                      <Text fontSize={typography.bodySmallSize} color={colors.primaryTextColor}>
-                        {label}
-                      </Text>
-                    </Box>
+                    <ChartLabel color={colorKey} label={label} idx={idx} key={`legend-${idx}`} />
                   );
                 })}
               </Box>

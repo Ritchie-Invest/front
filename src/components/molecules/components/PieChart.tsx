@@ -43,6 +43,27 @@ export const PieChartComponent: React.FC<PieChartProps> = memo(
       }));
     }, [data, chartConfig.defaultColors]);
 
+    const totalValue = useMemo(() => data.reduce((s, i) => s + (i.value ?? 0), 0), [data]);
+
+    const centerLabelComponent = useMemo(() => {
+      return () => (
+        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <Text
+            style={{
+              fontSize: typography.heading5Size,
+              color: colors.primaryTextColor,
+              fontWeight: 'bold',
+            }}
+          >
+            {totalValue}
+          </Text>
+          <Text style={{ fontSize: typography.captionSize, color: colors.primaryTextColor }}>
+            Total
+          </Text>
+        </View>
+      );
+    }, [chartConfig.centerLabelComponent, totalValue]);
+
     if (data.length === 0) {
       return (
         <View
@@ -61,15 +82,21 @@ export const PieChartComponent: React.FC<PieChartProps> = memo(
       <View style={{ alignItems: 'center', width: '100%' }}>
         <Pressable onPress={onPress}>
           <PieChart
+            donut
+            showGradient
+            sectionAutoFocus
+            radius={90}
+            innerRadius={60}
             data={chartData}
-            radius={chartSize / 2}
+            innerCircleColor={colors.mainBackgroundColor}
             textColor={colors.primaryTextColor}
             textSize={typography.bodySize}
-            fontWeight="bold"
+            fontWeight={typography.fontWeightMedium}
             showText={false}
             showTextBackground={true}
             showTooltip={true}
             tooltipBackgroundColor={colors.mainBackgroundColor}
+            centerLabelComponent={centerLabelComponent}
           />
         </Pressable>
       </View>

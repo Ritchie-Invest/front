@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Center } from '@gluestack-ui/themed';
+import { Box, Center, VStack } from '@gluestack-ui/themed';
 import { ETFDetails } from '~/features/etf/components/ETFDetails';
 import { colors, paddings } from '~/lib/theme/theme';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -17,22 +17,15 @@ export const ETFTransactionScreen: React.FC = () => {
 
   if (response || error) {
     return (
-      <Center height="100%" flex={1} bg={colors.mainBackgroundColor} p={paddings.paddingLarge}>
+      <Box flex={1} bg={colors.mainBackgroundColor}>
         <ResponseMessage response={response} error={error} />
-      </Center>
+      </Box>
     );
   } else {
     return (
-      <Box height="100%" flex={1} bg={colors.mainBackgroundColor}>
-        <ScrollView
-          keyboardShouldPersistTaps="always"
-          contentContainerStyle={{ flexGrow: 1 }}
-          showsVerticalScrollIndicator={false}
-          keyboardDismissMode="interactive"
-        >
-          <ETFDetails />
-          <TransactionForm />
-        </ScrollView>
+      <Box flex={1} bg={colors.mainBackgroundColor}>
+        <ETFDetails />
+        <TransactionForm />
       </Box>
     );
   }

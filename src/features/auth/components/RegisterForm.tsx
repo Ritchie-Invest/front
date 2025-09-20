@@ -10,7 +10,7 @@ import { registerSchema } from '../validation/registerSchema';
 import { useFormValidation } from '../../../hooks/useFormValidation';
 import { useTranslation } from 'react-i18next';
 import PageCover from '~/components/organisms/components/PageCover';
-import { Screens } from '~/features/navigation/Type/Screens';
+import { Screen } from '~/features/navigation/Type/Screen';
 
 type RegisterFormProps = {
   onBackToLogin?: () => void;
@@ -66,7 +66,7 @@ export const RegisterForm = ({ onBackToLogin, onSuccess }: RegisterFormProps) =>
         showsVerticalScrollIndicator={false}
       >
         <VStack space="lg" px={spacing.spacingVerySmall} flex={1} justifyContent="center">
-          <PageCover title={t('register.title')} Screen={Screens.AUTH_REGISTER} size={250} />
+          <PageCover title={t('register.title')} Screen={Screen.AUTH_REGISTER} size={200} />
 
           <InputField
             placeholder={t('form.email')}

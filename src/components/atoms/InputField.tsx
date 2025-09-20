@@ -32,7 +32,6 @@ export const InputField = ({
 
   const handleChangeText = (text: string) => {
     if (isNumeric) {
-      // Allow only numeric characters, decimal point, and minus sign
       const numericText = text.replace(/[^0-9.-]/g, '');
       onChange(numericText);
     } else {
@@ -58,6 +57,7 @@ export const InputField = ({
         secureTextEntry={isPassword}
         keyboardType={isNumeric ? 'numeric' : 'default'}
         accessibilityLabel={accessibilityLabel || placeholder}
+        width="100%"
       />
     </Input>
   );

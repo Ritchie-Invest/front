@@ -91,6 +91,8 @@
     "unlockMessage": "Terminez la leçon précédente pour débloquer"
   },
   "game": {
+    "button": "Confirmer",
+    "completeSentence": "Complète la phrase",
     "success": "Bravo !",
     "error": "Oups !",
     "loading": "Chargement du jeu...",

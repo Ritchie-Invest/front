@@ -2,14 +2,15 @@ import { useState } from 'react';
 import { TransactionServiceAdapter } from '../adapters/TransactionServiceAdapter';
 import { TransactionApiRequest } from '~/features/etf/models/Transaction';
 import { TransactionType } from '../types/TransactionType';
-import { useSelectedETF } from '~/features/etf/store/ETFStore';
 import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
 import { MainStackParamList } from '~/navigation/AppNavigator';
 import { useTransactionStore } from '../store/TransactionStore';
 import { useConversion } from './useConversion';
-import { Screens } from '~/features/navigation/Type/Screens';
+import { Screen } from '~/features/navigation/Type/Screen';
+import { usePortfolio } from '~/features/etf-portfolio/hooks/usePortfolio';
+import { useSelectedETF } from '~/features/etf/store/ETFStore';
 
-type ETFTransactionRouteProp = RouteProp<MainStackParamList, Screens.TRANSACTION>;
+type ETFTransactionRouteProp = RouteProp<MainStackParamList, Screen.TRANSACTION>;
 
 type ButtonVariant = 'primary' | 'secondary' | 'disabled';
 
@@ -17,7 +18,9 @@ export const useTransactionForm = () => {
   const route = useRoute<ETFTransactionRouteProp>();
   const { transactionType } = route.params;
   const selectedETF = useSelectedETF();
-
+  const { portfolio } = usePortfolio();
+  const cash = portfolio?.cash ?? 0;
+  const ownedAmount = selectedETF?.userAmount || 0;
   const [amount, setAmount] = useState<number | null>(null);
   const { executeTransaction, loading, error, response } = useTransaction();
   const { shares, isValidAmount: conversionValid } = useConversion(amount || 0);
@@ -30,7 +33,12 @@ export const useTransactionForm = () => {
   const handleSubmit = () => {
     const numericAmount = amount;
 
-    if (numericAmount === null || numericAmount <= 0) {
+    if (
+      numericAmount === null ||
+      numericAmount <= 0 ||
+      (transactionType === TransactionType.BUY && numericAmount > cash) ||
+      (transactionType === TransactionType.SELL && numericAmount > ownedAmount)
+    ) {
       return;
     }
 
@@ -40,7 +48,11 @@ export const useTransactionForm = () => {
   const isBuy = transactionType === TransactionType.BUY;
   const buttonText = isBuy ? 'Acheter' : 'Vendre';
   const buttonVariant: ButtonVariant = isBuy ? 'primary' : 'secondary';
-  const isAmountValid = amount !== null && amount > 0;
+  const isAmountValid =
+    amount !== null &&
+    amount > 0 &&
+    ((transactionType === TransactionType.BUY && amount <= cash) ||
+      (transactionType === TransactionType.SELL && amount <= ownedAmount));
   const finalVariant: ButtonVariant = !isAmountValid ? 'disabled' : buttonVariant;
 
   return {
@@ -114,7 +126,7 @@ export const useTransaction = () => {
 
   const goToInvestmentDashboard = () => {
     clearTransaction();
-    navigation.navigate(Screens.DASHBOARD as never);
+    navigation.navigate(Screen.DASHBOARD as never);
   };
 
   return {

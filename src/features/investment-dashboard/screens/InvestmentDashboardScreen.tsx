@@ -9,22 +9,20 @@ import { usePortfolio } from '~/features/etf-portfolio/hooks/usePortfolio';
 import { ETFList } from '../components/ETFList';
 import { colors, margins, paddings, spacing, typography } from '~/lib/theme/theme';
 import PageCover from '~/components/organisms/components/PageCover';
-import { Screens } from '~/features/navigation/Type/Screens';
+import { Screen } from '~/features/navigation/Type/Screen';
 import { useCurrentUserInfos } from '~/features/user/store/UserInfosStore';
 import LockedOverlay from '../components/LockedOverlay';
-import { config } from '~/lib/config';
 
 export const InvestmentDashboardScreen: React.FC = () => {
-  const lockDashboard = config.LOCK_DASHBOARD;
   const navigation = useNavigation<NativeStackNavigationProp<MainStackParamList>>();
   const { loading: portfolioLoading, error: portfolioError } = usePortfolio();
   const currentUserInfos = useCurrentUserInfos();
 
-  if (lockDashboard && currentUserInfos && !currentUserInfos.isInvestmentUnlocked) {
-    return <LockedOverlay level={currentUserInfos.levelRequiredToUnlockInvestment} />;
+  if ((currentUserInfos?.levelRequiredToUnlockInvestment ?? 0) > (currentUserInfos?.level ?? 0)) {
+    return <LockedOverlay level={currentUserInfos?.levelRequiredToUnlockInvestment ?? 0} />;
   }
   const handlePortfolioPress = () => {
-    navigation.navigate(Screens.PORTFOLIO);
+    navigation.navigate(Screen.PORTFOLIO as any);
   };
 
   if (portfolioError) {
@@ -43,7 +41,7 @@ export const InvestmentDashboardScreen: React.FC = () => {
   return (
     <ScrollView style={{ flex: 1, backgroundColor: colors.mainBackgroundColor }}>
       <VStack bg={colors.mainBackgroundColor} space={spacing.spacingMediumFallback}>
-        <PageCover title="Tableau de bord" Screen={Screens.DASHBOARD} size={250} />
+        <PageCover title="Tableau de bord" Screen={Screen.DASHBOARD} size={200} />
         <Box>
           <PortfolioPie onPress={handlePortfolioPress} />
         </Box>

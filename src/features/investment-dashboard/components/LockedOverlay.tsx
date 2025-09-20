@@ -3,7 +3,7 @@ import { Image, Dimensions } from 'react-native';
 import { borderRadius, colors, paddings, spacing, typography } from '~/lib/theme/theme';
 
 type LockedOverlayProps = {
-  level: number;
+  level?: number;
 };
 
 const LockedOverlay: React.FC<LockedOverlayProps> = ({ level }) => {

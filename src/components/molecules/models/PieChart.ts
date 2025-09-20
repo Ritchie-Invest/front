@@ -27,5 +27,9 @@ export interface PieChartConfig {
   labelTextColor?: string;
   labelFontSize?: number;
   centerLabelComponent?: React.ReactNode;
+  innerRadius?: number;
+  showGradient?: boolean;
+  sectionAutoFocus?: boolean;
+  innerCircleColor?: string;
   defaultColors?: string[];
 }

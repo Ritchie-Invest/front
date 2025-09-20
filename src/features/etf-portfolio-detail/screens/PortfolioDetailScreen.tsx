@@ -7,14 +7,14 @@ import { PortfolioPie } from '~/features/etf-portfolio/components/PortfolioPie';
 import { PortfolioLineChart } from '~/features/etf-portfolio-detail/components/PortfolioLineChart';
 import { UserETFList } from '~/features/etf/components/UserETFList';
 import PageCover from '~/components/organisms/components/PageCover';
-import { Screens } from '~/features/navigation/Type/Screens';
+import { Screen } from '~/features/navigation/Type/Screen';
 
 export const PortfolioDetailScreen: React.FC = () => {
   return (
     <Box flex={1} bg={colors.mainBackgroundColor}>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
         <VStack space="md">
-          <PageCover title="Votre portefeuille" Screen={Screens.PORTFOLIO} size={250} />
+          <PageCover title="Votre portefeuille" Screen={Screen.PORTFOLIO} size={200} />
           <PortfolioPie />
           <PortfolioLineChart />
           <UserETFList />

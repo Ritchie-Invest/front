@@ -1,12 +1,13 @@
-import React, { useLayoutEffect } from 'react';
-import { ScrollView } from '@gluestack-ui/themed';
+import React from 'react';
+import { ScrollView, VStack } from '@gluestack-ui/themed';
 import { Hero } from '../components/hero';
 import { ChaptersTimeline } from '../components/timeline';
 import { useProgress } from '../hooks/useProgress';
 import PageCover from '~/components/organisms/components/PageCover';
-import { Screens } from '~/features/navigation/Type/Screens';
+import BadgeOverlay from '~/features/badges/components/badgeOverlay';
+import { Screen } from '~/features/navigation/Type/Screen';
 
-const HomeScreen = () => {
+const HomeScreen: React.FC = () => {
   const {
     chapters,
     currentLesson,
@@ -21,26 +22,29 @@ const HomeScreen = () => {
 
   return (
     <>
-      <PageCover title="" Screen={Screens.HOME} size={200} />
-      {showProgress && (
-        <Hero
-          chapterTitle={currentChapter?.title || 'Aucun chapitre disponible'}
-          currentLesson={currentLesson}
-        />
-      )}
+      <BadgeOverlay />
       <ScrollView
         style={{ flex: 1 }}
         contentContainerStyle={{ alignItems: 'center' }}
         ref={autoScroll ? (scrollViewRef as any) : undefined}
       >
-        <ChaptersTimeline
-          chapters={chapters}
-          currentLesson={currentLesson}
-          currentChapter={currentChapter}
-          onChapterLayout={handleChapterLayout}
-          onLessonAction={handleLessonAction}
-          scrollViewRef={scrollViewRef}
-        />
+        <PageCover title="" Screen={Screen.HOME} size={200} />
+        {showProgress && (
+          <Hero
+            chapterTitle={currentChapter?.title || 'Aucun chapitre disponible'}
+            currentLesson={currentLesson}
+          />
+        )}
+        <VStack>
+          <ChaptersTimeline
+            chapters={chapters}
+            currentLesson={currentLesson}
+            currentChapter={currentChapter}
+            onChapterLayout={handleChapterLayout}
+            onLessonAction={handleLessonAction}
+            scrollViewRef={scrollViewRef}
+          />
+        </VStack>
       </ScrollView>
     </>
   );

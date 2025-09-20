@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Center, Text, VStack } from '@gluestack-ui/themed';
+import { Box, Center, Divider, Text, VStack } from '@gluestack-ui/themed';
 import { PostTransactionApiResponse } from '~/features/etf/models/Transaction';
 import { borderRadius, colors, margins, paddings, spacing, typography } from '~/lib/theme/theme';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -26,10 +26,9 @@ export const ResponseMessage: React.FC<ResponseMessageProps> = ({ response, erro
       shadowRadius={3}
       elevation={2}
       width="100%"
-      minHeight="40%"
     >
       {isSuccess && response ? (
-        <Center width="100%" style={{ gap: spacing.spacingMedium }}>
+        <Center flex={1} style={{ gap: spacing.spacingMedium }}>
           <Ionicons name="checkmark-circle" size={80} color={colors.successColor} />
           <Text
             color={colors.primaryTextColor}
@@ -37,30 +36,31 @@ export const ResponseMessage: React.FC<ResponseMessageProps> = ({ response, erro
             textAlign="center"
             fontWeight={typography.fontWeightBold}
           >
-            {' '}
             Votre transaction est un succès !
           </Text>
-          <Box width="100%" height={1} bg={colors.GreyL30} my={spacing.spacingMedium} />
+          <Divider bg={colors.GreyL30} />
+
           <Text
             color={colors.primaryTextColor}
             fontSize={typography.heading3Size}
             textAlign="center"
             fontWeight={typography.fontWeightMedium}
           >
-            {' '}
             Voici vos nouveaux soldes :
           </Text>
 
-          <Text color={colors.DarkGrey} width="100%" textAlign="left">
-            💰 Solde: {response.cash.toFixed(2)} €
-          </Text>
-          <Text color={colors.DarkGrey} width="100%" textAlign="left">
-            📈 Investissements: {response.investments.toFixed(2)} €
-          </Text>
-          <Text color={colors.DarkGrey} width="100%" textAlign="left">
-            🏷️ Titres détenus: {response.tickerHoldings}
-          </Text>
-          <Center padding={paddings.paddingLarge}>
+          <Box gap={spacing.spacingSmall}>
+            <Text color={colors.DarkGrey} width="100%" textAlign="left">
+              💰 Solde: {response.cash.toFixed(0)} €
+            </Text>
+            <Text color={colors.DarkGrey} width="100%" textAlign="left">
+              📈 Investissements: {response.investments.toFixed(0)} €
+            </Text>
+            <Text color={colors.DarkGrey} width="100%" textAlign="left">
+              🏷️ Titres détenus: {response.tickerHoldings.toFixed(0)}
+            </Text>
+          </Box>
+          <Center padding={paddings.paddingSmall}>
             <Button onPress={goToInvestmentDashboard} children="Retour au tableau de bord" />
           </Center>
         </Center>

@@ -5,14 +5,13 @@ import { useNavigation } from '@react-navigation/native';
 import { MainStackParamList } from '~/navigation/AppNavigator';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useActiveTab } from '~/features/navigation/hooks/useActiveTab';
-import { TabName, TabNameType } from '~/features/navigation/Type/TabNames';
-import { borderRadius, colors, paddings } from '~/lib/theme/theme';
-import { Screens } from '../../Type/Screens';
+import { borderRadius, colors, paddings, typography } from '~/lib/theme/theme';
+import { Screen } from '../../Type/Screen';
 
 type NavigationProp = NativeStackNavigationProp<MainStackParamList>;
 
 interface TabItemProps {
-  name: TabNameType;
+  name: Screen;
   icon: string;
   label: string;
   onPress: () => void;
@@ -24,10 +23,10 @@ const TabItem: React.FC<TabItemProps> = ({ icon, label, onPress, isActive }) => 
     <VStack alignItems="center">
       <MaterialIcons
         name={icon as any}
-        color={isActive ? colors.primaryActionColor : '#9ca3af'}
-        size={24}
+        color={isActive ? colors.primaryActionColor : colors.Grey}
+        size={typography.heading1Size}
       />
-      <Text fontSize={12} color={isActive ? '$blue500' : '$gray400'}>
+      <Text fontSize={typography.captionSize} color={isActive ? '$blue500' : '$gray400'}>
         {label}
       </Text>
     </VStack>
@@ -39,11 +38,11 @@ const Navbar: React.FC = () => {
   const activeTab = useActiveTab();
 
   const handleLessonsPress = () => {
-    navigation.navigate(Screens.HOME);
+    navigation.navigate(Screen.HOME as any);
   };
 
   const handleInvestmentPress = () => {
-    navigation.navigate(Screens.DASHBOARD);
+    navigation.navigate(Screen.DASHBOARD as any);
   };
 
   return (
@@ -56,19 +55,21 @@ const Navbar: React.FC = () => {
       py={paddings.paddingSmall}
     >
       <TabItem
-        name={TabName.Landing}
+        name={Screen.HOME}
         icon="menu-book"
         label="Leçons"
         onPress={handleLessonsPress}
-        isActive={activeTab === TabName.Landing}
+        isActive={[activeTab].includes(Screen.HOME || Screen.GAME)}
       />
 
       <TabItem
-        name={TabName.InvestmentDashboard}
+        name={Screen.DASHBOARD}
         icon="trending-up"
         label="Portfolio"
         onPress={handleInvestmentPress}
-        isActive={activeTab === TabName.InvestmentDashboard}
+        isActive={[activeTab].includes(
+          Screen.DASHBOARD || Screen.ETF_DETAILS || Screen.PORTFOLIO || Screen.TRANSACTION,
+        )}
       />
     </HStack>
   );

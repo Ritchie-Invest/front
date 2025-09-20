@@ -9,6 +9,7 @@ export class PortfolioPositionsService {
       const response = await axiosInstance.get<PortfolioHistoryResponse>(
         `/portfolio/positions?limit=${limit}`,
       );
+      console.log('Fetched portfolio positions:', response.data);
       return response.data;
     } catch (error) {
       console.error('Failed to fetch portfolio positions:', error);

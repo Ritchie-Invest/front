@@ -1,23 +1,32 @@
 import { axiosInstance } from '../../../lib/api/axios';
 import { CompleteModuleResponse, CompleteLessonResponse } from '../models/progress';
 import { GameProgressServiceContract } from '../contracts/GameProgressServiceContract';
+import { MODULE_TYPES, ModuleType } from '../types/moduleTypes';
 
 export class GameProgressServiceAdapter implements GameProgressServiceContract {
   async completeModule(
     moduleId: string,
     answer: string | boolean,
-    moduleType: 'MCQ' | 'TRUE_OR_FALSE',
+    moduleType: ModuleType,
   ): Promise<CompleteModuleResponse> {
-    const payload =
-      moduleType === 'MCQ'
-        ? {
-            gameType: 'MCQ',
-            mcq: { choiceId: answer as string },
-          }
-        : {
-            gameType: 'TRUE_OR_FALSE',
-            trueOrFalse: { answer: answer as boolean },
-          };
+    let payload;
+
+    if (moduleType === MODULE_TYPES.MCQ) {
+      payload = {
+        gameType: MODULE_TYPES.MCQ,
+        mcq: { choiceId: answer as string },
+      };
+    } else if (moduleType === MODULE_TYPES.TRUE_OR_FALSE) {
+      payload = {
+        gameType: MODULE_TYPES.TRUE_OR_FALSE,
+        trueOrFalse: { answer: answer as boolean },
+      };
+    } else {
+      payload = {
+        gameType: MODULE_TYPES.FILL_IN_THE_BLANK,
+        fillInTheBlank: { blankId: answer as string },
+      };
+    }
 
     const response = await axiosInstance.post(`/modules/${moduleId}/complete`, payload);
 

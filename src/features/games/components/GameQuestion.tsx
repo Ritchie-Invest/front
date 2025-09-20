@@ -31,7 +31,7 @@ const GameQuestion = ({ text, titleKey }: GameQuestionProps) => {
   );
 };
 
-GameQuestion.Error = ({ error }: { error: any }) => {
+GameQuestion.Error = ({ error }: { error: Error }) => {
   const { t } = useTranslation();
   return (
     <Box flex={1} justifyContent="center" alignItems="center" bg={colors.errorBackgroundColor}>
@@ -42,7 +42,7 @@ GameQuestion.Error = ({ error }: { error: any }) => {
         <Heading size="md" color={colors.errorColor}>
           {t('game.error')}
         </Heading>
-        <Text color={colors.errorColor}>{(error as Error).message}</Text>
+        <Text color={colors.errorColor}>{error.message}</Text>
       </VStack>
     </Box>
   );

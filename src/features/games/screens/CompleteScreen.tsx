@@ -7,7 +7,8 @@ import { useNavigation } from '@react-navigation/native';
 import { useQueryClient } from '@tanstack/react-query';
 import { Button } from '~/components/atoms/Button';
 import { spacing, colors } from '~/lib/theme/theme';
-import { RootStackParamList } from '../../../navigation/AppNavigator';
+import { MainStackParamList } from '../../../navigation/AppNavigator';
+import { Screen } from '../../navigation/Type/Screen';
 import CompletionSummary from '../components/CompletionSummary';
 
 interface CompleteScreenProps {
@@ -25,16 +26,13 @@ const CompleteScreen: React.FC<CompleteScreenProps> = ({
   isLessonCompleted,
 }) => {
   const { t } = useTranslation();
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<NativeStackNavigationProp<MainStackParamList>>();
   const queryClient = useQueryClient();
 
   const handleContinue = () => {
     queryClient.invalidateQueries({ queryKey: ['chapters', 'progress'] });
 
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'Main' }],
-    });
+    navigation.navigate(Screen.HOME);
   };
 
   return (

@@ -6,7 +6,7 @@ export const gameProgressService = {
   async completeModule(
     moduleId: string,
     answer: string | boolean,
-    moduleType: 'MCQ' | 'TRUE_OR_FALSE',
+    moduleType: 'MCQ' | 'TRUE_OR_FALSE' | 'FILL_IN_THE_BLANK',
   ) {
     return gameProgressServiceAdapter.completeModule(moduleId, answer, moduleType);
   },

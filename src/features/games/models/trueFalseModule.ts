@@ -7,6 +7,6 @@ export interface TrueFalseModule {
 }
 
 export interface TrueFalseDetails {
-  question: string;
+  sentence: string;
   isTrue: boolean;
 }

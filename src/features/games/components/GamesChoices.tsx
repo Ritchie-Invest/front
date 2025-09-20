@@ -1,19 +1,18 @@
 import React from 'react';
 import { VStack } from '@gluestack-ui/themed';
-import { CompleteModuleResponse } from '../models/progress';
 import { spacing } from '~/lib/theme/theme';
 import { SelectableItem } from '~/components/molecules/components/selectableItem';
 import { useTranslation } from 'react-i18next';
 import { QCMModule } from '../models/qcmModule';
 import { TrueFalseModule } from '../models/trueFalseModule';
-import { isQCMModule } from '../utils/moduleTypeGuards';
+import { FillBlankModule } from '../models/fillBlankModule';
+import { getModuleChoices } from '../utils/moduleTypeGuards';
 
 interface GamesChoicesProps {
-  module: QCMModule | TrueFalseModule;
-  selected: any;
+  module: QCMModule | TrueFalseModule | FillBlankModule | null;
+  selected: string | boolean | null;
   showFeedback: 'none' | 'success' | 'error';
-  completionResult?: CompleteModuleResponse | null;
-  onSelect: (id: any) => void;
+  onSelect: (id: string | boolean) => void;
 }
 
 const GamesChoices: React.FC<GamesChoicesProps> = ({
@@ -24,16 +23,13 @@ const GamesChoices: React.FC<GamesChoicesProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const finalChoices = isQCMModule(module)
-    ? module.details.choices
-    : [
-        { id: true, text: t('game.trueOrFalse.true') },
-        { id: false, text: t('game.trueOrFalse.false') },
-      ];
+  if (!module) return null;
+
+  const choices = getModuleChoices(module, t);
 
   return (
     <VStack gap={spacing.spacingMedium}>
-      {finalChoices.map((choice) => {
+      {choices.map((choice) => {
         const toggleColor: 'none' | 'success' | 'error' =
           showFeedback !== 'none' && selected === choice.id ? showFeedback : 'none';
 
@@ -43,7 +39,7 @@ const GamesChoices: React.FC<GamesChoicesProps> = ({
             title={choice.text}
             isSelected={selected === choice.id}
             toggleColor={toggleColor}
-            disabled={selected !== null && selected !== choice.id}
+            disabled={showFeedback !== 'none' && selected !== choice.id}
             onPress={() => {
               onSelect(choice.id);
             }}

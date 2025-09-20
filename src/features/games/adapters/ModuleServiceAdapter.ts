@@ -1,29 +1,21 @@
 import { axiosInstance } from '../../../lib/api/axios';
 import { QCMModule } from '../models/qcmModule';
 import { TrueFalseModule } from '../models/trueFalseModule';
+import { FillBlankModule } from '../models/fillBlankModule';
 import { ModuleServiceContract } from '../contracts/ModuleServiceContract';
-import { isQCMModule } from '../utils/moduleTypeGuards';
+import { isTrueFalseModule, isFillBlankModule, isQCMModule } from '../utils/moduleTypeGuards';
+
+const isValidModule = (data: unknown): data is QCMModule | TrueFalseModule | FillBlankModule => {
+  return isTrueFalseModule(data) || isFillBlankModule(data) || isQCMModule(data);
+};
 
 export class ModuleServiceAdapter implements ModuleServiceContract {
-  async getModule(moduleId: string): Promise<QCMModule | TrueFalseModule> {
+  async getModule(moduleId: string): Promise<QCMModule | TrueFalseModule | FillBlankModule> {
     const response = await axiosInstance.get(`/modules/${moduleId}`);
     const data = response.data;
 
-    const moduleType = isQCMModule(data) ? 'MCQ' : 'TRUE_OR_FALSE';
+    if (isValidModule(data)) return data;
 
-    if (moduleType === 'TRUE_OR_FALSE') {
-      return {
-        id: data.id,
-        lessonId: data.lessonId,
-        details: {
-          question: data.details.sentence || data.details.question || '',
-          isTrue: data.details.isTrue ?? data.details.choices?.[0]?.isCorrect ?? true,
-        },
-        updatedAt: data.updatedAt,
-        createdAt: data.createdAt,
-      } as TrueFalseModule;
-    }
-
-    return data as QCMModule;
+    throw new Error('Invalid module type received from API');
   }
 }

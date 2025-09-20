@@ -92,7 +92,6 @@
   },
   "game": {
     "button": "Confirmer",
-    "completeSentence": "Complète la phrase",
     "success": "Bravo !",
     "error": "Oups !",
     "loading": "Chargement du jeu...",
@@ -106,10 +105,13 @@
       "moduleSentence": "Vrai ou Faux",
       "true": "Vrai",
       "false": "Faux"
+    },
+    "fillBlank": {
+      "moduleSentence": "Complète la phrase"
     }
   },
   "completion": {
-    "congrats": "Haut la main!",
+    "congrats": "Haut la main !",
     "failed": "Essaye encore",
     "lessonSuccess": "Leçon complétée avec succès.",
     "lessonFailed": "Tu n'as pas réussi à compléter la leçon."

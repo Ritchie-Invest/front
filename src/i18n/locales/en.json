@@ -89,5 +89,31 @@
     "restart": "Restart",
     "continue": "Continue",
     "unlockMessage": "Complete the previous lesson to unlock"
+  },
+  "game": {
+    "button": "Confirm",
+    "success": "Well done !",
+    "error": "Oops !",
+    "loading": "Loading game...",
+    "correctAnswer": "Correct answer :",
+    "continue": "Continue",
+    "understood": "Understood",
+    "qcm": {
+      "moduleSentence": "Answer the question"
+    },
+    "trueOrFalse": {
+      "moduleSentence": "True or False",
+      "true": "True",
+      "false": "False"
+    },
+    "fillBlank": {
+      "moduleSentence": "Complete the sentence"
+    }
+  },
+  "completion": {
+    "congrats": "Crushed it !",
+    "failed": "Try again",
+    "lessonSuccess": "Lesson completed successfully.",
+    "lessonFailed": "You did not complete the lesson."
   }
 }

@@ -6,8 +6,19 @@ import { moduleService } from '../services/moduleService';
 import { gameProgressService } from '../services/progressService';
 import { CompleteModuleResponse } from '../models/progress';
 import { MainStackParamList } from '~/navigation/AppNavigator';
-import { isTrueFalseModule } from '../utils/moduleTypeGuards';
+import { getModuleType, getGameData, calculateProgress } from '../utils/moduleTypeGuards';
 import { Screen } from '~/features/navigation/Type/Screen';
+import { QCMModule } from '../models/qcmModule';
+import { TrueFalseModule } from '../models/trueFalseModule';
+import { FillBlankModule } from '../models/fillBlankModule';
+
+interface AxiosError {
+  response?: {
+    status: number;
+  };
+}
+
+const HTTP_CONFLICT = 409;
 
 type ModuleScreenRouteProp = RouteProp<MainStackParamList, typeof Screen.MODULE_SCREEN>;
 
@@ -21,9 +32,9 @@ export const useGameModule = () => {
     correctAnswers = 0,
   } = route.params;
 
-  const [module, setModule] = useState<any>(null);
-  const [error, setError] = useState<any>(null);
-  const [selected, setSelected] = useState<any>(null);
+  const [module, setModule] = useState<QCMModule | TrueFalseModule | FillBlankModule | null>(null);
+  const [error, setError] = useState<Error | null>(null);
+  const [selected, setSelected] = useState<string | boolean | null>(null);
   const [showFeedback, setShowFeedback] = useState<'none' | 'success' | 'error'>('none');
   const [completionResult, setCompletionResult] = useState<CompleteModuleResponse | null>(null);
   const navigation = useNavigation<NativeStackNavigationProp<MainStackParamList>>();
@@ -35,57 +46,25 @@ export const useGameModule = () => {
         const moduleData = await moduleService.getModule(moduleId);
         setModule(moduleData);
       } catch (err) {
-        setError(err);
+        setError(err as Error);
       }
     };
 
     loadModuleAndDetectType();
   }, [moduleId]);
 
-  const handleAnswer = async () => {
-    if (selected === null) {
-      return;
-    }
+  const handleSelect = (selection: string | boolean) => {
+    setSelected(selection);
+  };
+
+  const handleConfirm = async () => {
+    if (selected === null) return;
+
     try {
-      // Envoi de la réponse et récupération du résultat
       const result = await gameProgressService.completeModule(
         moduleId,
         selected,
-        isTrueFalseModule(module) ? 'TRUE_OR_FALSE' : 'MCQ',
-      );
-      setCompletionResult(result);
-      setShowFeedback(result.isCorrect ? 'success' : 'error');
-
-      // Invalidation des caches pour forcer le rafraîchissement des données
-      queryClient.invalidateQueries({ queryKey: ['chapters', 'progress'] });
-      queryClient.invalidateQueries({ queryKey: ['lesson', lessonId] });
-    } catch (error: any) {
-      // Gestion du cas où le module est déjà complété (erreur 409)
-      if (error?.response?.status === 409) {
-        navigation.replace(Screen.COMPLETE_SCREEN, {
-          lessonId,
-          completedModules: 0,
-          totalModules: totalGameModules,
-          xpWon: 0,
-          isLessonCompleted: false,
-        });
-        return;
-      }
-      setShowFeedback('error');
-    }
-  };
-
-  const handleSelect = async (selection: any) => {
-    setSelected(selection);
-
-    try {
-      let result;
-
-      // Compléter le module avec le bon type
-      result = await gameProgressService.completeModule(
-        moduleId,
-        selection,
-        isTrueFalseModule(module) ? 'TRUE_OR_FALSE' : 'MCQ',
+        getModuleType(module),
       );
 
       setCompletionResult(result);
@@ -94,9 +73,9 @@ export const useGameModule = () => {
       // Invalidation des caches pour forcer le rafraîchissement des données
       queryClient.invalidateQueries({ queryKey: ['chapters', 'progress'] });
       queryClient.invalidateQueries({ queryKey: ['lesson', lessonId] });
-    } catch (error: any) {
+    } catch (error: unknown) {
       // Gestion du cas où le module est déjà complété (erreur 409)
-      if (error?.response?.status === 409) {
+      if ((error as AxiosError)?.response?.status === HTTP_CONFLICT) {
         navigation.replace(Screen.COMPLETE_SCREEN, {
           lessonId,
           completedModules: 0,
@@ -136,7 +115,7 @@ export const useGameModule = () => {
           xpWon: lessonResult.xpWon || 0,
           isLessonCompleted: lessonResult.isCompleted,
         });
-      } catch (error) {
+      } catch (error: unknown) {
         // En cas d'erreur, afficher tout de même l'écran de completion
         navigation.replace(Screen.COMPLETE_SCREEN, {
           lessonId,
@@ -149,33 +128,25 @@ export const useGameModule = () => {
     }
   };
 
-  // Calcul de la progression
-  const apiTotalModules = completionResult?.totalGameModules || totalGameModules;
-  const apiCurrentIndex = completionResult?.currentGameModuleIndex ?? currentGameModuleIndex;
-
-  const progress = apiTotalModules > 0 ? apiCurrentIndex / apiTotalModules : 0;
-  // Ajustement visuel de la barre de progression lors de l'affichage du feedback
-  const adjustedProgress = showFeedback !== 'none' ? progress + 1 / apiTotalModules : progress;
-
   // Extraire les données spécifiques selon le type
-  const gameData = isTrueFalseModule(module)
-    ? {
-        question: module?.details?.question,
-        correctAnswer: module?.details?.isTrue ?? true,
-      }
-    : {
-        question: module?.details?.question,
-        choices: module?.details?.choices || [],
-      };
+  const gameData = getGameData(module);
+
+  // Calcul de la progression
+  const progress = calculateProgress(
+    completionResult,
+    currentGameModuleIndex,
+    totalGameModules,
+    showFeedback,
+  );
 
   return {
-    progress: Math.min(adjustedProgress, 1),
+    progress,
     selected,
     showFeedback,
     completionResult,
     handleSelect,
+    handleConfirm,
     handleContinue,
-    handleAnswer,
     error,
     loading: !module && !error,
     module,

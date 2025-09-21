@@ -18,7 +18,6 @@ export const portfolioService = {
       }
 
       const response = await axiosInstance.get<Portfolio>('/portfolio');
-
       return {
         currency: response.data.currency,
         cash: response.data.cash,

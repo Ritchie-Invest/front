@@ -9,6 +9,8 @@ import { useAuthStore } from '../../auth/store/authStore';
 import { ProgressServiceAdapter } from '../adapters/ProgressServiceAdapter';
 import { Chapter } from '../models/responses/chapter';
 import { Lesson } from '../models/responses/lesson';
+import { LessonStatus } from '../types/LessonStatus';
+import { ChapterStatus } from '../types/ChapterStatus';
 
 const progressAdapter = new ProgressServiceAdapter();
 
@@ -30,21 +32,25 @@ export const useProgress = () => {
     staleTime: 5 * 60 * 1000,
   });
 
-  const chapters: Chapter[] = chaptersData?.chapters || [];
-  const lessons = chapters.flatMap((chapter: Chapter) => chapter.lessons);
+  const chapters: Chapter[] = chaptersData?.chapters ?? [];
+  const lessons = chapters.flatMap((chapter: Chapter) => chapter.lessons ?? []);
 
-  const completedLessons = chapters.reduce((sum, chapter) => sum + chapter.completedLessons, 0);
-  const totalLessons = chapters.reduce((sum, chapter) => sum + chapter.totalLessons, 0);
+  const completedLessons = chapters.reduce(
+    (sum, chapter) => sum + (chapter.completedLessons ?? 0),
+    0,
+  );
+  const totalLessons = chapters.reduce((sum, chapter) => sum + (chapter.totalLessons ?? 0), 0);
   const progressValue = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
 
   const getCurrentLesson = (): Lesson | null => {
     for (const chapter of chapters) {
-      if (chapter.status === 'LOCKED') continue;
+      if (chapter.status === ChapterStatus.LOCKED) continue;
 
-      for (const lesson of chapter.lessons) {
-        if (lesson.status === 'LOCKED') continue;
+      const chapterLessons = chapter.lessons ?? [];
+      for (const lesson of chapterLessons) {
+        if (lesson.status === LessonStatus.LOCKED) continue;
 
-        if (lesson.status !== 'COMPLETED') {
+        if (lesson.status !== LessonStatus.COMPLETED) {
           return lesson;
         }
       }
@@ -55,10 +61,9 @@ export const useProgress = () => {
   const getCurrentChapter = (): Chapter | null => {
     const currentLesson = getCurrentLesson();
     if (!currentLesson) return null;
-
     return (
       chapters.find((chapter) =>
-        chapter.lessons.some((lesson) => lesson.id === currentLesson.id),
+        (chapter.lessons ?? []).some((lesson) => lesson.id === currentLesson.id),
       ) || null
     );
   };

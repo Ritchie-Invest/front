@@ -115,5 +115,17 @@
     "failed": "Try again",
     "lessonSuccess": "Lesson completed successfully.",
     "lessonFailed": "You did not complete the lesson."
+  },
+  "life": {
+    "noLivesModal": {
+      "title": "No lives left !",
+      "description": "Wait a bit before you can play again.",
+      "nextLifeIn": "Next life in:",
+      "button": "Got it",
+      "hasLivesTitle": "You have {{count}} {{life}}",
+      "hasLivesDescription": "You can resume lessons",
+      "life": "life",
+      "lives": "lives"
+    }
   }
 }

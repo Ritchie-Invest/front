@@ -12,4 +12,9 @@ export const config = {
   LOCK_DASHBOARD: Constants.expoConfig?.extra?.LOCK_DASHBOARD || false,
 
   SHOW_BADGE_OVERLAY: Constants.expoConfig?.extra?.SHOW_BADGE_OVERLAY || true,
+
+  MAX_LIVES: Number(Constants.expoConfig?.extra?.MAX_LIVES) || 2,
+
+  LIFE_REGENERATION_TIME_MS:
+    Number(Constants.expoConfig?.extra?.LIFE_REGENERATION_TIME_MS) || 10000,
 } as const;

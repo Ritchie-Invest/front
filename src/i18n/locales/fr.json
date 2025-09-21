@@ -115,5 +115,17 @@
     "failed": "Essaye encore",
     "lessonSuccess": "Leçon complétée avec succès.",
     "lessonFailed": "Tu n'as pas réussi à compléter la leçon."
+  },
+  "life": {
+    "noLivesModal": {
+      "title": "Plus de vies !",
+      "description": "Patientez un peu avant de pouvoir rejouer.",
+      "nextLifeIn": "Prochaine vie dans :",
+      "button": "Compris",
+      "hasLivesTitle": "Vous avez {{count}} {{life}}",
+      "hasLivesDescription": "Vous pouvez reprendre les leçons",
+      "life": "vie",
+      "lives": "vies"
+    }
   }
 }

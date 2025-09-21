@@ -1,7 +1,8 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Lesson } from '../models/responses/lesson';
 import { LessonStatus } from '../types/LessonStatus';
 import { colors } from '~/lib/theme/theme';
+import { useLifeStore } from '~/features/life/store/lifeStore';
 
 export interface LessonCircleStyle {
   backgroundColor: string;
@@ -25,6 +26,8 @@ export interface UseLessonCircleReturn {
   iconProps: LessonCircleIcon;
   handlePress: () => void;
   isDisabled: boolean;
+  showNoLivesModal: boolean;
+  handleCloseModal: () => void;
 }
 
 export const useLessonCircle = (
@@ -32,6 +35,9 @@ export const useLessonCircle = (
   onAction: (lessonId: string, action: 'start') => void,
   isCurrent: boolean = false,
 ): UseLessonCircleReturn => {
+  const { lifeStatus } = useLifeStore();
+  const [showNoLivesModal, setShowNoLivesModal] = useState(false);
+
   const state = useMemo(
     (): LessonCircleState => ({
       isCompleted: lesson.status === LessonStatus.COMPLETED,
@@ -100,10 +106,22 @@ export const useLessonCircle = (
   const handlePress = useMemo(
     () => () => {
       if (!state.isLocked && !state.isCompleted) {
-        onAction(lesson.id, 'start');
+        // Vérifier s'il y a des vies disponibles
+        if (lifeStatus.isOutOfLives) {
+          setShowNoLivesModal(true);
+        } else {
+          onAction(lesson.id, 'start');
+        }
       }
     },
-    [state.isLocked, state.isCompleted, onAction, lesson.id],
+    [state.isLocked, state.isCompleted, lifeStatus.isOutOfLives, onAction, lesson.id],
+  );
+
+  const handleCloseModal = useMemo(
+    () => () => {
+      setShowNoLivesModal(false);
+    },
+    [],
   );
 
   const isDisabled = state.isLocked || state.isCompleted;
@@ -114,5 +132,7 @@ export const useLessonCircle = (
     iconProps,
     handlePress,
     isDisabled,
+    showNoLivesModal,
+    handleCloseModal,
   };
 };

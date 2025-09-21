@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { moduleService } from '../services/moduleService';
 import { gameProgressService } from '../services/progressService';
 import { CompleteModuleResponse } from '../models/progress';
@@ -11,14 +12,11 @@ import { Screen } from '~/features/navigation/Type/Screen';
 import { QCMModule } from '../models/qcmModule';
 import { TrueFalseModule } from '../models/trueFalseModule';
 import { FillBlankModule } from '../models/fillBlankModule';
-
-interface AxiosError {
-  response?: {
-    status: number;
-  };
-}
+import { lifeEventService } from '~/features/life/services/lifeEventService';
+import { useLifeStore } from '~/features/life/store/lifeStore';
 
 const HTTP_CONFLICT = 409;
+const LIFE_CHECK_DELAY = 200;
 
 type ModuleScreenRouteProp = RouteProp<MainStackParamList, typeof Screen.MODULE_SCREEN>;
 
@@ -37,6 +35,7 @@ export const useGameModule = () => {
   const [selected, setSelected] = useState<string | boolean | null>(null);
   const [showFeedback, setShowFeedback] = useState<'none' | 'success' | 'error'>('none');
   const [completionResult, setCompletionResult] = useState<CompleteModuleResponse | null>(null);
+  const [showNoLivesModal, setShowNoLivesModal] = useState<boolean>(false);
   const navigation = useNavigation<NativeStackNavigationProp<MainStackParamList>>();
   const queryClient = useQueryClient();
 
@@ -68,6 +67,19 @@ export const useGameModule = () => {
       );
 
       setCompletionResult(result);
+
+      if (!result.isCorrect) {
+        lifeEventService.notifyLifeChanged();
+
+        setTimeout(() => {
+          const currentLifeStatus = useLifeStore.getState().lifeStatus;
+          if (currentLifeStatus.livesRemaining <= 0) {
+            setShowNoLivesModal(true);
+            return;
+          }
+        }, LIFE_CHECK_DELAY);
+      }
+
       setShowFeedback(result.isCorrect ? 'success' : 'error');
 
       // Invalidation des caches pour forcer le rafraîchissement des données
@@ -87,6 +99,10 @@ export const useGameModule = () => {
       }
       setShowFeedback('error');
     }
+  };
+
+  const handleCloseNoLivesModal = () => {
+    setShowNoLivesModal(false);
   };
 
   const handleContinue = async () => {
@@ -150,6 +166,8 @@ export const useGameModule = () => {
     error,
     loading: !module && !error,
     module,
+    showNoLivesModal,
+    handleCloseNoLivesModal,
     ...gameData,
   };
 };

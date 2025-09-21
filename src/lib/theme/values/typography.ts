@@ -60,5 +60,8 @@ const typography = {
   overlineSize: 10,
   overlineLineHeight: 16,
   overlineLetterSpacing: 1.5,
+
+  timerSmallSize: 12,
+  timerLargeSize: 18,
 };
 export { typography };

@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useLifeSync } from '~/features/life/hooks/useLifeSync';
 import { OnboardingLayout } from '../features/onboarding/screens/OnboardingLayout';
 import { LoginScreen } from '~/features/auth/screens/LoginScreen';
 import { RegisterScreen } from '~/features/auth/screens/RegisterScreen';
@@ -78,96 +79,103 @@ export const AppNavigator = ({
   handleLogout: () => void;
   handleBackToLogin: () => void;
   onShowOnboarding?: () => void;
-}) => (
-  <NavigationContainer>
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {!isOnboardingCompleted ? (
-        showRegister ? (
-          <Stack.Screen name={Screen.AUTH_REGISTER}>
-            {() => (
-              <BaseLayout
-                children={
-                  <RegisterScreen
-                    onBackToLogin={handleBackToLogin}
-                    onSuccess={handleLoginSuccess}
-                  />
-                }
-                showNavbar={false}
-              />
-            )}
-          </Stack.Screen>
-        ) : showLogin ? (
-          <Stack.Screen name={Screen.AUTH_LOGIN}>
-            {() => (
-              <BaseLayout
-                children={
-                  <LoginScreen
-                    onLoginSuccess={handleLoginSuccess}
-                    signupEnabled={false}
-                    onShowOnboarding={onShowOnboarding}
-                  />
-                }
-                showNavbar={false}
-              />
-            )}
-          </Stack.Screen>
-        ) : (
-          <Stack.Screen name={Screen.ONBOARDING}>
-            {() => <OnboardingLayout onComplete={handleOnboardingComplete} onLogin={handleLogin} />}
-          </Stack.Screen>
-        )
-      ) : (
-        <Stack.Screen name="Main" options={{ headerShown: false }}>
-          {() => (
-            <MainStack.Navigator
-              screenOptions={{
-                headerShown: true,
-                headerTitle: () => <UserHeader />,
-              }}
-            >
-              <MainStack.Screen name={Screen.HOME}>
-                {() => <BaseLayout children={<HomeScreen />} />}
-              </MainStack.Screen>
-              <MainStack.Screen name={Screen.DASHBOARD}>
-                {() => <BaseLayout children={<InvestmentDashboardScreen />} />}
-              </MainStack.Screen>
-              <MainStack.Screen name={Screen.ETF_DETAILS}>
-                {() => <BaseLayout children={<ETFDetailScreen />} />}
-              </MainStack.Screen>
-              <MainStack.Screen name={Screen.TRANSACTION}>
-                {() => <BaseLayout children={<ETFTransactionScreen />} />}
-              </MainStack.Screen>
-              <MainStack.Screen name={Screen.PORTFOLIO}>
-                {() => <BaseLayout children={<PortfolioDetailScreen />} />}
-              </MainStack.Screen>
-              <MainStack.Screen name={Screen.PROFILE}>
-                {() => <BaseLayout children={<UserProfile handleLogout={handleLogout} />} />}
-              </MainStack.Screen>
-              <MainStack.Screen name={Screen.MODULE_SCREEN} options={{ headerTitle: '' }}>
-                {() => <BaseLayout children={<ModuleScreen />} />}
-              </MainStack.Screen>
-              <MainStack.Screen name={Screen.COMPLETE_SCREEN} options={{ headerTitle: '' }}>
-                {({ route }) => {
-                  const params = route.params as MainStackParamList[typeof Screen.COMPLETE_SCREEN];
-                  return (
-                    <BaseLayout
-                      children={
-                        <CompleteScreen
-                          lessonId={params.lessonId}
-                          completedModules={params.completedModules}
-                          totalModules={params.totalModules}
-                          xpWon={params.xpWon}
-                          isLessonCompleted={params.isLessonCompleted}
-                        />
-                      }
+}) => {
+  useLifeSync();
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {!isOnboardingCompleted ? (
+          showRegister ? (
+            <Stack.Screen name={Screen.AUTH_REGISTER}>
+              {() => (
+                <BaseLayout
+                  children={
+                    <RegisterScreen
+                      onBackToLogin={handleBackToLogin}
+                      onSuccess={handleLoginSuccess}
                     />
-                  );
+                  }
+                  showNavbar={false}
+                />
+              )}
+            </Stack.Screen>
+          ) : showLogin ? (
+            <Stack.Screen name={Screen.AUTH_LOGIN}>
+              {() => (
+                <BaseLayout
+                  children={
+                    <LoginScreen
+                      onLoginSuccess={handleLoginSuccess}
+                      signupEnabled={false}
+                      onShowOnboarding={onShowOnboarding}
+                    />
+                  }
+                  showNavbar={false}
+                />
+              )}
+            </Stack.Screen>
+          ) : (
+            <Stack.Screen name={Screen.ONBOARDING}>
+              {() => (
+                <OnboardingLayout onComplete={handleOnboardingComplete} onLogin={handleLogin} />
+              )}
+            </Stack.Screen>
+          )
+        ) : (
+          <Stack.Screen name="Main" options={{ headerShown: false }}>
+            {() => (
+              <MainStack.Navigator
+                screenOptions={{
+                  headerShown: true,
+                  headerTitle: () => <UserHeader />,
                 }}
-              </MainStack.Screen>
-            </MainStack.Navigator>
-          )}
-        </Stack.Screen>
-      )}
-    </Stack.Navigator>
-  </NavigationContainer>
-);
+              >
+                <MainStack.Screen name={Screen.HOME}>
+                  {() => <BaseLayout children={<HomeScreen />} />}
+                </MainStack.Screen>
+                <MainStack.Screen name={Screen.DASHBOARD}>
+                  {() => <BaseLayout children={<InvestmentDashboardScreen />} />}
+                </MainStack.Screen>
+                <MainStack.Screen name={Screen.ETF_DETAILS}>
+                  {() => <BaseLayout children={<ETFDetailScreen />} />}
+                </MainStack.Screen>
+                <MainStack.Screen name={Screen.TRANSACTION}>
+                  {() => <BaseLayout children={<ETFTransactionScreen />} />}
+                </MainStack.Screen>
+                <MainStack.Screen name={Screen.PORTFOLIO}>
+                  {() => <BaseLayout children={<PortfolioDetailScreen />} />}
+                </MainStack.Screen>
+                <MainStack.Screen name={Screen.PROFILE}>
+                  {() => <BaseLayout children={<UserProfile handleLogout={handleLogout} />} />}
+                </MainStack.Screen>
+                <MainStack.Screen name={Screen.MODULE_SCREEN} options={{ headerTitle: '' }}>
+                  {() => <BaseLayout children={<ModuleScreen />} />}
+                </MainStack.Screen>
+                <MainStack.Screen name={Screen.COMPLETE_SCREEN} options={{ headerTitle: '' }}>
+                  {({ route }) => {
+                    const params =
+                      route.params as MainStackParamList[typeof Screen.COMPLETE_SCREEN];
+                    return (
+                      <BaseLayout
+                        children={
+                          <CompleteScreen
+                            lessonId={params.lessonId}
+                            completedModules={params.completedModules}
+                            totalModules={params.totalModules}
+                            xpWon={params.xpWon}
+                            isLessonCompleted={params.isLessonCompleted}
+                          />
+                        }
+                      />
+                    );
+                  }}
+                </MainStack.Screen>
+              </MainStack.Navigator>
+            )}
+          </Stack.Screen>
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};

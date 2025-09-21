@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Center, ScrollView } from '@gluestack-ui/themed';
+import { Box, Center, ScrollView, HStack } from '@gluestack-ui/themed';
 import { useTranslation } from 'react-i18next';
 import { colors, spacing } from '~/lib/theme/theme';
 import { useGameModule } from '../hooks/useGameModule';
@@ -9,6 +9,8 @@ import Feedback from '../components/Feedback';
 import { getCorrectAnswerText, getTitleKey } from '../utils/moduleTypeGuards';
 import { Button } from '~/components/atoms/Button';
 import ProgressBar from '~/components/molecules/components/ProgressBar';
+import { LifeDisplay } from '~/features/life/components/LifeDisplay';
+import { NoLivesModal } from '~/features/life/components/NoLivesModal';
 
 const PERCENTAGE_MULTIPLIER = 100;
 
@@ -26,6 +28,8 @@ const ModuleScreen: React.FC = () => {
     error,
     loading,
     module,
+    showNoLivesModal,
+    handleCloseNoLivesModal,
   } = useGameModule();
 
   if (loading) return <GameQuestion.Loading />;
@@ -40,7 +44,12 @@ const ModuleScreen: React.FC = () => {
       >
         <Box gap={spacing.spacingExtraLarge}>
           <Box gap={spacing.spacingMedium}>
-            <ProgressBar value={Math.round(progress * PERCENTAGE_MULTIPLIER)} />
+            <HStack alignItems="center" justifyContent="space-between" gap={spacing.spacingMedium}>
+              <Box flex={1}>
+                <ProgressBar value={Math.round(progress * PERCENTAGE_MULTIPLIER)} />
+              </Box>
+              <LifeDisplay showTimer={false} />
+            </HStack>
             <GameQuestion text={question} titleKey={getTitleKey(module)} />
           </Box>
 
@@ -65,6 +74,12 @@ const ModuleScreen: React.FC = () => {
           </Center>
         )}
       </ScrollView>
+
+      <NoLivesModal
+        isOpen={showNoLivesModal}
+        onClose={handleCloseNoLivesModal}
+        shouldNavigateBack={true}
+      />
     </Box>
   );
 };

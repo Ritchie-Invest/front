@@ -105,8 +105,7 @@ export const useLessonCircle = (
 
   const handlePress = useMemo(
     () => () => {
-      if (!state.isLocked && !state.isCompleted) {
-        // Vérifier s'il y a des vies disponibles
+      if (!state.isLocked) {
         if (lifeStatus.isOutOfLives) {
           setShowNoLivesModal(true);
         } else {
@@ -114,7 +113,7 @@ export const useLessonCircle = (
         }
       }
     },
-    [state.isLocked, state.isCompleted, lifeStatus.isOutOfLives, onAction, lesson.id],
+    [state.isLocked, lifeStatus.isOutOfLives, onAction, lesson.id],
   );
 
   const handleCloseModal = useMemo(
@@ -124,7 +123,7 @@ export const useLessonCircle = (
     [],
   );
 
-  const isDisabled = state.isLocked || state.isCompleted;
+  const isDisabled = state.isLocked;
 
   return {
     state,

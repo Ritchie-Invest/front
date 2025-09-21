@@ -18,52 +18,62 @@ export const ResponseMessage: React.FC<ResponseMessageProps> = ({ response, erro
 
   return (
     <Box
-      bg={colors.mainBackgroundColor}
-      p={paddings.paddingExtraLarge}
+      bg={colors.componentBackgroundColor}
+      p={paddings.paddingLarge}
       borderRadius={borderRadius.borderRadiusMedium}
       shadowOffset={{ width: 0, height: 2 }}
       shadowOpacity={0.2}
       shadowRadius={3}
       elevation={2}
       width="100%"
+      height="80%"
+      my="auto"
     >
       {isSuccess && response ? (
-        <Center flex={1} style={{ gap: spacing.spacingMedium }}>
-          <Ionicons name="checkmark-circle" size={80} color={colors.successColor} />
-          <Text
-            color={colors.primaryTextColor}
-            fontSize={typography.heading1Size}
-            textAlign="center"
-            fontWeight={typography.fontWeightBold}
-          >
-            Votre transaction est un succès !
-          </Text>
-          <Divider bg={colors.GreyL30} />
+        <Box
+          flex={1}
+          justifyContent="space-around"
+          alignItems="center"
+          style={{ gap: spacing.spacingMedium }}
+        >
+          <Center flex={1} style={{ gap: spacing.spacingMedium }}>
+            <Ionicons name="checkmark-circle" size={80} color={colors.successColor} />
+            <Text
+              color={colors.primaryTextColor}
+              fontSize={typography.heading1Size}
+              textAlign="center"
+              fontWeight={typography.fontWeightBold}
+            >
+              Votre transaction est un succès !
+            </Text>
+            <Divider bg={colors.GreyL30} />
 
-          <Text
-            color={colors.primaryTextColor}
-            fontSize={typography.heading3Size}
-            textAlign="center"
-            fontWeight={typography.fontWeightMedium}
-          >
-            Voici vos nouveaux soldes :
-          </Text>
+            <Text
+              color={colors.primaryTextColor}
+              fontSize={typography.heading3Size}
+              textAlign="center"
+              fontWeight={typography.fontWeightMedium}
+            >
+              Voici vos nouveaux soldes :
+            </Text>
 
-          <Box gap={spacing.spacingSmall}>
-            <Text color={colors.DarkGrey} width="100%" textAlign="left">
-              💰 Solde: {response.cash.toFixed(0)} €
-            </Text>
-            <Text color={colors.DarkGrey} width="100%" textAlign="left">
-              📈 Investissements: {response.investments.toFixed(0)} €
-            </Text>
-            <Text color={colors.DarkGrey} width="100%" textAlign="left">
-              🏷️ Titres détenus: {response.tickerHoldings.toFixed(0)}
-            </Text>
-          </Box>
-          <Center padding={paddings.paddingSmall}>
-            <Button onPress={goToInvestmentDashboard} children="Retour au tableau de bord" />
+            <Box gap={spacing.spacingSmall}>
+              <Text color={colors.DarkGrey} width="100%" textAlign="left">
+                💰 Solde: {response.cash.toFixed(0)} €
+              </Text>
+              <Text color={colors.DarkGrey} width="100%" textAlign="left">
+                📈 Investissements: {response.investments.toFixed(0)} €
+              </Text>
+              <Text color={colors.DarkGrey} width="100%" textAlign="left">
+                🏷️ Montant possédé pour cet ETF: {response.tickerHoldings.toFixed(0)}
+              </Text>
+            </Box>
+
+            <Center padding={paddings.paddingSmall}>
+              <Button onPress={goToInvestmentDashboard} children="Retour au tableau de bord" />
+            </Center>
           </Center>
-        </Center>
+        </Box>
       ) : (
         <Center width="100%" style={{ gap: spacing.spacingMedium }}>
           <Ionicons name="close-circle" size={80} color={colors.errorColor} />

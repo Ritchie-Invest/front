@@ -36,44 +36,42 @@ export const ResponseMessage: React.FC<ResponseMessageProps> = ({ response, erro
           alignItems="center"
           style={{ gap: spacing.spacingMedium }}
         >
-    >
-      {isSuccess && response ? (
-        <Center flex={1} style={{ gap: spacing.spacingMedium }}>
-
-          <Ionicons name="checkmark-circle" size={80} color={colors.successColor} />
-          <Text
-            color={colors.primaryTextColor}
-            fontSize={typography.heading1Size}
-            textAlign="center"
-            fontWeight={typography.fontWeightBold}
-          >
-            Votre transaction est un succès !
-          </Text>
-          <Divider bg={colors.GreyL30} />
-
-          <Text
-            color={colors.primaryTextColor}
-            fontSize={typography.heading3Size}
-            textAlign="center"
-            fontWeight={typography.fontWeightMedium}
-          >
-            Voici vos nouveaux soldes :
-          </Text>
-
-          <Box gap={spacing.spacingSmall}>
-            <Text color={colors.DarkGrey} width="100%" textAlign="left">
-              💰 Solde: {response.cash.toFixed(0)} €
+          <Center flex={1} style={{ gap: spacing.spacingMedium }}>
+            <Ionicons name="checkmark-circle" size={80} color={colors.successColor} />
+            <Text
+              color={colors.primaryTextColor}
+              fontSize={typography.heading1Size}
+              textAlign="center"
+              fontWeight={typography.fontWeightBold}
+            >
+              Votre transaction est un succès !
             </Text>
-            <Text color={colors.DarkGrey} width="100%" textAlign="left">
-              📈 Investissements: {response.investments.toFixed(0)} €
-            </Text>
-            <Text color={colors.DarkGrey} width="100%" textAlign="left">
-              🏷️ Montant possédé pour cet ETF: {response.tickerHoldings.toFixed(0)}
+            <Divider bg={colors.GreyL30} />
 
+            <Text
+              color={colors.primaryTextColor}
+              fontSize={typography.heading3Size}
+              textAlign="center"
+              fontWeight={typography.fontWeightMedium}
+            >
+              Voici vos nouveaux soldes :
             </Text>
-          </Box>
-          <Center padding={paddings.paddingSmall}>
-            <Button onPress={goToInvestmentDashboard} children="Retour au tableau de bord" />
+
+            <Box gap={spacing.spacingSmall}>
+              <Text color={colors.DarkGrey} width="100%" textAlign="left">
+                💰 Solde: {response.cash.toFixed(0)} €
+              </Text>
+              <Text color={colors.DarkGrey} width="100%" textAlign="left">
+                📈 Investissements: {response.investments.toFixed(0)} €
+              </Text>
+              <Text color={colors.DarkGrey} width="100%" textAlign="left">
+                🏷️ Montant possédé pour cet ETF: {response.tickerHoldings.toFixed(0)}
+              </Text>
+            </Box>
+
+            <Center padding={paddings.paddingSmall}>
+              <Button onPress={goToInvestmentDashboard} children="Retour au tableau de bord" />
+            </Center>
           </Center>
         </Box>
       ) : (

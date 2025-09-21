@@ -1,7 +1,7 @@
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Screen } from '~/features/navigation/Type/Screen';
-import { borderRadius, colors, paddings } from '~/lib/theme/theme';
+import { borderRadius, colors, paddings, iconSizes } from '~/lib/theme/theme';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Center } from '@gluestack-ui/themed';
 
@@ -20,11 +20,17 @@ export const ProfileButton: React.FC = () => {
       backgroundColor={isActive ? colors.infoBackgroundColor : undefined}
       borderRadius={borderRadius.borderRadiusLarge}
       padding={paddings.paddingVerySmall}
+      width={30}
+      height={30}
     >
-      <TouchableOpacity onPress={handlePress} accessibilityLabel="profile-button">
+      <TouchableOpacity
+        onPress={handlePress}
+        accessibilityLabel="profile-button"
+        style={{ alignItems: 'center', justifyContent: 'center' }}
+      >
         <MaterialIcons
           name="person"
-          size={32}
+          size={iconSizes.iconMedium}
           color={isActive ? colors.infoColor : colors.infoInactiveColor}
         />
       </TouchableOpacity>

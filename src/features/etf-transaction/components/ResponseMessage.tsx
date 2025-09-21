@@ -28,7 +28,6 @@ export const ResponseMessage: React.FC<ResponseMessageProps> = ({ response, erro
       width="100%"
       height="80%"
       my="auto"
-      mx="auto"
     >
       {isSuccess && response ? (
         <Box
@@ -59,7 +58,7 @@ export const ResponseMessage: React.FC<ResponseMessageProps> = ({ response, erro
 
           <Box gap={spacing.spacingSmall}>
             <Text color={colors.DarkGrey} width="100%" textAlign="left">
-              💰 Solde: {response.cash.toFixed(0)} €
+              💰 Solde: {response.cash.toFixed(0)}
             </Text>
             <Text color={colors.DarkGrey} width="100%" textAlign="left">
               📈 Investissements: {response.investments.toFixed(0)} €

@@ -36,6 +36,10 @@ export const ResponseMessage: React.FC<ResponseMessageProps> = ({ response, erro
           alignItems="center"
           style={{ gap: spacing.spacingMedium }}
         >
+    >
+      {isSuccess && response ? (
+        <Center flex={1} style={{ gap: spacing.spacingMedium }}>
+
           <Ionicons name="checkmark-circle" size={80} color={colors.successColor} />
           <Text
             color={colors.primaryTextColor}
@@ -65,6 +69,7 @@ export const ResponseMessage: React.FC<ResponseMessageProps> = ({ response, erro
             </Text>
             <Text color={colors.DarkGrey} width="100%" textAlign="left">
               🏷️ Montant possédé pour cet ETF: {response.tickerHoldings.toFixed(0)}
+
             </Text>
           </Box>
           <Center padding={paddings.paddingSmall}>

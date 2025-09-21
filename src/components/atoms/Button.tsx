@@ -92,34 +92,6 @@ export const Button = ({ children, onPress, isLoading, variant = 'primary', ...r
             textColor: colors.secondaryTextColor,
           },
         };
-      case 'success':
-        return {
-          variant: 'solid',
-          bg: colors.successColor,
-          $focus: { bg: colors.successColor },
-          $active: { bg: colors.successColor },
-        };
-      case 'error':
-        return {
-          variant: 'solid',
-          bg: colors.errorColor,
-          $focus: { bg: colors.errorColor },
-          $active: { bg: colors.errorColor },
-        };
-      case 'info':
-        return {
-          variant: 'solid',
-          bg: colors.primaryActionColor,
-          $focus: { bg: colors.primaryActionFocusColor },
-          $active: { bg: colors.primaryActionActiveColor },
-        };
-      case 'accent':
-        return {
-          variant: 'solid',
-          bg: colors.accentTextColor,
-          $focus: { bg: colors.accentTextColor },
-          $active: { bg: colors.accentTextColor },
-        };
 
       case 'primary':
       default:

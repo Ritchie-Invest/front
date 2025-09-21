@@ -3,7 +3,7 @@ import { QCMModule } from '../models/qcmModule';
 import { TrueFalseModule } from '../models/trueFalseModule';
 import { FillBlankModule } from '../models/fillBlankModule';
 import { ModuleServiceContract } from '../contracts/ModuleServiceContract';
-import { isTrueFalseModule, isFillBlankModule, isQCMModule } from '../utils/moduleTypeGuards';
+import { isTrueFalseModule, isFillBlankModule, isQCMModule } from '../validation/moduleValidators';
 
 const isValidModule = (data: unknown): data is QCMModule | TrueFalseModule | FillBlankModule => {
   return isTrueFalseModule(data) || isFillBlankModule(data) || isQCMModule(data);

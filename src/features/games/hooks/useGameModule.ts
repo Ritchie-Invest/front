@@ -7,12 +7,8 @@ import { ModuleServiceAdapter } from '../adapters/ModuleServiceAdapter';
 import { gameProgressService } from '../services/progressService';
 import { CompleteModuleResponse } from '../models/progress';
 import { MainStackParamList } from '~/navigation/AppNavigator';
-import {
-  getModuleType,
-  getGameData,
-  calculateProgress,
-  isTrueFalseModule,
-} from '../utils/moduleTypeGuards';
+import { getModuleType, getGameData, calculateProgress } from '../utils/moduleTypeGuards';
+import { isTrueFalseModule } from '../validation/moduleValidators';
 import { Screen } from '~/features/navigation/Type/Screen';
 import { QCMModule } from '../models/qcmModule';
 import { TrueFalseModule } from '../models/trueFalseModule';

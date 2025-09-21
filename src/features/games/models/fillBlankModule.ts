@@ -1,7 +1,6 @@
 export interface FillBlankChoice {
   id: string;
   text: string;
-  isCorrect: boolean;
 }
 
 export interface FillBlankDetails {

@@ -7,7 +7,12 @@ import { moduleService } from '../services/moduleService';
 import { gameProgressService } from '../services/progressService';
 import { CompleteModuleResponse } from '../models/progress';
 import { MainStackParamList } from '~/navigation/AppNavigator';
-import { getModuleType, getGameData, calculateProgress } from '../utils/moduleTypeGuards';
+import {
+  getModuleType,
+  getGameData,
+  calculateProgress,
+  isTrueFalseModule,
+} from '../utils/moduleTypeGuards';
 import { Screen } from '~/features/navigation/Type/Screen';
 import { QCMModule } from '../models/qcmModule';
 import { TrueFalseModule } from '../models/trueFalseModule';
@@ -68,7 +73,19 @@ export const useGameModule = () => {
 
       setCompletionResult(result);
 
-      if (!result.isCorrect) {
+      // Validation robuste avec correctChoiceId
+      let isSuccess = false;
+
+      if (module && isTrueFalseModule(module)) {
+        // Pour True/False, comparer avec module.details.isTrue
+        isSuccess = selected === (module as TrueFalseModule).details.isTrue;
+      } else {
+        // Pour QCM et FillBlank, utiliser correctChoiceId
+        const selectedId = typeof selected === 'boolean' ? selected.toString() : selected;
+        isSuccess = selectedId === result.correctChoiceId;
+      }
+
+      if (!isSuccess) {
         lifeEventService.notifyLifeChanged();
 
         setTimeout(() => {
@@ -80,7 +97,7 @@ export const useGameModule = () => {
         }, LIFE_CHECK_DELAY);
       }
 
-      setShowFeedback(result.isCorrect ? 'success' : 'error');
+      setShowFeedback(isSuccess ? 'success' : 'error');
 
       // Invalidation des caches pour forcer le rafraîchissement des données
       queryClient.invalidateQueries({ queryKey: ['chapters', 'progress'] });
@@ -109,7 +126,8 @@ export const useGameModule = () => {
     if (!completionResult) return;
 
     setSelected(null);
-    const newCorrectAnswers = correctAnswers + (completionResult.isCorrect ? 1 : 0);
+    const wasLastAnswerCorrect = showFeedback === 'success';
+    const newCorrectAnswers = correctAnswers + (wasLastAnswerCorrect ? 1 : 0);
 
     if (completionResult.nextGameModuleId) {
       // Il y a encore des modules dans cette leçon
@@ -168,6 +186,8 @@ export const useGameModule = () => {
     module,
     showNoLivesModal,
     handleCloseNoLivesModal,
+    correctChoiceId: completionResult?.correctChoiceId,
+    wasAnswerCorrect: showFeedback === 'success',
     ...gameData,
   };
 };

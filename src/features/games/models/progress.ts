@@ -1,5 +1,4 @@
 export interface CompleteModuleResponse {
-  isCorrect: boolean;
   feedback: string;
   nextGameModuleId: string | null;
   currentGameModuleIndex: number;

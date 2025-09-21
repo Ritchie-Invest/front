@@ -48,7 +48,6 @@ export const getGameData = (module: Module | null) => {
   if (isTrueFalseModule(module)) {
     return {
       question: module.details.sentence,
-      correctAnswer: module.details.isTrue ?? true,
     };
   }
 
@@ -82,18 +81,27 @@ export const getModuleChoices = (module: Module | null, t: (key: string) => stri
   ];
 };
 
-export const getCorrectAnswerText = (module: Module | null, correctAnswer?: boolean) => {
-  if (!module) return '';
+export const getCorrectAnswerText = (
+  module: Module | null,
+  correctChoiceId?: string,
+  wasAnswerCorrect?: boolean,
+  t?: (key: string) => string,
+): string => {
+  if (!module || !correctChoiceId) return '';
+
+  if (wasAnswerCorrect === undefined) return '';
 
   if (isTrueFalseModule(module)) {
-    return correctAnswer ? 'Vrai' : 'Faux';
+    const correctBooleanValue = (module as TrueFalseModule).details.isTrue;
+    const choices = getModuleChoices(module, t || ((key) => key));
+    const correctChoice = choices.find((choice) => choice.id === correctBooleanValue);
+    return correctChoice?.text || '';
   }
 
-  if (isFillBlankModule(module)) {
-    return module.details.blanks?.find((b) => b.isCorrect)?.text || '';
-  }
+  const choices = getModuleChoices(module, t || ((key) => key));
+  const correctChoice = choices.find((choice) => choice.id === correctChoiceId);
 
-  return module.details.choices?.find((c) => c.isCorrect)?.text || '';
+  return correctChoice?.text || '';
 };
 
 export const getTitleKey = (module: Module | null) => {

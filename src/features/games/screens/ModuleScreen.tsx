@@ -19,7 +19,6 @@ const ModuleScreen: React.FC = () => {
   const {
     progress,
     question,
-    correctAnswer,
     selected,
     showFeedback,
     handleSelect,
@@ -30,6 +29,8 @@ const ModuleScreen: React.FC = () => {
     module,
     showNoLivesModal,
     handleCloseNoLivesModal,
+    correctChoiceId,
+    wasAnswerCorrect,
   } = useGameModule();
 
   if (loading) return <GameQuestion.Loading />;
@@ -63,7 +64,7 @@ const ModuleScreen: React.FC = () => {
         {showFeedback !== 'none' ? (
           <Feedback
             type={showFeedback as 'success' | 'error'}
-            correctText={getCorrectAnswerText(module, correctAnswer)}
+            correctText={getCorrectAnswerText(module, correctChoiceId, wasAnswerCorrect, t)}
             onContinue={handleContinue}
           />
         ) : (

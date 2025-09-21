@@ -1,16 +1,3 @@
-import { LifeStatus } from '../models/life';
-
-export const validateLifeStatus = (data: any): data is LifeStatus => {
-  return (
-    typeof data === 'object' &&
-    typeof data.livesRemaining === 'number' &&
-    typeof data.nextLifeIn === 'number' &&
-    typeof data.isOutOfLives === 'boolean' &&
-    data.livesRemaining >= 0 &&
-    data.nextLifeIn >= 0
-  );
-};
-
 export const formatTimeRemaining = (milliseconds: number): string => {
   if (milliseconds <= 0) return '00:00';
 

@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { LifeStatus } from '../models/life';
 import { UserInfosServiceAdapter } from '../../user/adapters/UserInfosServiceAdapter';
-import { validateLifeStatus } from '../validation/lifeValidation';
 import { decrementTimer, regenerateLife } from '../utils/lifeCalculations';
 import { config } from '~/lib/config';
 
@@ -72,10 +71,6 @@ export const useLifeStore = create<LifeState>((set, get) => ({
         nextLifeIn: response.nextLifeIn,
         isOutOfLives: response.livesRemaining <= 0,
       };
-
-      if (!validateLifeStatus(newLifeStatus)) {
-        throw new Error('Invalid life status data');
-      }
 
       setLifeStatus(newLifeStatus);
       setError(null);

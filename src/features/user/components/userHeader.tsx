@@ -3,7 +3,7 @@ import { ProfileButton } from './ProfileButton';
 import UserXP from './userXP';
 import { paddings } from '~/lib/theme/theme';
 import { useUserInfos } from '../hooks/useUserInfos';
-import { LifeDisplay } from '~/features/life/components/LifeDisplay';
+import { LifeCounter } from '~/components/molecules/components/LifeCounter';
 
 export default function UserHeader() {
   const { userInfos } = useUserInfos();
@@ -16,7 +16,7 @@ export default function UserHeader() {
       width="100%"
       padding={paddings.paddingSmall}
     >
-      <LifeDisplay showTimer={true} />
+      <LifeCounter showTimer={true} />
       <UserXP TotalXP={userInfos?.totalXp || 0} level={userInfos?.level || 0} />
       <ProfileButton />
     </Box>

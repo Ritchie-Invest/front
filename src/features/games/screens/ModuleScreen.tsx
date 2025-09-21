@@ -9,7 +9,7 @@ import Feedback from '../components/Feedback';
 import { getCorrectAnswerText, getTitleKey } from '../utils/moduleTypeGuards';
 import { Button } from '~/components/atoms/Button';
 import ProgressBar from '~/components/molecules/components/ProgressBar';
-import { LifeDisplay } from '~/features/life/components/LifeDisplay';
+import { LifeCounter } from '~/components/molecules/components/LifeCounter';
 import { NoLivesModal } from '~/features/life/components/NoLivesModal';
 
 const PERCENTAGE_MULTIPLIER = 100;
@@ -49,7 +49,7 @@ const ModuleScreen: React.FC = () => {
               <Box flex={1}>
                 <ProgressBar value={Math.round(progress * PERCENTAGE_MULTIPLIER)} />
               </Box>
-              <LifeDisplay showTimer={false} />
+              <LifeCounter showTimer={false} />
             </HStack>
             <GameQuestion text={question} titleKey={getTitleKey(module)} />
           </Box>

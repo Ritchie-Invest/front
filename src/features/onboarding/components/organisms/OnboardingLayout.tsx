@@ -9,7 +9,7 @@ import {
 } from '@gluestack-ui/themed';
 import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { borderRadius, colors } from '~/lib/theme/theme';
+import { borderRadius, colors, paddings, spacing, typography } from '~/lib/theme/theme';
 import ProgressBar from '~/components/molecules/components/ProgressBar';
 
 interface OnboardingLayoutProps {
@@ -26,15 +26,26 @@ export const OnboardingLayout: React.FC<OnboardingLayoutProps> = ({
   showBackButton = true,
 }) => {
   return (
-    <View style={{ flex: 1, backgroundColor: 'white' }}>
-      <VStack flex={1} bg="$white">
-        <HStack alignItems="center" px="$8" py="$2" space="md">
+    <View style={{ flex: 1, backgroundColor: colors.componentBackgroundColor }}>
+      <VStack flex={1}>
+        <HStack
+          alignItems="center"
+          px={paddings.paddingMedium}
+          py={paddings.paddingSmall}
+          gap={spacing.spacingMedium}
+        >
           {showBackButton && (
-            <Pressable onPress={onBackPress} p="$2">
-              <Ionicons name="arrow-back" size={24} color="black" />
+            <Pressable onPress={onBackPress} p={paddings.paddingSmall}>
+              <Ionicons
+                name="arrow-back"
+                size={typography.heading1Size}
+                color={colors.primaryTextColor}
+              />
             </Pressable>
           )}
-          <ProgressBar value={progress} />
+          <Box width="80%">
+            <ProgressBar value={progress} />
+          </Box>
         </HStack>
 
         <VStack flex={1} px="$8" height="100%">

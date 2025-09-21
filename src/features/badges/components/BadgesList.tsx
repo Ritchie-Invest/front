@@ -91,6 +91,7 @@ const BadgesList: React.FC = () => {
         backgroundColor={colors.warningBackgroundColor}
         isOpen={isModalOpen}
         onClose={closeModal}
+        openKey={selectedBadge?.id}
       >
         {selectedBadge && (
           <>

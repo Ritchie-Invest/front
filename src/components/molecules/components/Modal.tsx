@@ -6,17 +6,25 @@ import {
   ModalBody,
 } from '@gluestack-ui/themed';
 import { paddings } from '~/lib/theme/theme';
+import { useModal } from '../hooks/useModal';
+import type { UseModalProps } from '../hooks/useModal';
 
-interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+interface ModalProps extends UseModalProps {
   children: React.ReactNode;
   backgroundColor?: string;
 }
 
-export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, backgroundColor }) => {
+export const Modal: React.FC<ModalProps> = ({
+  isOpen,
+  onClose,
+  openKey,
+  children,
+  backgroundColor,
+}) => {
+  const { visible, handleClose } = useModal({ isOpen, onClose, openKey });
+
   return (
-    <GluestackModal isOpen={isOpen} onClose={onClose}>
+    <GluestackModal isOpen={visible} onClose={handleClose}>
       <ModalBackdrop />
       <ModalContent p={paddings.paddingLarge} bg={backgroundColor}>
         <ModalBody>{children}</ModalBody>

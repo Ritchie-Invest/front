@@ -1,4 +1,4 @@
-import { axiosInstance } from '../../../lib/api/axios';
+import { moduleService } from '../services/moduleService';
 import { QCMModule } from '../models/qcmModule';
 import { TrueFalseModule } from '../models/trueFalseModule';
 import { FillBlankModule } from '../models/fillBlankModule';
@@ -11,10 +11,12 @@ const isValidModule = (data: unknown): data is QCMModule | TrueFalseModule | Fil
 
 export class ModuleServiceAdapter implements ModuleServiceContract {
   async getModule(moduleId: string): Promise<QCMModule | TrueFalseModule | FillBlankModule> {
-    const response = await axiosInstance.get(`/modules/${moduleId}`);
-    const data = response.data;
+    const response = await moduleService.getModule(moduleId);
 
-    if (isValidModule(data)) return data;
+    if (isValidModule(response)) {
+      const validatedModule: QCMModule | TrueFalseModule | FillBlankModule = response;
+      return validatedModule;
+    }
 
     throw new Error('Invalid module type received from API');
   }

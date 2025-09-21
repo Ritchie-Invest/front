@@ -3,7 +3,7 @@ import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { moduleService } from '../services/moduleService';
+import { ModuleServiceAdapter } from '../adapters/ModuleServiceAdapter';
 import { gameProgressService } from '../services/progressService';
 import { CompleteModuleResponse } from '../models/progress';
 import { MainStackParamList } from '~/navigation/AppNavigator';
@@ -47,7 +47,8 @@ export const useGameModule = () => {
   useEffect(() => {
     const loadModuleAndDetectType = async () => {
       try {
-        const moduleData = await moduleService.getModule(moduleId);
+        const moduleServiceAdapter = new ModuleServiceAdapter();
+        const moduleData = await moduleServiceAdapter.getModule(moduleId);
         setModule(moduleData);
       } catch (err) {
         setError(err as Error);
@@ -73,14 +74,11 @@ export const useGameModule = () => {
 
       setCompletionResult(result);
 
-      // Validation robuste avec correctChoiceId
       let isSuccess = false;
 
       if (module && isTrueFalseModule(module)) {
-        // Pour True/False, comparer avec module.details.isTrue
         isSuccess = selected === (module as TrueFalseModule).details.isTrue;
       } else {
-        // Pour QCM et FillBlank, utiliser correctChoiceId
         const selectedId = typeof selected === 'boolean' ? selected.toString() : selected;
         isSuccess = selectedId === result.correctChoiceId;
       }

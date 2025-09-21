@@ -1,9 +1,8 @@
-import { ModuleServiceAdapter } from '../adapters/ModuleServiceAdapter';
-
-const moduleServiceAdapter = new ModuleServiceAdapter();
+import { axiosInstance } from '../../../lib/api/axios';
 
 export const moduleService = {
-  async getModule(moduleId: string) {
-    return moduleServiceAdapter.getModule(moduleId);
+  async getModule(moduleId: string): Promise<unknown> {
+    const response = await axiosInstance.get(`/modules/${moduleId}`);
+    return response.data;
   },
 };

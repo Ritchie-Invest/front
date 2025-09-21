@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { AppState } from 'react-native';
 import { useLifeStore } from '../store/lifeStore';
-import { lifeEventService } from '../services/lifeEventService';
 
 export const useLifeSync = () => {
   const { refreshLifeStatus, decrementTimer, lifeStatus } = useLifeStore();
@@ -29,12 +28,5 @@ export const useLifeSync = () => {
 
     const subscription = AppState.addEventListener('change', handleAppStateChange);
     return () => subscription?.remove();
-  }, [refreshLifeStatus]);
-
-  useEffect(() => {
-    const unsubscribe = lifeEventService.subscribe(() => {
-      refreshLifeStatus();
-    });
-    return unsubscribe;
   }, [refreshLifeStatus]);
 };

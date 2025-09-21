@@ -20,6 +20,7 @@ export interface LifeState {
   updateConfig: (maxLives: number, regenTime: number) => void;
   refreshLifeStatus: () => Promise<void>;
   decrementTimer: () => void;
+  notifyLifeChanged: () => void;
 }
 
 export const useLifeStore = create<LifeState>((set, get) => ({
@@ -101,5 +102,9 @@ export const useLifeStore = create<LifeState>((set, get) => ({
         nextLifeIn: newTimer,
       });
     }
+  },
+
+  notifyLifeChanged: () => {
+    get().refreshLifeStatus();
   },
 }));

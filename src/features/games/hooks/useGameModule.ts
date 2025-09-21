@@ -13,7 +13,6 @@ import { Screen } from '~/features/navigation/Type/Screen';
 import { QCMModule } from '../models/qcmModule';
 import { TrueFalseModule } from '../models/trueFalseModule';
 import { FillBlankModule } from '../models/fillBlankModule';
-import { lifeEventService } from '~/features/life/services/lifeEventService';
 import { useLifeStore } from '~/features/life/store/lifeStore';
 
 const HTTP_CONFLICT = 409;
@@ -80,7 +79,7 @@ export const useGameModule = () => {
       }
 
       if (!isSuccess) {
-        lifeEventService.notifyLifeChanged();
+        useLifeStore.getState().notifyLifeChanged();
 
         setTimeout(() => {
           const currentLifeStatus = useLifeStore.getState().lifeStatus;

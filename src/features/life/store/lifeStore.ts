@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { LifeStatus } from '../models/life';
-import { lifeService } from '../services/lifeService';
+import { userInfosService } from '../../user/services/UserInfosService';
 import { validateLifeStatus } from '../validation/lifeValidation';
 import { decrementTimer, regenerateLife } from '../utils/lifeCalculations';
 import { config } from '~/lib/config';
@@ -44,7 +44,11 @@ export const useLifeStore = create<LifeState>((set, get) => ({
 
     try {
       setLoading(true);
-      const response = await lifeService.getUserLifeStatus();
+      const userInfos = await userInfosService.getUserInfos();
+      const response = {
+        livesRemaining: userInfos.life,
+        nextLifeIn: userInfos.nextLifeIn,
+      };
 
       const state = get();
       let newMaxLives = state.maxLives;

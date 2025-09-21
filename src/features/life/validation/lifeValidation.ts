@@ -1,4 +1,4 @@
-import { LifeStatus, UserLifeResponse } from '../models/life';
+import { LifeStatus } from '../models/life';
 
 export const validateLifeStatus = (data: any): data is LifeStatus => {
   return (
@@ -6,16 +6,6 @@ export const validateLifeStatus = (data: any): data is LifeStatus => {
     typeof data.livesRemaining === 'number' &&
     typeof data.nextLifeIn === 'number' &&
     typeof data.isOutOfLives === 'boolean' &&
-    data.livesRemaining >= 0 &&
-    data.nextLifeIn >= 0
-  );
-};
-
-export const validateUserLifeResponse = (data: any): data is UserLifeResponse => {
-  return (
-    typeof data === 'object' &&
-    typeof data.livesRemaining === 'number' &&
-    typeof data.nextLifeIn === 'number' &&
     data.livesRemaining >= 0 &&
     data.nextLifeIn >= 0
   );

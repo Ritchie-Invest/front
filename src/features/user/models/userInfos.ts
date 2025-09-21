@@ -7,4 +7,6 @@ export interface UserInfos {
   xpForThisLevel: number;
   isInvestmentUnlocked: boolean;
   levelRequiredToUnlockInvestment: number;
+  life: number;
+  nextLifeIn: number;
 }

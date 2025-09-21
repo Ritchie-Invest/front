@@ -3,8 +3,3 @@ export interface LifeStatus {
   nextLifeIn: number;
   isOutOfLives: boolean;
 }
-
-export interface UserLifeResponse {
-  livesRemaining: number;
-  nextLifeIn: number;
-}

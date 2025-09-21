@@ -1,9 +1,11 @@
 import { create } from 'zustand';
 import { LifeStatus } from '../models/life';
-import { userInfosService } from '../../user/services/UserInfosService';
+import { UserInfosServiceAdapter } from '../../user/adapters/UserInfosServiceAdapter';
 import { validateLifeStatus } from '../validation/lifeValidation';
 import { decrementTimer, regenerateLife } from '../utils/lifeCalculations';
 import { config } from '~/lib/config';
+
+const userInfosAdapter = new UserInfosServiceAdapter();
 
 export interface LifeState {
   lifeStatus: LifeStatus;
@@ -44,7 +46,7 @@ export const useLifeStore = create<LifeState>((set, get) => ({
 
     try {
       setLoading(true);
-      const userInfos = await userInfosService.getUserInfos();
+      const userInfos = await userInfosAdapter.getUserInfos();
       const response = {
         livesRemaining: userInfos.life,
         nextLifeIn: userInfos.nextLifeIn,

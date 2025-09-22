@@ -27,6 +27,7 @@ const HomeScreen: React.FC = () => {
         style={{ flex: 1 }}
         contentContainerStyle={{ alignItems: 'center' }}
         ref={autoScroll ? (scrollViewRef as any) : undefined}
+        showsVerticalScrollIndicator={false}
       >
         <PageCover title="" Screen={Screen.HOME} size={200} />
         {showProgress && (

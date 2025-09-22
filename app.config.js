@@ -46,6 +46,8 @@ export default {
       FORGOT_PASSWORD_ENABLED: process.env.FORGOT_PASSWORD_ENABLED,
       SIGNUP_ENABLED: process.env.SIGNUP_ENABLED,
       LOCK_DASHBOARD: process.env.LOCK_DASHBOARD,
+      MAX_LIVES: process.env.MAX_LIVES,
+      LIFE_REGENERATION_TIME_MS: process.env.LIFE_REGENERATION_TIME_MS,
       eas: {
         projectId: "5c2df484-8c85-4390-8911-15c37c322260",
       },

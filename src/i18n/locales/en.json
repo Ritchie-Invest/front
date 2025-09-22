@@ -92,19 +92,40 @@
   },
   "game": {
     "button": "Confirm",
-
-    "completeSentence": "Complete the sentence",
-    "success": "Well done!",
-    "error": "Oops!",
-    "loading": "Loading the game...",
-    "correctAnswer": "Correct answer:",
+    "success": "Well done !",
+    "error": "Oops !",
+    "loading": "Loading game...",
+    "correctAnswer": "Correct answer :",
     "continue": "Continue",
-    "understood": "Understood"
+    "understood": "Understood",
+    "qcm": {
+      "moduleSentence": "Answer the question"
+    },
+    "trueOrFalse": {
+      "moduleSentence": "True or False",
+      "true": "True",
+      "false": "False"
+    },
+    "fillBlank": {
+      "moduleSentence": "Complete the sentence"
+    }
   },
   "completion": {
-    "congrats": "High five!",
-    "failed": "Almost there!",
+    "congrats": "Crushed it !",
+    "failed": "Try again",
     "lessonSuccess": "Lesson completed successfully.",
-    "lessonFail": "You didn't pass the lesson. Try again!"
+    "lessonFailed": "You did not complete the lesson."
+  },
+  "life": {
+    "noLivesModal": {
+      "title": "No lives left !",
+      "description": "Wait a bit before you can play again.",
+      "nextLifeIn": "Next life in:",
+      "button": "Got it",
+      "hasLivesTitle": "You have {{count}} {{life}}",
+      "hasLivesDescription": "You can resume lessons",
+      "life": "life",
+      "lives": "lives"
+    }
   }
 }

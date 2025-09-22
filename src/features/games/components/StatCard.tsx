@@ -1,6 +1,5 @@
 import React from 'react';
 import { HStack, Text, Icon } from '@gluestack-ui/themed';
-import Ionicons from '@expo/vector-icons/Ionicons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors, spacing, borderRadius, typography } from '~/lib/theme/theme';
 

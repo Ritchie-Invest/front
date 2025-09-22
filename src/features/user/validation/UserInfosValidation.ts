@@ -36,6 +36,16 @@ export const USER_INFO_VALIDATION_RULES = {
     required: true,
     type: 'boolean',
   },
+  LIFE: {
+    required: true,
+    type: 'number',
+    min: 0,
+  },
+  NEXT_LIFE_IN: {
+    required: true,
+    type: 'number',
+    min: 0,
+  },
 } as const;
 
 export const validateUserId = (id: unknown): id is string => {
@@ -66,6 +76,8 @@ export const validateUserInfos = (userInfos: UserInfos): boolean => {
     levelRequiredToUnlockInvestment:
       typeof userInfosData.levelRequiredToUnlockInvestment === 'number' &&
       userInfosData.levelRequiredToUnlockInvestment >= 0,
+    life: typeof userInfosData.life === 'number' && userInfosData.life >= 0,
+    nextLifeIn: typeof userInfosData.nextLifeIn === 'number' && userInfosData.nextLifeIn >= 0,
   };
 
   const isValid = Object.values(validations).every(Boolean);

@@ -1,9 +1,8 @@
 import { axiosInstance } from '../../../lib/api/axios';
-import { GameModule } from '../models/module';
 
 export const moduleService = {
-  async getModule(moduleId: string): Promise<GameModule> {
-    const response = await axiosInstance.get<GameModule>(`/modules/${moduleId}`);
+  async getModule(moduleId: string): Promise<unknown> {
+    const response = await axiosInstance.get(`/modules/${moduleId}`);
     return response.data;
   },
 };

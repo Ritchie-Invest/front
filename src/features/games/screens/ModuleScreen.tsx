@@ -1,64 +1,86 @@
 import React from 'react';
-import { Box, Center } from '@gluestack-ui/themed';
-import { colors, spacing } from '~/lib/theme/theme';
-import { useModuleScreen } from '../hooks/useModuleScreen';
-import ModuleQuestion from '../components/ModuleQuestion';
-import ModuleChoices from '../components/ModuleChoices';
-import Feedback from '../components/Feedback';
+import { Box, Center, ScrollView, HStack } from '@gluestack-ui/themed';
 import { useTranslation } from 'react-i18next';
+import { colors, spacing } from '~/lib/theme/theme';
+import { useGameModule } from '../hooks/useGameModule';
+import GameQuestion from '../components/GameQuestion';
+import GamesChoices from '../components/GamesChoices';
+import Feedback from '../components/Feedback';
+import { getCorrectAnswerText, getTitleKey } from '../utils/moduleTypeGuards';
 import { Button } from '~/components/atoms/Button';
 import ProgressBar from '~/components/molecules/components/ProgressBar';
+import { LifeCounter } from '~/components/molecules/components/LifeCounter';
+import { NoLivesModal } from '~/features/life/components/NoLivesModal';
+
+const PERCENTAGE_MULTIPLIER = 100;
 
 const ModuleScreen: React.FC = () => {
   const { t } = useTranslation();
   const {
     progress,
     question,
-    choices,
     selected,
     showFeedback,
-    completionResult,
     handleSelect,
+    handleConfirm,
     handleContinue,
-    handleAnswer,
     error,
     loading,
-  } = useModuleScreen();
+    module,
+    showNoLivesModal,
+    handleCloseNoLivesModal,
+    correctChoiceId,
+    wasAnswerCorrect,
+  } = useGameModule();
 
-  if (error) return <ModuleQuestion.Error error={error} />;
-  if (loading) return <ModuleQuestion.Loading />;
+  if (loading) return <GameQuestion.Loading />;
+  if (error) return <GameQuestion.Error error={error} />;
 
   return (
-    <Box flex={1} bg={colors.mainBackgroundColor} justifyContent="space-between">
-      <Box gap={spacing.spacingExtraLarge}>
-        <Box gap={spacing.spacingMedium}>
-          <ProgressBar value={Math.round(progress * 100)} />
-          <ModuleQuestion question={question} />
-        </Box>
+    <Box flex={1} bg={colors.mainBackgroundColor}>
+      <ScrollView
+        flex={1}
+        contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between' }}
+        showsVerticalScrollIndicator={false}
+      >
+        <Box gap={spacing.spacingExtraLarge}>
+          <Box gap={spacing.spacingMedium}>
+            <HStack alignItems="center" justifyContent="space-between" gap={spacing.spacingMedium}>
+              <Box flex={1}>
+                <ProgressBar value={Math.round(progress * PERCENTAGE_MULTIPLIER)} />
+              </Box>
+              <LifeCounter showTimer={false} />
+            </HStack>
+            <GameQuestion text={question} titleKey={getTitleKey(module)} />
+          </Box>
 
-        <ModuleChoices
-          choices={choices}
-          selected={selected}
-          showFeedback={showFeedback}
-          completionResult={completionResult}
-          onSelect={handleSelect}
-        />
-      </Box>
-      <Box>
+          <GamesChoices
+            module={module}
+            selected={selected}
+            showFeedback={showFeedback}
+            onSelect={handleSelect}
+          />
+        </Box>
         {showFeedback !== 'none' ? (
           <Feedback
             type={showFeedback as 'success' | 'error'}
-            correctText={choices.find((c) => c.isCorrect)?.text}
+            correctText={getCorrectAnswerText(module, correctChoiceId, wasAnswerCorrect, t)}
             onContinue={handleContinue}
           />
         ) : (
           <Center width="100%">
-            <Button variant={selected ? 'primary' : 'disabled'} onPress={handleAnswer}>
+            <Button variant={selected !== null ? 'primary' : 'disabled'} onPress={handleConfirm}>
               {t('game.button')}
             </Button>
           </Center>
         )}
-      </Box>
+      </ScrollView>
+
+      <NoLivesModal
+        isOpen={showNoLivesModal}
+        onClose={handleCloseNoLivesModal}
+        shouldNavigateBack={true}
+      />
     </Box>
   );
 };

@@ -1,5 +1,4 @@
 export interface CompleteModuleResponse {
-  isCorrect: boolean;
   feedback: string;
   nextGameModuleId: string | null;
   currentGameModuleIndex: number;
@@ -10,7 +9,6 @@ export interface CompleteModuleResponse {
 export interface CompleteLessonResponse {
   completedGameModules: number;
   totalGameModules: number;
-  score: number;
   isCompleted: boolean;
-  xpWon?: number;
+  xpWon: number;
 }

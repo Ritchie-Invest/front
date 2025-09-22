@@ -6,6 +6,7 @@ import { paddings } from './values/padding';
 import { margins } from './values/margin';
 import { borderRadius } from './values/border-radius';
 import { spacing } from './values/spacing';
+import { iconSizes } from './values/iconSizes';
 
 export const customConfig = createConfig({
   ...defaultConfig,
@@ -34,6 +35,6 @@ export const customConfig = createConfig({
   },
 });
 
-export { colors, typography, paddings, margins, borderRadius, spacing };
+export { colors, typography, paddings, margins, borderRadius, spacing, iconSizes };
 
 export type CustomConfigType = typeof customConfig;

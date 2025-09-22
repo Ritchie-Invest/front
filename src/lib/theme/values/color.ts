@@ -3,6 +3,7 @@ const colors = {
   alternativeBackgroundColor: '#f8fafc',
   componentBackgroundColor: '#fcfcfcff',
   surfaceColor: '#f1f5f9',
+  lifeColor: '#ef4444',
 
   GreyL15: '#EEEDEC',
   GreyL20: '#E8E7E6',

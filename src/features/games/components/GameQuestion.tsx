@@ -4,29 +4,34 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useTranslation } from 'react-i18next';
 import { spacing, colors, typography } from '~/lib/theme/theme';
 
-const ModuleQuestion = ({ question }: { question?: string }) => {
+interface GameQuestionProps {
+  text?: string;
+  titleKey: string;
+}
+
+const GameQuestion = ({ text, titleKey }: GameQuestionProps) => {
   const { t } = useTranslation();
   return (
     <VStack gap={spacing.spacingSmall}>
       <Text
         fontSize={typography.bodyLargeSize}
         color={colors.Grey}
-        fontWeight={typography.fontWeightMedium}
+        fontWeight={typography.fontWeightBold}
       >
-        {t('game.completeSentence')}
+        {t(titleKey)}
       </Text>
       <Text
         fontSize={typography.heading1Size}
         color={colors.primaryTextColor}
         fontWeight={typography.fontWeightBold}
       >
-        {question}
+        {text}
       </Text>
     </VStack>
   );
 };
 
-ModuleQuestion.Error = ({ error }: { error: any }) => {
+GameQuestion.Error = ({ error }: { error: Error }) => {
   const { t } = useTranslation();
   return (
     <Box flex={1} justifyContent="center" alignItems="center" bg={colors.errorBackgroundColor}>
@@ -37,13 +42,13 @@ ModuleQuestion.Error = ({ error }: { error: any }) => {
         <Heading size="md" color={colors.errorColor}>
           {t('game.error')}
         </Heading>
-        <Text color={colors.errorColor}>{(error as Error).message}</Text>
+        <Text color={colors.errorColor}>{error.message}</Text>
       </VStack>
     </Box>
   );
 };
 
-ModuleQuestion.Loading = () => {
+GameQuestion.Loading = () => {
   const { t } = useTranslation();
   return (
     <Box flex={1} justifyContent="center" alignItems="center">
@@ -53,4 +58,4 @@ ModuleQuestion.Loading = () => {
   );
 };
 
-export default ModuleQuestion;
+export default GameQuestion;

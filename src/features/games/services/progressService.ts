@@ -1,30 +1,17 @@
-import { axiosInstance } from '../../../lib/api/axios';
-import { CompleteModuleResponse, CompleteLessonResponse } from '../models/progress';
+import { ProgressAdapter } from '../adapters/ProgressAdapter';
+
+const progressAdapter = new ProgressAdapter();
 
 export const gameProgressService = {
-  // Completion d'un module avec envoi de la réponse choisie
   async completeModule(
     moduleId: string,
-    choiceId: string,
-    gameType: string = 'MCQ',
-  ): Promise<CompleteModuleResponse> {
-    const payload = {
-      gameType,
-      mcq: { choiceId },
-    };
-
-    const response = await axiosInstance.post<CompleteModuleResponse>(
-      `/modules/${moduleId}/complete`,
-      payload,
-    );
-    return response.data;
+    answer: string | boolean,
+    moduleType: 'MCQ' | 'TRUE_OR_FALSE' | 'FILL_IN_THE_BLANK',
+  ) {
+    return progressAdapter.completeModule(moduleId, answer, moduleType);
   },
 
-  // Completion finale d'une leçon et calcul des XP
-  async completeLesson(lessonId: string): Promise<CompleteLessonResponse> {
-    const response = await axiosInstance.post<CompleteLessonResponse>(
-      `/lessons/${lessonId}/complete`,
-    );
-    return response.data;
+  async completeLesson(lessonId: string) {
+    return progressAdapter.completeLesson(lessonId);
   },
 };

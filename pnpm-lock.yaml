@@ -838,7 +838,7 @@ packages:
 
   '@expo/bunyan@4.0.1':
     resolution: {integrity: sha512-+Lla7nYSiHZirgK+U/uYzsLv/X+HaJienbD5AKX1UQZHYfWaP+9uuQluRB4GrEVWF0GZ7vEVp/jzaOT9k/SQlg==}
-    engines: {'0': node >=0.10.0}
+    engines: {node: '>=0.10.0'}
 
   '@expo/cli@54.0.5':
     resolution: {integrity: sha512-8MZOZKHfHRHTBQu2/PXBi7eCKc2aF1i1JsZweL/P7aX8nivhrP6KV6An5PtO1/rrdnS9z7pmX2KwMygvvaFNhg==}

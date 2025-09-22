@@ -4,7 +4,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { ModuleServiceAdapter } from '../adapters/ModuleServiceAdapter';
-import { gameProgressService } from '../services/progressService';
+import { GameProgressServiceAdapter } from '../adapters/GameProgressServiceAdapter';
 import { CompleteModuleResponse } from '../models/progress';
 import { MainStackParamList } from '~/navigation/AppNavigator';
 import { getModuleType, getGameData, calculateProgress } from '../utils/moduleTypeGuards';
@@ -38,6 +38,7 @@ export const useGameModule = () => {
   const [showNoLivesModal, setShowNoLivesModal] = useState<boolean>(false);
   const navigation = useNavigation<NativeStackNavigationProp<MainStackParamList>>();
   const queryClient = useQueryClient();
+  const gameProgressServiceAdapter = new GameProgressServiceAdapter();
 
   useEffect(() => {
     const loadModuleAndDetectType = async () => {
@@ -61,7 +62,7 @@ export const useGameModule = () => {
     if (selected === null) return;
 
     try {
-      const result = await gameProgressService.completeModule(
+      const result = await gameProgressServiceAdapter.completeModule(
         moduleId,
         selected,
         getModuleType(module),
@@ -134,7 +135,7 @@ export const useGameModule = () => {
     } else {
       // Fin de la leçon
       try {
-        const lessonResult = await gameProgressService.completeLesson(lessonId);
+        const lessonResult = await gameProgressServiceAdapter.completeLesson(lessonId);
         navigation.replace(Screen.COMPLETE_SCREEN, {
           lessonId,
           completedModules: lessonResult.completedGameModules,

@@ -1,6 +1,6 @@
-import { GameProgressServiceAdapter } from '../adapters/GameProgressServiceAdapter';
+import { ProgressAdapter } from '../adapters/ProgressAdapter';
 
-const gameProgressServiceAdapter = new GameProgressServiceAdapter();
+const progressAdapter = new ProgressAdapter();
 
 export const gameProgressService = {
   async completeModule(
@@ -8,10 +8,10 @@ export const gameProgressService = {
     answer: string | boolean,
     moduleType: 'MCQ' | 'TRUE_OR_FALSE' | 'FILL_IN_THE_BLANK',
   ) {
-    return gameProgressServiceAdapter.completeModule(moduleId, answer, moduleType);
+    return progressAdapter.completeModule(moduleId, answer, moduleType);
   },
 
   async completeLesson(lessonId: string) {
-    return gameProgressServiceAdapter.completeLesson(lessonId);
+    return progressAdapter.completeLesson(lessonId);
   },
 };

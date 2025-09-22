@@ -2,14 +2,14 @@ import { moduleService } from '../services/moduleService';
 import { QCMModule } from '../models/qcmModule';
 import { TrueFalseModule } from '../models/trueFalseModule';
 import { FillBlankModule } from '../models/fillBlankModule';
-import { ModuleServiceContract } from '../contracts/ModuleServiceContract';
+import { ModuleContract } from '../contracts/ModuleContract';
 import { isTrueFalseModule, isFillBlankModule, isQCMModule } from '../validation/moduleValidators';
 
 const isValidModule = (data: unknown): data is QCMModule | TrueFalseModule | FillBlankModule => {
   return isTrueFalseModule(data) || isFillBlankModule(data) || isQCMModule(data);
 };
 
-export class ModuleServiceAdapter implements ModuleServiceContract {
+export class ModuleAdapter implements ModuleContract {
   async getModule(moduleId: string): Promise<QCMModule | TrueFalseModule | FillBlankModule> {
     const response = await moduleService.getModule(moduleId);
 

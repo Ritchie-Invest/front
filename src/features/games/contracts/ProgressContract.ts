@@ -1,7 +1,7 @@
 import { CompleteModuleResponse, CompleteLessonResponse } from '../models/progress';
 import { ModuleType } from '../types/moduleTypes';
 
-export interface GameProgressServiceContract {
+export interface ProgressContract {
   completeModule(
     moduleId: string,
     answer: string | boolean,

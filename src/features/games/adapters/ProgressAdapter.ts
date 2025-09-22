@@ -1,9 +1,9 @@
 import { axiosInstance } from '../../../lib/api/axios';
 import { CompleteModuleResponse, CompleteLessonResponse } from '../models/progress';
-import { GameProgressServiceContract } from '../contracts/GameProgressServiceContract';
+import { ProgressContract } from '../contracts/ProgressContract';
 import { MODULE_TYPES, ModuleType } from '../types/moduleTypes';
 
-export class GameProgressServiceAdapter implements GameProgressServiceContract {
+export class ProgressAdapter implements ProgressContract {
   async completeModule(
     moduleId: string,
     answer: string | boolean,

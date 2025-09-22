@@ -3,8 +3,8 @@ import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { ModuleServiceAdapter } from '../adapters/ModuleServiceAdapter';
-import { GameProgressServiceAdapter } from '../adapters/GameProgressServiceAdapter';
+import { ModuleAdapter } from '../adapters/ModuleAdapter';
+import { ProgressAdapter } from '../adapters/ProgressAdapter';
 import { CompleteModuleResponse } from '../models/progress';
 import { MainStackParamList } from '~/navigation/AppNavigator';
 import { getModuleType, getGameData, calculateProgress } from '../utils/moduleTypeGuards';
@@ -38,13 +38,13 @@ export const useGameModule = () => {
   const [showNoLivesModal, setShowNoLivesModal] = useState<boolean>(false);
   const navigation = useNavigation<NativeStackNavigationProp<MainStackParamList>>();
   const queryClient = useQueryClient();
-  const gameProgressServiceAdapter = new GameProgressServiceAdapter();
+  const progressAdapter = new ProgressAdapter();
 
   useEffect(() => {
     const loadModuleAndDetectType = async () => {
       try {
-        const moduleServiceAdapter = new ModuleServiceAdapter();
-        const moduleData = await moduleServiceAdapter.getModule(moduleId);
+        const moduleAdapter = new ModuleAdapter();
+        const moduleData = await moduleAdapter.getModule(moduleId);
         setModule(moduleData);
       } catch (err) {
         setError(err as Error);
@@ -62,7 +62,7 @@ export const useGameModule = () => {
     if (selected === null) return;
 
     try {
-      const result = await gameProgressServiceAdapter.completeModule(
+      const result = await progressAdapter.completeModule(
         moduleId,
         selected,
         getModuleType(module),
@@ -135,7 +135,7 @@ export const useGameModule = () => {
     } else {
       // Fin de la leçon
       try {
-        const lessonResult = await gameProgressServiceAdapter.completeLesson(lessonId);
+        const lessonResult = await progressAdapter.completeLesson(lessonId);
         navigation.replace(Screen.COMPLETE_SCREEN, {
           lessonId,
           completedModules: lessonResult.completedGameModules,
